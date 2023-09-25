@@ -1,0 +1,16 @@
+{
+  "name": "starboard",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc && bun src/index.ts",
+    "start": "bun src/index.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
