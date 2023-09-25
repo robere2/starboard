@@ -1,12 +1,19 @@
 import {Server} from "bun";
 
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 export class Starboard {
 
     private server?: Server;
+    private readonly apiKey: string;
     private readonly port: number;
     private readonly hostname: string;
 
-    constructor(port = 4381, hostname = "localhost") {
+    constructor(apiKey: string, port = 4381, hostname = "localhost") {
+        if(!uuidRegex.test(apiKey)) {
+            throw new Error('Invalid API key: format must be a UUID v4 string');
+        }
+        this.apiKey = apiKey;
         this.port = port;
         this.hostname = hostname;
     }
