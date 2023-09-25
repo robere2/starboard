@@ -12,6 +12,7 @@ export class Starboard {
     }
 
     public start(): void {
+        this.assertServerStopped()
         this.server = Bun.serve({
             port: this.port,
             hostname: this.hostname,
@@ -26,10 +27,29 @@ export class Starboard {
     }
 
     public stop(): void {
-        if(!this.server) {
-            throw new Error('Starboard.stop() was called but the server is already stopped')
-        }
-        this.server.stop();
+        this.assertServerRunning();
+        this.server?.stop();
         this.server = undefined;
+    }
+
+    public getPort(): number {
+        this.assertServerRunning();
+        return this.server?.port as number
+    }
+
+    public getHostname(): string {
+        this.assertServerRunning();
+        return this.server?.hostname as string
+    }
+
+    private assertServerStopped(): void {
+        if(this.server) {
+            throw new Error('Server is already running')
+        }
+    }
+    private assertServerRunning(): void {
+        if(!this.server) {
+            throw new Error('Server is not running')
+        }
     }
 }
