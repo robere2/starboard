@@ -1,11 +1,9 @@
 import {afterEach, beforeEach, expect, test} from "bun:test";
 import {Starboard} from "./Starboard.ts";
 
-const validUuid = 'ca2db850-02ee-4b39-a18f-44656d182791';
-
 let sb: Starboard;
 beforeEach(() => {
-    sb = new Starboard(validUuid);
+    sb = new Starboard();
 })
 
 afterEach(() => {
@@ -19,14 +17,10 @@ test('Starts the server', () => {
 })
 
 test('Accepts port and hostname', () => {
-    sb = new Starboard(validUuid, 8080, "0.0.0.0");
+    sb = new Starboard(8080, "0.0.0.0");
     sb.start()
     expect(sb.getPort()).toEqual(8080)
     expect(sb.getHostname()).toEqual("0.0.0.0");
-})
-
-test('Does not accept invalid UUIDs', () => {
-    expect(() => new Starboard('This is not a valid UUID')).toThrow()
 })
 
 test('Knows if the server is running', () => {

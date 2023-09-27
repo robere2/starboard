@@ -1,19 +1,14 @@
 import {Server} from "bun";
-
-const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+import {Route} from "./route/Route.ts";
 
 export class Starboard {
 
     private server?: Server;
-    private readonly apiKey: string;
     private readonly port: number;
     private readonly hostname: string;
+    private readonly routes: Route[] = [];
 
-    constructor(apiKey: string, port = 4381, hostname = "localhost") {
-        if(!uuidRegex.test(apiKey)) {
-            throw new Error('Invalid API key: format must be a UUID v4 string');
-        }
-        this.apiKey = apiKey;
+    constructor(port = 4381, hostname = "localhost") {
         this.port = port;
         this.hostname = hostname;
     }
@@ -23,10 +18,22 @@ export class Starboard {
         this.server = Bun.serve({
             port: this.port,
             hostname: this.hostname,
-            fetch(req: Request): Response {
+            fetch: async (req: Request): Promise<Response> => {
+                const url = new URL(req.url);
+                for(const route of this.routes) {
+                    console.log(url.pathname);
+                    if(route.path === url.pathname) {
+                        return route.handle(req);
+                    }
+                }
                 return new Response('Hello, world!');
             }
         })
+    }
+
+    public addRoute(route: Route): this {
+        this.routes.push(route);
+        return this;
     }
 
     public isRunning(): boolean {
