@@ -3,8 +3,8 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsc && bun src/index.ts",
-    "start": "bun src/index.ts"
+    "dev": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun --inspect playground.ts\"",
+    "watch-test": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun --inspect test --coverage\""
   },
   "devDependencies": {
     "bun-types": "latest",

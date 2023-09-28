@@ -25,7 +25,9 @@ export class Starboard extends Service {
                         return endpoint.handle(req);
                     }
                 }
-                return new Response('Hello, world!');
+                return new Response(JSON.stringify({error: 404}), {
+                    status: 404
+                });
             }
         })
     }
