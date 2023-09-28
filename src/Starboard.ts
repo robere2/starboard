@@ -1,14 +1,14 @@
 import {Server} from "bun";
-import {Route} from "./route/Route.ts";
+import {Service} from "./service/Service.ts";
 
-export class Starboard {
+export class Starboard extends Service {
 
     private server?: Server;
     private readonly port: number;
     private readonly hostname: string;
-    private readonly routes: Route[] = [];
 
     constructor(port = 4381, hostname = "localhost") {
+        super('/');
         this.port = port;
         this.hostname = hostname;
     }
@@ -20,20 +20,14 @@ export class Starboard {
             hostname: this.hostname,
             fetch: async (req: Request): Promise<Response> => {
                 const url = new URL(req.url);
-                for(const route of this.routes) {
-                    console.log(url.pathname);
-                    if(route.path === url.pathname) {
-                        return route.handle(req);
+                for(const [endpointPath, endpoint] of this.allEndpoints()) {
+                    if(endpointPath === url.pathname) {
+                        return endpoint.handle(req);
                     }
                 }
                 return new Response('Hello, world!');
             }
         })
-    }
-
-    public addRoute(route: Route): this {
-        this.routes.push(route);
-        return this;
     }
 
     public isRunning(): boolean {
