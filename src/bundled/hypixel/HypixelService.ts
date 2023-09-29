@@ -1,4 +1,4 @@
-import {Service} from "../../service/Service.ts";
+import {Service} from "../../Service.ts";
 import {HypixelEndpoint} from "./HypixelEndpoint.ts";
 
 export class HypixelService extends Service {

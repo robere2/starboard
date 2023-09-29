@@ -1,4 +1,4 @@
-import {Endpoint} from "../../endpoint/Endpoint.ts";
+import {Endpoint} from "../../Endpoint.ts";
 import path from "path";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";

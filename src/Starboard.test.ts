@@ -1,7 +1,7 @@
 import {afterEach, beforeEach, describe, expect, Mock, mock, test} from "bun:test";
 import {Starboard} from "./Starboard.ts";
-import {Service} from "./service/Service.ts";
-import {Endpoint} from "./endpoint/Endpoint.ts";
+import {Service} from "./Service.ts";
+import {Endpoint} from "./Endpoint.ts";
 
 class DummyEndpoint extends Endpoint {
     public mock: Mock<() => void> = mock(() => {});

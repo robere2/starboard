@@ -1,6 +1,6 @@
-import {Endpoint} from "../endpoint/Endpoint.ts";
+import {Endpoint} from "./Endpoint.ts";
 import path from "path";
-import {Plugin} from "../plugin/Plugin.ts";
+import {Plugin} from "./Plugin.ts";
 
 
 export class Service {

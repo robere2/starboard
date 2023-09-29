@@ -1,8 +1,8 @@
 import {expect, Mock, mock, test} from "bun:test";
 import {Service} from "./Service.ts";
-import {Endpoint} from "../endpoint/Endpoint.ts";
-import {Plugin} from "../plugin/Plugin.ts";
-import {Executor} from "../Executor.ts";
+import {Endpoint} from "./Endpoint.ts";
+import {Plugin} from "./Plugin.ts";
+import {Executor} from "./Executor.ts";
 
 class DummyEndpoint extends Endpoint {
     handle(): Response | Promise<Response> {

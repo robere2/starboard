@@ -1,5 +1,5 @@
 import {Server} from "bun";
-import {Service} from "./service/Service.ts";
+import {Service} from "./Service.ts";
 
 export class Starboard extends Service {
 

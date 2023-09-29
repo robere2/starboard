@@ -1,5 +1,5 @@
-import {Executor} from "../Executor.ts";
-import {Endpoint} from "../endpoint/Endpoint.ts";
+import {Executor} from "./Executor.ts";
+import {Endpoint} from "./Endpoint.ts";
 
 
 export abstract class Plugin {

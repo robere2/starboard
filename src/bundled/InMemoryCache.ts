@@ -1,4 +1,4 @@
-import {Cache} from "./Cache.ts";
+import {Cache} from "../Cache.ts";
 
 type CacheItem<T> = {
     value: T
