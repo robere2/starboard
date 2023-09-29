@@ -34,6 +34,10 @@ export class Starboard extends Service {
         return this.server !== undefined;
     }
 
+    public getServer(): Server | undefined {
+        return this.server;
+    }
+
     public stop(): void {
         this.assertServerRunning();
         this.server?.stop();
