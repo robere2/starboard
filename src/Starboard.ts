@@ -19,11 +19,9 @@ export class Starboard extends Service {
             port: this.port,
             hostname: this.hostname,
             fetch: async (req: Request): Promise<Response> => {
-                const url = new URL(req.url);
-                for(const [endpointPath, endpoint] of this.allEndpoints()) {
-                    if(endpointPath === url.pathname) {
-                        return endpoint.handle(req);
-                    }
+                const endpoint = this.allEndpoints().get(new URL(req.url).pathname)
+                if(endpoint) {
+                    return endpoint.handle(req);
                 }
                 return new Response(JSON.stringify({error: 404}), {
                     status: 404

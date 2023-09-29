@@ -8,8 +8,11 @@ export class Service {
     private readonly subservices: Service[] = [];
     public readonly path: string;
 
-    constructor(path: string) {
-        this.path = path;
+    constructor(inputPath: string) {
+        this.path = path.normalize(inputPath);
+        if(this.path.startsWith("..")) {
+            throw new Error('Path cannot start with ".."');
+        }
     }
 
     public addService(service: Service): this {
@@ -33,18 +36,16 @@ export class Service {
     }
 
     public ownEndpoints(): Map<string, Endpoint> {
-        return new Map(this.endpoints)
+        // Map the Map values to prepend this service's path to the endpoint path
+        return new Map(
+            Array.from(this.endpoints)
+                .map(([endpointPath, endpoint]) => [path.join(this.path, endpointPath), endpoint])
+        )
     }
 
     public allEndpoints(): Map<string, Endpoint> {
-        const endpoints: Map<string, Endpoint> = new Map();
-        for (const [endpointPath, endpoint] of this.ownEndpoints()) {
-            const joinedPath = path.join(this.path, endpointPath);
-            if (endpoints.has(joinedPath)) {
-                throw new Error(`Duplicate endpoint path ${joinedPath}`);
-            }
-            endpoints.set(joinedPath, endpoint)
-        }
+        const endpoints: Map<string, Endpoint> = this.ownEndpoints();
+
         for (const subservice of this.subservices) {
             for (const [endpointPath, endpoint] of subservice.allEndpoints()) {
                 const joinedPath = path.join(this.path, endpointPath);
@@ -54,7 +55,12 @@ export class Service {
                 endpoints.set(joinedPath, endpoint)
             }
         }
+
         return endpoints;
+    }
+
+    public getServices(): Service[] {
+        return [...this.subservices];
     }
 
     protected searchForCircularStructure(visited: Service[] = []): boolean {
