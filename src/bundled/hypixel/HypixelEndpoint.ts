@@ -20,6 +20,9 @@ export class HypixelEndpoint extends Endpoint {
     public handle(req: Request): Response | Promise<Response> {
         const url = new URL(path.join(HYPIXEL_API_URL, this.path));
         for(const param of new URL(req.url).searchParams.entries()) {
+            if(param[0] === "key") {
+                continue;
+            }
             url.searchParams.append(param[0], param[1]);
         }
         const hypixelRequest = new Request({
