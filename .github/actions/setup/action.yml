@@ -1,0 +1,29 @@
+name: 'Setup Environment'
+description: 'Set up testing environment'
+runs:
+  using: "composite"
+  steps:
+    - name: Load Bun from Cache
+      id: cache-bun
+      uses: actions/cache@v3
+      with:
+          path: /root/.bun
+          key: ${{ runner.os }}-bun
+
+    - name: Setup Bun
+      if: steps.cache-bun.outputs.cache-hit != 'true'
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+
+    - name: Load Dependencies from Cache
+      id: cache-deps
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+
+    - name: Install Dependencies
+      if: steps.cache-deps.outputs.cache-hit != 'true'
+      run: bun install
+      shell: bash
