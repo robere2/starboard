@@ -43,7 +43,7 @@ export class HypixelAPI {
      */
     public constructor(options: HypixelAPIOptions) {
         this.options = Object.freeze(options);
-        this.mojangApi = new MojangAPI()
+        this.mojangApi = new MojangAPI(options)
     }
 
     /**
