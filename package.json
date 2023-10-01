@@ -1,5 +1,6 @@
 {
   "name": "starboard",
+  "version": "0.1-alpha1",
   "module": "src/index.ts",
   "type": "module",
   "scripts": {

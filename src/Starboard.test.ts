@@ -5,7 +5,7 @@ import {Endpoint} from "./Endpoint.ts";
 
 class DummyEndpoint extends Endpoint {
     public mock: Mock<() => void> = mock(() => {});
-    handle(req: Request): Response | Promise<Response> {
+    async handle(req: Request): Promise<Response> {
         this.mock();
         return new Response(JSON.stringify({url: req.url}))
     }
