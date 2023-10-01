@@ -3,23 +3,10 @@ description: 'Set up testing environment'
 runs:
   using: "composite"
   steps:
-    - name: Load Bun from Cache
-      id: cache-bun
-      uses: actions/cache@v3
-      with:
-          path: ~/.bun
-          key: ${{ runner.os }}-bun
-
     - name: Setup Bun
-      if: steps.cache-bun.outputs.cache-hit != 'true'
       uses: oven-sh/setup-bun@v1
       with:
         bun-version: latest
-
-    - name: Reload Bun Path
-      if: steps.cache-bun.outputs.cache-hit == 'true'
-      run: echo "$HOME/.bun/bin" >> $GITHUB_PATH
-      shell: bash
 
     - name: Load Dependencies from Cache
       id: cache-deps
