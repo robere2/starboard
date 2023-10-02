@@ -1,7 +1,8 @@
 import {HypixelPlayer, HypixelPlayerResponse} from "./HypixelPlayer.ts";
 import {MojangAPI} from "../../MojangAPI.ts";
-import packageJson from "../../../../package.json";
-import {UUID_REGEX} from "../../../util.ts";
+import {ParsedOptions, UUID_REGEX} from "../../../util.ts";
+import {HttpClient} from "../../HttpClient.ts";
+import {BaseAPI} from "../../BaseAPI.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 
@@ -27,13 +28,19 @@ export type HypixelAPIOptions = {
      *   If you would like to use Bun's default user agent, set this to null.
      */
     userAgent?: string | null;
+    /**
+     * Custom HTTP client to use for HTTP requests to the Mojang API. If not provided, a default HTTP client will be
+     *   used, which simply uses the {@link fetch} function. Custom HTTP clients are particularly useful for
+     *   test suites where you want to mock an HTTP request. Custom clients can also be useful for adding custom logging
+     *   or error handling for HTTP requests.
+     */
+    httpClient?: HttpClient;
 }
 
 /**
  * Interface for requesting data from the Hypixel API. Caching is not built-in.
  */
-export class HypixelAPI {
-    private readonly options: HypixelAPIOptions;
+export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     private readonly mojangApi: MojangAPI;
 
     /**
@@ -42,8 +49,8 @@ export class HypixelAPI {
      *   optional.
      */
     public constructor(options: HypixelAPIOptions) {
-        this.options = Object.freeze(options);
-        this.mojangApi = new MojangAPI(options)
+        super(options);
+        this.mojangApi = new MojangAPI()
     }
 
     /**
@@ -105,7 +112,7 @@ export class HypixelAPI {
         }
 
         // Request is sent to the Hypixel API
-        const res = await fetch(hypixelRequest);
+        const res = await this.options.httpClient.fetch(hypixelRequest);
         const json: HypixelPlayerResponse = await res.json();
         if(json.success) {
             return json.player;
@@ -116,14 +123,17 @@ export class HypixelAPI {
         }
     }
 
-    private genHeaders(): Headers {
-        const headers = new Headers();
+
+    protected genHeaders(): Headers {
+        const headers = super.genHeaders();
         headers.set("API-Key", this.options.apiKey);
-        if(this.options.userAgent) {
-            headers.set("User-Agent", this.options.userAgent);
-        } else if(this.options.userAgent === undefined) {
-            headers.set("User-Agent", `Starboard v${packageJson.version}`);
-        }
         return headers;
+    }
+
+    protected parseOptions(options: HypixelAPIOptions): ParsedOptions<HypixelAPIOptions> {
+        return Object.freeze({
+            ...this.parseDefaultOptions(options),
+            apiKey: options.apiKey
+        })
     }
 }

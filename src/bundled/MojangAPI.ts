@@ -1,31 +1,25 @@
-import packageJson from "../../package.json";
+import {APIOptions, BaseAPI} from "./BaseAPI.ts";
+import {ParsedOptions} from "../util.ts";
+import crypto from "crypto";
+import {MojangProfile} from "./MojangProfile.ts";
 
-export type MojangAPIOptions = {
-    /**
-     * Rate limit usage percentage at which to enable queuing requests to help ensure that your over-usage of the API
-     *   doesn't get 429 rate limited. Should be a number between 0.0 and 1.0, where 0.0 means enable queueing after 0%
-     *   of the rate limit has been used (i.e. all requests) and 1.0 means enable queueing after 100% (i.e. no
-     *   requests). Once the queue is in use, this will use the rate limit headers found in the response from the API
-     *   to determine how much time needs to pass before another request can be made to ensure that not all requests are
-     *   used up before the rate limit timer resets. Requests will then be processed in the queue with the required
-     *   delay between each request. This value can also be a boolean, where `true` means enable queueing at any
-     *   percentage (same as providing 0.0) and `false` means disable queueing entirely (same as providing 1.0).
-     */
-    defer?: boolean | number;
-    /**
-     * The user agent to provide to the Mojang API servers. Defaults to "Starboard <Version>", e.g. "Starboard v1.0.0".
-     *   If you would like to use Bun's default user agent, set this to null.
-     */
-    userAgent?: string | null;
-}
+export class MojangAPI extends BaseAPI<APIOptions> {
 
-export class MojangAPI {
+    private static readonly IP_REGEX = /^(?:\d{1,3}\.){3}\d{1,3}|(?:\d{1,3}\.){1,3}\*$/
 
-    constructor(public readonly options?: MojangAPIOptions) {}
+    private accessToken?: string;
+    constructor(options?: APIOptions) {
+        super(options ?? {});
+    }
+
+    public authorize(accessToken: string | undefined): this {
+        this.accessToken = accessToken;
+        return this;
+    }
 
     public async getUuid(name: string): Promise<string | null> {
         // Request Mojang API with the user agent injected if it is set. Otherwise, Bun default is used.
-        const res = await fetch(new Request(`https://api.mojang.com/users/profiles/minecraft/${name}`,  {
+        const res = await this.options.httpClient.fetch(new Request(`https://api.mojang.com/users/profiles/minecraft/${name}`,  {
             headers: this.genHeaders()
         }));
 
@@ -39,13 +33,114 @@ export class MojangAPI {
         }
     }
 
-    private genHeaders(): Headers {
-        const headers = new Headers();
-        if(this.options?.userAgent) {
-            headers.set("User-Agent", this.options.userAgent);
-        } else if(this.options?.userAgent === undefined) {
-            headers.set("User-Agent", `Starboard v${packageJson.version}`);
+    public async getProfile(uuid: string): Promise<MojangProfile | null> {
+        const res = await this.options.httpClient.fetch(new Request(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`, {
+            headers: this.genHeaders()
+        }));
+        if(res.ok) {
+            const json = await res.json();
+            return new MojangProfile(json);
+        } else {
+            throw new Error('Request to Mojang API failed', {
+                cause: await res.json()
+            })
+        }
+    }
+
+    public async getBlockedServerHashes(): Promise<string[]> {
+        const res = await this.options.httpClient.fetch(new Request("https://sessionserver.mojang.com/blockedservers", {
+            headers: this.genHeaders()
+        }));
+        if(res.ok) {
+            return (await res.text()).split('\n');
+        } else {
+            throw new Error('Request to Mojang API failed', {
+                cause: await res.text()
+            });
+        }
+    }
+
+    /**
+     * Checks if a given Minecraft server address is blocked by Mojang. This is done by checking the list of blocked
+     *   server hashes from the Mojang API and comparing the SHA1 hash of the provided server address against the list.
+     *   If the server address hash is not found in the list, a wild card is applied to the highest specificity
+     *   subdomain/octet (e.g. dev.mc.hypixel.net -> *.mc.hypixel.net, and 192.168.0.1 -> 192.168.0.*). This process
+     *   continues up to the TLD/the highest octet (e.g. *.net, and 192.*). If a matching hash is found within the
+     *   list then the server is blocked by Mojang and true is returned.
+     * @param serverAddress
+     */
+    public async isServerBlocked(serverAddress: string): Promise<boolean> {
+        const hashes = await this.getBlockedServerHashes();
+        const serverNamespaces = this.getServerNamespaces(serverAddress);
+        for(const namespace  of serverNamespaces) {
+            const hash = crypto.createHash('sha1').update(namespace).digest('hex');
+            if(hashes.includes(hash)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Gets all strings used by Minecraft to test if a given server address is blocked. Minecraft tests the server
+     *   address itself along with addresses with wildcards placed in each subdomain location, except for the TLD.
+     *   For example, for the server address "mc.hypixel.net", the returned strings will be:
+     *     - mc.hypixel.net
+     *     - *.hypixel.net
+     *     - *.net
+     *   If an IPv4 address is supplied, the order of wildcards is reversed. For example, for the IP address
+     *   "192.168.1.1", the returned strings will be:
+     *     - 192.168.1.1
+     *     - 192.168.1.*
+     *     - 192.168.*
+     *     - 192.*
+     *   This is a recursive algorithm.
+     * @param serverAddress The server address to test. A valid domain or IPv4 address is expected. Behavior is
+     *   undefined when an invalid server address is provided. IPv6 addresses are not supported.
+     * @returns An array of strings used by Minecraft to test if a Minecraft server address is blocked. The array
+     *   is in order of most specific to least specific.
+     * @protected
+     */
+    protected getServerNamespaces(serverAddress: string): string[] {
+        let parts = serverAddress.split('.');
+        const isIP = MojangAPI.IP_REGEX.test(serverAddress);
+
+        // Breakout condition, top-level domains cannot be replaced with a wild card (i.e., *.net does not become *)
+        if(parts.length <= 2) {
+            return [serverAddress]
+        }
+
+        // IPv4 addresses have their wild cards applied in reverse order of domains. Parts are reversed and then
+        //  reversed again later
+        if(isIP) {
+            parts = parts.reverse();
+        }
+
+        // If this address already has wildcards within it, we want to remove the wildcard and add it to the next level
+        //  up in the domain. Otherwise, we just want to add a wildcard to the bottom level.
+        if(parts[0] === '*') {
+            parts = parts.slice(1);
+        }
+        parts[0] = '*';
+
+        // IPv4 parts were previously reversed, now they need to be reversed again
+        if(isIP) {
+            parts = parts.reverse();
+        }
+
+        return [serverAddress, ...this.getServerNamespaces(parts.join('.'))];
+    }
+
+    protected genHeaders(): Headers {
+        const headers = super.genHeaders();
+        if(this.accessToken) {
+            headers.set("Authorization", `Bearer ${this.accessToken}`);
         }
         return headers;
+    }
+
+    protected parseOptions(options: APIOptions): ParsedOptions<APIOptions> {
+        return this.parseDefaultOptions(options);
     }
 }
