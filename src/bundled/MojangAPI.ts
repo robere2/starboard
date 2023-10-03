@@ -19,9 +19,7 @@ export class MojangAPI extends BaseAPI<APIOptions> {
 
     public async getUuid(name: string): Promise<string | null> {
         // Request Mojang API with the user agent injected if it is set. Otherwise, Bun default is used.
-        const res = await this.options.httpClient.fetch(new Request(`https://api.mojang.com/users/profiles/minecraft/${name}`,  {
-            headers: this.genHeaders()
-        }));
+        const res = await this.options.httpClient.fetch(new Request(`https://api.mojang.com/users/profiles/minecraft/${name}`));
 
         if(res.ok) {
             const json = await res.json();
@@ -34,9 +32,7 @@ export class MojangAPI extends BaseAPI<APIOptions> {
     }
 
     public async getProfile(uuid: string): Promise<MojangProfile | null> {
-        const res = await this.options.httpClient.fetch(new Request(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`, {
-            headers: this.genHeaders()
-        }));
+        const res = await this.options.httpClient.fetch(new Request(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`));
         if(res.ok) {
             const json = await res.json();
             return new MojangProfile(json);
@@ -48,9 +44,7 @@ export class MojangAPI extends BaseAPI<APIOptions> {
     }
 
     public async getBlockedServerHashes(): Promise<string[]> {
-        const res = await this.options.httpClient.fetch(new Request("https://sessionserver.mojang.com/blockedservers", {
-            headers: this.genHeaders()
-        }));
+        const res = await this.options.httpClient.fetch(new Request("https://sessionserver.mojang.com/blockedservers"));
         if(res.ok) {
             return (await res.text()).split('\n');
         } else {
@@ -130,14 +124,6 @@ export class MojangAPI extends BaseAPI<APIOptions> {
         }
 
         return [serverAddress, ...this.getServerNamespaces(parts.join('.'))];
-    }
-
-    protected genHeaders(): Headers {
-        const headers = super.genHeaders();
-        if(this.accessToken) {
-            headers.set("Authorization", `Bearer ${this.accessToken}`);
-        }
-        return headers;
     }
 
     protected parseOptions(options: APIOptions): ParsedOptions<APIOptions> {

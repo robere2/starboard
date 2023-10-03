@@ -1,7 +1,7 @@
 import {HypixelPlayer, HypixelPlayerResponse} from "./HypixelPlayer.ts";
 import {MojangAPI} from "../../MojangAPI.ts";
 import {ParsedOptions, UUID_REGEX} from "../../../util.ts";
-import {HttpClient} from "../../HttpClient.ts";
+import {HttpClient} from "../../http/HttpClient.ts";
 import {BaseAPI} from "../../BaseAPI.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
@@ -23,11 +23,6 @@ export type HypixelAPIOptions = {
      *   percentage (same as providing 0.0) and `false` means disable queueing entirely (same as providing 1.0).
      */
     defer?: boolean | number;
-    /**
-     * The user agent to provide to the Hypixel API servers. Defaults to "Starboard <Version>", e.g. "Starboard v1.0.0".
-     *   If you would like to use Bun's default user agent, set this to null.
-     */
-    userAgent?: string | null;
     /**
      * Custom HTTP client to use for HTTP requests to the Mojang API. If not provided, a default HTTP client will be
      *   used, which simply uses the {@link fetch} function. Custom HTTP clients are particularly useful for
@@ -125,7 +120,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
 
 
     protected genHeaders(): Headers {
-        const headers = super.genHeaders();
+        const headers = new Headers();
         headers.set("API-Key", this.options.apiKey);
         return headers;
     }

@@ -1,6 +1,5 @@
-import {HttpClient} from "./HttpClient.ts";
+import {HttpClient} from "./http/HttpClient.ts";
 import {ParsedOptions} from "../util.ts";
-import packageJson from "../../package.json";
 
 export type APIOptions = {
     /**
@@ -14,11 +13,6 @@ export type APIOptions = {
      *   percentage (same as providing 0.0) and `false` means disable queueing entirely (same as providing 1.0).
      */
     defer?: boolean | number;
-    /**
-     * The user agent to provide to the Hypixel API servers. Defaults to "Starboard <Version>", e.g. "Starboard v1.0.0".
-     *   If you would like to use Bun's default user agent, set this to null.
-     */
-    userAgent?: string | null;
     /**
      * Custom HTTP client to use for HTTP requests to the Mojang API. If not provided, a default HTTP client will be
      *   used, which simply uses the {@link fetch} function. Custom HTTP clients are particularly useful for
@@ -37,19 +31,22 @@ export abstract class BaseAPI<T extends APIOptions> {
 
     protected abstract parseOptions(options: T): ParsedOptions<T>;
 
+    /**
+     * Parse an APIOptions input into an object with default values applied. This is a utility function that can parse
+     *   all the default options found in APIOptions objects for you. Custom values found in classes that extend
+     *   APIOptions can be parsed with {@link parseOptions}. If your implementation of BaseAPI does not have custom
+     *   options (i.e., it uses just a APIOptions object), {@link parseOptions} can just call this function and return
+     *   the returned value.
+     * @param options APIOptions object with potentially undefined property values
+     * @returns ParsedOptions<APIOptions> An object with all the values found in the passed options object, with default
+     *   values applied to all supported properties that are otherwise undefined. This means the returned value is
+     *   guaranteed to have no more undefined configuration values.
+     * @protected
+     */
     protected parseDefaultOptions(options: APIOptions): ParsedOptions<APIOptions> {
         return Object.freeze({
             defer: options.defer ?? 0.0,
-            userAgent: options.userAgent === undefined ? `Starboard v${packageJson.version}` : options.userAgent,
             httpClient: options.httpClient ?? new HttpClient()
         })
-    }
-
-    protected genHeaders(): Headers {
-        const headers = new Headers();
-        if(this.options.userAgent) {
-            headers.set("User-Agent", this.options.userAgent);
-        }
-        return headers;
     }
 }
