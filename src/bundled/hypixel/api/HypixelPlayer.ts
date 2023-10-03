@@ -11,6 +11,7 @@ export class HypixelPlayer {
     public readonly lastLogin: number | null = null;
     public readonly lastLogout: number | null = null;
     public readonly stats: Record<string, any> | null = null;
+    [undocumentedProperties: string]: any
 
     public constructor(uuid: string) {
         if(!UUID_REGEX.test(uuid)) {
