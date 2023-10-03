@@ -3,8 +3,12 @@ import {MojangAPI} from "../../MojangAPI.ts";
 import {ParsedOptions, UUID_REGEX} from "../../../util.ts";
 import {HttpClient} from "../../http/HttpClient.ts";
 import {BaseAPI} from "../../BaseAPI.ts";
+import {HypixelRecentGame, HypixelRecentGamesResponse} from "./HypixelRecentGame.ts";
+import {HypixelStatus, HypixelStatusResponse} from "./HypixelStatus.ts";
+import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
+const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
 
 export type HypixelAPIOptions = {
     /**
@@ -30,6 +34,13 @@ export type HypixelAPIOptions = {
      *   or error handling for HTTP requests.
      */
     httpClient?: HttpClient;
+}
+
+export type HypixelAPIErrorDef = {
+    success: false,
+    cause: string,
+    throttle?: boolean,
+    global?: boolean
 }
 
 /**
@@ -82,15 +93,29 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @returns HypixelPlayer object containing all the data of the player, or null if the player is not found.
      */
     public async getPlayer(uuid: string): Promise<HypixelPlayer | null>;
-    public async getPlayer(nameOrUuid: string, direct: boolean = false): Promise<HypixelPlayer | null> {
+    /**
+     * Retrieve up-to-date data of a specific player, including game stats. If the player is not found, null is
+     *   returned, however this should never happen unless you constructed the HypixelPlayer object yourself. Request
+     *   to API could be delayed depending on the `defer` option provided to the constructor.
+     * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get Hypixel API reference
+     * @param player HypixelPlayer instance with the UUID of the player you're looking for data for.
+     * @throws Error if an invalid Hypixel API key was provided to the constructor.
+     * @throws Error if the HTTP request to the Hypixel API failed
+     * @throws Error if the Hypixel API rate limit has been reached and request deferring was disabled in the
+     *   constructor. Can occur if the API has an emergency global throttle applied as well.
+     * @returns HypixelPlayer object containing all the data of the player, or null if the player is not found.
+     */
+    public async getPlayer(player: HypixelPlayer): Promise<HypixelPlayer | null>;
+    public async getPlayer(player: string | HypixelPlayer, direct: boolean = false): Promise<HypixelPlayer | null> {
         // Hypixel API request is generated based on the two provided inputs
         let hypixelRequest: Request;
-        if(UUID_REGEX.test(nameOrUuid)) {
-            hypixelRequest = new Request(`${HYPIXEL_API_URL}/player?uuid=${nameOrUuid}`, {
+        if(player instanceof HypixelPlayer || UUID_REGEX.test(player)) {
+            const uuid = player instanceof HypixelPlayer ? player.uuid : player;
+            hypixelRequest = new Request(`${HYPIXEL_API_URL}/player?uuid=${uuid}`, {
                 headers: this.genHeaders()
             });
         } else {
-            const name = nameOrUuid; // Rename variable to make code clearer
+            const name = player; // Rename variable to make code clearer
             if(!direct) {
                 const uuid = await this.mojangApi.getUuid(name);
                 if(uuid === null) {
@@ -118,6 +143,70 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
+    public async getRecentGames(uuid: string): Promise<HypixelRecentGame[]>;
+    public async getRecentGames(player: HypixelPlayer): Promise<HypixelRecentGame[]>;
+    public async getRecentGames(player: string | HypixelPlayer): Promise<HypixelRecentGame[]> {
+        const uuid = player instanceof HypixelPlayer ? player.uuid : player;
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/recentgames?uuid=${uuid}`, {
+            headers: this.genHeaders()
+        })
+        const json: HypixelRecentGamesResponse = await res.json();
+        if(json.success) {
+            return json.games;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            })
+        }
+    }
+
+    public async getStatus(uuid: string): Promise<HypixelStatus>;
+    public async getStatus(player: HypixelPlayer): Promise<HypixelStatus>;
+    public async getStatus(player: string | HypixelPlayer): Promise<HypixelStatus> {
+        const uuid = player instanceof HypixelPlayer ? player.uuid : player;
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/status?uuid=${uuid}`, {
+            headers: this.genHeaders()
+        })
+        const json: HypixelStatusResponse = await res.json();
+        if(json.success) {
+            return json.session;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            })
+        }
+    }
+
+    public async getGuild(id: string): Promise<HypixelGuild>;
+    public async getGuild(name: string): Promise<HypixelGuild>;
+    public async getGuild(player: HypixelPlayer): Promise<HypixelGuild>;
+    public async getGuild(playerUuid: string): Promise<HypixelGuild>;
+    public async getGuild(input: string | HypixelPlayer): Promise<HypixelGuild> {
+        // Guilds can be searched by ID, name, or member UUID. All three of these are strings, but we can pretty safely
+        //   (although not definitively) assume which format is being used based on the contents of the string.
+        let paramType: "id" | "name" | "player";
+        if(input instanceof HypixelPlayer || UUID_REGEX.test(input)) {
+            paramType = "player";
+            input = input instanceof HypixelPlayer ? input.uuid : input;
+        } else if(MONGODB_ID_REGEX.test(input)) {
+            paramType = "id";
+        } else {
+            paramType = "name";
+        }
+
+
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/guild?${paramType}=${input}`, {
+            headers: this.genHeaders()
+        })
+        const json: HypixelGuildResponse = await res.json();
+        if(json.success) {
+            return json.guild;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            })
+        }
+    }
 
     protected genHeaders(): Headers {
         const headers = new Headers();

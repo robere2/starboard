@@ -1,4 +1,5 @@
 import {UUID_REGEX} from "../../../util.ts";
+import {HypixelAPIErrorDef} from "./HypixelAPI.ts";
 
 export class HypixelPlayer {
     public readonly uuid: string;
@@ -13,18 +14,31 @@ export class HypixelPlayer {
     public readonly stats: Record<string, any> | null = null;
     [undocumentedProperties: string]: any
 
-    public constructor(uuid: string) {
-        if(!UUID_REGEX.test(uuid)) {
-            throw new Error('Invalid UUID');
+    public constructor(data: HypixelPlayer);
+    public constructor(uuid: string);
+    public constructor(player: string | HypixelPlayer) {
+        if(player instanceof HypixelPlayer) {
+            this.uuid = player.uuid;
+            this.displayname = player.displayname;
+            this.rank = player.rank;
+            this.packageRank = player.packageRank;
+            this.newPackageRank = player.newPackageRank;
+            this.monthlyPackageRank = player.monthlyPackageRank;
+            this.firstLogin = player.firstLogin;
+            this.lastLogin = player.lastLogin;
+            this.lastLogout = player.lastLogout;
+            this.stats = player.stats;
+            Object.assign(this, player) // Copy all undocumented properties
+        } else {
+            if(!UUID_REGEX.test(player)) {
+                throw new Error('Invalid UUID');
+            }
+            this.uuid = player;
         }
-        this.uuid = uuid;
     }
 }
 
 export type HypixelPlayerResponse = {
     success: true;
     player: HypixelPlayer;
-} | {
-    success: false;
-    cause: string;
-}
+} | HypixelAPIErrorDef
