@@ -11,6 +11,7 @@ import {HypixelAchievementsResponse, HypixelGameAchievements} from "./resources/
 import {HypixelChallenge, HypixelChallengeResponse} from "./resources/HypixelChallenge.ts";
 import {HypixelQuest, HypixelQuestResponse} from "./resources/HypixelQuest.ts";
 import {HypixelGuildAchievements, HypixelGuildAchievementsResponse} from "./resources/HypixelGuildAchievements.ts";
+import {HypixelPet, HypixelPetRarity, HypixelPetsResponse} from "./resources/HypixelPet.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -340,6 +341,56 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 one_time: json?.one_time ?? {},
                 tiered: json.tiered ?? {}
             })
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getPets(): Promise<HypixelPet[]> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/vanity/pets`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelPetsResponse = await res.json();
+        if(json.success) {
+            if(!json.types) {
+                return [];
+            }
+
+            const pets: HypixelPet[] = [];
+            for(const pet of json.types) {
+                if(!pet) {
+                    continue;
+                }
+                pets.push(new HypixelPet(pet));
+            }
+            return pets;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getPetRarities(): Promise<HypixelPetRarity[]> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/vanity/pets`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelPetsResponse = await res.json();
+        if(json.success) {
+            if(!json.rarities) {
+                return [];
+            }
+
+            const rarities: HypixelPetRarity[] = [];
+            for(const rarity of json.rarities) {
+                if(!rarity || !rarity.name || !rarity.color) {
+                    continue;
+                }
+                rarities.push(rarity as HypixelPetRarity);
+            }
+            return rarities;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
