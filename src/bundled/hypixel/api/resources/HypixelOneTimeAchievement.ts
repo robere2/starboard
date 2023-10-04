@@ -1,5 +1,5 @@
-import {HypixelAPIValue} from "./HypixelAPI.ts";
-import {HypixelParseError} from "./HypixelParseError.ts";
+import {HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelParseError} from "../HypixelParseError.ts";
 
 export class HypixelOneTimeAchievement {
     public points: number;

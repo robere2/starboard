@@ -1,5 +1,5 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
-import {HypixelParseError} from "./HypixelParseError.ts";
+import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelParseError} from "../HypixelParseError.ts";
 
 export class HypixelGame {
     public id: number;

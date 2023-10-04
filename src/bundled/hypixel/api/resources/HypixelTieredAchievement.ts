@@ -1,5 +1,5 @@
-import {HypixelAPIValue} from "./HypixelAPI.ts";
-import {HypixelParseError} from "./HypixelParseError.ts";
+import {HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelParseError} from "../HypixelParseError.ts";
 
 export type HypixelAchievementTier = { tier: number, points: number, amount: number };
 

@@ -1,4 +1,4 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
+import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelTieredAchievement} from "./HypixelTieredAchievement.ts";
 import {HypixelOneTimeAchievement} from "./HypixelOneTimeAchievement.ts";
 

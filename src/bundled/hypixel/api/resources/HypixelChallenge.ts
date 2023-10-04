@@ -1,9 +1,10 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
-import {HypixelParseError} from "./HypixelParseError.ts";
+import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelParseError} from "../HypixelParseError.ts";
 
 export type HypixelChallengeReward = {
     type: string;
-    amount: number;
+    amount?: number;
+    package?: string;
 }
 
 export class HypixelChallenge {
@@ -27,7 +28,7 @@ export class HypixelChallenge {
         }
         this.rewards = [];
         this.rewards.push(...input.rewards.reduce<HypixelChallengeReward[]>((acc, reward) => {
-            if(reward && reward.type && reward.amount) {
+            if(reward && reward.type) {
                 acc.push(reward as HypixelChallengeReward)
             }
             return acc;

@@ -6,9 +6,10 @@ import {BaseAPI} from "../../BaseAPI.ts";
 import {HypixelRecentGame, HypixelRecentGamesResponse} from "./HypixelRecentGame.ts";
 import {HypixelSession, HypixelStatusResponse} from "./HypixelSession.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
-import {HypixelGame, HypixelGamesResponse} from "./HypixelGame.ts";
-import {HypixelAchievementsResponse, HypixelGameAchievements} from "./HypixelGameAchievements.ts";
-import {HypixelChallenge, HypixelChallengeResponse} from "./HypixelChallenge.ts";
+import {HypixelGame, HypixelGamesResponse} from "./resources/HypixelGame.ts";
+import {HypixelAchievementsResponse, HypixelGameAchievements} from "./resources/HypixelGameAchievements.ts";
+import {HypixelChallenge, HypixelChallengeResponse} from "./resources/HypixelChallenge.ts";
+import {HypixelQuest, HypixelQuestResponse} from "./resources/HypixelQuest.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -295,6 +296,32 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             }
 
             return typedChallenges;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getQuests(): Promise<Record<string, HypixelQuest[]>> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/quests`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelQuestResponse = await res.json();
+        if(json.success) {
+            if(!json.quests) {
+                return {};
+            }
+
+            // Hypixel API response is not actual HypixelQuest objects. HypixelQuest constructor performs type checks
+            const typedQuests = json.quests as Record<string, HypixelQuest[]>
+            for(const game in typedQuests) {
+                for(let i = 0; i < typedQuests[game].length; i++) {
+                    typedQuests[game][i] = new HypixelQuest(typedQuests[game][i]);
+                }
+            }
+
+            return typedQuests;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
