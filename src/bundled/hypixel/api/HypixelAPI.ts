@@ -10,6 +10,7 @@ import {HypixelGame, HypixelGamesResponse} from "./resources/HypixelGame.ts";
 import {HypixelAchievementsResponse, HypixelGameAchievements} from "./resources/HypixelGameAchievements.ts";
 import {HypixelChallenge, HypixelChallengeResponse} from "./resources/HypixelChallenge.ts";
 import {HypixelQuest, HypixelQuestResponse} from "./resources/HypixelQuest.ts";
+import {HypixelGuildAchievements, HypixelGuildAchievementsResponse} from "./resources/HypixelGuildAchievements.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -322,6 +323,23 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             }
 
             return typedQuests;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getGuildAchievements(): Promise<HypixelGuildAchievements> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/guilds/achievements`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelGuildAchievementsResponse = await res.json();
+        if(json.success) {
+            return new HypixelGuildAchievements({
+                one_time: json?.one_time ?? {},
+                tiered: json.tiered ?? {}
+            })
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
