@@ -1,19 +1,18 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
 
-export class HypixelRecentGame {
-    date?: number;
+export class HypixelSession {
+    online?: boolean;
     gameType?: string;
     mode?: string;
     map?: string;
-    ended?: number;
     [undocumentedProperties: string]: any
 
-    public constructor(input: HypixelAPIValue<HypixelRecentGame>) {
+    public constructor(input: HypixelAPIValue<HypixelSession>) {
         Object.assign(this, input); // Copy undocumented and non-required properties
     }
 }
 
-export type HypixelRecentGamesResponse = HypixelAPIResponse<{
+export type HypixelStatusResponse = HypixelAPIResponse<{
     uuid: string;
-    games: HypixelRecentGame[];
-}>
+    session: HypixelSession;
+}>;

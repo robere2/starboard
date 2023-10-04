@@ -4,7 +4,7 @@ import {ParsedOptions, UUID_REGEX} from "../../../util.ts";
 import {HttpClient} from "../../http/HttpClient.ts";
 import {BaseAPI} from "../../BaseAPI.ts";
 import {HypixelRecentGame, HypixelRecentGamesResponse} from "./HypixelRecentGame.ts";
-import {HypixelStatus, HypixelStatusResponse} from "./HypixelStatus.ts";
+import {HypixelSession, HypixelStatusResponse} from "./HypixelSession.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
 import {HypixelGame, HypixelGamesResponse} from "./HypixelGame.ts";
 
@@ -43,6 +43,14 @@ export type HypixelAPIErrorDef = {
     throttle?: boolean,
     global?: boolean
 }
+
+export type HypixelAPIValue<T> = {
+    readonly [P in keyof T]?: HypixelAPIValue<T[P]>;
+}
+
+export type HypixelAPIResponse<T> = ({
+    success: true;
+} & HypixelAPIValue<T>) | HypixelAPIErrorDef;
 
 /**
  * Interface for requesting data from the Hypixel API. Caching is not built-in.
@@ -136,7 +144,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         const res = await this.options.httpClient.fetch(hypixelRequest);
         const json: HypixelPlayerResponse = await res.json();
         if(json.success) {
-            return json.player;
+            return new HypixelPlayer(json.player ?? {});
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -153,7 +161,15 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         })
         const json: HypixelRecentGamesResponse = await res.json();
         if(json.success) {
-            return json.games;
+            if(!json.games) {
+                return [];
+            }
+            if(!Array.isArray(json.games)) {
+                throw new Error("Hypixel API Error", {
+                    cause: "games is not an array"
+                })
+            }
+            return json.games.map(game => new HypixelRecentGame(game));
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -161,16 +177,16 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
-    public async getStatus(uuid: string): Promise<HypixelStatus>;
-    public async getStatus(player: HypixelPlayer): Promise<HypixelStatus>;
-    public async getStatus(player: string | HypixelPlayer): Promise<HypixelStatus> {
+    public async getStatus(uuid: string): Promise<HypixelSession | null>;
+    public async getStatus(player: HypixelPlayer): Promise<HypixelSession | null>;
+    public async getStatus(player: string | HypixelPlayer): Promise<HypixelSession | null> {
         const uuid = player instanceof HypixelPlayer ? player.uuid : player;
         const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/status?uuid=${uuid}`, {
             headers: this.genHeaders()
         })
         const json: HypixelStatusResponse = await res.json();
         if(json.success) {
-            return json.session;
+            return json.session ? new HypixelSession(json.session) : null;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -178,11 +194,11 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
-    public async getGuild(id: string): Promise<HypixelGuild>;
-    public async getGuild(name: string): Promise<HypixelGuild>;
-    public async getGuild(player: HypixelPlayer): Promise<HypixelGuild>;
-    public async getGuild(playerUuid: string): Promise<HypixelGuild>;
-    public async getGuild(input: string | HypixelPlayer): Promise<HypixelGuild> {
+    public async getGuild(id: string): Promise<HypixelGuild | null>;
+    public async getGuild(name: string): Promise<HypixelGuild | null>;
+    public async getGuild(player: HypixelPlayer): Promise<HypixelGuild | null>;
+    public async getGuild(playerUuid: string): Promise<HypixelGuild | null>;
+    public async getGuild(input: string | HypixelPlayer): Promise<HypixelGuild | null> {
         // Guilds can be searched by ID, name, or member UUID. All three of these are strings, but we can pretty safely
         //   (although not definitively) assume which format is being used based on the contents of the string.
         let paramType: "id" | "name" | "player";
@@ -201,7 +217,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         })
         const json: HypixelGuildResponse = await res.json();
         if(json.success) {
-            return json.guild;
+            return json.guild ? new HypixelGuild(json.guild) : null;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -215,7 +231,17 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         });
         const json: HypixelGamesResponse = await res.json();
         if(json.success) {
-            return json.games ?? {};
+            if(!json.games) {
+                return {};
+            }
+
+            // Hypixel API response is not actual HypixelGame objects. HypixelGame constructor performs type checks
+            const typedGames = json.games as Record<string, HypixelGame>
+            for(const prop in typedGames) {
+                typedGames[prop] = new HypixelGame(typedGames);
+            }
+
+            return typedGames;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
