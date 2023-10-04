@@ -6,6 +6,7 @@ import {BaseAPI} from "../../BaseAPI.ts";
 import {HypixelRecentGame, HypixelRecentGamesResponse} from "./HypixelRecentGame.ts";
 import {HypixelStatus, HypixelStatusResponse} from "./HypixelStatus.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
+import {HypixelGame, HypixelGamesResponse} from "./HypixelGame.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -205,6 +206,20 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
             })
+        }
+    }
+
+    public async getGames(): Promise<Record<string, HypixelGame>> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/games`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelGamesResponse = await res.json();
+        if(json.success) {
+            return json.games ?? {};
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
         }
     }
 
