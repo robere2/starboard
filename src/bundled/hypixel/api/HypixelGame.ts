@@ -11,6 +11,7 @@ export class HypixelGame {
     [undocumentedProperties: string]: any
 
     public constructor(input: HypixelAPIValue<HypixelGame>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.id) {
             throw new HypixelParseError("Game ID cannot be null", input)
         }
@@ -23,7 +24,6 @@ export class HypixelGame {
         this.id = input.id;
         this.name = input.name;
         this.databaseName = input.databaseName;
-        Object.assign(this, input); // Copy undocumented and non-required properties
     }
 }
 

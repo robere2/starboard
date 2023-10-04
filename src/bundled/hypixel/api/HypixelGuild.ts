@@ -6,11 +6,11 @@ export class HypixelGuild {
     [undocumentedProperties: string]: any
 
     public constructor(input: HypixelAPIValue<HypixelGuild>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input._id) {
             throw new HypixelParseError("Guild ID is required", input)
         }
         this._id = input._id;
-        Object.assign(this, input); // Copy undocumented and non-required properties
     }
 }
 

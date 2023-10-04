@@ -15,12 +15,11 @@ export class HypixelPlayer {
     [undocumentedProperties: string]: any
 
     public constructor(input: HypixelAPIValue<HypixelPlayer>) {
-
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.uuid) {
             throw new HypixelParseError("Player UUID cannot be null", input)
         }
         this.uuid = input.uuid;
-        Object.assign(this, input); // Copy undocumented and non-required properties
     }
 }
 

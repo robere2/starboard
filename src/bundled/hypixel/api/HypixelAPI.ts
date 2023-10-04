@@ -7,6 +7,7 @@ import {HypixelRecentGame, HypixelRecentGamesResponse} from "./HypixelRecentGame
 import {HypixelSession, HypixelStatusResponse} from "./HypixelSession.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
 import {HypixelGame, HypixelGamesResponse} from "./HypixelGame.ts";
+import {HypixelAchievementsResponse, HypixelGameAchievements} from "./HypixelGameAchievements.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -242,6 +243,30 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             }
 
             return typedGames;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getAchievements(): Promise<Record<string, HypixelGameAchievements>> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/achievements`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelAchievementsResponse = await res.json();
+        if(json.success) {
+            if(!json.achievements) {
+                return {};
+            }
+
+            // Hypixel API response is not actual HypixelGameAchievements objects. HypixelGameAchievements constructor performs type checks
+            const typedAchievements = json.achievements as Record<string, HypixelGameAchievements>
+            for(const prop in typedAchievements) {
+                typedAchievements[prop] = new HypixelGameAchievements(typedAchievements);
+            }
+
+            return typedAchievements;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
