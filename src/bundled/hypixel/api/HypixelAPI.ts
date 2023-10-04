@@ -8,6 +8,7 @@ import {HypixelSession, HypixelStatusResponse} from "./HypixelSession.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
 import {HypixelGame, HypixelGamesResponse} from "./HypixelGame.ts";
 import {HypixelAchievementsResponse, HypixelGameAchievements} from "./HypixelGameAchievements.ts";
+import {HypixelChallenge, HypixelChallengeResponse} from "./HypixelChallenge.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -239,7 +240,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             // Hypixel API response is not actual HypixelGame objects. HypixelGame constructor performs type checks
             const typedGames = json.games as Record<string, HypixelGame>
             for(const prop in typedGames) {
-                typedGames[prop] = new HypixelGame(typedGames);
+                typedGames[prop] = new HypixelGame(typedGames[prop]);
             }
 
             return typedGames;
@@ -263,10 +264,37 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             // Hypixel API response is not actual HypixelGameAchievements objects. HypixelGameAchievements constructor performs type checks
             const typedAchievements = json.achievements as Record<string, HypixelGameAchievements>
             for(const prop in typedAchievements) {
-                typedAchievements[prop] = new HypixelGameAchievements(typedAchievements);
+                typedAchievements[prop] = new HypixelGameAchievements(typedAchievements[prop]);
             }
 
             return typedAchievements;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getChallenges(): Promise<Record<string, HypixelChallenge[]>> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/challenges`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelChallengeResponse = await res.json();
+        if(json.success) {
+            if(!json.challenges) {
+                return {};
+            }
+
+            // Hypixel API response is not actual HypixelChallenge objects. HypixelChallenge constructor performs type checks
+            const typedChallenges = json.challenges as Record<string, HypixelChallenge[]>
+            for(const game in typedChallenges) {
+
+                for(let i = 0; i < typedChallenges[game].length; i++) {
+                    typedChallenges[game][i] = new HypixelChallenge(typedChallenges[game][i]);
+                }
+            }
+
+            return typedChallenges;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause

@@ -5,8 +5,10 @@ export class HypixelOneTimeAchievement {
     public points: number;
     public name: string;
     public description: string;
-    public gamePercentUnlocked: number;
-    public globalPercentUnlocked: number;
+    public gamePercentUnlocked?: number;
+    public globalPercentUnlocked?: number;
+    public legacy?: boolean;
+    public secret?: boolean;
     [undocumentedProperties: string]: any;
 
     constructor(input: HypixelAPIValue<HypixelOneTimeAchievement>) {
@@ -23,13 +25,5 @@ export class HypixelOneTimeAchievement {
             throw new HypixelParseError("Description cannot be null", input)
         }
         this.description = input.description;
-        if(input.gamePercentUnlocked == null) {
-            throw new HypixelParseError("Game percent unlocked cannot be null", input)
-        }
-        this.gamePercentUnlocked = input.gamePercentUnlocked;
-        if(input.globalPercentUnlocked == null) {
-            throw new HypixelParseError("Global percent unlocked cannot be null", input)
-        }
-        this.globalPercentUnlocked = input.globalPercentUnlocked;
     }
 }
