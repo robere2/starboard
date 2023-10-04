@@ -12,6 +12,7 @@ import {HypixelChallenge, HypixelChallengeResponse} from "./resources/HypixelCha
 import {HypixelQuest, HypixelQuestResponse} from "./resources/HypixelQuest.ts";
 import {HypixelGuildAchievements, HypixelGuildAchievementsResponse} from "./resources/HypixelGuildAchievements.ts";
 import {HypixelPet, HypixelPetRarity, HypixelPetsResponse} from "./resources/HypixelPet.ts";
+import {HypixelCompanion, HypixelCompanionRarity, HypixelCompanionsResponse} from "./resources/HypixelCompanion.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -389,6 +390,56 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                     continue;
                 }
                 rarities.push(rarity as HypixelPetRarity);
+            }
+            return rarities;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getCompanions(): Promise<HypixelCompanion[]> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/vanity/companions`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelCompanionsResponse = await res.json();
+        if(json.success) {
+            if(!json.types) {
+                return [];
+            }
+
+            const companions: HypixelCompanion[] = [];
+            for(const companion of json.types) {
+                if(!companion) {
+                    continue;
+                }
+                companions.push(new HypixelCompanion(companion));
+            }
+            return companions;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getCompanionRarities(): Promise<HypixelCompanionRarity[]> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/vanity/companions`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelCompanionsResponse = await res.json();
+        if(json.success) {
+            if(!json.rarities) {
+                return [];
+            }
+
+            const rarities: HypixelCompanionRarity[] = [];
+            for(const rarity of json.rarities) {
+                if(!rarity || !rarity.name || !rarity.color) {
+                    continue;
+                }
+                rarities.push(rarity as HypixelCompanionRarity);
             }
             return rarities;
         } else {
