@@ -3,7 +3,7 @@ import {ParsedOptions} from "../../../../util.ts";
 import {HypixelGame, HypixelGamesResponse} from "./HypixelGame.ts";
 import {HypixelAchievementsResponse, HypixelGameAchievements} from "./HypixelGameAchievements.ts";
 import {HypixelChallenge, HypixelChallengeResponse} from "./HypixelChallenge.ts";
-import {HypixelQuest, HypixelQuestResponse} from "./HypixelQuest.ts";
+import {HypixelQuest, HypixelQuestsResponse} from "./HypixelQuest.ts";
 import {HypixelGuildAchievements, HypixelGuildAchievementsResponse} from "./HypixelGuildAchievements.ts";
 import {HypixelPet, HypixelPetsResponse} from "./HypixelPet.ts";
 import {HypixelCompanion, HypixelCompanionsResponse} from "./HypixelCompanion.ts";
@@ -15,27 +15,186 @@ import {HypixelSkyBlockElection, HypixelSkyBlockElectionResponse} from "./skyblo
 import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelSkyBlockBingo, HypixelSkyBlockBingoResponse} from "./skyblock/HypixelSkyBlockBingo.ts";
 import {HypixelRarity} from "./HypixelRarity.ts";
+import {HypixelAPIValue} from "../HypixelAPI.ts";
+import {ResourcesNotReadyError} from "./ResourcesNotReadyError.ts";
+import crypto from "crypto";
 
 const HYPIXEL_RESOURCES_URL = "https://api.hypixel.net/resources";
 export class HypixelResources extends BaseAPI<APIOptions> {
 
+    // Resources get their own ID so children can reference them later without having to store them as a property. This
+    //   prevents circular references, allowing you to log/serialize child values.
+    public readonly id: string = crypto.randomUUID();
+    private _games?: Record<string, HypixelGame>
+    private _achievements?: Record<string, HypixelGameAchievements>
+    private _challenges?: Record<string, HypixelChallenge[]>
+    private _quests?: Record<string, HypixelQuest[]>
+    private _guildAchievements?: HypixelGuildAchievements
+    private _pets?: HypixelPet[]
+    private _petRarities?: HypixelRarity[]
+    private _companions?: HypixelCompanion[]
+    private _companionRarities?: HypixelRarity[]
+    private _skyBlockCollections?: Record<string, HypixelSkyBlockCollection>
+    private _skyBlockSkills?: Record<string, HypixelSkyBlockSkill>
+    private _skyBlockItems?: HypixelSkyBlockItem[]
+    private _skyBlockCurrentMayor?: HypixelSkyBlockMayor
+    private _skyBlockCurrentElection?: HypixelSkyBlockElection
+    private _skyBlockBingo?: HypixelSkyBlockBingo
 
+    private constructor(options: APIOptions) {
+        super(options);
+    }
 
-    public async getGames(): Promise<Record<string, HypixelGame>> {
+    public static async create(options?: APIOptions): Promise<HypixelResources> {
+        const resources = new HypixelResources(options ?? {});
+        resources._games = await resources.fetchGames();
+        resources._achievements = await resources.fetchAchievements();
+        resources._challenges = await resources.fetchChallenges();
+        resources._quests = await resources.fetchQuests();
+        resources._guildAchievements = await resources.fetchGuildAchievements();
+        resources._pets = await resources.fetchPets();
+        resources._petRarities = await resources.fetchPetRarities();
+        resources._companions = await resources.fetchCompanions();
+        resources._companionRarities = await resources.fetchCompanionRarities();
+        resources._skyBlockCollections = await resources.fetchSkyBlockCollections();
+        resources._skyBlockSkills = await resources.fetchSkyBlockSkills();
+        resources._skyBlockItems = await resources.fetchSkyBlockItems();
+        resources._skyBlockCurrentMayor = await resources.fetchCurrentSkyBlockMayor();
+        resources._skyBlockCurrentElection = await resources.fetchCurrentSkyBlockElection();
+        resources._skyBlockBingo = await resources.fetchSkyBlockBingo();
+        return resources;
+    }
+
+    public get games(): Readonly<Record<string, HypixelGame>> {
+        if(!this._games) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._games;
+    }
+
+    public get achievements(): Readonly<Record<string, HypixelGameAchievements>> {
+        if(!this._achievements) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._achievements;
+    }
+
+    public get challenges(): Readonly<Record<string, HypixelChallenge[]>> {
+        if(!this._challenges) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._challenges;
+    }
+
+    public get quests(): Readonly<Record<string, HypixelQuest[]>> {
+        if(!this._quests) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._quests;
+    }
+
+    public get guildAchievements(): Readonly<HypixelGuildAchievements> {
+        if(!this._guildAchievements) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._guildAchievements;
+    }
+
+    public get pets(): Readonly<HypixelPet[]> {
+        if(!this._pets) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._pets;
+    }
+
+    public get petRarities(): Readonly<HypixelRarity[]> {
+        if(!this._petRarities) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._petRarities;
+    }
+
+    public get companions(): Readonly<HypixelCompanion[]> {
+        if(!this._companions) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._companions;
+    }
+
+    public get companionRarities(): Readonly<HypixelRarity[]> {
+        if(!this._companionRarities) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._companionRarities;
+    }
+
+    public get skyBlockCollections(): Readonly<Record<string, HypixelSkyBlockCollection>> {
+        if(!this._skyBlockCollections) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._skyBlockCollections;
+    }
+
+    public get skyBlockSkills(): Readonly<Record<string, HypixelSkyBlockSkill>> {
+        if(!this._skyBlockSkills) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._skyBlockSkills;
+    }
+
+    public get skyBlockItems(): Readonly<HypixelSkyBlockItem[]> {
+        if(!this._skyBlockItems) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._skyBlockItems;
+    }
+
+    public get skyBlockCurrentMayor(): Readonly<HypixelSkyBlockMayor> {
+        if(!this._skyBlockCurrentMayor) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._skyBlockCurrentMayor;
+    }
+
+    public get skyBlockCurrentElection(): Readonly<HypixelSkyBlockElection> {
+        if(!this._skyBlockCurrentElection) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._skyBlockCurrentElection ?? {};
+    }
+
+    public get skyBlockBingo(): Readonly<HypixelSkyBlockBingo> {
+        if(!this._skyBlockBingo) {
+            throw new ResourcesNotReadyError()
+        }
+        return this._skyBlockBingo ?? {};
+    }
+
+    public async fetchGames(raw?: false): Promise<Record<string, HypixelGame>>;
+    public async fetchGames(raw?: true): Promise<HypixelGamesResponse>;
+    public async fetchGames(raw = false): Promise<Record<string, HypixelGame> | HypixelGamesResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/games`);
         const json: HypixelGamesResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.games) {
                 return {};
             }
 
             // Hypixel API response is not actual HypixelGame objects. HypixelGame constructor performs type checks
-            const typedGames = json.games as Record<string, HypixelGame>
-            for(const prop in typedGames) {
-                typedGames[prop] = new HypixelGame(typedGames[prop]);
+            const games: Record<string, HypixelGame> = {};
+            for(const prop in json.games) {
+                if(json.games[prop] == null) {
+                    continue;
+                }
+                games[prop] = new HypixelGame(json.games[prop] as HypixelAPIValue<HypixelGame>, this);
             }
 
-            return typedGames;
+            return games;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -43,21 +202,31 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getAchievements(): Promise<Record<string, HypixelGameAchievements>> {
+    public async fetchAchievements(raw?: false): Promise<Record<string, HypixelGameAchievements>>;
+    public async fetchAchievements(raw?: true): Promise<HypixelAchievementsResponse>;
+    public async fetchAchievements(raw = false): Promise<Record<string, HypixelGameAchievements> | HypixelAchievementsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/achievements`);
         const json: HypixelAchievementsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.achievements) {
                 return {};
             }
 
             // Hypixel API response is not actual HypixelGameAchievements objects. HypixelGameAchievements constructor performs type checks
-            const typedAchievements = json.achievements as Record<string, HypixelGameAchievements>
-            for(const prop in typedAchievements) {
-                typedAchievements[prop] = new HypixelGameAchievements(typedAchievements[prop]);
+            const achievemenachievementssObj: Record<string, HypixelGameAchievements> = {}
+            for(const prop in achievemenachievementssObj) {
+                if(json.achievements[prop] == null) {
+                    continue;
+                }
+                achievemenachievementssObj[prop] = new HypixelGameAchievements(json.achievements[prop] as HypixelAPIValue<HypixelGameAchievements>);
             }
 
-            return typedAchievements;
+            return achievemenachievementssObj;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -65,24 +234,39 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getChallenges(): Promise<Record<string, HypixelChallenge[]>> {
+    public async fetchChallenges(raw?: false): Promise<Record<string, HypixelChallenge[]>>;
+    public async fetchChallenges(raw?: true): Promise<HypixelChallengeResponse>;
+    public async fetchChallenges(raw = false): Promise<Record<string, HypixelChallenge[]> | HypixelChallengeResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/challenges`);
         const json: HypixelChallengeResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.challenges) {
                 return {};
             }
 
             // Hypixel API response is not actual HypixelChallenge objects. HypixelChallenge constructor performs type checks
-            const typedChallenges = json.challenges as Record<string, HypixelChallenge[]>
-            for(const game in typedChallenges) {
-
-                for(let i = 0; i < typedChallenges[game].length; i++) {
-                    typedChallenges[game][i] = new HypixelChallenge(typedChallenges[game][i]);
+            const challenges: Record<string, HypixelChallenge[]> = {}
+            for(const game in json.challenges) {
+                if(json.challenges[game] == null) {
+                    continue;
                 }
+                const gameChallengesInput: HypixelAPIValue<HypixelChallenge>[] = json.challenges[game] as HypixelAPIValue<HypixelChallenge>[];
+                const gameChallenges: HypixelChallenge[] = [];
+                for(let i = 0; i < gameChallengesInput.length; i++) {
+                    if(gameChallengesInput[i] == null) {
+                        continue;
+                    }
+                    gameChallenges[i] = new HypixelChallenge(gameChallengesInput[i]);
+                }
+                challenges[game] = gameChallenges;
             }
 
-            return typedChallenges;
+            return challenges;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -90,23 +274,39 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getQuests(): Promise<Record<string, HypixelQuest[]>> {
+    public async fetchQuests(raw?:  false): Promise<Record<string, HypixelQuest[]>>;
+    public async fetchQuests(raw?: true): Promise<HypixelQuestsResponse>;
+    public async fetchQuests(raw = false): Promise<Record<string, HypixelQuest[]> | HypixelQuestsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/quests`);
-        const json: HypixelQuestResponse = await res.json();
+        const json: HypixelQuestsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.quests) {
                 return {};
             }
 
             // Hypixel API response is not actual HypixelQuest objects. HypixelQuest constructor performs type checks
-            const typedQuests = json.quests as Record<string, HypixelQuest[]>
-            for(const game in typedQuests) {
-                for(let i = 0; i < typedQuests[game].length; i++) {
-                    typedQuests[game][i] = new HypixelQuest(typedQuests[game][i]);
+            const quests: Record<string, HypixelQuest[]> = {}
+            for(const game in json.quests) {
+                if(json.quests[game] == null) {
+                    continue;
                 }
+                const gameQuestsInput: HypixelAPIValue<HypixelQuest>[] = json.quests[game] as HypixelAPIValue<HypixelQuest>[];
+                const gameQuests: HypixelQuest[] = [];
+                for(let i = 0; i < gameQuestsInput.length; i++) {
+                    if(gameQuestsInput[i] == null) {
+                        continue;
+                    }
+                    gameQuests[i] = new HypixelQuest(gameQuestsInput[i]);
+                }
+                quests[game] = gameQuests;
             }
 
-            return typedQuests;
+            return quests;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -114,9 +314,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getGuildAchievements(): Promise<HypixelGuildAchievements> {
+    public async fetchGuildAchievements(raw?: false): Promise<HypixelGuildAchievements>;
+    public async fetchGuildAchievements(raw?: true): Promise<HypixelGuildAchievementsResponse>;
+    public async fetchGuildAchievements(raw = false): Promise<HypixelGuildAchievements | HypixelGuildAchievementsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/guilds/achievements`);
         const json: HypixelGuildAchievementsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             return new HypixelGuildAchievements({
                 one_time: json?.one_time ?? {},
@@ -129,9 +336,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getPets(): Promise<HypixelPet[]> {
+    public async fetchPets(raw?: false): Promise<HypixelPet[]>;
+    public async fetchPets(raw?: true): Promise<HypixelPetsResponse>;
+    public async fetchPets(raw = false): Promise<HypixelPet[] | HypixelPetsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/vanity/pets`);
         const json: HypixelPetsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.types) {
                 return [];
@@ -152,9 +366,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getPetRarities(): Promise<HypixelRarity[]> {
+    public async fetchPetRarities(raw?: false): Promise<HypixelRarity[]>;
+    public async fetchPetRarities(raw?: true): Promise<HypixelPetsResponse>;
+    public async fetchPetRarities(raw = false): Promise<HypixelRarity[] | HypixelPetsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/vanity/pets`);
         const json: HypixelPetsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.rarities) {
                 return [];
@@ -175,9 +396,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getCompanions(): Promise<HypixelCompanion[]> {
+    public async fetchCompanions(raw?: false): Promise<HypixelCompanion[]>;
+    public async fetchCompanions(raw?: true): Promise<HypixelCompanionsResponse>;
+    public async fetchCompanions(raw = false): Promise<HypixelCompanion[] | HypixelCompanionsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/vanity/companions`);
         const json: HypixelCompanionsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.types) {
                 return [];
@@ -198,9 +426,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getCompanionRarities(): Promise<HypixelRarity[]> {
+    public async fetchCompanionRarities(raw?: false): Promise<HypixelRarity[]>;
+    public async fetchCompanionRarities(raw?: true): Promise<HypixelCompanionsResponse>;
+    public async fetchCompanionRarities(raw = false): Promise<HypixelRarity[] | HypixelCompanionsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/vanity/companions`);
         const json: HypixelCompanionsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.rarities) {
                 return [];
@@ -221,9 +456,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getSkyBlockCollections(): Promise<Record<string,HypixelSkyBlockCollection>> {
+    public async fetchSkyBlockCollections(raw?: false): Promise<Record<string,HypixelSkyBlockCollection>>;
+    public async fetchSkyBlockCollections(raw?: true): Promise<HypixelSkyBlockCollectionsResponse>;
+    public async fetchSkyBlockCollections(raw = false): Promise<Record<string,HypixelSkyBlockCollection> | HypixelSkyBlockCollectionsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/collections`);
         const json: HypixelSkyBlockCollectionsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.collections) {
                 return {};
@@ -245,9 +487,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getSkyBlockSkills(): Promise<Record<string, HypixelSkyBlockSkill>> {
+    public async fetchSkyBlockSkills(raw?: false): Promise<Record<string, HypixelSkyBlockSkill>>;
+    public async fetchSkyBlockSkills(raw?: true): Promise<HypixelSkyBlockSkillsResponse>;
+    public async fetchSkyBlockSkills(raw = false): Promise<Record<string, HypixelSkyBlockSkill> | HypixelSkyBlockSkillsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/skills`);
         const json: HypixelSkyBlockSkillsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.collections) {
                 return {};
@@ -268,9 +517,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getSkyBlockItems(): Promise<HypixelSkyBlockItem[]> {
+    public async fetchSkyBlockItems(raw?: false): Promise<HypixelSkyBlockItem[]>;
+    public async fetchSkyBlockItems(raw?: true): Promise<HypixelSkyBlockItemsResponse>;
+    public async fetchSkyBlockItems(raw = false): Promise<HypixelSkyBlockItem[] | HypixelSkyBlockItemsResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/items`);
         const json: HypixelSkyBlockItemsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.items) {
                 return [];
@@ -291,9 +547,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getCurrentSkyBlockMayor(): Promise<HypixelSkyBlockMayor> {
+    public async fetchCurrentSkyBlockMayor(raw?: false): Promise<HypixelSkyBlockMayor>;
+    public async fetchCurrentSkyBlockMayor(raw?: true): Promise<HypixelSkyBlockElectionResponse>;
+    public async fetchCurrentSkyBlockMayor(raw = false): Promise<HypixelSkyBlockMayor | HypixelSkyBlockElectionResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/election`);
         const json: HypixelSkyBlockElectionResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.mayor) {
                 throw new HypixelParseError("No mayor elected", json);
@@ -307,9 +570,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getCurrentSkyBlockElection(): Promise<HypixelSkyBlockElection> {
+    public async fetchCurrentSkyBlockElection(raw?: false): Promise<HypixelSkyBlockElection>;
+    public async fetchCurrentSkyBlockElection(raw?: true): Promise<HypixelSkyBlockElectionResponse>;
+    public async fetchCurrentSkyBlockElection(raw = false): Promise<HypixelSkyBlockElection | HypixelSkyBlockElectionResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/election`);
         const json: HypixelSkyBlockElectionResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.current) {
                 throw new HypixelParseError("No ongoing election", json);
@@ -323,9 +593,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async getSkyBlockBingo(): Promise<HypixelSkyBlockBingo> {
+    public async fetchSkyBlockBingo(raw?: false): Promise<HypixelSkyBlockBingo>;
+    public async fetchSkyBlockBingo(raw?: true): Promise<HypixelSkyBlockBingoResponse>;
+    public async fetchSkyBlockBingo(raw = false): Promise<HypixelSkyBlockBingo | HypixelSkyBlockBingoResponse> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/bingo`);
         const json: HypixelSkyBlockBingoResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.id) {
                 throw new HypixelParseError("No Bingo ID found", json);

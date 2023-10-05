@@ -95,7 +95,7 @@ export class HypixelQuest {
     }
 }
 
-export type HypixelQuestResponse = HypixelAPIResponse<{
+export type HypixelQuestsResponse = HypixelAPIResponse<{
     success: true;
     lastUpdated: number;
     quests: Record<string, HypixelQuest[]>;

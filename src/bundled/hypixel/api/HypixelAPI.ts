@@ -38,7 +38,8 @@ export type HypixelAPIResponse<T> = ({
  */
 export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
 
-    public readonly resources: HypixelResources;
+    private resources?: HypixelResources;
+    private resourcesPromise: Promise<HypixelResources> | null;
     private readonly mojangApi: MojangAPI;
 
     /**
@@ -49,7 +50,18 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     public constructor(options: HypixelAPIOptions) {
         super(options);
         this.mojangApi = new MojangAPI(options)
-        this.resources = new HypixelResources(options);
+        this.resourcesPromise = HypixelResources.create(this.options).then((resources) => {
+            this.resourcesPromise = null;
+            return this.resources = resources
+        })
+    }
+
+    public async getResources(): Promise<HypixelResources> {
+        if(this.resourcesPromise) {
+            return this.resourcesPromise;
+        }
+        // Resources won't be null after creation promise resolves. resourcesPromise is set to null after it's resolved.
+        return this.resources as HypixelResources;
     }
 
     /**
