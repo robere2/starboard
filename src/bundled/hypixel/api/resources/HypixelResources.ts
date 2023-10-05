@@ -509,16 +509,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
 
         if(json.success) {
-            if(!json.collections) {
+            if(!json.skills) {
                 return {};
             }
 
             const skills: Record<string, HypixelSkyBlockSkill> = {};
-            for(const skill in json.collections) {
+            for(const skill in json.skills) {
                 if(!skill) {
                     continue;
                 }
-                skills[skill] = new HypixelSkyBlockSkill(this, json.collections[skill] as HypixelSkyBlockSkill);
+                skills[skill] = new HypixelSkyBlockSkill(this, json.skills[skill] as HypixelSkyBlockSkill);
             }
             return skills;
         } else {

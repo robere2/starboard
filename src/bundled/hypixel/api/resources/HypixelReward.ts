@@ -10,6 +10,7 @@ export class HypixelReward extends HypixelResource {
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelReward>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Reward type cannot be null", input)
         }

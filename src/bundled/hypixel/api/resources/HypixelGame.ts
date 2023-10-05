@@ -24,6 +24,7 @@ export class HypixelGame extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGame>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Game ID cannot be null", input)
         }

@@ -10,6 +10,7 @@ export class HypixelSkyBlockMayorPerk extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockMayorPerk>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Mayor perk name cannot be null", input)
         }
@@ -29,6 +30,7 @@ export class HypixelSkyBlockMayor extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockMayor>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.key == null) {
             throw new HypixelParseError("Mayor key cannot be null", input)
         }

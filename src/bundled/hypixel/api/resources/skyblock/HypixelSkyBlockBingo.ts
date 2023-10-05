@@ -31,6 +31,7 @@ export class HypixelSkyBlockBingo extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockBingo>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Bingo ID cannot be null", input)
         }

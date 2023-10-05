@@ -14,6 +14,7 @@ export class HypixelOneTimeAchievement extends HypixelResource {
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelOneTimeAchievement>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.points == null) {
             throw new HypixelParseError("Points cannot be null", input)
         }

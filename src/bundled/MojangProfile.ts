@@ -1,24 +1,27 @@
+export type MojangProfileTextures = {
+    timestamp: number,
+    profileId: string,
+    profileName: string,
+    signatureRequired?: boolean,
+    textures: {
+        SKIN?: {
+            url: string,
+            metadata?: {
+                model: "slim" | "classic"
+            }
+        },
+        CAPE?: {
+            url: string
+        }
+    }
+}
+
 export class MojangProfile {
     public readonly id: string
     public readonly name: string
     public readonly legacy?: boolean
     public readonly demo?: boolean
-    public readonly textures?: {
-        timestamp: number,
-        profileId: string,
-        profileName: string,
-        textures: {
-            SKIN?: {
-                url: string,
-                metadata?: {
-                    model: "slim" | "classic"
-                }
-            },
-            CAPE?: {
-                url: string
-            }
-        }
-    }
+    public readonly textures?: MojangProfileTextures;
     public readonly profileActions: string[]
 
     public constructor(json: Record<string, any>) {

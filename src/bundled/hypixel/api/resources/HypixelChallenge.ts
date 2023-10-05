@@ -11,6 +11,7 @@ export class HypixelChallenge extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelChallenge>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.id) {
             throw new HypixelParseError("Challenge ID cannot be null", input)
         }

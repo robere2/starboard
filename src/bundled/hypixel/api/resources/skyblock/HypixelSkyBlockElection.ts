@@ -10,6 +10,7 @@ export class HypixelSkyBlockElection extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockElection>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
 
         if(input.year == null) {
             throw new HypixelParseError("Election year cannot be null", input)

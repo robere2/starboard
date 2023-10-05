@@ -9,6 +9,7 @@ export class HypixelGuildAchievements extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGuildAchievements>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         // One-time guild achievements are defined in the API, but currently none exist
         this.one_time = input.one_time;
 

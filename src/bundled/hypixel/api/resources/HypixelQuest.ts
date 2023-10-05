@@ -11,6 +11,7 @@ export class HypixelQuestObjective extends HypixelResource {
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuestObjective>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Objective ID cannot be null", input)
         }
@@ -27,6 +28,7 @@ export class HypixelQuestRequirement extends HypixelResource {
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuestRequirement>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Requirement type cannot be null", input)
         }
@@ -44,6 +46,7 @@ export class HypixelQuest extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuest>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Challenge ID cannot be null", input)
         }

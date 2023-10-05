@@ -12,6 +12,7 @@ export class HypixelGameAchievements extends HypixelResource {
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGameAchievements>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
 
         this.one_time = {}
         for(const [key, value] of Object.entries(input.one_time ?? {})) {

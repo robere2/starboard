@@ -9,6 +9,7 @@ export class HypixelGuildAchievementTier extends HypixelResource {
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGuildAchievementTier>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.tier == null) {
             throw new HypixelParseError("Guild achievement tier number cannot be null", input)
         }
@@ -27,6 +28,7 @@ export class HypixelTieredGuildAchievement extends HypixelResource {
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelTieredGuildAchievement>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Name cannot be null", input)
         }

@@ -9,6 +9,7 @@ export class HypixelRarity extends HypixelResource {
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelRarity>) {
         super(parent, input);
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Rarity name cannot be null", input)
         }
