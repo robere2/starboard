@@ -1,59 +1,21 @@
 import {HypixelPlayer, HypixelPlayerResponse} from "./HypixelPlayer.ts";
 import {MojangAPI} from "../../MojangAPI.ts";
 import {ParsedOptions, UUID_REGEX} from "../../../util.ts";
-import {HttpClient} from "../../http/HttpClient.ts";
-import {BaseAPI} from "../../BaseAPI.ts";
+import {APIOptions, BaseAPI} from "../../BaseAPI.ts";
 import {HypixelRecentGame, HypixelRecentGamesResponse} from "./HypixelRecentGame.ts";
 import {HypixelSession, HypixelStatusResponse} from "./HypixelSession.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
-import {HypixelGame, HypixelGamesResponse} from "./resources/HypixelGame.ts";
-import {HypixelAchievementsResponse, HypixelGameAchievements} from "./resources/HypixelGameAchievements.ts";
-import {HypixelChallenge, HypixelChallengeResponse} from "./resources/HypixelChallenge.ts";
-import {HypixelQuest, HypixelQuestResponse} from "./resources/HypixelQuest.ts";
-import {HypixelGuildAchievements, HypixelGuildAchievementsResponse} from "./resources/HypixelGuildAchievements.ts";
-import {HypixelPet, HypixelPetRarity, HypixelPetsResponse} from "./resources/HypixelPet.ts";
-import {HypixelCompanion, HypixelCompanionRarity, HypixelCompanionsResponse} from "./resources/HypixelCompanion.ts";
-import {
-    HypixelSkyBlockCollection,
-    HypixelSkyBlockCollectionsResponse
-} from "./resources/skyblock/HypixelSkyBlockCollection.ts";
-import {HypixelSkyBlockItem, HypixelSkyBlockItemsResponse} from "./resources/skyblock/HypixelSkyBlockItem.ts";
-import {HypixelSkyBlockSkill, HypixelSkyBlockSkillsResponse} from "./resources/skyblock/HypixelSkyBlockSkill.ts";
-import {HypixelSkyBlockMayor} from "./resources/skyblock/HypixelSkyBlockMayor.ts";
-import {
-    HypixelSkyBlockElection,
-    HypixelSkyBlockElectionResponse
-} from "./resources/skyblock/HypixelSkyBlockElection.ts";
-import {HypixelParseError} from "./HypixelParseError.ts";
-import {HypixelSkyBlockBingo, HypixelSkyBlockBingoResponse} from "./resources/skyblock/HypixelSkyBlockBingo.ts";
+import {HypixelResources} from "./resources/HypixelResources.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
 
-export type HypixelAPIOptions = {
+export type HypixelAPIOptions = APIOptions & {
     /**
      * API key to use in requests to the Hypixel API. Should be a valid UUID with or without dashes retrieved from
      *   https://developer.hypixel.net/dashboard. An invalid UUID will result in 403 error responses from the API.
      */
     apiKey: string;
-    /**
-     * Rate limit usage percentage at which to enable queuing requests to help ensure that your over-usage of the API
-     *   doesn't get 429 rate limited. Should be a number between 0.0 and 1.0, where 0.0 means enable queueing after 0%
-     *   of the rate limit has been used (i.e. all requests) and 1.0 means enable queueing after 100% (i.e. no
-     *   requests). Once the queue is in use, this will use the rate limit headers found in the response from the API
-     *   to determine how much time needs to pass before another request can be made to ensure that not all requests are
-     *   used up before the rate limit timer resets. Requests will then be processed in the queue with the required
-     *   delay between each request. This value can also be a boolean, where `true` means enable queueing at any
-     *   percentage (same as providing 0.0) and `false` means disable queueing entirely (same as providing 1.0).
-     */
-    defer?: boolean | number;
-    /**
-     * Custom HTTP client to use for HTTP requests to the Mojang API. If not provided, a default HTTP client will be
-     *   used, which simply uses the {@link fetch} function. Custom HTTP clients are particularly useful for
-     *   test suites where you want to mock an HTTP request. Custom clients can also be useful for adding custom logging
-     *   or error handling for HTTP requests.
-     */
-    httpClient?: HttpClient;
 }
 
 export type HypixelAPIErrorDef = {
@@ -75,6 +37,8 @@ export type HypixelAPIResponse<T> = ({
  * Interface for requesting data from the Hypixel API. Caching is not built-in.
  */
 export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
+
+    public readonly resources: HypixelResources;
     private readonly mojangApi: MojangAPI;
 
     /**
@@ -84,7 +48,8 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      */
     public constructor(options: HypixelAPIOptions) {
         super(options);
-        this.mojangApi = new MojangAPI()
+        this.mojangApi = new MojangAPI(options)
+        this.resources = new HypixelResources(options);
     }
 
     /**
@@ -241,357 +206,6 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
             })
-        }
-    }
-
-    public async getGames(): Promise<Record<string, HypixelGame>> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/games`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelGamesResponse = await res.json();
-        if(json.success) {
-            if(!json.games) {
-                return {};
-            }
-
-            // Hypixel API response is not actual HypixelGame objects. HypixelGame constructor performs type checks
-            const typedGames = json.games as Record<string, HypixelGame>
-            for(const prop in typedGames) {
-                typedGames[prop] = new HypixelGame(typedGames[prop]);
-            }
-
-            return typedGames;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getAchievements(): Promise<Record<string, HypixelGameAchievements>> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/achievements`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelAchievementsResponse = await res.json();
-        if(json.success) {
-            if(!json.achievements) {
-                return {};
-            }
-
-            // Hypixel API response is not actual HypixelGameAchievements objects. HypixelGameAchievements constructor performs type checks
-            const typedAchievements = json.achievements as Record<string, HypixelGameAchievements>
-            for(const prop in typedAchievements) {
-                typedAchievements[prop] = new HypixelGameAchievements(typedAchievements[prop]);
-            }
-
-            return typedAchievements;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getChallenges(): Promise<Record<string, HypixelChallenge[]>> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/challenges`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelChallengeResponse = await res.json();
-        if(json.success) {
-            if(!json.challenges) {
-                return {};
-            }
-
-            // Hypixel API response is not actual HypixelChallenge objects. HypixelChallenge constructor performs type checks
-            const typedChallenges = json.challenges as Record<string, HypixelChallenge[]>
-            for(const game in typedChallenges) {
-
-                for(let i = 0; i < typedChallenges[game].length; i++) {
-                    typedChallenges[game][i] = new HypixelChallenge(typedChallenges[game][i]);
-                }
-            }
-
-            return typedChallenges;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getQuests(): Promise<Record<string, HypixelQuest[]>> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/quests`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelQuestResponse = await res.json();
-        if(json.success) {
-            if(!json.quests) {
-                return {};
-            }
-
-            // Hypixel API response is not actual HypixelQuest objects. HypixelQuest constructor performs type checks
-            const typedQuests = json.quests as Record<string, HypixelQuest[]>
-            for(const game in typedQuests) {
-                for(let i = 0; i < typedQuests[game].length; i++) {
-                    typedQuests[game][i] = new HypixelQuest(typedQuests[game][i]);
-                }
-            }
-
-            return typedQuests;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getGuildAchievements(): Promise<HypixelGuildAchievements> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/guilds/achievements`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelGuildAchievementsResponse = await res.json();
-        if(json.success) {
-            return new HypixelGuildAchievements({
-                one_time: json?.one_time ?? {},
-                tiered: json.tiered ?? {}
-            })
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getPets(): Promise<HypixelPet[]> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/vanity/pets`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelPetsResponse = await res.json();
-        if(json.success) {
-            if(!json.types) {
-                return [];
-            }
-
-            const pets: HypixelPet[] = [];
-            for(const pet of json.types) {
-                if(!pet) {
-                    continue;
-                }
-                pets.push(new HypixelPet(pet));
-            }
-            return pets;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getPetRarities(): Promise<HypixelPetRarity[]> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/vanity/pets`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelPetsResponse = await res.json();
-        if(json.success) {
-            if(!json.rarities) {
-                return [];
-            }
-
-            const rarities: HypixelPetRarity[] = [];
-            for(const rarity of json.rarities) {
-                if(!rarity) {
-                    continue;
-                }
-                rarities.push(new HypixelPetRarity(rarity));
-            }
-            return rarities;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getCompanions(): Promise<HypixelCompanion[]> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/vanity/companions`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelCompanionsResponse = await res.json();
-        if(json.success) {
-            if(!json.types) {
-                return [];
-            }
-
-            const companions: HypixelCompanion[] = [];
-            for(const companion of json.types) {
-                if(!companion) {
-                    continue;
-                }
-                companions.push(new HypixelCompanion(companion));
-            }
-            return companions;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getCompanionRarities(): Promise<HypixelCompanionRarity[]> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/vanity/companions`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelCompanionsResponse = await res.json();
-        if(json.success) {
-            if(!json.rarities) {
-                return [];
-            }
-
-            const rarities: HypixelCompanionRarity[] = [];
-            for(const rarity of json.rarities) {
-                if(!rarity) {
-                    continue;
-                }
-                rarities.push(new HypixelCompanionRarity(rarity));
-            }
-            return rarities;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getSkyBlockCollections(): Promise<Record<string,HypixelSkyBlockCollection>> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/collections`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelSkyBlockCollectionsResponse = await res.json();
-        if(json.success) {
-            if(!json.collections) {
-                return {};
-            }
-
-            const collections: Record<string, HypixelSkyBlockCollection> = {};
-            for(const collection in json.collections) {
-                if(!json.collections[collection]) {
-                    continue;
-                }
-                collections[collection] = new HypixelSkyBlockCollection(json.collections[collection] as HypixelSkyBlockCollection);
-            }
-
-            return collections;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getSkyBlockSkills(): Promise<Record<string, HypixelSkyBlockSkill>> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/skills`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelSkyBlockSkillsResponse = await res.json();
-        if(json.success) {
-            if(!json.collections) {
-                return {};
-            }
-
-            const skills: Record<string, HypixelSkyBlockSkill> = {};
-            for(const skill in json.collections) {
-                if(!skill) {
-                    continue;
-                }
-                skills[skill] = new HypixelSkyBlockSkill(json.collections[skill] as HypixelSkyBlockSkill);
-            }
-            return skills;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getSkyBlockItems(): Promise<HypixelSkyBlockItem[]> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/items`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelSkyBlockItemsResponse = await res.json();
-        if(json.success) {
-            if(!json.items) {
-                return [];
-            }
-
-            const items: HypixelSkyBlockItem[] = [];
-            for(const item of json.items) {
-                if(!item) {
-                    continue;
-                }
-                items.push(new HypixelSkyBlockItem(item));
-            }
-            return items;
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getCurrentSkyBlockMayor(): Promise<HypixelSkyBlockMayor> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/election`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelSkyBlockElectionResponse = await res.json();
-        if(json.success) {
-            if(!json.mayor) {
-                throw new HypixelParseError("No mayor elected", json);
-            }
-
-            return new HypixelSkyBlockMayor(json.mayor)
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getCurrentSkyBlockElection(): Promise<HypixelSkyBlockElection> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/election`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelSkyBlockElectionResponse = await res.json();
-        if(json.success) {
-            if(!json.current) {
-                throw new HypixelParseError("No ongoing election", json);
-            }
-
-            return new HypixelSkyBlockElection(json.current)
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        }
-    }
-
-    public async getSkyBlockBingo(): Promise<HypixelSkyBlockBingo> {
-        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/bingo`, {
-            headers: this.genHeaders()
-        });
-        const json: HypixelSkyBlockBingoResponse = await res.json();
-        if(json.success) {
-            if(!json.id) {
-                throw new HypixelParseError("No Bingo ID found", json);
-            }
-
-            return new HypixelSkyBlockBingo({
-                id: json.id,
-                goals: json.goals
-            })
-        } else {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
         }
     }
 

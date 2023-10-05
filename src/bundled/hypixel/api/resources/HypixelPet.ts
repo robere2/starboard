@@ -1,23 +1,6 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
-
-export class HypixelPetRarity {
-    name: string;
-    color: string;
-    [undocumentedProperties: string]: any
-
-    constructor(input: HypixelAPIValue<HypixelPetRarity>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
-        if(input.name == null) {
-            throw new HypixelParseError("Rarity name cannot be null", input)
-        }
-        this.name = input.name;
-        if(input.color == null) {
-            throw new HypixelParseError("Rarity color cannot be null", input)
-        }
-        this.color = input.color;
-    }
-}
+import {HypixelRarity} from "./HypixelRarity.ts";
 
 export class HypixelPet {
     public key: string;
@@ -45,5 +28,5 @@ export type HypixelPetsResponse = HypixelAPIResponse<{
     success: true;
     lastUpdated: number;
     types: HypixelPet[];
-    rarities: HypixelPetRarity[];
+    rarities: HypixelRarity[];
 }>
