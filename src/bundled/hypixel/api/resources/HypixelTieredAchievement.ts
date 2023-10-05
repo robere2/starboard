@@ -1,14 +1,15 @@
 import {HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
+import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelAchievementTier {
+export class HypixelAchievementTier extends HypixelResource {
     public tier: number;
     public points: number;
     public amount: number;
-    [undocumentedProperties: string]: any;
 
-    constructor(input: HypixelAPIValue<HypixelAchievementTier>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelAchievementTier>) {
+        super(parent, input);
         if(input.tier == null) {
             throw new HypixelParseError("Achievement tier number cannot be null", input)
         }
@@ -24,14 +25,13 @@ export class HypixelAchievementTier {
     }
 }
 
-export class HypixelTieredAchievement {
+export class HypixelTieredAchievement extends HypixelResource {
     public name: string;
     public description: string;
     public tiers: HypixelAchievementTier[];
-    [undocumentedProperties: string]: any;
 
-    constructor(input: HypixelAPIValue<HypixelTieredAchievement>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelTieredAchievement>) {
+        super(parent, input);
         if(input.name == null) {
             throw new HypixelParseError("Name cannot be null", input)
         }
@@ -46,7 +46,7 @@ export class HypixelTieredAchievement {
             if(!tier) {
                 continue;
             }
-            this.tiers.push(new HypixelAchievementTier(tier))
+            this.tiers.push(new HypixelAchievementTier(parent, tier))
         }
     }
 }

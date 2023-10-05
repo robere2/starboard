@@ -1,16 +1,17 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelRarity} from "./HypixelRarity.ts";
+import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelPet {
+export class HypixelPet extends HypixelResource {
     public key: string;
     public name: string;
     public rarity?: string;
     public package?: string;
-    [undocumentedProperties: string]: any
 
-    public constructor(input: HypixelAPIValue<HypixelPet>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelPet>) {
+        super(parent, input);
         if(input.key == null) {
             throw new HypixelParseError("Pet key cannot be null", input)
         }

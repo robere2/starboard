@@ -1,14 +1,16 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
+import {HypixelResource} from "../HypixelResource.ts";
+import {HypixelResources} from "../HypixelResources.ts";
 
-export class HypixelSkyBlockCollectionItem {
+export class HypixelSkyBlockCollectionItem extends HypixelResource {
     name: string;
     maxTiers: number;
     tiers: HypixelSkyBlockCollectionTier[];
     [undocumentedProperties: string]: any
 
-    constructor(input: HypixelAPIValue<HypixelSkyBlockCollectionItem>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockCollectionItem>) {
+        super(parent, input);
         if(input.name == null) {
             throw new HypixelParseError("Collection item name cannot be null", input)
         }
@@ -26,19 +28,19 @@ export class HypixelSkyBlockCollectionItem {
             if(!tier) {
                 continue;
             }
-            this.tiers.push(new HypixelSkyBlockCollectionTier(tier));
+            this.tiers.push(new HypixelSkyBlockCollectionTier(parent, tier));
         }
     }
 }
 
-export class HypixelSkyBlockCollectionTier {
+export class HypixelSkyBlockCollectionTier extends HypixelResource {
     tier: number;
     amountRequired: number;
     unlocks: string[];
     [undocumentedProperties: string]: any
 
-    constructor(input: HypixelAPIValue<HypixelSkyBlockCollectionTier>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockCollectionTier>) {
+        super(parent, input);
         if(input.tier == null) {
             throw new HypixelParseError("Collection tier number cannot be null", input)
         }
@@ -57,13 +59,13 @@ export class HypixelSkyBlockCollectionTier {
     }
 }
 
-export class HypixelSkyBlockCollection {
+export class HypixelSkyBlockCollection extends HypixelResource {
     public name: string;
     public items: Record<string, HypixelSkyBlockCollectionItem>;
     [undocumentedProperties: string]: any
 
-    public constructor(input: HypixelAPIValue<HypixelSkyBlockCollection>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockCollection>) {
+        super(parent, input);
         if(input.name == null) {
             throw new HypixelParseError("Collection name cannot be null", input)
         }
@@ -75,7 +77,7 @@ export class HypixelSkyBlockCollection {
                 if (input.items[item] == null) {
                     continue;
                 }
-                this.items[item] = new HypixelSkyBlockCollectionItem(input.items[item] as HypixelSkyBlockCollectionItem);
+                this.items[item] = new HypixelSkyBlockCollectionItem(parent, input.items[item] as HypixelSkyBlockCollectionItem);
             }
         }
     }

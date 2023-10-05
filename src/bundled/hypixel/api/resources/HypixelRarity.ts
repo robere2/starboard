@@ -1,13 +1,14 @@
 import {HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
+import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelRarity {
+export class HypixelRarity extends HypixelResource {
     name: string;
     color: string;
-    [undocumentedProperties: string]: any
 
-    constructor(input: HypixelAPIValue<HypixelRarity>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelRarity>) {
+        super(parent, input);
         if(input.name == null) {
             throw new HypixelParseError("Rarity name cannot be null", input)
         }

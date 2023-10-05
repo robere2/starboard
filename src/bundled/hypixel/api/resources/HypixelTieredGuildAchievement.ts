@@ -1,13 +1,14 @@
 import {HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
+import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelGuildAchievementTier {
+export class HypixelGuildAchievementTier extends HypixelResource {
     public tier: number;
     public amount: number;
-    [undocumentedProperties: string]: any;
 
-    constructor(input: HypixelAPIValue<HypixelGuildAchievementTier>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGuildAchievementTier>) {
+        super(parent, input);
         if(input.tier == null) {
             throw new HypixelParseError("Guild achievement tier number cannot be null", input)
         }
@@ -19,14 +20,13 @@ export class HypixelGuildAchievementTier {
     }
 }
 
-export class HypixelTieredGuildAchievement {
+export class HypixelTieredGuildAchievement extends HypixelResource {
     public name: string;
     public description: string;
     public tiers: HypixelGuildAchievementTier[];
-    [undocumentedProperties: string]: any;
 
-    constructor(input: HypixelAPIValue<HypixelTieredGuildAchievement>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelTieredGuildAchievement>) {
+        super(parent, input);
         if(input.name == null) {
             throw new HypixelParseError("Name cannot be null", input)
         }
@@ -41,7 +41,7 @@ export class HypixelTieredGuildAchievement {
             if (!tier) {
                 continue;
             }
-            this.tiers.push(new HypixelGuildAchievementTier(tier))
+            this.tiers.push(new HypixelGuildAchievementTier(parent, tier))
         }
     }
 }

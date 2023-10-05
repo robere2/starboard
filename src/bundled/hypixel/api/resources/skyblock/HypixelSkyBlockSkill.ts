@@ -1,13 +1,15 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
+import {HypixelResource} from "../HypixelResource.ts";
+import {HypixelResources} from "../HypixelResources.ts";
 
-export class HypixelSkyBlockSkillLevel {
+export class HypixelSkyBlockSkillLevel extends HypixelResource {
     public level: number;
     public totalExpRequired: number;
     public unlocks: string[];
 
-    constructor(input: HypixelAPIValue<HypixelSkyBlockSkillLevel>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockSkillLevel>) {
+        super(parent, input);
         if(input.level == null) {
             throw new HypixelParseError("Skill level value cannot be null", input)
         }
@@ -27,15 +29,14 @@ export class HypixelSkyBlockSkillLevel {
     }
 }
 
-export class HypixelSkyBlockSkill {
+export class HypixelSkyBlockSkill extends HypixelResource {
     public name: string;
     public description: string;
     public maxLevel: number;
     public levels: HypixelSkyBlockSkillLevel[];
-    [undocumentedProperties: string]: any
 
-    public constructor(input: HypixelAPIValue<HypixelSkyBlockSkill>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockSkill>) {
+        super(parent, input);
         if(input.name == null) {
             throw new HypixelParseError("Skill name cannot be null", input)
         }
@@ -56,7 +57,7 @@ export class HypixelSkyBlockSkill {
             if (!level) {
                 continue;
             }
-            this.levels.push(new HypixelSkyBlockSkillLevel(level));
+            this.levels.push(new HypixelSkyBlockSkillLevel(parent, level));
         }
     }
 }

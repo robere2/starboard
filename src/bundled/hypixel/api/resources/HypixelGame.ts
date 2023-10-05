@@ -4,6 +4,7 @@ import {HypixelGameAchievements} from "./HypixelGameAchievements.ts";
 import {HypixelChallenge} from "./HypixelChallenge.ts";
 import {HypixelQuest} from "./HypixelQuest.ts";
 import {HypixelResources} from "./HypixelResources.ts";
+import {HypixelResource} from "./HypixelResource.ts";
 
 // For some reason, these three games do not use their database name as a key in the achievements list. This is a
 //   conversion table from database name to achievement category key.
@@ -13,21 +14,16 @@ const gamesToAchievements = new Map(Object.entries({
     "Battleground": "warlords"
 }))
 
-export class HypixelGame {
-
-    private static parents: Map<string, HypixelResources> = new Map();
-
-    private _parentId: string;
+export class HypixelGame extends HypixelResource {
     public id: number;
     public name: string;
     public databaseName: string;
     public modeNames?: Record<string, string>;
     public retired?: boolean;
     public legacy?: boolean;
-    [undocumentedProperties: string]: any
 
-    public constructor(input: HypixelAPIValue<HypixelGame>, parent: HypixelResources) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
+    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGame>) {
+        super(parent, input);
         if(input.id == null) {
             throw new HypixelParseError("Game ID cannot be null", input)
         }
@@ -40,16 +36,6 @@ export class HypixelGame {
         this.id = input.id;
         this.name = input.name;
         this.databaseName = input.databaseName;
-        this._parentId = parent.id;
-        HypixelGame.parents.set(parent.id, parent);
-    }
-
-    public getParentResources(): HypixelResources {
-        const parent = HypixelGame.parents.get(this._parentId);
-        if(!parent) {
-            throw new Error("Parent resources not found");
-        }
-        return parent;
     }
 
     public getAchievements(): HypixelGameAchievements | null {
@@ -72,18 +58,6 @@ export class HypixelGame {
 
     public getQuests(): HypixelQuest[] {
         return this.getParentResources().quests[this.databaseName.toLowerCase()]
-    }
-
-    public toJSON() {
-        const result: Record<string, unknown> = {};
-        for(const key in this) {
-            if(key === "_parentId") {
-                continue;
-            }
-            result[key] = this[key];
-
-        }
-        return result;
     }
 }
 
