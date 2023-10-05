@@ -19,6 +19,12 @@ import {
 } from "./resources/skyblock/HypixelSkyBlockCollection.ts";
 import {HypixelSkyBlockItem, HypixelSkyBlockItemsResponse} from "./resources/skyblock/HypixelSkyBlockItem.ts";
 import {HypixelSkyBlockSkill, HypixelSkyBlockSkillsResponse} from "./resources/skyblock/HypixelSkyBlockSkill.ts";
+import {HypixelSkyBlockMayor} from "./resources/skyblock/HypixelSkyBlockMayor.ts";
+import {
+    HypixelSkyBlockElection,
+    HypixelSkyBlockElectionResponse
+} from "./resources/skyblock/HypixelSkyBlockElection.ts";
+import {HypixelParseError} from "./HypixelParseError.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -524,6 +530,42 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 items.push(new HypixelSkyBlockItem(item));
             }
             return items;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getCurrentMayor(): Promise<HypixelSkyBlockMayor> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/election`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockElectionResponse = await res.json();
+        if(json.success) {
+            if(!json.mayor) {
+                throw new HypixelParseError("No mayor elected", json);
+            }
+
+            return new HypixelSkyBlockMayor(json.mayor)
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getCurrentElection(): Promise<HypixelSkyBlockElection> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/election`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockElectionResponse = await res.json();
+        if(json.success) {
+            if(!json.current) {
+                throw new HypixelParseError("No ongoing election", json);
+            }
+
+            return new HypixelSkyBlockElection(json.current)
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
