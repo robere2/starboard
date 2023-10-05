@@ -1,7 +1,28 @@
 import {HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 
-export type HypixelAchievementTier = { tier: number, points: number, amount: number };
+export class HypixelAchievementTier {
+    public tier: number;
+    public points: number;
+    public amount: number;
+    [undocumentedProperties: string]: any;
+
+    constructor(input: HypixelAPIValue<HypixelAchievementTier>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
+        if(input.tier == null) {
+            throw new HypixelParseError("Achievement tier number cannot be null", input)
+        }
+        this.tier = input.tier;
+        if(input.points == null) {
+            throw new HypixelParseError("Achievement tier points cannot be null", input)
+        }
+        this.points = input.points;
+        if(input.amount == null) {
+            throw new HypixelParseError("Achievement tier amount cannot be null", input)
+        }
+        this.amount = input.amount;
+    }
+}
 
 export class HypixelTieredAchievement {
     public name: string;
@@ -22,12 +43,12 @@ export class HypixelTieredAchievement {
         if(input.tiers == null) {
             throw new HypixelParseError("Tiers cannot be null", input)
         }
-        // This code requires tiers to have all properties and just skips any which are malformed.
-        this.tiers = input.tiers.reduce<HypixelAchievementTier[]>((acc, tier) => {
-            if(tier && tier.tier != null && tier.amount != null && tier.points != null) {
-                acc.push(tier as HypixelAchievementTier);
+        this.tiers = [];
+        for(const tier of input.tiers) {
+            if(!tier) {
+                continue;
             }
-            return acc;
-        }, [])
+            this.tiers.push(new HypixelAchievementTier(tier))
+        }
     }
 }

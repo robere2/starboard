@@ -5,8 +5,10 @@ export class HypixelSkyBlockCollectionItem {
     name: string;
     maxTiers: number;
     tiers: HypixelSkyBlockCollectionTier[];
+    [undocumentedProperties: string]: any
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockCollectionItem>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Collection item name cannot be null", input)
         }
@@ -31,8 +33,10 @@ export class HypixelSkyBlockCollectionTier {
     tier: number;
     amountRequired: number;
     unlocks: string[];
+    [undocumentedProperties: string]: any
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockCollectionTier>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.tier) {
             throw new HypixelParseError("Collection tier number cannot be null", input)
         }

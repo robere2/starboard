@@ -1,7 +1,23 @@
 import {HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 
-export type HypixelGuildAchievementTier = { tier: number, amount: number };
+export class HypixelGuildAchievementTier {
+    public tier: number;
+    public amount: number;
+    [undocumentedProperties: string]: any;
+
+    constructor(input: HypixelAPIValue<HypixelGuildAchievementTier>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
+        if(input.tier == null) {
+            throw new HypixelParseError("Guild achievement tier number cannot be null", input)
+        }
+        this.tier = input.tier;
+        if(input.amount == null) {
+            throw new HypixelParseError("Guild achievement tier amount cannot be null", input)
+        }
+        this.amount = input.amount;
+    }
+}
 
 export class HypixelTieredGuildAchievement {
     public name: string;

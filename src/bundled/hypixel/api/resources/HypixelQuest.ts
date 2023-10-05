@@ -1,20 +1,51 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 
-export type HypixelQuestReward = {
-    type: string;
-    amount?: number;
-    package?: string;
+export class HypixelQuestReward {
+    public type: string;
+    public amount?: number;
+    public package?: string;
+    [undocumentedProperties: string]: any
+
+    constructor(input: HypixelAPIValue<HypixelQuestReward>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
+        if(!input.type) {
+            throw new HypixelParseError("Reward type cannot be null", input)
+        }
+        this.type = input.type;
+    }
 }
 
-export type HypixelQuestObjective = {
-    id: string;
-    type: string;
-    integer?: number;
+export class HypixelQuestObjective {
+    public id: string;
+    public type: string;
+    public integer?: number;
+    [undocumentedProperties: string]: any
+
+    constructor(input: HypixelAPIValue<HypixelQuestObjective>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
+        if(!input.id) {
+            throw new HypixelParseError("Objective ID cannot be null", input)
+        }
+        this.id = input.id;
+        if(!input.type) {
+            throw new HypixelParseError("Objective type cannot be null", input)
+        }
+        this.type = input.type;
+    }
 }
 
-export type HypixelQuestRequirement = {
-    type: string;
+export class HypixelQuestRequirement {
+    public type: string;
+    [undocumentedProperties: string]: any
+
+    constructor(input: HypixelAPIValue<HypixelQuestRequirement>) {
+        Object.assign(this, input); // Copy undocumented and non-required properties
+        if(!input.type) {
+            throw new HypixelParseError("Requirement type cannot be null", input)
+        }
+        this.type = input.type;
+    }
 }
 
 export class HypixelQuest {
@@ -24,7 +55,6 @@ export class HypixelQuest {
     public rewards: HypixelQuestReward[];
     public objectives: HypixelQuestObjective[];
     public requirements: HypixelQuestRequirement[];
-
     [undocumentedProperties: string]: any
 
     public constructor(input: HypixelAPIValue<HypixelQuest>) {
@@ -43,32 +73,30 @@ export class HypixelQuest {
             throw new HypixelParseError("Challenge rewards cannot be null", input)
         }
         this.rewards = [];
-        this.rewards.push(...input.rewards.reduce<HypixelQuestReward[]>((acc, reward) => {
-            if(reward && reward.type) {
-                acc.push(reward as HypixelQuestReward)
+        for(const reward of input.rewards) {
+            if(!reward) {
+                continue;
             }
-            return acc;
-        }, []))
+            this.rewards.push(new HypixelQuestReward(reward));
+        }
 
         if(!input.objectives) {
             throw new HypixelParseError("Challenge objectives cannot be null", input)
         }
         this.objectives = [];
-        this.objectives.push(...input.objectives.reduce<HypixelQuestObjective[]>((acc, objective) => {
-            if(objective && objective.type && objective.id) {
-                acc.push(objective as HypixelQuestObjective)
+        for(const objective of input.objectives) {
+            if(!objective) {
+                continue;
             }
-            return acc;
-        }, []))
+            this.objectives.push(new HypixelQuestObjective(objective));
+        }
 
         this.requirements = [];
-        if(input.requirements) {
-            this.requirements.push(...input.requirements.reduce<HypixelQuestRequirement[]>((acc, requirement) => {
-                if(requirement && requirement.type) {
-                    acc.push(requirement as HypixelQuestRequirement)
-                }
-                return acc;
-            }, []))
+        for(const requirements of input.requirements ?? []) {
+            if(!requirements) {
+                continue;
+            }
+            this.rewards.push(new HypixelQuestRequirement(requirements));
         }
     }
 }
