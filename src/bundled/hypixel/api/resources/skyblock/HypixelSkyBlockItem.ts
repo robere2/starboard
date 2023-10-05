@@ -273,5 +273,6 @@ export class HypixelSkyBlockItem {
 export type HypixelSkyBlockItemsResponse = HypixelAPIResponse<{
     success: true;
     lastUpdated: number;
+    version: string;
     items: HypixelSkyBlockItem[]
 }>
