@@ -5,6 +5,14 @@ import {HypixelChallenge} from "./HypixelChallenge.ts";
 import {HypixelQuest} from "./HypixelQuest.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
+// For some reason, these three games do not use their database name as a key in the achievements list. This is a
+//   conversion table from database name to achievement category key.
+const gamesToAchievements = new Map(Object.entries({
+    "HungerGames": "blitz",
+    "MCGO": "copsandcrims",
+    "Battleground": "warlords"
+}))
+
 export class HypixelGame {
 
     private static parents: Map<string, HypixelResources> = new Map();
@@ -45,8 +53,17 @@ export class HypixelGame {
     }
 
     public getAchievements(): HypixelGameAchievements | null {
-        // TODO
-        return null;
+        let achievements = this.getParentResources().achievements[this.databaseName.toLowerCase()];
+        if(!achievements) {
+            const convertedKey = gamesToAchievements.get(this.databaseName);
+            if(!convertedKey) {
+                return null; // No achievements for this game. This should mostly happen when the user is requesting
+                //   achievements for a game which legitimately has no achievements, but could theoretically happen
+                //   if Hypixel adds new games in the future but mismatches the database name and achievements key.
+            }
+            achievements = this.getParentResources().achievements[convertedKey];
+        }
+        return achievements;
     }
 
     public getChallenges(): HypixelChallenge[] {

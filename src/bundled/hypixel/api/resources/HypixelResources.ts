@@ -12,7 +12,6 @@ import {HypixelSkyBlockSkill, HypixelSkyBlockSkillsResponse} from "./skyblock/Hy
 import {HypixelSkyBlockItem, HypixelSkyBlockItemsResponse} from "./skyblock/HypixelSkyBlockItem.ts";
 import {HypixelSkyBlockMayor} from "./skyblock/HypixelSkyBlockMayor.ts";
 import {HypixelSkyBlockElection, HypixelSkyBlockElectionResponse} from "./skyblock/HypixelSkyBlockElection.ts";
-import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelSkyBlockBingo, HypixelSkyBlockBingoResponse} from "./skyblock/HypixelSkyBlockBingo.ts";
 import {HypixelRarity} from "./HypixelRarity.ts";
 import {HypixelAPIValue} from "../HypixelAPI.ts";
@@ -37,9 +36,9 @@ export class HypixelResources extends BaseAPI<APIOptions> {
     private _skyBlockCollections?: Record<string, HypixelSkyBlockCollection>
     private _skyBlockSkills?: Record<string, HypixelSkyBlockSkill>
     private _skyBlockItems?: HypixelSkyBlockItem[]
-    private _skyBlockCurrentMayor?: HypixelSkyBlockMayor
-    private _skyBlockCurrentElection?: HypixelSkyBlockElection
-    private _skyBlockBingo?: HypixelSkyBlockBingo
+    private _skyBlockCurrentMayor?: HypixelSkyBlockMayor | null
+    private _skyBlockCurrentElection?: HypixelSkyBlockElection | null
+    private _skyBlockBingo?: HypixelSkyBlockBingo | null
 
     private constructor(options: APIOptions) {
         super(options);
@@ -149,25 +148,25 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         return this._skyBlockItems;
     }
 
-    public get skyBlockCurrentMayor(): Readonly<HypixelSkyBlockMayor> {
+    public get skyBlockCurrentMayor(): Readonly<HypixelSkyBlockMayor> | null {
         if(!this._skyBlockCurrentMayor) {
             throw new ResourcesNotReadyError()
         }
-        return this._skyBlockCurrentMayor;
+        return this._skyBlockCurrentMayor ?? null;
     }
 
-    public get skyBlockCurrentElection(): Readonly<HypixelSkyBlockElection> {
+    public get skyBlockCurrentElection(): Readonly<HypixelSkyBlockElection> | null {
         if(!this._skyBlockCurrentElection) {
             throw new ResourcesNotReadyError()
         }
-        return this._skyBlockCurrentElection ?? {};
+        return this._skyBlockCurrentElection ?? null;
     }
 
-    public get skyBlockBingo(): Readonly<HypixelSkyBlockBingo> {
+    public get skyBlockBingo(): Readonly<HypixelSkyBlockBingo> | null {
         if(!this._skyBlockBingo) {
             throw new ResourcesNotReadyError()
         }
-        return this._skyBlockBingo ?? {};
+        return this._skyBlockBingo ?? null;
     }
 
     public async fetchGames(raw?: false): Promise<Record<string, HypixelGame>>;
@@ -218,15 +217,15 @@ export class HypixelResources extends BaseAPI<APIOptions> {
             }
 
             // Hypixel API response is not actual HypixelGameAchievements objects. HypixelGameAchievements constructor performs type checks
-            const achievemenachievementssObj: Record<string, HypixelGameAchievements> = {}
-            for(const prop in achievemenachievementssObj) {
+            const achievementsObj: Record<string, HypixelGameAchievements> = {}
+            for(const prop in json.achievements) {
                 if(json.achievements[prop] == null) {
                     continue;
                 }
-                achievemenachievementssObj[prop] = new HypixelGameAchievements(json.achievements[prop] as HypixelAPIValue<HypixelGameAchievements>);
+                achievementsObj[prop] = new HypixelGameAchievements(json.achievements[prop] as HypixelAPIValue<HypixelGameAchievements>);
             }
 
-            return achievemenachievementssObj;
+            return achievementsObj;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -547,9 +546,9 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async fetchCurrentSkyBlockMayor(raw?: false): Promise<HypixelSkyBlockMayor>;
+    public async fetchCurrentSkyBlockMayor(raw?: false): Promise<HypixelSkyBlockMayor | null>;
     public async fetchCurrentSkyBlockMayor(raw?: true): Promise<HypixelSkyBlockElectionResponse>;
-    public async fetchCurrentSkyBlockMayor(raw = false): Promise<HypixelSkyBlockMayor | HypixelSkyBlockElectionResponse> {
+    public async fetchCurrentSkyBlockMayor(raw = false): Promise<HypixelSkyBlockMayor | HypixelSkyBlockElectionResponse | null> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/election`);
         const json: HypixelSkyBlockElectionResponse = await res.json();
 
@@ -558,11 +557,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
 
         if(json.success) {
-            if(!json.mayor) {
-                throw new HypixelParseError("No mayor elected", json);
-            }
-
-            return new HypixelSkyBlockMayor(json.mayor)
+            return json.mayor == null ? null : new HypixelSkyBlockMayor(json.mayor)
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -570,9 +565,9 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async fetchCurrentSkyBlockElection(raw?: false): Promise<HypixelSkyBlockElection>;
+    public async fetchCurrentSkyBlockElection(raw?: false): Promise<HypixelSkyBlockElection | null>;
     public async fetchCurrentSkyBlockElection(raw?: true): Promise<HypixelSkyBlockElectionResponse>;
-    public async fetchCurrentSkyBlockElection(raw = false): Promise<HypixelSkyBlockElection | HypixelSkyBlockElectionResponse> {
+    public async fetchCurrentSkyBlockElection(raw = false): Promise<HypixelSkyBlockElection | HypixelSkyBlockElectionResponse | null> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/election`);
         const json: HypixelSkyBlockElectionResponse = await res.json();
 
@@ -581,11 +576,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
 
         if(json.success) {
-            if(!json.current) {
-                throw new HypixelParseError("No ongoing election", json);
-            }
-
-            return new HypixelSkyBlockElection(json.current)
+            return json.current == null ? null : new HypixelSkyBlockElection(json.current)
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -593,9 +584,9 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
     }
 
-    public async fetchSkyBlockBingo(raw?: false): Promise<HypixelSkyBlockBingo>;
+    public async fetchSkyBlockBingo(raw?: false): Promise<HypixelSkyBlockBingo | null>;
     public async fetchSkyBlockBingo(raw?: true): Promise<HypixelSkyBlockBingoResponse>;
-    public async fetchSkyBlockBingo(raw = false): Promise<HypixelSkyBlockBingo | HypixelSkyBlockBingoResponse> {
+    public async fetchSkyBlockBingo(raw = false): Promise<HypixelSkyBlockBingo | HypixelSkyBlockBingoResponse | null> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_RESOURCES_URL}/skyblock/bingo`);
         const json: HypixelSkyBlockBingoResponse = await res.json();
 
@@ -604,10 +595,10 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
 
         if(json.success) {
-            if(!json.id) {
-                throw new HypixelParseError("No Bingo ID found", json);
-            }
 
+            if(json.id == null) {
+                return null;
+            }
             return new HypixelSkyBlockBingo({
                 id: json.id,
                 goals: json.goals
