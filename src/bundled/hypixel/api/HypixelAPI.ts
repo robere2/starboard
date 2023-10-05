@@ -25,6 +25,7 @@ import {
     HypixelSkyBlockElectionResponse
 } from "./resources/skyblock/HypixelSkyBlockElection.ts";
 import {HypixelParseError} from "./HypixelParseError.ts";
+import {HypixelSkyBlockBingo, HypixelSkyBlockBingoResponse} from "./resources/skyblock/HypixelSkyBlockBingo.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -62,9 +63,9 @@ export type HypixelAPIErrorDef = {
     global?: boolean
 }
 
-export type HypixelAPIValue<T> = {
+export type HypixelAPIValue<T> = T extends object ? {
     readonly [P in keyof T]?: HypixelAPIValue<T[P]>;
-}
+} : T | undefined
 
 export type HypixelAPIResponse<T> = ({
     success: true;
@@ -537,7 +538,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
-    public async getCurrentMayor(): Promise<HypixelSkyBlockMayor> {
+    public async getCurrentSkyBlockMayor(): Promise<HypixelSkyBlockMayor> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/election`, {
             headers: this.genHeaders()
         });
@@ -555,7 +556,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
-    public async getCurrentElection(): Promise<HypixelSkyBlockElection> {
+    public async getCurrentSkyBlockElection(): Promise<HypixelSkyBlockElection> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/election`, {
             headers: this.genHeaders()
         });
@@ -566,6 +567,27 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             }
 
             return new HypixelSkyBlockElection(json.current)
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockBingo(): Promise<HypixelSkyBlockBingo> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/bingo`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockBingoResponse = await res.json();
+        if(json.success) {
+            if(!json.id) {
+                throw new HypixelParseError("No Bingo ID found", json);
+            }
+
+            return new HypixelSkyBlockBingo({
+                id: json.id,
+                goals: json.goals
+            })
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
