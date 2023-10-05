@@ -13,6 +13,10 @@ import {HypixelQuest, HypixelQuestResponse} from "./resources/HypixelQuest.ts";
 import {HypixelGuildAchievements, HypixelGuildAchievementsResponse} from "./resources/HypixelGuildAchievements.ts";
 import {HypixelPet, HypixelPetRarity, HypixelPetsResponse} from "./resources/HypixelPet.ts";
 import {HypixelCompanion, HypixelCompanionRarity, HypixelCompanionsResponse} from "./resources/HypixelCompanion.ts";
+import {
+    HypixelSkyBlockCollection,
+    HypixelSkyBlockCollectionsResponse
+} from "./resources/skyblock/HypixelSkyBlockCollection.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -442,6 +446,32 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 rarities.push(rarity as HypixelCompanionRarity);
             }
             return rarities;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockCollections(): Promise<Record<string, Record<string, HypixelSkyBlockCollection>>> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/collections`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockCollectionsResponse = await res.json();
+        if(json.success) {
+            if(!json.collections) {
+                return {};
+            }
+
+            const collections: Record<string, HypixelSkyBlockCollection> = {};
+            for(const collection in json.collections) {
+                if(!json.collections[collection]) {
+                    continue;
+                }
+                collections[collection] = new HypixelSkyBlockCollection(json.collections[collection] as HypixelSkyBlockCollection);
+            }
+
+            return collections;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
