@@ -18,6 +18,7 @@ import {
     HypixelSkyBlockCollectionsResponse
 } from "./resources/skyblock/HypixelSkyBlockCollection.ts";
 import {HypixelSkyBlockItem, HypixelSkyBlockItemsResponse} from "./resources/skyblock/HypixelSkyBlockItem.ts";
+import {HypixelSkyBlockSkill, HypixelSkyBlockSkillsResponse} from "./resources/skyblock/HypixelSkyBlockSkill.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -391,7 +392,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
 
             const rarities: HypixelPetRarity[] = [];
             for(const rarity of json.rarities) {
-                if(!rarity || !rarity.name || !rarity.color) {
+                if(!rarity) {
                     continue;
                 }
                 rarities.push(new HypixelPetRarity(rarity));
@@ -441,7 +442,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
 
             const rarities: HypixelCompanionRarity[] = [];
             for(const rarity of json.rarities) {
-                if(!rarity || !rarity.name || !rarity.color) {
+                if(!rarity) {
                     continue;
                 }
                 rarities.push(new HypixelCompanionRarity(rarity));
@@ -454,7 +455,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
-    public async getSkyBlockCollections(): Promise<Record<string, Record<string, HypixelSkyBlockCollection>>> {
+    public async getSkyBlockCollections(): Promise<Record<string,HypixelSkyBlockCollection>> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/collections`, {
             headers: this.genHeaders()
         });
@@ -480,6 +481,31 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
+    public async getSkyBlockSkills(): Promise<Record<string, HypixelSkyBlockSkill>> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/skills`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockSkillsResponse = await res.json();
+        if(json.success) {
+            if(!json.collections) {
+                return {};
+            }
+
+            const skills: Record<string, HypixelSkyBlockSkill> = {};
+            for(const skill in json.collections) {
+                if(!skill) {
+                    continue;
+                }
+                skills[skill] = new HypixelSkyBlockSkill(json.collections[skill] as HypixelSkyBlockSkill);
+            }
+            return skills;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
     public async getSkyBlockItems(): Promise<HypixelSkyBlockItem[]> {
         const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/items`, {
             headers: this.genHeaders()
@@ -492,7 +518,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
 
             const items: HypixelSkyBlockItem[] = [];
             for(const item of json.items) {
-                if(!item || !item.name || !item.color) {
+                if(!item) {
                     continue;
                 }
                 items.push(new HypixelSkyBlockItem(item));

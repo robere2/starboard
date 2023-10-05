@@ -35,15 +35,13 @@ export class HypixelTieredGuildAchievement {
             throw new HypixelParseError("Description cannot be null", input)
         }
         this.description = input.description;
-        if(input.tiers == null) {
-            throw new HypixelParseError("Tiers cannot be null", input)
-        }
-        // This code requires tiers to have all properties and just skips any which are malformed.
-        this.tiers = input.tiers.reduce<HypixelGuildAchievementTier[]>((acc, tier) => {
-            if(tier && tier.tier != null && tier.amount != null) {
-                acc.push(tier as HypixelGuildAchievementTier);
+
+        this.tiers = [];
+        for(const tier of input.tiers ?? []) {
+            if (!tier) {
+                continue;
             }
-            return acc;
-        }, [])
+            this.tiers.push(new HypixelGuildAchievementTier(tier))
+        }
     }
 }

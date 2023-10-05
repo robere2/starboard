@@ -40,11 +40,9 @@ export class HypixelTieredAchievement {
             throw new HypixelParseError("Description cannot be null", input)
         }
         this.description = input.description;
-        if(input.tiers == null) {
-            throw new HypixelParseError("Tiers cannot be null", input)
-        }
+
         this.tiers = [];
-        for(const tier of input.tiers) {
+        for(const tier of input.tiers ?? []) {
             if(!tier) {
                 continue;
             }

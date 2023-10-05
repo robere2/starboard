@@ -12,13 +12,13 @@ export class HypixelGame {
 
     public constructor(input: HypixelAPIValue<HypixelGame>) {
         Object.assign(this, input); // Copy undocumented and non-required properties
-        if(!input.id) {
+        if(input.id == null) {
             throw new HypixelParseError("Game ID cannot be null", input)
         }
-        if(!input.name) {
+        if(input.name == null) {
             throw new HypixelParseError("Game name cannot be null", input)
         }
-        if(!input.databaseName) {
+        if(input.databaseName == null) {
             throw new HypixelParseError("Game database name cannot be null", input)
         }
         this.id = input.id;

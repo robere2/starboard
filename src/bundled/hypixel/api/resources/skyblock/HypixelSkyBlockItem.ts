@@ -9,7 +9,7 @@ export class HypixelSkyBlockItemSalvage {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockItemSalvage>) {
         Object.assign(this, input) // Copy undocumented and non-required properties
-        if(!input.type) {
+        if(input.type == null) {
             throw new HypixelParseError("Salvage type cannot be null", input)
         }
         this.type = input.type;
@@ -34,7 +34,7 @@ export class HypixelSkyBlockItemRequirement {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockItemRequirement>) {
         Object.assign(this, input) // Copy undocumented and non-required properties
-        if(!input.type) {
+        if(input.type == null) {
             throw new HypixelParseError("Requirement type cannot be null", input)
         }
         this.type = input.type;
@@ -50,7 +50,7 @@ export class HypixelSkyBlockItemUpgradeCost {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockItemUpgradeCost>) {
         Object.assign(this, input) // Copy undocumented and non-required properties
-        if(!input.type) {
+        if(input.type == null) {
             throw new HypixelParseError("Upgrade cost cannot be null", input)
         }
         this.type = input.type;
@@ -64,7 +64,7 @@ export class HypixelSkyBlockItemGemstoneSlot {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockItemGemstoneSlot>) {
         Object.assign(this, input) // Copy undocumented and non-required properties
-        if(!input.slot_type) {
+        if(input.slot_type == null) {
             throw new HypixelParseError("Gemstone slot type cannot be null", input)
         }
         this.slot_type = input.slot_type;
@@ -88,7 +88,7 @@ export class HypixelSkyBlockItemGemstoneSlotCost {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockItemGemstoneSlotCost>) {
         Object.assign(this, input) // Copy undocumented and non-required properties
-        if(!input.type) {
+        if(input.type == null) {
             throw new HypixelParseError("Gemstone slot cost cannot be null", input)
         }
         this.type = input.type;
@@ -103,11 +103,11 @@ export class HypixelSkyBlockItemDungeonConversionCost {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockItemDungeonConversionCost>) {
         Object.assign(this, input) // Copy undocumented and non-required properties
-        if(!input.essence_type) {
+        if(input.essence_type == null) {
             throw new HypixelParseError("Dungeon conversion cost essence type cannot be null", input)
         }
         this.essence_type = input.essence_type;
-        if(!input.amount) {
+        if(input.amount == null) {
             throw new HypixelParseError("Dungeon conversion cost amount cannot be null", input)
         }
         this.amount = input.amount;
@@ -122,7 +122,7 @@ export class HypixelSkyBlockItemCatacombsRequirement {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockItemCatacombsRequirement>) {
         Object.assign(this, input) // Copy undocumented and non-required properties
-        if(!input.type) {
+        if(input.type == null) {
             throw new HypixelParseError("Catacombs requirement type cannot be null", input)
         }
         this.type = input.type;
@@ -136,7 +136,7 @@ export class HypixelSkyBlockItemPrestige {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockItemPrestige>) {
         Object.assign(this, input) // Copy undocumented and non-required properties
-        if(!input.item_id) {
+        if(input.item_id == null) {
             throw new HypixelParseError("Prestige item ID cannot be null", input)
         }
         this.item_id = input.item_id;
@@ -203,15 +203,15 @@ export class HypixelSkyBlockItem {
 
     public constructor(input: HypixelAPIValue<HypixelSkyBlockItem>) {
         Object.assign(this, input); // Copy undocumented and non-required properties
-        if(!input.id) {
+        if(input.id == null) {
             throw new HypixelParseError("Item id cannot be null", input)
         }
         this.id = input.id;
-        if(!input.name) {
+        if(input.name == null) {
             throw new HypixelParseError("Item name cannot be null", input)
         }
         this.name = input.name;
-        if(!input.material) {
+        if(input.material == null) {
             throw new HypixelParseError("Item material cannot be null", input)
         }
         this.material = input.material;

@@ -20,12 +20,14 @@ export class HypixelSkyBlockCollectionItem {
         if(input.tiers?.length !== this.maxTiers) {
             throw new HypixelParseError("Collection item tiers must be the same length as max tiers", input)
         }
-        this.tiers = input.tiers.map(tier => {
+
+        this.tiers = [];
+        for(const tier of input.tiers ?? []) {
             if(!tier) {
-                throw new HypixelParseError("Collection item tier cannot be null", input)
+                continue;
             }
-            return new HypixelSkyBlockCollectionTier(tier)
-        })
+            this.tiers.push(new HypixelSkyBlockCollectionTier(tier));
+        }
     }
 }
 
@@ -37,14 +39,15 @@ export class HypixelSkyBlockCollectionTier {
 
     constructor(input: HypixelAPIValue<HypixelSkyBlockCollectionTier>) {
         Object.assign(this, input); // Copy undocumented and non-required properties
-        if(!input.tier) {
+        if(input.tier == null) {
             throw new HypixelParseError("Collection tier number cannot be null", input)
         }
         this.tier = input.tier;
-        if(!input.amountRequired) {
+        if(input.amountRequired == null) {
             throw new HypixelParseError("Collection tier amountRequired cannot be null", input)
         }
         this.amountRequired = input.amountRequired;
+
         this.unlocks = [];
         for(const unlock of input.unlocks ?? []) {
             if(unlock != null) {
@@ -61,17 +64,19 @@ export class HypixelSkyBlockCollection {
 
     public constructor(input: HypixelAPIValue<HypixelSkyBlockCollection>) {
         Object.assign(this, input); // Copy undocumented and non-required properties
-        if(!input.name) {
+        if(input.name == null) {
             throw new HypixelParseError("Collection name cannot be null", input)
         }
         this.name = input.name;
+
         this.items = {};
-        if(input.items)
-        for(const item in input.items ?? {}) {
-            if(input.items[item] == null) {
-                continue;
+        if(input.items) {
+            for (const item in input.items) {
+                if (input.items[item] == null) {
+                    continue;
+                }
+                this.items[item] = new HypixelSkyBlockCollectionItem(input.items[item] as HypixelSkyBlockCollectionItem);
             }
-            this.items[item] = new HypixelSkyBlockCollectionItem(input.items[item] as HypixelSkyBlockCollectionItem);
         }
     }
 }

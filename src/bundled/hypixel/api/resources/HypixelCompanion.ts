@@ -8,11 +8,11 @@ export class HypixelCompanionRarity {
 
     public constructor(input: HypixelAPIValue<HypixelCompanionRarity>) {
         Object.assign(this, input); // Copy undocumented and non-required properties
-        if(!input.name) {
+        if(input.name == null) {
             throw new HypixelParseError("Rarity name cannot be null", input)
         }
         this.name = input.name;
-        if(!input.color) {
+        if(input.color == null) {
             throw new HypixelParseError("Rarity color cannot be null", input)
         }
         this.color = input.color;
@@ -28,10 +28,10 @@ export class HypixelCompanion {
 
     public constructor(input: HypixelAPIValue<HypixelCompanion>) {
         Object.assign(this, input); // Copy undocumented and non-required properties
-        if(!input.key) {
+        if(input.key == null) {
             throw new HypixelParseError("Companion key cannot be null", input)
         }
-        if(!input.name) {
+        if(input.name == null) {
             throw new HypixelParseError("Companion name cannot be null", input)
         }
         this.key = input.key;

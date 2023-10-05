@@ -12,24 +12,20 @@ export class HypixelGameAchievements {
     public constructor(input: HypixelAPIValue<HypixelGameAchievements>) {
         Object.assign(this, input); // Copy undocumented and non-required properties
 
-        // one_time and tiered properties are converted into classes
-        if(input.one_time) {
-            this.one_time = {}
-            for(const [key, value] of Object.entries(input.one_time)) {
-                if(!value) {
-                    continue;
-                }
-                this.one_time[key] = new HypixelOneTimeAchievement(value)
+        this.one_time = {}
+        for(const [key, value] of Object.entries(input.one_time ?? {})) {
+            if(!value) {
+                continue;
             }
+            this.one_time[key] = new HypixelOneTimeAchievement(value)
         }
-        if(input.tiered) {
-            this.tiered = {}
-            for(const [key, value] of Object.entries(input.tiered)) {
-                if(!value) {
-                    continue;
-                }
-                this.tiered[key] = new HypixelTieredAchievement(value)
+
+        this.tiered = {}
+        for(const [key, value] of Object.entries(input.tiered ?? {})) {
+            if(!value) {
+                continue;
             }
+            this.tiered[key] = new HypixelTieredAchievement(value)
         }
     }
 }

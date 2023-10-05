@@ -32,11 +32,9 @@ export class HypixelChallenge {
             throw new HypixelParseError("Challenge name cannot be null", input)
         }
         this.name = input.name;
-        if(!input.rewards) {
-            throw new HypixelParseError("Challenge rewards cannot be null", input)
-        }
+
         this.rewards = [];
-        for(const reward of input.rewards) {
+        for(const reward of input.rewards ?? []) {
             if(!reward) {
                 continue;
             }

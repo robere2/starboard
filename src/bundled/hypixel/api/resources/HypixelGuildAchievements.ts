@@ -8,14 +8,13 @@ export class HypixelGuildAchievements {
     public constructor(input: HypixelAPIValue<HypixelGuildAchievements>) {
         // One-time guild achievements are defined in the API, but currently none exist
         this.one_time = input.one_time;
-        if(input.tiered) {
-            this.tiered = {}
-            for(const [key, value] of Object.entries(input.tiered)) {
-                if(!value) {
-                    continue;
-                }
-                this.tiered[key] = new HypixelTieredGuildAchievement(value)
+
+        this.tiered = {}
+        for(const [key, value] of Object.entries(input.tiered ?? {})) {
+            if(!value) {
+                continue;
             }
+            this.tiered[key] = new HypixelTieredGuildAchievement(value)
         }
     }
 }
