@@ -1,25 +1,11 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
-
-export class HypixelChallengeReward {
-    public type: string;
-    public amount?: number;
-    public package?: string;
-    [undocumentedProperties: string]: any
-
-    public constructor(input: HypixelAPIValue<HypixelChallengeReward>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
-        if(input.type == null) {
-            throw new HypixelParseError("Challenge reward type cannot be null", input)
-        }
-        this.type = input.type;
-    }
-}
+import {HypixelReward} from "./HypixelReward.ts";
 
 export class HypixelChallenge {
     public id: string;
     public name: string;
-    public rewards: HypixelChallengeReward[];
+    public rewards: HypixelReward[];
     [undocumentedProperties: string]: any
 
     public constructor(input: HypixelAPIValue<HypixelChallenge>) {
@@ -38,7 +24,7 @@ export class HypixelChallenge {
             if(!reward) {
                 continue;
             }
-            this.rewards.push(new HypixelChallengeReward(reward));
+            this.rewards.push(new HypixelReward(reward));
         }
     }
 }

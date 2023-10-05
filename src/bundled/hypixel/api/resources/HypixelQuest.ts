@@ -1,20 +1,6 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
-
-export class HypixelQuestReward {
-    public type: string;
-    public amount?: number;
-    public package?: string;
-    [undocumentedProperties: string]: any
-
-    constructor(input: HypixelAPIValue<HypixelQuestReward>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
-        if(input.type == null) {
-            throw new HypixelParseError("Reward type cannot be null", input)
-        }
-        this.type = input.type;
-    }
-}
+import {HypixelReward} from "./HypixelReward.ts";
 
 export class HypixelQuestObjective {
     public id: string;
@@ -52,7 +38,7 @@ export class HypixelQuest {
     public id: string;
     public name: string;
     public description?: string;
-    public rewards: HypixelQuestReward[];
+    public rewards: HypixelReward[];
     public objectives: HypixelQuestObjective[];
     public requirements: HypixelQuestRequirement[];
     [undocumentedProperties: string]: any
@@ -74,7 +60,7 @@ export class HypixelQuest {
             if(!reward) {
                 continue;
             }
-            this.rewards.push(new HypixelQuestReward(reward));
+            this.rewards.push(new HypixelReward(reward));
         }
 
         this.objectives = [];
