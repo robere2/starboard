@@ -17,6 +17,7 @@ import {
     HypixelSkyBlockCollection,
     HypixelSkyBlockCollectionsResponse
 } from "./resources/skyblock/HypixelSkyBlockCollection.ts";
+import {HypixelSkyBlockItem, HypixelSkyBlockItemsResponse} from "./resources/skyblock/HypixelSkyBlockItem.ts";
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -393,7 +394,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 if(!rarity || !rarity.name || !rarity.color) {
                     continue;
                 }
-                rarities.push(rarity as HypixelPetRarity);
+                rarities.push(new HypixelPetRarity(rarity));
             }
             return rarities;
         } else {
@@ -443,7 +444,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 if(!rarity || !rarity.name || !rarity.color) {
                     continue;
                 }
-                rarities.push(rarity as HypixelCompanionRarity);
+                rarities.push(new HypixelCompanionRarity(rarity));
             }
             return rarities;
         } else {
@@ -472,6 +473,31 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             }
 
             return collections;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockItems(): Promise<HypixelSkyBlockItem[]> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/resources/skyblock/items`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockItemsResponse = await res.json();
+        if(json.success) {
+            if(!json.items) {
+                return [];
+            }
+
+            const items: HypixelSkyBlockItem[] = [];
+            for(const item of json.items) {
+                if(!item || !item.name || !item.color) {
+                    continue;
+                }
+                items.push(new HypixelSkyBlockItem(item));
+            }
+            return items;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
