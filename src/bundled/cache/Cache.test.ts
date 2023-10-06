@@ -5,7 +5,9 @@ import {TTLCachePolicy} from "./TTLCachePolicy.ts";
 class MinimumCacheExample<T = any> extends Cache<T> {
 
     constructor(ttl: number) {
-        super(new TTLCachePolicy(ttl));
+        super({
+            policy: new TTLCachePolicy<T>(ttl)
+        });
     }
 
     // Saving is not tested in this file
@@ -15,6 +17,14 @@ class MinimumCacheExample<T = any> extends Cache<T> {
 
     access(key: string): CacheItem<T> | Promise<CacheItem<T> | undefined> | undefined {
         return undefined;
+    }
+
+    delete(key: string): void | Promise<void> {
+        return undefined;
+    }
+
+    keys(): string[] | Promise<string[]> {
+        return []
     }
 
 }

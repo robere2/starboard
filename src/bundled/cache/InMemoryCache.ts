@@ -11,7 +11,15 @@ export class InMemoryCache<T> extends Cache<T> {
         });
     }
 
-    public async access(key: string): Promise<CacheItem<T> | undefined> {
+    public access(key: string): CacheItem<T> | undefined {
         return this.cache.get(key);
+    }
+
+    delete(key: string): void {
+        this.cache.delete(key);
+    }
+
+    keys(): string[] {
+        return Array.from(this.cache.keys());
     }
 }
