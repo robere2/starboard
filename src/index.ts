@@ -5,5 +5,7 @@ export * from './Executor.ts';
 export * from './Plugin.ts';
 export * from './Service.ts';
 
+export * from './util.ts';
+
 export * from './bundled';
 
