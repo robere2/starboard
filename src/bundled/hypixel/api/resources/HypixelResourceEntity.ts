@@ -5,6 +5,7 @@ export class HypixelResourceEntity {
     private static parents: Map<string, HypixelResources> = new Map();
 
     private readonly _parentId: string;
+    [undocumentedProperties: string]: any
 
     public constructor(parent: HypixelResources) {
         this._parentId = parent.id;

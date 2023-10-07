@@ -4,8 +4,8 @@ import {HypixelEntity} from "./resources/HypixelEntity.ts";
 export class HypixelRecentGame extends HypixelEntity {
     date?: number;
     gameType?: string;
-    mode?: string;
-    map?: string;
+    mode?: string | null;
+    map?: string | null;
     ended?: number;
     [undocumentedProperties: string]: any
 

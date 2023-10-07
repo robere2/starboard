@@ -5,6 +5,7 @@ export class HypixelEntity {
     private static roots: Map<string, HypixelAPI> = new Map();
 
     private readonly _rootId: string;
+    [undocumentedProperties: string]: any
 
     public constructor(root: HypixelAPI) {
         this._rootId = root.id;
