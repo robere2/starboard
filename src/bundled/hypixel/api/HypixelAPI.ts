@@ -6,7 +6,7 @@ import {HypixelRecentGame, HypixelRecentGamesResponse} from "./HypixelRecentGame
 import {HypixelSession, HypixelStatusResponse} from "./HypixelSession.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
 import {HypixelResources} from "./resources";
-import {HypixelSkyBlockNewsItem, HypixelSkyBlockNewsResponse} from "./HypixelSkyBlockNewsItem.ts";
+import {HypixelSkyBlockNewsItem, HypixelSkyBlockNewsResponse} from "./skyblock";
 import crypto from "crypto";
 import {HypixelEntity} from "./HypixelEntity.ts";
 

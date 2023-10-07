@@ -1,7 +1,7 @@
-import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
-import {HypixelParseError} from "./HypixelParseError.ts";
-import {HypixelEntity} from "./HypixelEntity.ts";
-import { HypixelResources } from "./resources";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelParseError} from "../HypixelParseError.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
+import { HypixelResources } from "../resources";
 
 export class HypixelSkyBlockNewsItem extends HypixelEntity {
     item?: {
