@@ -1,16 +1,16 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
-import {HypixelResourceEntity} from "../HypixelResourceEntity.ts";
+import {HypixelEntity} from "../../HypixelEntity.ts";
 import {HypixelResources} from "../HypixelResources.ts";
 import {HypixelSkyBlockCollection} from "./HypixelSkyBlockCollection.ts";
 
-export class HypixelSkyBlockSkillLevel extends HypixelResourceEntity {
+export class HypixelSkyBlockSkillLevel extends HypixelEntity {
     public level: number;
     public totalExpRequired: number;
     public unlocks: string[];
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockSkillLevel>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockSkillLevel>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.level == null) {
             throw new HypixelParseError("Skill level value cannot be null", input)
@@ -31,14 +31,14 @@ export class HypixelSkyBlockSkillLevel extends HypixelResourceEntity {
     }
 }
 
-export class HypixelSkyBlockSkill extends HypixelResourceEntity {
+export class HypixelSkyBlockSkill extends HypixelEntity {
     public name: string;
     public description: string;
     public maxLevel: number;
     public levels: HypixelSkyBlockSkillLevel[];
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockSkill>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockSkill>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Skill name cannot be null", input)
@@ -60,7 +60,7 @@ export class HypixelSkyBlockSkill extends HypixelResourceEntity {
             if (!level) {
                 continue;
             }
-            this.levels.push(new HypixelSkyBlockSkillLevel(parent, level));
+            this.levels.push(new HypixelSkyBlockSkillLevel(root, parent, level));
         }
     }
 

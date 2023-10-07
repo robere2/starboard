@@ -1,17 +1,17 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelRarity} from "./HypixelRarity.ts";
-import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelCompanion extends HypixelResourceEntity {
+export class HypixelCompanion extends HypixelEntity {
     public key: string;
     public name: string;
     public rarity?: string;
     public package?: string;
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelCompanion>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelCompanion>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.key == null) {
             throw new HypixelParseError("Companion key cannot be null", input)

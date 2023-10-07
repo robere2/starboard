@@ -1,6 +1,7 @@
 import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
 import {HypixelParseError} from "./HypixelParseError.ts";
-import {HypixelEntity} from "./resources/HypixelEntity.ts";
+import {HypixelEntity} from "./HypixelEntity.ts";
+import { HypixelResources } from "./resources";
 
 export class HypixelSkyBlockNewsItem extends HypixelEntity {
     item?: {
@@ -11,8 +12,8 @@ export class HypixelSkyBlockNewsItem extends HypixelEntity {
     title: string
     [undocumentedProperties: string]: any
 
-    public constructor(root: HypixelAPI, input: HypixelAPIValue<HypixelSkyBlockNewsItem>) {
-        super(root);
+    public constructor(root: HypixelAPI, resources: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockNewsItem>) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.link) {
             throw new HypixelParseError("SkyBlock news item must have the \"link\" property", input);

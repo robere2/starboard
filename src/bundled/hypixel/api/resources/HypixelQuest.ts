@@ -1,16 +1,16 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelReward} from "./HypixelReward.ts";
-import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelQuestObjective extends HypixelResourceEntity {
+export class HypixelQuestObjective extends HypixelEntity {
     public id: string;
     public type: string;
     public integer?: number;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuestObjective>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelQuestObjective>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Objective ID cannot be null", input)
@@ -23,11 +23,11 @@ export class HypixelQuestObjective extends HypixelResourceEntity {
     }
 }
 
-export class HypixelQuestRequirement extends HypixelResourceEntity {
+export class HypixelQuestRequirement extends HypixelEntity {
     public type: string;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuestRequirement>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelQuestRequirement>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Requirement type cannot be null", input)
@@ -36,7 +36,7 @@ export class HypixelQuestRequirement extends HypixelResourceEntity {
     }
 }
 
-export class HypixelQuest extends HypixelResourceEntity {
+export class HypixelQuest extends HypixelEntity {
     public id: string;
     public name: string;
     public description?: string;
@@ -44,8 +44,8 @@ export class HypixelQuest extends HypixelResourceEntity {
     public objectives: HypixelQuestObjective[];
     public requirements: HypixelQuestRequirement[];
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuest>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelQuest>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Challenge ID cannot be null", input)
@@ -62,7 +62,7 @@ export class HypixelQuest extends HypixelResourceEntity {
             if(!reward) {
                 continue;
             }
-            this.rewards.push(new HypixelReward(parent, reward));
+            this.rewards.push(new HypixelReward(root, parent, reward));
         }
 
         this.objectives = [];
@@ -70,7 +70,7 @@ export class HypixelQuest extends HypixelResourceEntity {
             if(!objective) {
                 continue;
             }
-            this.objectives.push(new HypixelQuestObjective(parent, objective));
+            this.objectives.push(new HypixelQuestObjective(root, parent, objective));
         }
 
         this.requirements = [];
@@ -78,7 +78,7 @@ export class HypixelQuest extends HypixelResourceEntity {
             if(!requirements) {
                 continue;
             }
-            this.rewards.push(new HypixelQuestRequirement(parent, requirements));
+            this.rewards.push(new HypixelQuestRequirement(root, parent, requirements));
         }
     }
 }

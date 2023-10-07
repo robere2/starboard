@@ -5,5 +5,6 @@ export * from './HypixelPlayer.ts';
 export * from './HypixelRecentGame.ts';
 export * from './HypixelSession.ts';
 export * from './HypixelSkyBlockNewsItem.ts';
+export * from './HypixelEntity.ts';
 
 export * from './resources';

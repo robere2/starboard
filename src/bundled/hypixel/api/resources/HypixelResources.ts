@@ -14,9 +14,10 @@ import {HypixelSkyBlockMayor} from "./skyblock/HypixelSkyBlockMayor.ts";
 import {HypixelSkyBlockElection, HypixelSkyBlockElectionResponse} from "./skyblock/HypixelSkyBlockElection.ts";
 import {HypixelSkyBlockBingo, HypixelSkyBlockBingoResponse} from "./skyblock/HypixelSkyBlockBingo.ts";
 import {HypixelRarity} from "./HypixelRarity.ts";
-import {HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIValue} from "../HypixelAPI.ts";
 import {ResourcesNotReadyError} from "./ResourcesNotReadyError.ts";
 import crypto from "crypto";
+import {HypixelEntity} from "../HypixelEntity.ts";
 
 const HYPIXEL_RESOURCES_URL = "https://api.hypixel.net/resources";
 export class HypixelResources extends BaseAPI<APIOptions> {
@@ -25,6 +26,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
     //   property. This prevents circular references, allowing you to log/serialize child values.
     public readonly id: string = crypto.randomUUID()
     private ready: boolean = false;
+    private readonly _rootId: string;
 
     private _games?: Record<string, HypixelGame>
     private _achievements?: Record<string, HypixelGameAchievements>
@@ -42,12 +44,14 @@ export class HypixelResources extends BaseAPI<APIOptions> {
     private _skyBlockCurrentElection?: HypixelSkyBlockElection | null
     private _skyBlockBingo?: HypixelSkyBlockBingo | null
 
-    private constructor(options: APIOptions) {
+    private constructor(root: HypixelAPI, options: APIOptions) {
         super(options);
+        this._rootId = root.id;
     }
 
-    public static async create(options?: APIOptions): Promise<HypixelResources> {
-        const resources = new HypixelResources(options ?? {});
+    public static async create(root: HypixelAPI, options?: APIOptions): Promise<HypixelResources> {
+        const resources = new HypixelResources(root, options ?? {});
+        HypixelEntity.registerResources(resources);
         resources._games = await resources.fetchGames();
         resources._achievements = await resources.fetchAchievements();
         resources._challenges = await resources.fetchChallenges();
@@ -65,6 +69,10 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         resources._skyBlockBingo = await resources.fetchSkyBlockBingo();
         resources.ready = true;
         return resources;
+    }
+
+    public getRoot(): HypixelAPI {
+        return HypixelEntity.getRoot(this._rootId);
     }
 
     public isReady(): boolean {
@@ -118,6 +126,14 @@ export class HypixelResources extends BaseAPI<APIOptions> {
             throw new ResourcesNotReadyError()
         }
         return this._quests;
+    }
+
+    public get flattenedQuests(): Readonly<Record<string, HypixelQuest>> {
+        // Convert the quests resource from an array of quests for each game into a flattened map of quest IDs to quest object
+        return Object.values(this.quests).flat().reduce((acc, quest) => {
+            acc[quest.id] = quest;
+            return acc;
+        }, {} as Record<string, HypixelQuest>);
     }
 
     public get guildAchievements(): Readonly<HypixelGuildAchievements> {
@@ -209,7 +225,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(json.games[prop] == null) {
                     continue;
                 }
-                games[prop] = new HypixelGame(this, json.games[prop] as HypixelAPIValue<HypixelGame>);
+                games[prop] = new HypixelGame(this.getRoot(), this, json.games[prop] as HypixelAPIValue<HypixelGame>);
             }
 
             return games;
@@ -241,7 +257,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(json.achievements[prop] == null) {
                     continue;
                 }
-                achievementsObj[prop] = new HypixelGameAchievements(this, json.achievements[prop] as HypixelAPIValue<HypixelGameAchievements>);
+                achievementsObj[prop] = new HypixelGameAchievements(this.getRoot(), this, json.achievements[prop] as HypixelAPIValue<HypixelGameAchievements>);
             }
 
             return achievementsObj;
@@ -279,7 +295,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                     if(gameChallengesInput[i] == null) {
                         continue;
                     }
-                    gameChallenges[i] = new HypixelChallenge(this, gameChallengesInput[i]);
+                    gameChallenges[i] = new HypixelChallenge(this.getRoot(), this, gameChallengesInput[i]);
                 }
                 challenges[game] = gameChallenges;
             }
@@ -319,7 +335,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                     if(gameQuestsInput[i] == null) {
                         continue;
                     }
-                    gameQuests[i] = new HypixelQuest(this, gameQuestsInput[i]);
+                    gameQuests[i] = new HypixelQuest(this.getRoot(), this, gameQuestsInput[i]);
                 }
                 quests[game] = gameQuests;
             }
@@ -343,7 +359,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
 
         if(json.success) {
-            return new HypixelGuildAchievements(this, {
+            return new HypixelGuildAchievements(this.getRoot(), this, {
                 one_time: json?.one_time ?? {},
                 tiered: json.tiered ?? {}
             })
@@ -374,7 +390,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(!pet) {
                     continue;
                 }
-                pets.push(new HypixelPet(this, pet));
+                pets.push(new HypixelPet(this.getRoot(), this, pet));
             }
             return pets;
         } else {
@@ -404,7 +420,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(!rarity) {
                     continue;
                 }
-                rarities.push(new HypixelRarity(this, rarity));
+                rarities.push(new HypixelRarity(this.getRoot(), this, rarity));
             }
             return rarities;
         } else {
@@ -434,7 +450,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(!companion) {
                     continue;
                 }
-                companions.push(new HypixelCompanion(this, companion));
+                companions.push(new HypixelCompanion(this.getRoot(), this, companion));
             }
             return companions;
         } else {
@@ -464,7 +480,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(!rarity) {
                     continue;
                 }
-                rarities.push(new HypixelRarity(this, rarity));
+                rarities.push(new HypixelRarity(this.getRoot(), this, rarity));
             }
             return rarities;
         } else {
@@ -494,7 +510,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(!json.collections[collection]) {
                     continue;
                 }
-                collections[collection] = new HypixelSkyBlockCollection(this, json.collections[collection] as HypixelSkyBlockCollection);
+                collections[collection] = new HypixelSkyBlockCollection(this.getRoot(), this, json.collections[collection] as HypixelSkyBlockCollection);
             }
 
             return collections;
@@ -525,7 +541,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(!skill) {
                     continue;
                 }
-                skills[skill] = new HypixelSkyBlockSkill(this, json.skills[skill] as HypixelSkyBlockSkill);
+                skills[skill] = new HypixelSkyBlockSkill(this.getRoot(), this, json.skills[skill] as HypixelSkyBlockSkill);
             }
             return skills;
         } else {
@@ -555,7 +571,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
                 if(!item) {
                     continue;
                 }
-                items.push(new HypixelSkyBlockItem(this, item));
+                items.push(new HypixelSkyBlockItem(this.getRoot(), this, item));
             }
             return items;
         } else {
@@ -576,7 +592,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
 
         if(json.success) {
-            return json.mayor == null ? null : new HypixelSkyBlockMayor(this, json.mayor)
+            return json.mayor == null ? null : new HypixelSkyBlockMayor(this.getRoot(), this, json.mayor)
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -595,7 +611,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         }
 
         if(json.success) {
-            return json.current == null ? null : new HypixelSkyBlockElection(this, json.current)
+            return json.current == null ? null : new HypixelSkyBlockElection(this.getRoot(), this, json.current)
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -618,7 +634,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
             if(json.id == null) {
                 return null;
             }
-            return new HypixelSkyBlockBingo(this, {
+            return new HypixelSkyBlockBingo(this.getRoot(), this, {
                 id: json.id,
                 goals: json.goals
             })

@@ -1,7 +1,8 @@
 import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
 import {HypixelParseError} from "./HypixelParseError.ts";
-import {HypixelEntity} from "./resources/HypixelEntity.ts";
+import {HypixelEntity} from "./HypixelEntity.ts";
 import {HypixelPlayer} from "./HypixelPlayer.ts";
+import {HypixelResources} from "./resources";
 
 export class HypixelGuildMember extends HypixelEntity {
     private readonly _parentId: string;
@@ -12,8 +13,8 @@ export class HypixelGuildMember extends HypixelEntity {
     public readonly mutedTill?: number;
     [undocumentedProperties: string]: any;
 
-    constructor(root: HypixelAPI, input: HypixelAPIValue<HypixelGuildMember>, parentGuildId: string) {
-        super(root);
+    constructor(root: HypixelAPI, resources: HypixelResources, input: HypixelAPIValue<HypixelGuildMember>, parentGuildId: string) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.uuid) {
             throw new HypixelParseError("Guild member UUID is required", input)
@@ -52,8 +53,8 @@ export class HypixelGuildRank extends HypixelEntity {
     created?: number;
     priority?: number;
 
-    constructor(root: HypixelAPI, input: HypixelAPIValue<HypixelGuildRank>, parentGuildId: string) {
-        super(root);
+    constructor(root: HypixelAPI, resources: HypixelResources, input: HypixelAPIValue<HypixelGuildRank>, parentGuildId: string) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.name) {
             throw new HypixelParseError("Guild rank name is required", input)
@@ -101,8 +102,8 @@ export class HypixelGuild extends HypixelEntity {
     guildExpByGameType?: Record<string, number>;
     [undocumentedProperties: string]: any
 
-    public constructor(root: HypixelAPI, input: HypixelAPIValue<HypixelGuild>) {
-        super(root);
+    public constructor(root: HypixelAPI, resources: HypixelResources, input: HypixelAPIValue<HypixelGuild>) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input._id) {
             throw new HypixelParseError("Guild ID is required", input)
@@ -115,7 +116,7 @@ export class HypixelGuild extends HypixelEntity {
                 if(!member) {
                     throw new HypixelParseError("Guild member cannot be null", input)
                 }
-                members.push(new HypixelGuildMember(root, member, this._id));
+                members.push(new HypixelGuildMember(root, resources, member, this._id));
             }
             this.members = members;
         }
@@ -126,7 +127,7 @@ export class HypixelGuild extends HypixelEntity {
                 if(!rank) {
                     throw new HypixelParseError("Guild rank cannot be null", input)
                 }
-                ranks.push(new HypixelGuildRank(root, rank, this._id));
+                ranks.push(new HypixelGuildRank(root, resources, rank, this._id));
             }
             this.ranks = ranks;
         }

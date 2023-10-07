@@ -1,5 +1,6 @@
 import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
-import {HypixelEntity} from "./resources/HypixelEntity.ts";
+import {HypixelEntity} from "./HypixelEntity.ts";
+import { HypixelResources } from "./resources";
 
 export class HypixelSession extends HypixelEntity {
     online?: boolean;
@@ -8,8 +9,8 @@ export class HypixelSession extends HypixelEntity {
     map?: string;
     [undocumentedProperties: string]: any
 
-    public constructor(root: HypixelAPI, input: HypixelAPIValue<HypixelSession>) {
-        super(root);
+    public constructor(root: HypixelAPI, resources: HypixelResources, input: HypixelAPIValue<HypixelSession>) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
     }
 }

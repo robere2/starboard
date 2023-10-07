@@ -1,15 +1,16 @@
 import {HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
 import {HypixelSkyBlockElection} from "./HypixelSkyBlockElection.ts";
-import {HypixelResourceEntity} from "../HypixelResourceEntity.ts";
+import {HypixelEntity} from "../../HypixelEntity.ts";
 import {HypixelResources} from "../HypixelResources.ts";
+import {HypixelAPI} from "../../HypixelAPI.ts";
 
-export class HypixelSkyBlockMayorPerk extends HypixelResourceEntity {
+export class HypixelSkyBlockMayorPerk extends HypixelEntity {
     name: string;
     description: string;
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockMayorPerk>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockMayorPerk>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Mayor perk name cannot be null", input)
@@ -22,14 +23,14 @@ export class HypixelSkyBlockMayorPerk extends HypixelResourceEntity {
     }
 }
 
-export class HypixelSkyBlockMayor extends HypixelResourceEntity {
+export class HypixelSkyBlockMayor extends HypixelEntity {
     public key: string;
     public name: string;
     public perks: HypixelSkyBlockMayorPerk[];
     public election?: HypixelSkyBlockElection;
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockMayor>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockMayor>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.key == null) {
             throw new HypixelParseError("Mayor key cannot be null", input)
@@ -46,9 +47,9 @@ export class HypixelSkyBlockMayor extends HypixelResourceEntity {
             if(!perk) {
                 continue;
             }
-            this.perks.push(new HypixelSkyBlockMayorPerk(parent, perk));
+            this.perks.push(new HypixelSkyBlockMayorPerk(root, parent, perk));
         }
 
-        this.election = input.election ? new HypixelSkyBlockElection(parent, input.election) : undefined;
+        this.election = input.election ? new HypixelSkyBlockElection(root, parent, input.election) : undefined;
     }
 }

@@ -1,9 +1,9 @@
-import {HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
-import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelOneTimeAchievement extends HypixelResourceEntity {
+export class HypixelOneTimeAchievement extends HypixelEntity {
     public points: number;
     public name: string;
     public description: string;
@@ -12,8 +12,8 @@ export class HypixelOneTimeAchievement extends HypixelResourceEntity {
     public legacy?: boolean;
     public secret?: boolean;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelOneTimeAchievement>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelOneTimeAchievement>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.points == null) {
             throw new HypixelParseError("Points cannot be null", input)

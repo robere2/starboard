@@ -1,16 +1,16 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
-import {HypixelResourceEntity} from "../HypixelResourceEntity.ts";
+import {HypixelEntity} from "../../HypixelEntity.ts";
 import {HypixelResources} from "../HypixelResources.ts";
 import {MojangProfileTextures} from "../../../../MojangProfile.ts";
 
-export class HypixelSkyBlockItemSalvage extends HypixelResourceEntity {
+export class HypixelSkyBlockItemSalvage extends HypixelEntity {
     type: string;
     essence_type?: string;
     amount?: number;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemSalvage>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemSalvage>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Salvage type cannot be null", input)
@@ -19,7 +19,7 @@ export class HypixelSkyBlockItemSalvage extends HypixelResourceEntity {
     }
 }
 
-export class HypixelSkyBlockItemRequirement extends HypixelResourceEntity {
+export class HypixelSkyBlockItemRequirement extends HypixelEntity {
     type: string;
     skill?: string;
     level?: number;
@@ -34,8 +34,8 @@ export class HypixelSkyBlockItemRequirement extends HypixelResourceEntity {
     minimum_age_unit?: string;
     minimum_age?: number;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemRequirement>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemRequirement>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Requirement type cannot be null", input)
@@ -44,14 +44,14 @@ export class HypixelSkyBlockItemRequirement extends HypixelResourceEntity {
     }
 }
 
-export class HypixelSkyBlockItemUpgradeCost extends HypixelResourceEntity {
+export class HypixelSkyBlockItemUpgradeCost extends HypixelEntity {
     type: string;
     item_id?: string;
     essence_type?: string;
     amount?: number;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemUpgradeCost>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemUpgradeCost>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Upgrade cost cannot be null", input)
@@ -60,11 +60,11 @@ export class HypixelSkyBlockItemUpgradeCost extends HypixelResourceEntity {
     }
 }
 
-export class HypixelSkyBlockItemGemstoneSlot extends HypixelResourceEntity {
+export class HypixelSkyBlockItemGemstoneSlot extends HypixelEntity {
     slot_type: string;
     costs: HypixelSkyBlockItemGemstoneSlotCost[];
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemGemstoneSlot>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemGemstoneSlot>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.slot_type == null) {
             throw new HypixelParseError("Gemstone slot type cannot be null", input)
@@ -76,19 +76,19 @@ export class HypixelSkyBlockItemGemstoneSlot extends HypixelResourceEntity {
             if (!cost) {
                 continue;
             }
-            this.costs.push(new HypixelSkyBlockItemGemstoneSlotCost(parent, cost));
+            this.costs.push(new HypixelSkyBlockItemGemstoneSlotCost(root, parent, cost));
         }
     }
 }
 
-export class HypixelSkyBlockItemGemstoneSlotCost extends HypixelResourceEntity {
+export class HypixelSkyBlockItemGemstoneSlotCost extends HypixelEntity {
     type: string;
     coins?: number;
     item_id?: string;
     amount?: number;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemGemstoneSlotCost>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemGemstoneSlotCost>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Gemstone slot cost cannot be null", input)
@@ -97,13 +97,13 @@ export class HypixelSkyBlockItemGemstoneSlotCost extends HypixelResourceEntity {
     }
 }
 
-export class HypixelSkyBlockItemDungeonConversionCost extends HypixelResourceEntity {
+export class HypixelSkyBlockItemDungeonConversionCost extends HypixelEntity {
     essence_type: string;
     amount: number;
 
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemDungeonConversionCost>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemDungeonConversionCost>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.essence_type == null) {
             throw new HypixelParseError("Dungeon conversion cost essence type cannot be null", input)
@@ -116,13 +116,13 @@ export class HypixelSkyBlockItemDungeonConversionCost extends HypixelResourceEnt
     }
 }
 
-export class HypixelSkyBlockItemCatacombsRequirement extends HypixelResourceEntity {
+export class HypixelSkyBlockItemCatacombsRequirement extends HypixelEntity {
     type: string;
     dungeon_type?: string;
     level?: number;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemCatacombsRequirement>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemCatacombsRequirement>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Catacombs requirement type cannot be null", input)
@@ -131,12 +131,12 @@ export class HypixelSkyBlockItemCatacombsRequirement extends HypixelResourceEnti
     }
 }
 
-export class HypixelSkyBlockItemPrestige extends HypixelResourceEntity {
+export class HypixelSkyBlockItemPrestige extends HypixelEntity {
     item_id: string;
     costs: HypixelSkyBlockItemUpgradeCost[];
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemPrestige>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItemPrestige>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.item_id == null) {
             throw new HypixelParseError("Prestige item ID cannot be null", input)
@@ -148,12 +148,12 @@ export class HypixelSkyBlockItemPrestige extends HypixelResourceEntity {
             if (!cost) {
                 continue;
             }
-            this.costs.push(new HypixelSkyBlockItemUpgradeCost(parent, cost));
+            this.costs.push(new HypixelSkyBlockItemUpgradeCost(root, parent, cost));
         }
     }
 }
 
-export class HypixelSkyBlockItem extends HypixelResourceEntity {
+export class HypixelSkyBlockItem extends HypixelEntity {
     public id: string;
     public name: string;
     public material: string;
@@ -202,8 +202,8 @@ export class HypixelSkyBlockItem extends HypixelResourceEntity {
     // public salvage?: unknown; // This seems to maybe be a remnant from prev. version? Only exists on one value
     public prestige?: HypixelSkyBlockItemPrestige;
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItem>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockItem>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
@@ -220,11 +220,11 @@ export class HypixelSkyBlockItem extends HypixelResourceEntity {
         this.material = input.material;
 
         if(input.dungeon_item_conversion_cost) {
-            this.dungeon_item_conversion_cost = new HypixelSkyBlockItemDungeonConversionCost(parent, input.dungeon_item_conversion_cost);
+            this.dungeon_item_conversion_cost = new HypixelSkyBlockItemDungeonConversionCost(root, parent, input.dungeon_item_conversion_cost);
         }
 
         if(input.prestige) {
-            this.prestige = new HypixelSkyBlockItemPrestige(parent, input.prestige);
+            this.prestige = new HypixelSkyBlockItemPrestige(root, parent, input.prestige);
         }
 
         this.salvages = [];
@@ -232,7 +232,7 @@ export class HypixelSkyBlockItem extends HypixelResourceEntity {
             if(!salvage) {
                 continue;
             }
-            this.salvages.push(new HypixelSkyBlockItemSalvage(parent, salvage));
+            this.salvages.push(new HypixelSkyBlockItemSalvage(root, parent, salvage));
         }
 
         this.requirements = [];
@@ -240,7 +240,7 @@ export class HypixelSkyBlockItem extends HypixelResourceEntity {
             if(!requirement) {
                 continue;
             }
-            this.requirements.push(new HypixelSkyBlockItemRequirement(parent, requirement));
+            this.requirements.push(new HypixelSkyBlockItemRequirement(root, parent, requirement));
         }
 
         this.upgrade_costs = [];
@@ -250,7 +250,7 @@ export class HypixelSkyBlockItem extends HypixelResourceEntity {
                 if(!upgradeCost) {
                     continue;
                 }
-                newUpgradeCostSet.push(new HypixelSkyBlockItemUpgradeCost(parent, upgradeCost))
+                newUpgradeCostSet.push(new HypixelSkyBlockItemUpgradeCost(root, parent, upgradeCost))
             }
             this.upgrade_costs.push(newUpgradeCostSet);
         }
@@ -260,7 +260,7 @@ export class HypixelSkyBlockItem extends HypixelResourceEntity {
             if(!gemstoneSlot) {
                 continue;
             }
-            this.gemstone_slots.push(new HypixelSkyBlockItemGemstoneSlot(parent, gemstoneSlot));
+            this.gemstone_slots.push(new HypixelSkyBlockItemGemstoneSlot(root, parent, gemstoneSlot));
         }
 
         this.catacombs_requirements = [];
@@ -268,7 +268,7 @@ export class HypixelSkyBlockItem extends HypixelResourceEntity {
             if(!catacombsRequirement) {
                 continue;
             }
-            this.catacombs_requirements.push(new HypixelSkyBlockItemCatacombsRequirement(parent, catacombsRequirement));
+            this.catacombs_requirements.push(new HypixelSkyBlockItemCatacombsRequirement(root, parent, catacombsRequirement));
         }
     }
 

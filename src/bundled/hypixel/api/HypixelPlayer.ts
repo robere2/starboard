@@ -1,7 +1,7 @@
 import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
 import {HypixelParseError} from "./HypixelParseError.ts";
-import {HypixelEntity} from "./resources";
-import {HypixelTieredAchievement} from "./resources";
+import {HypixelEntity, HypixelQuest} from "./";
+import {HypixelResources, HypixelTieredAchievement} from "./resources";
 import {HypixelOneTimeAchievement} from "./resources";
 import {HypixelPet} from "./resources";
 
@@ -15,8 +15,8 @@ export class HypixelPlayerFirework extends HypixelEntity {
     public readonly selected?: boolean;
     [undocumentedProperties: string]: any;
 
-    constructor(root: HypixelAPI, input: HypixelAPIValue<HypixelPlayerFirework>) {
-        super(root);
+    constructor(root: HypixelAPI, resources: HypixelResources, input: HypixelAPIValue<HypixelPlayerFirework>) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.flight_duration == null) {
             throw new HypixelParseError("Player firework must have the \"flight_duration\" property", input);
@@ -24,6 +24,41 @@ export class HypixelPlayerFirework extends HypixelEntity {
         this.flight_duration = input.flight_duration;
     }
 }
+
+export class HypixelPlayerQuestStatus extends HypixelEntity {
+    public readonly completions?: {
+        time?: number;
+        [undocumentedProperties: string]: any;
+    }[];
+    private readonly _questKey;
+    public readonly active?: {
+        started?: number;
+        objectives?: Record<string, number>
+    }
+    [undocumentedProperties: string]: any;
+
+    constructor(root: HypixelAPI, resources: HypixelResources, key: string, input: HypixelAPIValue<HypixelPlayerQuestStatus>) {
+        super(root, resources);
+        this._questKey = key;
+        Object.assign(this, input); // Copy undocumented and non-required properties
+    }
+
+    public get definition(): HypixelQuest | null {
+        return this.getResources().flattenedQuests[this._questKey] ?? null;
+    }
+
+    public toJSON(): Record<string, unknown> {
+        const result: Record<string, unknown> = {};
+        for(const key in this) {
+            if(key === "_questKey") {
+                continue;
+            }
+            result[key] = this[key];
+        }
+        return result;
+    }
+}
+
 export class HypixelPlayerPetStatistics extends HypixelEntity {
     _petTypeKey: string;
     name?: string;
@@ -42,8 +77,8 @@ export class HypixelPlayerPetStatistics extends HypixelEntity {
     }
     [undocumentedProperties: string]: any;
 
-    constructor(root: HypixelAPI, key: string, input: HypixelAPIValue<HypixelPlayerPetStatistics>) {
-        super(root);
+    constructor(root: HypixelAPI, resources: HypixelResources, key: string, input: HypixelAPIValue<HypixelPlayerPetStatistics>) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
         this._petTypeKey = key;
     }
@@ -98,7 +133,7 @@ export class HypixelPlayer extends HypixelEntity {
         [undocumentedProperties: string]: any;
     }[]>;
     public readonly playername?: string;
-    public readonly quests?: unknown; // TODO
+    public readonly quests?: Record<string, HypixelPlayerQuestStatus>;
     public readonly rank?: string;
     public readonly seeRequests?: boolean;
     public readonly spectators_invisible?: boolean;
@@ -259,8 +294,8 @@ export class HypixelPlayer extends HypixelEntity {
     }
     [undocumentedProperties: string]: any
 
-    public constructor(root: HypixelAPI, input: HypixelAPIValue<HypixelPlayer>) {
-        super(root);
+    public constructor(root: HypixelAPI, resources: HypixelResources, input: HypixelAPIValue<HypixelPlayer>) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.uuid) {
             throw new HypixelParseError("Player UUID cannot be null", input)
@@ -272,7 +307,7 @@ export class HypixelPlayer extends HypixelEntity {
             if(!firework) {
                 throw new HypixelParseError("Player firework cannot be null", input)
             }
-            fireworks.push(new HypixelPlayerFirework(root, firework));
+            fireworks.push(new HypixelPlayerFirework(root, resources, firework));
         }
         this.fireworkStorage = fireworks;
 
@@ -281,17 +316,24 @@ export class HypixelPlayer extends HypixelEntity {
             if(!petKey || !input.petStats?.[petKey]) {
                 throw new HypixelParseError("Player pet stats cannot be null", input)
             }
-            pets[petKey] = (new HypixelPlayerPetStatistics(root, petKey, input.petStats[petKey] as HypixelPlayerPetStatistics));
+            pets[petKey] = (new HypixelPlayerPetStatistics(root, resources, petKey, input.petStats[petKey] as HypixelPlayerPetStatistics));
         }
         this.petStats = pets;
+
+        for(const quest in input.quests) {
+            if(!quest || !input.quests[quest]) {
+                throw new HypixelParseError("Player quest cannot be null", input)
+            }
+            (this.quests as Record<string, HypixelPlayerQuestStatus>)[quest] = new HypixelPlayerQuestStatus(root, resources, quest, input.quests[quest] as HypixelQuest);
+        }
     }
 
-    public async getAchievements(): Promise<Record<string, HypixelTieredAchievement & {progress: number} | null>> {
+    public getAchievements(): Record<string, HypixelTieredAchievement & {progress: number} | null> {
         if(!this.achievements) {
             return {};
         }
-
-        const resources = await this.getRoot().getResources();
+        const resources = this.getResources();
+        const root = this.getRoot();
         const achievements = resources.achievements;
 
         const result: Record<string, HypixelTieredAchievement & {progress: number} | null> = {}
@@ -300,7 +342,7 @@ export class HypixelPlayer extends HypixelEntity {
             const achievementName = achievement.substring(game.length + 1).toUpperCase();
             const achievementDef = achievements[game.toLowerCase()]?.tiered?.[achievementName];
             if(achievementDef) {
-                result[achievement] = new HypixelTieredAchievement(resources, {
+                result[achievement] = new HypixelTieredAchievement(root, resources, {
                     ...achievementDef,
                     progress: this.achievements[achievement]
                 }) as HypixelTieredAchievement & {progress: number};
@@ -311,12 +353,13 @@ export class HypixelPlayer extends HypixelEntity {
         return result;
     }
 
-    public async getOneTimeAchievements(): Promise<(HypixelOneTimeAchievement | null)[]> {
+    public getOneTimeAchievements(): (HypixelOneTimeAchievement | null)[] {
         if(!this.achievementsOneTime) {
             return [];
         }
 
-        const resources = await this.getRoot().getResources();
+        const root = this.getRoot();
+        const resources = this.getResources();
         const achievements = resources.achievements;
 
         const result: (HypixelOneTimeAchievement | null)[] = [];
@@ -324,7 +367,7 @@ export class HypixelPlayer extends HypixelEntity {
             const game = achievement.split("_", 1)[0].toLowerCase();
             const achievementName = achievement.substring(game.length + 1).toUpperCase();
             const achievementDef = achievements[game.toLowerCase()]?.one_time?.[achievementName];
-            result.push(achievementDef ?? null);
+            result.push(achievementDef ? new HypixelOneTimeAchievement(root, resources, achievementDef) : null);
         }
         return result;
     }

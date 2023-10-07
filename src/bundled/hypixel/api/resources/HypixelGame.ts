@@ -1,10 +1,10 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelGameAchievements} from "./HypixelGameAchievements.ts";
 import {HypixelChallenge} from "./HypixelChallenge.ts";
 import {HypixelQuest} from "./HypixelQuest.ts";
 import {HypixelResources} from "./HypixelResources.ts";
-import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
 
 // For some reason, these three games do not use their database name as a key in the achievements list. This is a
 //   conversion table from database name to achievement category key.
@@ -14,7 +14,7 @@ const gamesToAchievements = new Map(Object.entries({
     "Battleground": "warlords"
 }))
 
-export class HypixelGame extends HypixelResourceEntity {
+export class HypixelGame extends HypixelEntity {
     public id: number;
     public name: string;
     public databaseName: string;
@@ -22,8 +22,8 @@ export class HypixelGame extends HypixelResourceEntity {
     public retired?: boolean;
     public legacy?: boolean;
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGame>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelGame>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Game ID cannot be null", input)

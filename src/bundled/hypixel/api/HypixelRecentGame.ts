@@ -1,5 +1,6 @@
 import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
-import {HypixelEntity} from "./resources/HypixelEntity.ts";
+import {HypixelEntity} from "./HypixelEntity.ts";
+import { HypixelResources } from "./resources";
 
 export class HypixelRecentGame extends HypixelEntity {
     date?: number;
@@ -9,8 +10,8 @@ export class HypixelRecentGame extends HypixelEntity {
     ended?: number;
     [undocumentedProperties: string]: any
 
-    public constructor(root: HypixelAPI, input: HypixelAPIValue<HypixelRecentGame>) {
-        super(root);
+    public constructor(root: HypixelAPI, resources: HypixelResources, input: HypixelAPIValue<HypixelRecentGame>) {
+        super(root, resources);
         Object.assign(this, input); // Copy undocumented and non-required properties
     }
 }

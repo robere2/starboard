@@ -1,15 +1,15 @@
-import {HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
-import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelAchievementTier extends HypixelResourceEntity {
+export class HypixelAchievementTier extends HypixelEntity {
     public tier: number;
     public points: number;
     public amount: number;
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelAchievementTier>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelAchievementTier>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.tier == null) {
             throw new HypixelParseError("Achievement tier number cannot be null", input)
@@ -26,13 +26,13 @@ export class HypixelAchievementTier extends HypixelResourceEntity {
     }
 }
 
-export class HypixelTieredAchievement extends HypixelResourceEntity {
+export class HypixelTieredAchievement extends HypixelEntity {
     public name: string;
     public description: string;
     public tiers: HypixelAchievementTier[];
 
-    constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelTieredAchievement>) {
-        super(parent);
+    constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelTieredAchievement>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Name cannot be null", input)
@@ -48,7 +48,7 @@ export class HypixelTieredAchievement extends HypixelResourceEntity {
             if(!tier) {
                 continue;
             }
-            this.tiers.push(new HypixelAchievementTier(parent, tier))
+            this.tiers.push(new HypixelAchievementTier(root, parent, tier))
         }
     }
 }

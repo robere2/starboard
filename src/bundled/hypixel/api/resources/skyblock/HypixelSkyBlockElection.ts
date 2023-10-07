@@ -1,15 +1,15 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
 import {HypixelSkyBlockMayor} from "./HypixelSkyBlockMayor.ts";
-import {HypixelResourceEntity} from "../HypixelResourceEntity.ts";
+import {HypixelEntity} from "../../HypixelEntity.ts";
 import {HypixelResources} from "../HypixelResources.ts";
 
-export class HypixelSkyBlockElection extends HypixelResourceEntity {
+export class HypixelSkyBlockElection extends HypixelEntity {
     public year: number;
     public candidates: (HypixelSkyBlockMayor & {votes: number})[];
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockElection>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockElection>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
 
         if(input.year == null) {
@@ -22,7 +22,7 @@ export class HypixelSkyBlockElection extends HypixelResourceEntity {
             if(!candidate) {
                 continue;
             }
-            const mayor: HypixelSkyBlockMayor & {votes: number} = new HypixelSkyBlockMayor(parent, candidate) as any;
+            const mayor: HypixelSkyBlockMayor & {votes: number} = new HypixelSkyBlockMayor(root, parent, candidate) as any;
             mayor.votes = candidate.votes ?? 0;
             this.candidates.push(mayor);
         }

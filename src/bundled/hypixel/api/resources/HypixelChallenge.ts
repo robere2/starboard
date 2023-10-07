@@ -1,16 +1,16 @@
-import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelReward} from "./HypixelReward.ts";
-import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelChallenge extends HypixelResourceEntity {
+export class HypixelChallenge extends HypixelEntity {
     public id: string;
     public name: string;
     public rewards: HypixelReward[];
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelChallenge>) {
-        super(parent);
+    public constructor(root: HypixelAPI, parent: HypixelResources, input: HypixelAPIValue<HypixelChallenge>) {
+        super(root, parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(!input.id) {
             throw new HypixelParseError("Challenge ID cannot be null", input)
@@ -26,7 +26,7 @@ export class HypixelChallenge extends HypixelResourceEntity {
             if(!reward) {
                 continue;
             }
-            this.rewards.push(new HypixelReward(parent, reward));
+            this.rewards.push(new HypixelReward(root, parent, reward));
         }
     }
 }
