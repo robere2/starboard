@@ -6,6 +6,8 @@ import {HypixelRecentGame, HypixelRecentGamesResponse} from "./HypixelRecentGame
 import {HypixelSession, HypixelStatusResponse} from "./HypixelSession.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
 import {HypixelResources} from "./resources/HypixelResources.ts";
+import {HypixelSkyBlockNewsItem, HypixelSkyBlockNewsResponse} from "./HypixelSkyBlockNewsItem.ts";
+
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
 const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
@@ -79,39 +81,98 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   will be converted to a UUID via {@link MojangAPI|The Mojang API}. Looking up data for a username directly is
      *   heavily rate limited per player. Attempts to call this method more than once per name approximately every five
      *   minutes will result in a 429 response.
+     * @param raw Whether to return the raw {@link HypixelPlayerResponse} instead of a {@link HypixelPlayer} object.
+     *   The raw response will bypass runtime type checking.
      * @throws Error if an invalid Hypixel API key was provided to the constructor.
      * @throws Error if the HTTP request to the Hypixel API failed
      * @throws Error if the Hypixel API rate limit has been reached and request deferring was disabled in the
      *   constructor. Can occur if the API has an emergency global throttle applied as well.
      * @returns HypixelPlayer object containing all the data of the player, or null if the player is not found.
      */
-    public async getPlayer(name: string, direct?: boolean): Promise<HypixelPlayer | null>;
+    public async getPlayer(name: string, direct?: boolean, raw?: false): Promise<HypixelPlayer | null>;
     /**
      * Retrieve data of a specific player, including game stats. If the player is not found, null is returned. Request
      *   to API could be delayed depending on the `defer` option provided to the constructor.
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get Hypixel API reference
      * @param uuid The UUID of the player. If the UUID is not found, null is returned.
+     * @param raw Whether to return the raw {@link HypixelPlayerResponse} instead of a {@link HypixelPlayer} object.
+     *   The raw response will bypass runtime type checking.
      * @throws Error if an invalid Hypixel API key was provided to the constructor.
      * @throws Error if the HTTP request to the Hypixel API failed
      * @throws Error if the Hypixel API rate limit has been reached and request deferring was disabled in the
      *   constructor. Can occur if the API has an emergency global throttle applied as well.
      * @returns HypixelPlayer object containing all the data of the player, or null if the player is not found.
      */
-    public async getPlayer(uuid: string): Promise<HypixelPlayer | null>;
+    public async getPlayer(uuid: string, raw?: false): Promise<HypixelPlayer | null>;
     /**
      * Retrieve up-to-date data of a specific player, including game stats. If the player is not found, null is
      *   returned, however this should never happen unless you constructed the HypixelPlayer object yourself. Request
      *   to API could be delayed depending on the `defer` option provided to the constructor.
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get Hypixel API reference
      * @param player HypixelPlayer instance with the UUID of the player you're looking for data for.
+     * @param raw Whether to return the raw {@link HypixelPlayerResponse} instead of a {@link HypixelPlayer} object.
+     *   The raw response will bypass runtime type checking.
      * @throws Error if an invalid Hypixel API key was provided to the constructor.
      * @throws Error if the HTTP request to the Hypixel API failed
      * @throws Error if the Hypixel API rate limit has been reached and request deferring was disabled in the
      *   constructor. Can occur if the API has an emergency global throttle applied as well.
      * @returns HypixelPlayer object containing all the data of the player, or null if the player is not found.
      */
-    public async getPlayer(player: HypixelPlayer): Promise<HypixelPlayer | null>;
-    public async getPlayer(player: string | HypixelPlayer, direct: boolean = false): Promise<HypixelPlayer | null> {
+    public async getPlayer(player: HypixelPlayer, raw?: false): Promise<HypixelPlayer | null>;
+    /**
+     * Retrieve data of a specific player, including game stats. If the player is not found, null is returned. Request
+     *   to API could be delayed depending on the `defer` option provided to the constructor.
+     * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get Hypixel API reference
+     * @param name The username of the player. If the username is not found, null is returned.
+     * @param direct Whether to directly fetch the data from the Hypixel API without converting the username into
+     *   a UUID first (default: false). This is a feature of the Hypixel API that is deprecated and no longer
+     *   recommended due to the ability to change Minecraft usernames. The "name" property is based on the last name
+     *   that a player connected to the Hypixel Network with. If the player "Steve" changes their name to "NotSteve",
+     *   the name lookup for "NotSteve" will not Steve's data until Steve reconnects. Further, if another player
+     *   previously had the username "NotSteve" but also has not connected to Hypixel since changing their name, then
+     *   their data may be returned instead. If this is not what you want, set this option to false and their username
+     *   will be converted to a UUID via {@link MojangAPI|The Mojang API}. Looking up data for a username directly is
+     *   heavily rate limited per player. Attempts to call this method more than once per name approximately every five
+     *   minutes will result in a 429 response.
+     * @param raw Whether to return the raw {@link HypixelPlayerResponse} instead of a {@link HypixelPlayer} object.
+     *   The raw response will bypass runtime type checking.
+     * @throws Error if an invalid Hypixel API key was provided to the constructor.
+     * @throws Error if the HTTP request to the Hypixel API failed
+     * @throws Error if the Hypixel API rate limit has been reached and request deferring was disabled in the
+     *   constructor. Can occur if the API has an emergency global throttle applied as well.
+     * @returns HypixelPlayer object containing all the data of the player, or null if the player is not found.
+     */
+    public async getPlayer(name: string, direct?: boolean, raw?: true): Promise<HypixelPlayerResponse>;
+    /**
+     * Retrieve data of a specific player, including game stats. If the player is not found, null is returned. Request
+     *   to API could be delayed depending on the `defer` option provided to the constructor.
+     * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get Hypixel API reference
+     * @param uuid The UUID of the player. If the UUID is not found, null is returned.
+     * @param raw Whether to return the raw {@link HypixelPlayerResponse} instead of a {@link HypixelPlayer} object.
+     *   The raw response will bypass runtime type checking.
+     * @throws Error if an invalid Hypixel API key was provided to the constructor.
+     * @throws Error if the HTTP request to the Hypixel API failed
+     * @throws Error if the Hypixel API rate limit has been reached and request deferring was disabled in the
+     *   constructor. Can occur if the API has an emergency global throttle applied as well.
+     * @returns HypixelPlayer object containing all the data of the player, or null if the player is not found.
+     */
+    public async getPlayer(uuid: string, raw?: true): Promise<HypixelPlayerResponse>;
+    /**
+     * Retrieve up-to-date data of a specific player, including game stats. If the player is not found, null is
+     *   returned, however this should never happen unless you constructed the HypixelPlayer object yourself. Request
+     *   to API could be delayed depending on the `defer` option provided to the constructor.
+     * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get Hypixel API reference
+     * @param player HypixelPlayer instance with the UUID of the player you're looking for data for.
+     * @param raw Whether to return the raw {@link HypixelPlayerResponse} instead of a {@link HypixelPlayer} object.
+     *   The raw response will bypass runtime type checking.
+     * @throws Error if an invalid Hypixel API key was provided to the constructor.
+     * @throws Error if the HTTP request to the Hypixel API failed
+     * @throws Error if the Hypixel API rate limit has been reached and request deferring was disabled in the
+     *   constructor. Can occur if the API has an emergency global throttle applied as well.
+     * @returns HypixelPlayer object containing all the data of the player, or null if the player is not found.
+     */
+    public async getPlayer(player: HypixelPlayer, raw?: true): Promise<HypixelPlayerResponse>;
+    public async getPlayer(player: string | HypixelPlayer, direct = false, raw = false): Promise<HypixelPlayer | HypixelPlayerResponse | null> {
         // Hypixel API request is generated based on the two provided inputs
         let hypixelRequest: Request;
         if(player instanceof HypixelPlayer || UUID_REGEX.test(player)) {
@@ -139,8 +200,13 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         // Request is sent to the Hypixel API
         const res = await this.options.httpClient.fetch(hypixelRequest);
         const json: HypixelPlayerResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
-            return new HypixelPlayer(json.player ?? {});
+            return json.player ? new HypixelPlayer(json.player) : null;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -148,24 +214,35 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
-    public async getRecentGames(uuid: string): Promise<HypixelRecentGame[]>;
-    public async getRecentGames(player: HypixelPlayer): Promise<HypixelRecentGame[]>;
-    public async getRecentGames(player: string | HypixelPlayer): Promise<HypixelRecentGame[]> {
+    public async getRecentGames(uuid: string, raw?: false): Promise<HypixelRecentGame[]>;
+    public async getRecentGames(player: HypixelPlayer, raw?: false): Promise<HypixelRecentGame[]>;
+    public async getRecentGames(uuid: string, raw?: true): Promise<HypixelRecentGamesResponse>;
+    public async getRecentGames(player: HypixelPlayer, raw?: true): Promise<HypixelRecentGamesResponse>;
+    public async getRecentGames(player: string | HypixelPlayer, raw = false): Promise<HypixelRecentGame[] | HypixelRecentGamesResponse> {
         const uuid = player instanceof HypixelPlayer ? player.uuid : player;
         const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/recentgames?uuid=${uuid}`, {
             headers: this.genHeaders()
         })
         const json: HypixelRecentGamesResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             if(!json.games) {
                 return [];
             }
-            if(!Array.isArray(json.games)) {
-                throw new Error("Hypixel API Error", {
-                    cause: "games is not an array"
-                })
+
+
+            const games: HypixelSkyBlockNewsItem[] = [];
+            for(const game of json.games) {
+                if(!game) {
+                    continue;
+                }
+                games.push(new HypixelSkyBlockNewsItem(game));
             }
-            return json.games.map(game => new HypixelRecentGame(game));
+            return games;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -173,14 +250,21 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
-    public async getStatus(uuid: string): Promise<HypixelSession | null>;
-    public async getStatus(player: HypixelPlayer): Promise<HypixelSession | null>;
-    public async getStatus(player: string | HypixelPlayer): Promise<HypixelSession | null> {
+    public async getStatus(uuid: string, raw?: false): Promise<HypixelSession | null>;
+    public async getStatus(player: HypixelPlayer, raw?: false): Promise<HypixelSession | null>;
+    public async getStatus(uuid: string, raw?: true): Promise<HypixelStatusResponse>;
+    public async getStatus(player: HypixelPlayer, raw?: true): Promise<HypixelStatusResponse>;
+    public async getStatus(player: string | HypixelPlayer, raw = false): Promise<HypixelSession | HypixelStatusResponse | null> {
         const uuid = player instanceof HypixelPlayer ? player.uuid : player;
         const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/status?uuid=${uuid}`, {
             headers: this.genHeaders()
         })
         const json: HypixelStatusResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             return json.session ? new HypixelSession(json.session) : null;
         } else {
@@ -190,11 +274,15 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
     }
 
-    public async getGuild(id: string): Promise<HypixelGuild | null>;
-    public async getGuild(name: string): Promise<HypixelGuild | null>;
-    public async getGuild(player: HypixelPlayer): Promise<HypixelGuild | null>;
-    public async getGuild(playerUuid: string): Promise<HypixelGuild | null>;
-    public async getGuild(input: string | HypixelPlayer): Promise<HypixelGuild | null> {
+    public async getGuild(id: string, raw?: false): Promise<HypixelGuild | null>;
+    public async getGuild(name: string, raw?: false): Promise<HypixelGuild | null>;
+    public async getGuild(player: HypixelPlayer, raw?: false): Promise<HypixelGuild | null>;
+    public async getGuild(playerUuid: string, raw?: false): Promise<HypixelGuild | null>;
+    public async getGuild(id: string, raw?: true): Promise<HypixelGuildResponse>;
+    public async getGuild(name: string, raw?: true): Promise<HypixelGuildResponse>;
+    public async getGuild(player: HypixelPlayer, raw?: true): Promise<HypixelGuildResponse>;
+    public async getGuild(playerUuid: string, raw?: true): Promise<HypixelGuildResponse>;
+    public async getGuild(input: string | HypixelPlayer, raw = false): Promise<HypixelGuild | HypixelGuildResponse | null> {
         // Guilds can be searched by ID, name, or member UUID. All three of these are strings, but we can pretty safely
         //   (although not definitively) assume which format is being used based on the contents of the string.
         let paramType: "id" | "name" | "player";
@@ -212,12 +300,49 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             headers: this.genHeaders()
         })
         const json: HypixelGuildResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
         if(json.success) {
             return json.guild ? new HypixelGuild(json.guild) : null;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
             })
+        }
+    }
+
+    public async getSkyBlockNews(raw?: false): Promise<HypixelSkyBlockNewsItem[] >;
+    public async getSkyBlockNews(raw?: true): Promise<HypixelSkyBlockNewsResponse>;
+    public async getSkyBlockNews(raw = false): Promise<HypixelSkyBlockNewsItem[] | HypixelSkyBlockNewsResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/news`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockNewsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            if(!json.items) {
+                return [];
+            }
+
+            const items: HypixelSkyBlockNewsItem[] = [];
+            for(const item of json.items) {
+                if(!item) {
+                    continue;
+                }
+                items.push(new HypixelSkyBlockNewsItem(item));
+            }
+            return items;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
         }
     }
 

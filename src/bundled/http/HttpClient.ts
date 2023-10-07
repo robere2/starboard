@@ -77,10 +77,10 @@ export class HttpClient {
         // input is now guaranteed to be a Request object. RequestInit takes precedence over Request, so if RequestInit
         //   has headers defined, we add our generated headers to that. Otherwise, we add them to the Request.
         if(init?.headers) {
-            init.headers =  {
-                ...generatedHeaders,
-                ...init?.headers
-            }
+            init.headers = new Headers({
+                ...Object.fromEntries(generatedHeaders),
+                ...Object.fromEntries(new Headers(init.headers))
+            })
         } else {
             for(const header of generatedHeaders) {
                 if(!input.headers.get(header[0])) {
