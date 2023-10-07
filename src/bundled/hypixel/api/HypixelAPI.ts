@@ -9,6 +9,25 @@ import {HypixelResources} from "./resources";
 import {HypixelSkyBlockNewsItem, HypixelSkyBlockNewsResponse} from "./skyblock";
 import crypto from "crypto";
 import {HypixelEntity} from "./HypixelEntity.ts";
+import {
+    HypixelSkyBlockAuction, HypixelSkyBlockAuctionResponse,
+} from "./skyblock/HypixelSkyBlockAuction.ts";
+import {HypixelSkyBlockAuctions, HypixelSkyBlockAuctionsResponse} from "./skyblock/HypixelSkyBlockAuctions.ts";
+import {
+    HypixelSkyBlockProfile,
+    HypixelSkyBlockProfileResponse,
+    HypixelSkyBlockProfilesResponse
+} from "./skyblock/HypixelSkyBlockProfile.ts";
+import {
+    HypixelSkyBlockEndedAuction,
+    HypixelSkyBlockEndedAuctionsResponse
+} from "./skyblock/HypixelSkyBlockEndedAuction.ts";
+import {HypixelSkyBlockBazaarProduct, HypixelSkyBlockBazaarResponse} from "./skyblock/HypixelSkyBlockBazaarProduct.ts";
+import {HypixelSkyBlockMuseumResponse, HypixelSkyBlockProfileMuseum} from "./skyblock/HypixelSkyBlockProfileMuseum.ts";
+import {
+    HypixelSkyBlockBingoProfile,
+    HypixelSkyBlockBingoProfilesResponse
+} from "./skyblock/HypixelSkyBlockBingoProfile.ts";
 
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
@@ -349,6 +368,279 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
             });
+        }
+    }
+
+    public async getSkyBlockAuctions(page?: number, raw?: false): Promise<HypixelSkyBlockAuctions>;
+    public async getSkyBlockAuctions(page?: number, raw?: true): Promise<HypixelSkyBlockAuctionsResponse>;
+    public async getSkyBlockAuctions(page?: number, raw = false): Promise<HypixelSkyBlockAuctions | HypixelSkyBlockAuctionsResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/auctions?page=${page ?? 0}`);
+        const json: HypixelSkyBlockAuctionsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            return new HypixelSkyBlockAuctions(this, await this.getResources(), json)
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockAuctionById(id: string, raw?: false): Promise<HypixelSkyBlockAuction | null>;
+    public async getSkyBlockAuctionById(id: string, raw?: true): Promise<HypixelSkyBlockAuctionResponse>;
+    public async getSkyBlockAuctionById(id: string, raw = false): Promise<HypixelSkyBlockAuction | null | HypixelSkyBlockAuctionResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/auctions?uuid=${id}`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockAuctionResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            const firstAuction = json.auctions?.[0] ?? null;
+            if(!firstAuction) {
+                return null;
+            }
+            return new HypixelSkyBlockAuction(this, await this.getResources(), firstAuction)
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw?: false): Promise<HypixelSkyBlockAuction[]>;
+    public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw?: true): Promise<HypixelSkyBlockAuctionResponse>;
+    public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw = false): Promise<HypixelSkyBlockAuction[] | HypixelSkyBlockAuctionResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/auctions?player=${playerUuid}`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockAuctionResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            const auctions: HypixelSkyBlockAuction[] = [];
+            for(const auction of json.auctions ?? []) {
+                if(!auction) {
+                    continue;
+                }
+                auctions.push(new HypixelSkyBlockAuction(this, await this.getResources(), auction));
+            }
+            return auctions;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockAuctionsByProfile(profileId: string, raw?: false): Promise<HypixelSkyBlockAuction[]>;
+    public async getSkyBlockAuctionsByProfile(profileId: string, raw?: true): Promise<HypixelSkyBlockAuctionResponse>;
+    public async getSkyBlockAuctionsByProfile(profileId: string, raw = false): Promise<HypixelSkyBlockAuction[] | HypixelSkyBlockAuctionResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/auctions?profile=${profileId}`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockAuctionResponse = await res.json();
+
+        if (raw) {
+            return json;
+        }
+
+        if (json.success) {
+            const auctions: HypixelSkyBlockAuction[] = [];
+            for (const auction of json.auctions ?? []) {
+                if (!auction) {
+                    continue;
+                }
+                auctions.push(new HypixelSkyBlockAuction(this, await this.getResources(), auction));
+            }
+            return auctions;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockEndedAuctions(raw?: false): Promise<HypixelSkyBlockEndedAuction[]>;
+    public async getSkyBlockEndedAuctions(raw?: true): Promise<HypixelSkyBlockAuctionResponse>;
+    public async getSkyBlockEndedAuctions(raw = false): Promise<HypixelSkyBlockEndedAuction[] | HypixelSkyBlockAuctionResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/auctions_ended`);
+        const json: HypixelSkyBlockEndedAuctionsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            const auctions: HypixelSkyBlockEndedAuction[] = [];
+            for(const auction of json.auctions ?? []) {
+                if(!auction) {
+                    continue;
+                }
+                auctions.push(new HypixelSkyBlockEndedAuction(this, await this.getResources(), auction));
+            }
+            return auctions;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockBazaarProducts(raw?: false): Promise<Record<string, HypixelSkyBlockBazaarProduct>>;
+    public async getSkyBlockBazaarProducts(raw?: true): Promise<HypixelSkyBlockBazaarResponse>;
+    public async getSkyBlockBazaarProducts(raw = false): Promise<Record<string, HypixelSkyBlockBazaarProduct> | HypixelSkyBlockBazaarResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/bazaar`);
+        const json: HypixelSkyBlockBazaarResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            const products: Record<string, HypixelSkyBlockBazaarProduct> = {};
+            for(const product in json.products ?? {}) {
+                if(!product || !json.products?.[product]) {
+                    continue;
+                }
+                products[json.products[product]?.product_id] = new HypixelSkyBlockBazaarProduct(this, await this.getResources(), json.products[product] as HypixelSkyBlockBazaarProduct);
+            }
+            return products;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockProfile(profileId: string, raw?: false): Promise<HypixelSkyBlockProfile | null>;
+    public async getSkyBlockProfile(profileId: string, raw?: true): Promise<HypixelSkyBlockProfileResponse>;
+    public async getSkyBlockProfile(profileId: string, raw = false): Promise<HypixelSkyBlockProfile | null | HypixelSkyBlockProfileResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/profile?profile=${profileId}`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockProfileResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            if(!json.profile) {
+                return null;
+            }
+
+            return new HypixelSkyBlockProfile(this, await this.getResources(), json.profile);
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockProfiles(playerUuid: string, raw?: false): Promise<HypixelSkyBlockProfile[]>;
+    public async getSkyBlockProfiles(playerUuid: string, raw?: true): Promise<HypixelSkyBlockProfilesResponse>;
+    public async getSkyBlockProfiles(playerUuid: string, raw = false): Promise<HypixelSkyBlockProfile[] | HypixelSkyBlockProfilesResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/profiles?uuid=${playerUuid}`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockProfilesResponse = await res.json();
+
+        if (raw) {
+            return json;
+        }
+
+        if (json.success) {
+            if (!json.profiles) {
+                return [];
+            }
+
+            const profiles: HypixelSkyBlockProfile[] = [];
+            for (const profile of json.profiles ?? []) {
+                if (!profile) {
+                    continue;
+                }
+                profiles.push(new HypixelSkyBlockProfile(this, await this.getResources(), profile));
+            }
+            return profiles;
+        } else {
+            console.error(json.cause);
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+
+        }
+    }
+
+    public async getSkyBlockMuseums(profileId: string, raw?: false): Promise<Record<string, HypixelSkyBlockProfileMuseum>>;
+    public async getSkyBlockMuseums(profileId: string, raw?: true): Promise<HypixelSkyBlockMuseumResponse>;
+    public async getSkyBlockMuseums(profileId: string, raw = false): Promise<Record<string, HypixelSkyBlockProfileMuseum> | HypixelSkyBlockMuseumResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/museum?profile=${profileId}`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockMuseumResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            const museums: Record<string, HypixelSkyBlockProfileMuseum> = {};
+            for(const member in json.members ?? {}) {
+                if(!member || !json.members?.[member]) {
+                    continue;
+                }
+                museums[member] = new HypixelSkyBlockProfileMuseum(this, await this.getResources(), json.members[member] as HypixelSkyBlockProfileMuseum);
+            }
+            return museums;
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getSkyBlockBingoProfiles(playerUuid: string, raw?: false): Promise<HypixelSkyBlockBingoProfile[]>;
+    public async getSkyBlockBingoProfiles(playerUuid: string, raw?: true): Promise<HypixelSkyBlockBingoProfilesResponse>;
+    public async getSkyBlockBingoProfiles(playerUuid: string, raw = false): Promise<HypixelSkyBlockBingoProfile[] | HypixelSkyBlockBingoProfilesResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/bingo?uuid=${playerUuid}`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelSkyBlockBingoProfilesResponse = await res.json();
+
+        if (raw) {
+            return json;
+        }
+
+        if (json.success) {
+            if (!json.events) {
+                return [];
+            }
+
+            const profiles: HypixelSkyBlockBingoProfile[] = [];
+            for (const profile of json.events ?? []) {
+                if (!profile) {
+                    continue;
+                }
+                profiles.push(new HypixelSkyBlockBingoProfile(this, await this.getResources(), profile));
+            }
+            return profiles;
+        } else {
+            console.error(json.cause);
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+
         }
     }
 

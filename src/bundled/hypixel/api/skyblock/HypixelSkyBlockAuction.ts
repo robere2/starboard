@@ -1,7 +1,9 @@
 import {HypixelEntity} from "../HypixelEntity.ts";
 import {HypixelResources} from "../resources";
-import {HypixelAPI, HypixelAPIValue} from "../HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
+import {HypixelPlayer} from "../HypixelPlayer.ts";
+import {HypixelSkyBlockProfile} from "./HypixelSkyBlockProfile.ts";
 
 export class HypixelSkyBlockAuctionBid extends HypixelEntity {
     public readonly auction_id: string;
@@ -36,6 +38,18 @@ export class HypixelSkyBlockAuctionBid extends HypixelEntity {
         this.amount = input.amount;
         this.timestamp = input.timestamp;
     }
+
+    public async getAuction(): Promise<HypixelSkyBlockAuction | null> {
+        return this.getRoot().getSkyBlockAuctionById(this.auction_id);
+    }
+
+    public async getBidder(): Promise<HypixelPlayer | null> {
+        return this.getRoot().getPlayer(this.bidder);
+    }
+
+    public async getBidderProfile(): Promise<HypixelSkyBlockProfile | null> {
+        return this.getRoot().getSkyBlockProfile(this.profile_id)
+    }
 }
 
 export class HypixelSkyBlockAuction extends HypixelEntity {
@@ -54,7 +68,7 @@ export class HypixelSkyBlockAuction extends HypixelEntity {
     public readonly starting_bid?: number;
     public readonly item_bytes?: string;
     public readonly claimed?: boolean;
-    public readonly claimed_bidders?: unknown[]; // TODO
+    public readonly claimed_bidders?: string[];
     public readonly highest_bid_amount?: number;
     public readonly last_updated?: number;
     public readonly bin?: boolean;
@@ -99,5 +113,8 @@ export class HypixelSkyBlockAuction extends HypixelEntity {
             this.bids.push(new HypixelSkyBlockAuctionBid(root, resources, bid))
         }
     }
-
 }
+
+export type HypixelSkyBlockAuctionResponse = HypixelAPIResponse<{
+    auctions: HypixelSkyBlockAuction[]
+}>;
