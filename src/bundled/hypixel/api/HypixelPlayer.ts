@@ -1,9 +1,9 @@
 import {HypixelAPI, HypixelAPIResponse, HypixelAPIValue} from "./HypixelAPI.ts";
 import {HypixelParseError} from "./HypixelParseError.ts";
-import {HypixelEntity} from "./resources/HypixelEntity.ts";
-import {HypixelTieredAchievement} from "./resources/HypixelTieredAchievement.ts";
-import {HypixelOneTimeAchievement} from "./resources/HypixelOneTimeAchievement.ts";
-import {HypixelPet} from "./resources/HypixelPet.ts";
+import {HypixelEntity} from "./resources";
+import {HypixelTieredAchievement} from "./resources";
+import {HypixelOneTimeAchievement} from "./resources";
+import {HypixelPet} from "./resources";
 
 export class HypixelPlayerFirework extends HypixelEntity {
     public readonly flight_duration: number;
@@ -79,8 +79,6 @@ export class HypixelPlayer extends HypixelEntity {
     public readonly eulaCoins?: boolean;
     public readonly fireworkStorage: HypixelPlayerFirework[];
     public readonly firstLogin?: number;
-    public readonly friendBlocksUuid?: string[];
-    public readonly friendRequests?: unknown[]; // TODO
     public readonly gadget?: string;
     public readonly guildNotifications?: boolean;
     public readonly karma?: number;
