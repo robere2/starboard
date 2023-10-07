@@ -1,17 +1,17 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelRarity} from "./HypixelRarity.ts";
-import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelPet extends HypixelResource {
+export class HypixelPet extends HypixelResourceEntity {
     public key: string;
     public name: string;
     public rarity?: string;
     public package?: string;
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelPet>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.key == null) {
             throw new HypixelParseError("Pet key cannot be null", input)
@@ -26,7 +26,7 @@ export class HypixelPet extends HypixelResource {
     }
 
     public getRarity(): HypixelRarity {
-        const matchingRarity = this.getParentResources().petRarities.find(rarity => rarity.name === this.rarity);
+        const matchingRarity = this.getResources().petRarities.find(rarity => rarity.name === this.rarity);
         if(!matchingRarity) {
             throw new HypixelParseError(`Could not find rarity ${this.rarity}`, this);
         }

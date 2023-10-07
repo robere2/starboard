@@ -1,15 +1,15 @@
 import {HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
 import {HypixelSkyBlockElection} from "./HypixelSkyBlockElection.ts";
-import {HypixelResource} from "../HypixelResource.ts";
+import {HypixelResourceEntity} from "../HypixelResourceEntity.ts";
 import {HypixelResources} from "../HypixelResources.ts";
 
-export class HypixelSkyBlockMayorPerk extends HypixelResource {
+export class HypixelSkyBlockMayorPerk extends HypixelResourceEntity {
     name: string;
     description: string;
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockMayorPerk>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Mayor perk name cannot be null", input)
@@ -22,14 +22,14 @@ export class HypixelSkyBlockMayorPerk extends HypixelResource {
     }
 }
 
-export class HypixelSkyBlockMayor extends HypixelResource {
+export class HypixelSkyBlockMayor extends HypixelResourceEntity {
     public key: string;
     public name: string;
     public perks: HypixelSkyBlockMayorPerk[];
     public election?: HypixelSkyBlockElection;
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockMayor>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.key == null) {
             throw new HypixelParseError("Mayor key cannot be null", input)

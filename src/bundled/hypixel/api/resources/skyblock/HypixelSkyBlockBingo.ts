@@ -1,9 +1,9 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
-import {HypixelResource} from "../HypixelResource.ts";
+import {HypixelResourceEntity} from "../HypixelResourceEntity.ts";
 import {HypixelResources} from "../HypixelResources.ts";
 
-export class HypixelSkyBlockBingoGoal extends HypixelResource {
+export class HypixelSkyBlockBingoGoal extends HypixelResourceEntity {
     id: string;
     name: string;
     lore?: string;
@@ -12,7 +12,7 @@ export class HypixelSkyBlockBingoGoal extends HypixelResource {
     progress?: number
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockBingoGoal>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.name == null) {
             throw new HypixelParseError("Bingo goal name cannot be null", input)
@@ -25,12 +25,12 @@ export class HypixelSkyBlockBingoGoal extends HypixelResource {
     }
 }
 
-export class HypixelSkyBlockBingo extends HypixelResource {
+export class HypixelSkyBlockBingo extends HypixelResourceEntity {
     id: number;
     goals: HypixelSkyBlockBingoGoal[];
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockBingo>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Bingo ID cannot be null", input)

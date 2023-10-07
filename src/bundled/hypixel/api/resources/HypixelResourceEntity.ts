@@ -1,24 +1,20 @@
-import {HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelResource {
+export class HypixelResourceEntity {
 
     private static parents: Map<string, HypixelResources> = new Map();
 
     private readonly _parentId: string;
-    [undocumentedProperties: string]: any
 
-    public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelResource>) {
-        Object.assign(this, input); // Copy undocumented and non-required properties
-
+    public constructor(parent: HypixelResources) {
         this._parentId = parent.id;
-        HypixelResource.parents.set(parent.id, parent);
+        HypixelResourceEntity.parents.set(parent.id, parent);
     }
 
-    public getParentResources(): HypixelResources {
-        const parent = HypixelResource.parents.get(this._parentId);
+    public getResources(): HypixelResources {
+        const parent = HypixelResourceEntity.parents.get(this._parentId);
         if(!parent) {
-            throw new Error("Parent resources not found");
+            throw new Error("Resources not found");
         }
         return parent;
     }

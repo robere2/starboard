@@ -1,14 +1,14 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelTieredGuildAchievement} from "./HypixelTieredGuildAchievement.ts";
-import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelGuildAchievements extends HypixelResource {
+export class HypixelGuildAchievements extends HypixelResourceEntity {
     public one_time?: Record<string, unknown>;
     public tiered?: Record<string, HypixelTieredGuildAchievement>;
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGuildAchievements>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         // One-time guild achievements are defined in the API, but currently none exist
         this.one_time = input.one_time;

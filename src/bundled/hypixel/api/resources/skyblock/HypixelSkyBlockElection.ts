@@ -1,15 +1,15 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../../HypixelAPI.ts";
 import {HypixelParseError} from "../../HypixelParseError.ts";
 import {HypixelSkyBlockMayor} from "./HypixelSkyBlockMayor.ts";
-import {HypixelResource} from "../HypixelResource.ts";
+import {HypixelResourceEntity} from "../HypixelResourceEntity.ts";
 import {HypixelResources} from "../HypixelResources.ts";
 
-export class HypixelSkyBlockElection extends HypixelResource {
+export class HypixelSkyBlockElection extends HypixelResourceEntity {
     public year: number;
     public candidates: (HypixelSkyBlockMayor & {votes: number})[];
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelSkyBlockElection>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
 
         if(input.year == null) {

@@ -1,16 +1,16 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelParseError} from "../HypixelParseError.ts";
 import {HypixelReward} from "./HypixelReward.ts";
-import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelQuestObjective extends HypixelResource {
+export class HypixelQuestObjective extends HypixelResourceEntity {
     public id: string;
     public type: string;
     public integer?: number;
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuestObjective>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Objective ID cannot be null", input)
@@ -23,11 +23,11 @@ export class HypixelQuestObjective extends HypixelResource {
     }
 }
 
-export class HypixelQuestRequirement extends HypixelResource {
+export class HypixelQuestRequirement extends HypixelResourceEntity {
     public type: string;
 
     constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuestRequirement>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.type == null) {
             throw new HypixelParseError("Requirement type cannot be null", input)
@@ -36,7 +36,7 @@ export class HypixelQuestRequirement extends HypixelResource {
     }
 }
 
-export class HypixelQuest extends HypixelResource {
+export class HypixelQuest extends HypixelResourceEntity {
     public id: string;
     public name: string;
     public description?: string;
@@ -45,7 +45,7 @@ export class HypixelQuest extends HypixelResource {
     public requirements: HypixelQuestRequirement[];
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelQuest>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Challenge ID cannot be null", input)

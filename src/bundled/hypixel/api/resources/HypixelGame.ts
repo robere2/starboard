@@ -4,7 +4,7 @@ import {HypixelGameAchievements} from "./HypixelGameAchievements.ts";
 import {HypixelChallenge} from "./HypixelChallenge.ts";
 import {HypixelQuest} from "./HypixelQuest.ts";
 import {HypixelResources} from "./HypixelResources.ts";
-import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
 
 // For some reason, these three games do not use their database name as a key in the achievements list. This is a
 //   conversion table from database name to achievement category key.
@@ -14,7 +14,7 @@ const gamesToAchievements = new Map(Object.entries({
     "Battleground": "warlords"
 }))
 
-export class HypixelGame extends HypixelResource {
+export class HypixelGame extends HypixelResourceEntity {
     public id: number;
     public name: string;
     public databaseName: string;
@@ -23,7 +23,7 @@ export class HypixelGame extends HypixelResource {
     public legacy?: boolean;
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGame>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
         if(input.id == null) {
             throw new HypixelParseError("Game ID cannot be null", input)
@@ -40,7 +40,7 @@ export class HypixelGame extends HypixelResource {
     }
 
     public getAchievements(): HypixelGameAchievements | null {
-        let achievements = this.getParentResources().achievements[this.databaseName.toLowerCase()];
+        let achievements = this.getResources().achievements[this.databaseName.toLowerCase()];
         if(!achievements) {
             const convertedKey = gamesToAchievements.get(this.databaseName);
             if(!convertedKey) {
@@ -48,17 +48,17 @@ export class HypixelGame extends HypixelResource {
                 //   achievements for a game which legitimately has no achievements, but could theoretically happen
                 //   if Hypixel adds new games in the future but mismatches the database name and achievements key.
             }
-            achievements = this.getParentResources().achievements[convertedKey];
+            achievements = this.getResources().achievements[convertedKey];
         }
         return achievements;
     }
 
     public getChallenges(): HypixelChallenge[] {
-        return this.getParentResources().challenges[this.databaseName.toLowerCase()]
+        return this.getResources().challenges[this.databaseName.toLowerCase()]
     }
 
     public getQuests(): HypixelQuest[] {
-        return this.getParentResources().quests[this.databaseName.toLowerCase()]
+        return this.getResources().quests[this.databaseName.toLowerCase()]
     }
 }
 

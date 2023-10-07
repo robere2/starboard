@@ -21,9 +21,11 @@ import crypto from "crypto";
 const HYPIXEL_RESOURCES_URL = "https://api.hypixel.net/resources";
 export class HypixelResources extends BaseAPI<APIOptions> {
 
-    // Resources get their own ID so children can reference them later without having to store them as a property. This
-    //   prevents circular references, allowing you to log/serialize child values.
-    public readonly id: string = crypto.randomUUID();
+    // Resources get their own ID so children entities can reference them later without having to store them as a
+    //   property. This prevents circular references, allowing you to log/serialize child values.
+    public readonly id: string = crypto.randomUUID()
+    private ready: boolean = false;
+
     private _games?: Record<string, HypixelGame>
     private _achievements?: Record<string, HypixelGameAchievements>
     private _challenges?: Record<string, HypixelChallenge[]>
@@ -61,7 +63,12 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         resources._skyBlockCurrentMayor = await resources.fetchCurrentSkyBlockMayor();
         resources._skyBlockCurrentElection = await resources.fetchCurrentSkyBlockElection();
         resources._skyBlockBingo = await resources.fetchSkyBlockBingo();
+        resources.ready = true;
         return resources;
+    }
+
+    public isReady(): boolean {
+        return this.ready;
     }
 
     public toJSON() {

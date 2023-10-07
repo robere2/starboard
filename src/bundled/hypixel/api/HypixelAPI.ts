@@ -7,6 +7,7 @@ import {HypixelSession, HypixelStatusResponse} from "./HypixelSession.ts";
 import {HypixelGuild, HypixelGuildResponse} from "./HypixelGuild.ts";
 import {HypixelResources} from "./resources/HypixelResources.ts";
 import {HypixelSkyBlockNewsItem, HypixelSkyBlockNewsResponse} from "./HypixelSkyBlockNewsItem.ts";
+import crypto from "crypto";
 
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
@@ -39,7 +40,9 @@ export type HypixelAPIResponse<T> = ({
  * Interface for requesting data from the Hypixel API. Caching is not built-in.
  */
 export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
-
+    // Resources get their own ID so children entities can reference them later without having to store them as a
+    //   property. This prevents circular references, allowing you to log/serialize child values.
+    public readonly id: string = crypto.randomUUID();
     private resources?: HypixelResources;
     private resourcesPromise: Promise<HypixelResources> | null;
     private readonly mojangApi: MojangAPI;
@@ -206,7 +209,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
 
         if(json.success) {
-            return json.player ? new HypixelPlayer(json.player) : null;
+            return json.player ? new HypixelPlayer(this, json.player) : null;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -240,7 +243,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 if(!game) {
                     continue;
                 }
-                games.push(new HypixelSkyBlockNewsItem(game));
+                games.push(new HypixelSkyBlockNewsItem(this, game));
             }
             return games;
         } else {
@@ -266,7 +269,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
 
         if(json.success) {
-            return json.session ? new HypixelSession(json.session) : null;
+            return json.session ? new HypixelSession(this, json.session) : null;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -306,7 +309,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
 
         if(json.success) {
-            return json.guild ? new HypixelGuild(json.guild) : null;
+            return json.guild ? new HypixelGuild(this, json.guild) : null;
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -336,7 +339,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 if(!item) {
                     continue;
                 }
-                items.push(new HypixelSkyBlockNewsItem(item));
+                items.push(new HypixelSkyBlockNewsItem(this, item));
             }
             return items;
         } else {

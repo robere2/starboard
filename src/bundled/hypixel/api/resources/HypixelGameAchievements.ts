@@ -1,17 +1,17 @@
 import {HypixelAPIResponse, HypixelAPIValue} from "../HypixelAPI.ts";
 import {HypixelTieredAchievement} from "./HypixelTieredAchievement.ts";
 import {HypixelOneTimeAchievement} from "./HypixelOneTimeAchievement.ts";
-import {HypixelResource} from "./HypixelResource.ts";
+import {HypixelResourceEntity} from "./HypixelResourceEntity.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 
-export class HypixelGameAchievements extends HypixelResource {
+export class HypixelGameAchievements extends HypixelResourceEntity {
     public one_time?: Record<string, HypixelOneTimeAchievement>;
     public tiered?: Record<string, HypixelTieredAchievement>;
     public total_points?: number;
     public total_legacy_points?: number;
 
     public constructor(parent: HypixelResources, input: HypixelAPIValue<HypixelGameAchievements>) {
-        super(parent, input);
+        super(parent);
         Object.assign(this, input); // Copy undocumented and non-required properties
 
         this.one_time = {}
