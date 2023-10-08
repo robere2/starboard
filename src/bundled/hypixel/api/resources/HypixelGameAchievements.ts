@@ -33,7 +33,6 @@ export class HypixelGameAchievements extends HypixelEntity {
 }
 
 export type HypixelAchievementsResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     achievements: Record<string, HypixelGameAchievements>;
 }>

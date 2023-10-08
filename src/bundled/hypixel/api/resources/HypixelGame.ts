@@ -63,7 +63,6 @@ export class HypixelGame extends HypixelEntity {
 }
 
 export type HypixelGamesResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     games: Record<string, HypixelGame>;
 }>

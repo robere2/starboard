@@ -48,7 +48,6 @@ export class HypixelSkyBlockBingo extends HypixelEntity {
 }
 
 export type HypixelSkyBlockBingoResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     id: number;
     goals: HypixelSkyBlockBingoGoal[];

@@ -84,7 +84,6 @@ export class HypixelQuest extends HypixelEntity {
 }
 
 export type HypixelQuestsResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     quests: Record<string, HypixelQuest[]>;
 }>

@@ -30,7 +30,6 @@ export class HypixelSkyBlockElection extends HypixelEntity {
 }
 
 export type HypixelSkyBlockElectionResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     mayor: HypixelSkyBlockMayor,
     current: HypixelSkyBlockElection

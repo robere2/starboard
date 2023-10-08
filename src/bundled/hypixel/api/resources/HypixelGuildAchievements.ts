@@ -24,7 +24,6 @@ export class HypixelGuildAchievements extends HypixelEntity {
 }
 
 export type HypixelGuildAchievementsResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     one_time: Record<string, unknown>,
     tiered: Record<string, HypixelTieredGuildAchievement>;

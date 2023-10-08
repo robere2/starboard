@@ -70,7 +70,6 @@ export class HypixelSkyBlockSkill extends HypixelEntity {
 }
 
 export type HypixelSkyBlockSkillsResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     version: string;
     skills: Record<string, HypixelSkyBlockSkill>;

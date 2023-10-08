@@ -28,6 +28,12 @@ import {
     HypixelSkyBlockBingoProfile,
     HypixelSkyBlockBingoProfilesResponse
 } from "./skyblock/HypixelSkyBlockBingoProfile.ts";
+import {HypixelSkyBlockFiresale, HypixelSkyBlockFiresalesResponse} from "./skyblock/HypixelSkyBlockFiresale.ts";
+import {HypixelBooster, HypixelBoostersResponse} from "./HypixelBooster.ts";
+import {HypixelCountsResponse, HypixelPlayerCount} from "./HypixelPlayerCount.ts";
+import {HypixelPunishmentStatistics, HypixelPunishmentStatisticsResponse} from "./HypixelPunishmentStatistics.ts";
+import {HypixelLeaderboards, HypixelLeaderboardsResponse} from "./HypixelLeaderboards.ts";
+import {HypixelParseError} from "./HypixelParseError.ts";
 
 
 const HYPIXEL_API_URL = "https://api.hypixel.net";
@@ -52,9 +58,7 @@ export type HypixelAPIValue<T> = T extends object ? {
     readonly [P in keyof T]?: HypixelAPIValue<T[P]>;
 } : T | undefined
 
-export type HypixelAPIResponse<T> = ({
-    success: true;
-} & HypixelAPIValue<T>) | HypixelAPIErrorDef;
+export type HypixelAPIResponse<T> = ({ success: true; } | HypixelAPIErrorDef) & HypixelAPIValue<T>;
 
 /**
  * Interface for requesting data from the Hypixel API. Caching is not built-in.
@@ -382,7 +386,13 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         }
 
         if(json.success) {
-            return new HypixelSkyBlockAuctions(this, await this.getResources(), json)
+            return new HypixelSkyBlockAuctions(this, await this.getResources(), {
+                page: json.page,
+                totalPages: json.totalPages,
+                totalAuctions: json.totalAuctions,
+                lastUpdated: json.lastUpdated,
+                auctions: json.auctions
+            })
         } else {
             throw new Error("Hypixel API Error", {
                 cause: json.cause
@@ -641,6 +651,152 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 cause: json.cause
             });
 
+        }
+    }
+
+    public async getSkyBlockFiresales(raw?: false): Promise<HypixelSkyBlockFiresale[]>;
+    public async getSkyBlockFiresales(raw?: true): Promise<HypixelSkyBlockFiresalesResponse>;
+    public async getSkyBlockFiresales(raw = false): Promise<HypixelSkyBlockFiresale[] | HypixelSkyBlockFiresalesResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/skyblock/firesales`);
+        const json: HypixelSkyBlockFiresalesResponse = await res.json();
+
+        if (raw) {
+            return json;
+        }
+
+        if (json.success) {
+            if (!json.sales) {
+                return [];
+            }
+
+            const sales: HypixelSkyBlockFiresale[] = [];
+            for (const sale of json.sales ?? []) {
+                if (!sale) {
+                    continue;
+                }
+                sales.push(new HypixelSkyBlockFiresale(this, await this.getResources(), sale));
+            }
+            return sales;
+        } else {
+            console.error(json.cause);
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+
+        }
+    }
+
+    public async areBoostersActive(): Promise<boolean> {
+        const boostersRes = await this.getBoosters(true);
+        return boostersRes.boosterState?.decrementing ?? false;
+    }
+
+    public async getBoosters(raw?: false): Promise<HypixelBooster[]>;
+    public async getBoosters(raw?: true): Promise<HypixelBoostersResponse>;
+    public async getBoosters(raw = false): Promise<HypixelBooster[] | HypixelBoostersResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/boosters`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelBoostersResponse = await res.json();
+
+        if (raw) {
+            return json;
+        }
+
+        if (json.success) {
+            if (!json.boosters) {
+                return [];
+            }
+
+            const boosters: HypixelBooster[] = [];
+            for (const booster of json.boosters ?? []) {
+                if (!booster) {
+                    continue;
+                }
+                boosters.push(new HypixelBooster(this, await this.getResources(), booster));
+            }
+            return boosters;
+        } else {
+            console.error(json.cause);
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+
+        }
+    }
+
+    public async getPlayerCounts(raw?: false): Promise<HypixelPlayerCount>;
+    public async getPlayerCounts(raw?: true): Promise<HypixelCountsResponse>;
+    public async getPlayerCounts(raw = false): Promise<HypixelPlayerCount | HypixelCountsResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/counts`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelCountsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            return new HypixelPlayerCount(this, await this.getResources(), {
+                games: json.games,
+                playerCount: json.playerCount
+            });
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getPunishmentStatistics(raw?: false): Promise<HypixelPunishmentStatistics>;
+    public async getPunishmentStatistics(raw?: true): Promise<HypixelPunishmentStatisticsResponse>;
+    public async getPunishmentStatistics(raw = false): Promise<HypixelPunishmentStatistics | HypixelPunishmentStatisticsResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/punishmentstats`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelPunishmentStatisticsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            return new HypixelPunishmentStatistics(this, await this.getResources(), {
+                watchdog_lastMinute: json.watchdog_lastMinute,
+                watchdog_rollingDaily: json.watchdog_rollingDaily,
+                staff_rollingDaily: json.staff_rollingDaily,
+                watchdog_total: json.watchdog_total,
+                staff_total: json.staff_total
+            });
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
+        }
+    }
+
+    public async getLeaderboards(raw?: false): Promise<HypixelLeaderboards>;
+    public async getLeaderboards(raw?: true): Promise<HypixelLeaderboardsResponse>;
+    public async getLeaderboards(raw = false): Promise<HypixelLeaderboards | HypixelLeaderboardsResponse> {
+        const res = await this.options.httpClient.fetch(`${HYPIXEL_API_URL}/leaderboards`, {
+            headers: this.genHeaders()
+        });
+        const json: HypixelLeaderboardsResponse = await res.json();
+
+        if(raw) {
+            return json;
+        }
+
+        if(json.success) {
+            if(!json.leaderboards) {
+                throw new HypixelParseError("Leaderboards not found", json);
+            }
+            return new HypixelLeaderboards(this, await this.getResources(), json.leaderboards);
+        } else {
+            throw new Error("Hypixel API Error", {
+                cause: json.cause
+            });
         }
     }
 

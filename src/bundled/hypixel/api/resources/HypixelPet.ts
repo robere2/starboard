@@ -35,7 +35,6 @@ export class HypixelPet extends HypixelEntity {
 }
 
 export type HypixelPetsResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     types: HypixelPet[];
     rarities: HypixelRarity[];

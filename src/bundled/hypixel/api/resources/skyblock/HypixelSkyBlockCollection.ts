@@ -89,7 +89,6 @@ export class HypixelSkyBlockCollection extends HypixelEntity {
 }
 
 export type HypixelSkyBlockCollectionsResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     version: string;
     collections: Record<string, HypixelSkyBlockCollection>;

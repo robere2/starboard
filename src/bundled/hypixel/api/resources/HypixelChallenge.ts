@@ -32,7 +32,6 @@ export class HypixelChallenge extends HypixelEntity {
 }
 
 export type HypixelChallengeResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     challenges: Record<string, HypixelChallenge[]>;
 }>

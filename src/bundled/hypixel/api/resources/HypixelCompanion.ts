@@ -35,7 +35,6 @@ export class HypixelCompanion extends HypixelEntity {
 }
 
 export type HypixelCompanionsResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     types: HypixelCompanion[];
     rarities: HypixelRarity[];

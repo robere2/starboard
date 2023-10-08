@@ -281,7 +281,6 @@ export class HypixelSkyBlockItem extends HypixelEntity {
 }
 
 export type HypixelSkyBlockItemsResponse = HypixelAPIResponse<{
-    success: true;
     lastUpdated: number;
     version: string;
     items: HypixelSkyBlockItem[]

@@ -53,7 +53,7 @@ export class HypixelEntity {
     public toJSON() {
         const result: Record<string, unknown> = {};
         for(const key in this) {
-            if(key === "_rootId") {
+            if(key === "_rootId" || key === "_resourceId") {
                 continue;
             }
             result[key] = this[key];
