@@ -520,10 +520,10 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         if(json.success) {
             const products: Record<string, HypixelSkyBlockBazaarProduct> = {};
             for(const product in json.products ?? {}) {
-                if(!product || !json.products?.[product]) {
+                if(!product || !json.products?.[product]?.product_id) {
                     continue;
                 }
-                products[json.products[product]?.product_id] = new HypixelSkyBlockBazaarProduct(this, await this.getResources(), json.products[product] as HypixelSkyBlockBazaarProduct);
+                products[json.products[product]?.product_id as string] = new HypixelSkyBlockBazaarProduct(this, await this.getResources(), json.products[product] as HypixelSkyBlockBazaarProduct);
             }
             return products;
         } else {

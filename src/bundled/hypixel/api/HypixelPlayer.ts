@@ -258,19 +258,32 @@ export class HypixelPlayer extends HypixelEntity {
         [undocumentedProperties: string]: any;
     };
     public readonly challenges?: {
-        all_time?: Record<string, number>
+        all_time?: Record<string, number>;
+        [key: `day_${number | string}`]: Record<string, number>;
         [undocumentedProperties: string]: any;
-    };
+    }
     public readonly currentGadget?: string;
     public readonly achievementPoints?: number;
     public readonly tourney?: {
         first_join_lobby?: number;
-        [undocumentedProperties: string]: any;
+        total_tributes?: number;
+        hide_purchased?: boolean;
+        shop_sort?: string;
+        [tourneyKeysAndOtherProps: string]: {
+            playtime?: number;
+            tributes_earned?: number;
+            first_win?: number;
+            claimed_ranking_reward?: number;
+            seenRPbook?: boolean;
+            first_game?: number;
+        } | any;
     };
+    public readonly onetime_achievement_menu_sort_completion_sort?: string;
     public readonly battlePassGlowStatus?: boolean;
     public readonly newPackageRank?: string;
     public readonly monthlyPackageRank?: string;
     public readonly mostRecentMonthlyPackageRank?: string;
+    public readonly monthlyRankColor?: string;
     public readonly cooldowns?: {
         fun: Record<string, number>;
         [undocumentedProperties: string]: any;
@@ -288,6 +301,7 @@ export class HypixelPlayer extends HypixelEntity {
     public readonly skyblock_free_cookie?: boolean;
     public readonly seasonal?: Record<string, any>;
     public readonly parkourCheckpointBests?: Record<string, Record<string, number>>
+    public readonly mostRecentGameType?: string;
     public readonly leveling?: {
         claimedRewards?: number[];
         [undocumentedProperties: string]: any;
