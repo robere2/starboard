@@ -71,7 +71,7 @@ export function generatePlayerSchema(api: HypixelAPI) {
                     .default([]).readonly(),
                 active: z.object({
                     started: ZodUnixDate.nullish().readonly(),
-                    objectives: z.record(z.string(), z.string()).default({}).readonly()
+                    objectives: z.record(z.string(), z.union([z.number(), z.boolean()])).default({}).readonly()
                 }).nullish().readonly()
             })).default({}).readonly(),
             rank: z.string().nullish(), // TODO add formatting getter
@@ -233,7 +233,7 @@ export function generatePlayerSchema(api: HypixelAPI) {
             })).default({}).readonly(),
             currentPet: z.string().nullish(), // TODO improve specificity
             currentClickEffect: z.string().nullish(),
-            skyblock_free_cookie: z.boolean().nullish(),
+            skyblock_free_cookie: ZodUnixDate.readonly().nullish(),
             seasonal: z.record(z.string(), z.any()).default({}).readonly(),
             parkourCheckpointBests: z.record(
                 z.string(), z.record(

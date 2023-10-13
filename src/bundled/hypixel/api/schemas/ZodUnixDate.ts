@@ -1,4 +1,6 @@
 import z from "zod";
 import {UnixDate} from "../../../../util.ts";
 
-export const ZodUnixDate = z.preprocess((arg: any) => new UnixDate(arg), z.date())
+export const ZodUnixDate = z.custom<UnixDate>(value => {
+    return typeof value === "number" && value > 0;
+}).transform(value => new UnixDate(value))

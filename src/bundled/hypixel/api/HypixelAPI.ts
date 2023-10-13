@@ -297,7 +297,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 throw new Error("Invalid UUID provided as input");
             }
 
-            return this.request(`/player?uuid=${uuid}`, raw, this.playerSchema, (v) => v.player);
+            return this.request(`player?uuid=${uuid}`, raw, this.playerSchema, (v) => v.player);
         } else {
             const name = player; // Rename variable to make code clearer
             if(!direct) {
@@ -309,7 +309,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 }
             }
 
-            return await this.request(`/player?name=${name}`, raw, this.playerSchema);
+            return await this.request(`player?name=${name}`, raw, this.playerSchema);
         }
     }
 
@@ -397,73 +397,73 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     public async getSkyBlockNews(raw?: false): Promise<HypixelSkyBlockNews[] >;
     public async getSkyBlockNews(raw?: true): Promise<BaseResponse>;
     public async getSkyBlockNews(raw = false): Promise<HypixelSkyBlockNews[] | BaseResponse> {
-        return await this.request("/skyblock/news", raw, this.skyBlockNewsSchema, (v) => v.items);
+        return await this.request("skyblock/news", raw, this.skyBlockNewsSchema, (v) => v.items);
     }
 
     public async getSkyBlockAuctions(page?: number, raw?: false): Promise<HypixelSkyBlockAuctions>;
     public async getSkyBlockAuctions(page?: number, raw?: true): Promise<BaseResponse>;
     public async getSkyBlockAuctions(page?: number, raw = false): Promise<HypixelSkyBlockAuctions | BaseResponse> {
-        return await this.request(`/skyblock/auctions?page=${page ?? 0}`, raw, this.skyBlockAuctionsSchema)
+        return await this.request(`skyblock/auctions?page=${page ?? 0}`, raw, this.skyBlockAuctionsSchema)
     }
 
     public async getSkyBlockAuctionById(id: string, raw?: false): Promise<HypixelSkyBlockAuction[]>;
     public async getSkyBlockAuctionById(id: string, raw?: true): Promise<BaseResponse>;
     public async getSkyBlockAuctionById(id: string, raw = false): Promise<HypixelSkyBlockAuction[] | BaseResponse> {
-        return await this.request(`/skyblock/auctions?uuid=${id}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
+        return await this.request(`skyblock/auctions?uuid=${id}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
     }
 
     public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw?: false): Promise<HypixelSkyBlockAuction[]>;
     public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw?: true): Promise<BaseResponse>;
     public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw = false): Promise<HypixelSkyBlockAuction[] | BaseResponse> {
-        return await this.request(`/skyblock/auctions?player=${playerUuid}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
+        return await this.request(`skyblock/auctions?player=${playerUuid}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
     }
 
     public async getSkyBlockAuctionsByProfile(profileId: string, raw?: false): Promise<HypixelSkyBlockAuction[]>;
     public async getSkyBlockAuctionsByProfile(profileId: string, raw?: true): Promise<BaseResponse>;
     public async getSkyBlockAuctionsByProfile(profileId: string, raw = false): Promise<HypixelSkyBlockAuction[] | BaseResponse> {
-        return await this.request(`/skyblock/auctions?profile=${profileId}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
+        return await this.request(`skyblock/auctions?profile=${profileId}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
     }
 
     public async getSkyBlockEndedAuctions(raw?: false): Promise<HypixelSkyBlockEndedAuction[]>;
     public async getSkyBlockEndedAuctions(raw?: true): Promise<BaseResponse>;
     public async getSkyBlockEndedAuctions(raw = false): Promise<HypixelSkyBlockEndedAuction[] | BaseResponse> {
-        return await this.request(`/skyblock/auctions_ended`, raw, this.skyBlockEndedAuctionsSchema, (v) => v.auctions ?? [])
+        return await this.request(`skyblock/auctions_ended`, raw, this.skyBlockEndedAuctionsSchema, (v) => v.auctions ?? [])
     }
 
     public async getSkyBlockBazaarProducts(raw?: false): Promise<Record<string, HypixelSkyBlockBazaarProduct>>;
     public async getSkyBlockBazaarProducts(raw?: true): Promise<BaseResponse>;
     public async getSkyBlockBazaarProducts(raw = false): Promise<Record<string, HypixelSkyBlockBazaarProduct> | BaseResponse> {
-        return await this.request(`/skyblock/bazaar`, raw, this.skyBlockBazaarSchema, (v) => v.products ?? {})
+        return await this.request(`skyblock/bazaar`, raw, this.skyBlockBazaarSchema, (v) => v.products ?? {})
     }
 
     public async getSkyBlockProfile(profileId: string, raw?: false): Promise<HypixelSkyBlockProfile | null>;
     public async getSkyBlockProfile(profileId: string, raw?: true): Promise<BaseResponse>;
     public async getSkyBlockProfile(profileId: string, raw = false): Promise<HypixelSkyBlockProfile | null | BaseResponse> {
-        return await this.request(`/skyblock/profile?profile=${profileId}`, raw, this.skyBlockProfileSchema, (v) => v.profile ?? null);
+        return await this.request(`skyblock/profile?profile=${profileId}`, raw, this.skyBlockProfileSchema, (v) => v.profile ?? null);
     }
 
     public async getSkyBlockProfiles(playerUuid: string, raw?: false): Promise<HypixelSkyBlockProfile[]>;
     public async getSkyBlockProfiles(playerUuid: string, raw?: true): Promise<BaseResponse>;
     public async getSkyBlockProfiles(playerUuid: string, raw = false): Promise<HypixelSkyBlockProfile[] | BaseResponse> {
-        return await this.request(`/skyblock/profiles?uuid=${playerUuid}`,  raw, this.skyBlockProfilesSchema, (v) => v.profiles ?? [])
+        return await this.request(`skyblock/profiles?uuid=${playerUuid}`,  raw, this.skyBlockProfilesSchema, (v) => v.profiles ?? [])
     }
 
     public async getSkyBlockMuseums(profileId: string, raw?: false): Promise<Record<string, HypixelSkyBlockMuseum>>;
     public async getSkyBlockMuseums(profileId: string, raw?: true): Promise<BaseResponse>;
     public async getSkyBlockMuseums(profileId: string, raw = false): Promise<Record<string, HypixelSkyBlockMuseum> | BaseResponse> {
-       return await this.request(`/skyblock/museum?profile=${profileId}`, raw, this.skyBlockMuseumSchema, (v) => v.members ?? {})
+       return await this.request(`skyblock/museum?profile=${profileId}`, raw, this.skyBlockMuseumSchema, (v) => v.members ?? {})
     }
 
     public async getSkyBlockBingoProfiles(playerUuid: string, raw?: false): Promise<HypixelSkyBlockBingoProfile[]>;
     public async getSkyBlockBingoProfiles(playerUuid: string, raw?: true): Promise<BaseResponse>;
     public async getSkyBlockBingoProfiles(playerUuid: string, raw = false): Promise<HypixelSkyBlockBingoProfile[] | BaseResponse> {
-        return await this.request(`/skyblock/bingo?uuid=${playerUuid}`, raw, this.skyBlockBingoProfileSchema, (v) => v.events ?? [])
+        return await this.request(`skyblock/bingo?uuid=${playerUuid}`, raw, this.skyBlockBingoProfileSchema, (v) => v.events ?? [])
     }
 
     public async getSkyBlockFiresales(raw?: false): Promise<HypixelSkyBlockFiresale[]>;
     public async getSkyBlockFiresales(raw?: true): Promise<BaseResponse>;
     public async getSkyBlockFiresales(raw = false): Promise<HypixelSkyBlockFiresale[] | BaseResponse> {
-        return await this.request(`/skyblock/firesales`, raw, this.skyBlockFiresalesSchema, (v) => v.sales ?? [])
+        return await this.request(`skyblock/firesales`, raw, this.skyBlockFiresalesSchema, (v) => v.sales ?? [])
     }
 
     protected genHeaders(): Headers {
