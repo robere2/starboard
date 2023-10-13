@@ -1,13 +1,15 @@
 import {Service} from "../../Service.ts";
 import {HypixelPlayerEndpoint} from "./endpoints/HypixelPlayerEndpoint.ts";
-import {HypixelAPI, HypixelAPIOptions} from "./api/HypixelAPI.ts";
+import {HypixelAPI, HypixelAPIOptions} from "./api";
 
 export class HypixelService extends Service {
 
-    private readonly api: HypixelAPI;
+    private api: HypixelAPI | null = null;
     constructor(path: string, private readonly apiOptions: HypixelAPIOptions) {
         super(path);
-        this.api = new HypixelAPI(this.apiOptions);
-        this.addEndpoint('player', new HypixelPlayerEndpoint(this.api));
+        HypixelAPI.create(this.apiOptions).then((api) => {
+            this.api = api;
+            this.addEndpoint('player', new HypixelPlayerEndpoint(this.api));
+        })
     }
 }
