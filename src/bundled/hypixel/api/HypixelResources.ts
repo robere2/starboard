@@ -3,7 +3,7 @@ import {ParsedOptions} from "../../../util.ts";
 import {HypixelAPI} from "./HypixelAPI.ts";
 import {ResourcesNotReadyError} from "./throwables/ResourcesNotReadyError.ts";
 import {HypixelEntity} from "./HypixelEntity.ts";
-import {BaseResponse, BaseSchema} from "./schemas/BaseSchema.ts";
+import {BaseResponse, BaseSchema} from "./schemas";
 import z from "zod";
 import {
     ChallengesResourceSchema,
@@ -80,19 +80,17 @@ export class HypixelResources extends BaseAPI<APIOptions> {
     private _skyBlockCurrentElection?: HypixelSkyBlockElection | null
     private _skyBlockBingo?: HypixelSkyBlockBingo | null
 
-    private gamesResourceSchema: GamesResourceSchema;
-    private achievementsResourceSchema: AchievementsResourceSchema;
-    private challengesResourceSchema: ChallengesResourceSchema;
-    private questsResourceSchema: QuestsResourceSchema;
-    private guildAchievementsResourceSchema: GuildAchievementsResourceSchema;
-    private petsResourceSchema: PetsResourceSchema;
-    private skyBlockCollectionsResourceSchema: SkyBlockCollectionsResourceSchema;
-    private skyBlockSkillsResourceSchema: SkyBlockSkillsResourceSchema;
-    private skyBlockItemsResourceSchema: SkyBlockItemsResourceSchema;
-    private skyBlockElectionResourceSchema: SkyBlockElectionResourceSchema;
-    private skyBlockBingoResourceSchema: SkyBlockBingoResourceSchema;
-
-
+    private readonly gamesResourceSchema: GamesResourceSchema;
+    private readonly achievementsResourceSchema: AchievementsResourceSchema;
+    private readonly challengesResourceSchema: ChallengesResourceSchema;
+    private readonly questsResourceSchema: QuestsResourceSchema;
+    private readonly guildAchievementsResourceSchema: GuildAchievementsResourceSchema;
+    private readonly petsResourceSchema: PetsResourceSchema;
+    private readonly skyBlockCollectionsResourceSchema: SkyBlockCollectionsResourceSchema;
+    private readonly skyBlockSkillsResourceSchema: SkyBlockSkillsResourceSchema;
+    private readonly skyBlockItemsResourceSchema: SkyBlockItemsResourceSchema;
+    private readonly skyBlockElectionResourceSchema: SkyBlockElectionResourceSchema;
+    private readonly skyBlockBingoResourceSchema: SkyBlockBingoResourceSchema;
 
     private constructor(root: HypixelAPI, options: APIOptions) {
         super(options);

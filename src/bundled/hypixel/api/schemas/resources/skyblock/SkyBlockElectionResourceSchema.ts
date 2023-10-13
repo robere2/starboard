@@ -4,7 +4,7 @@ import {ZodUnixDate} from "../../ZodUnixDate.ts";
 
 export type SkyBlockElectionResourceSchema = ReturnType<typeof generateSkyBlockElectionResourceSchema>;
 export type HypixelSkyBlockMayor = z.infer<SkyBlockElectionResourceSchema>["mayor"];
-export type HypixelSkyBlockCandidate = Exclude<z.infer<SkyBlockElectionResourceSchema>["current"], null | undefined>["candidates"][number];
+export type HypixelSkyBlockMayorCandidate = Exclude<z.infer<SkyBlockElectionResourceSchema>["current"], null | undefined>["candidates"][number];
 export type HypixelSkyBlockElection = z.infer<SkyBlockElectionResourceSchema>["current"];
 
 export function generateSkyBlockElectionResourceSchema() {
