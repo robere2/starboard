@@ -1,12 +1,10 @@
-import type {HypixelAPI} from "../../HypixelAPI.ts";
 import z from "zod";
-import {HypixelEntity} from "../../HypixelEntity.ts";
 import {BaseSchema} from "../BaseSchema.ts";
 
 export type SkyBlockBazaarSchema = ReturnType<typeof generateSkyBlockBazaarSchema>;
-export type HypixelSkyBlockBazaarProduct = HypixelEntity & z.infer<SkyBlockBazaarSchema>["products"][string];
+export type HypixelSkyBlockBazaarProduct = z.infer<SkyBlockBazaarSchema>["products"][string];
 
-export function generateSkyBlockBazaarSchema(api: HypixelAPI) {
+export function generateSkyBlockBazaarSchema() {
     return BaseSchema.extend({
         products: z.record(z.string(),
             z.object({
@@ -37,8 +35,7 @@ export function generateSkyBlockBazaarSchema(api: HypixelAPI) {
                     buyOrders: z.number().int().nonnegative().nullish()
                 }).readonly()
             }).transform((item) => {
-                return Object.assign(new HypixelEntity(api), {
-                    ...item,
+                return Object.assign(item, {
 
                 })
             })

@@ -2,7 +2,6 @@ import {APIOptions, BaseAPI} from "../../BaseAPI.ts";
 import {ParsedOptions} from "../../../util.ts";
 import {HypixelAPI} from "./HypixelAPI.ts";
 import {ResourcesNotReadyError} from "./throwables/ResourcesNotReadyError.ts";
-import {HypixelEntity} from "./HypixelEntity.ts";
 import {BaseResponse, BaseSchema} from "./schemas";
 import z from "zod";
 import {
@@ -131,10 +130,6 @@ export class HypixelResources extends BaseAPI<APIOptions> {
 
     public isReady(): boolean {
         return this.ready;
-    }
-
-    protected getRoot(): HypixelAPI {
-        return HypixelEntity.getRoot(this._rootId);
     }
 
     public toJSON() {

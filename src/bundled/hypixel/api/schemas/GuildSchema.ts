@@ -2,7 +2,6 @@ import type {HypixelAPI} from "../HypixelAPI.ts";
 import z from "zod";
 import {ZodEnumHypixelGames, ZodEnumHypixelGuildAchievements, ZodEnumMinecraftFormatting} from "./enums.ts";
 import {UUID_REGEX} from "../../../../util.ts";
-import {HypixelEntity} from "../HypixelEntity.ts";
 import {BaseSchema} from "./BaseSchema.ts";
 import {ZodUnixDate} from "./ZodUnixDate.ts";
 import {HypixelPlayer} from "./PlayerSchema.ts";
@@ -37,7 +36,7 @@ const GUILD_CUMULATIVE_EXP = GUILD_LEVEL_REQS.reduce((arr: number[], val) => {
 }, [])
 
 export type GuildSchema = ReturnType<typeof generateGuildSchema>;
-export type HypixelGuild = HypixelEntity & z.infer<GuildSchema>["guild"];
+export type HypixelGuild = z.infer<GuildSchema>["guild"];
 export function generateGuildSchema(api: HypixelAPI) {
 
     const bannerSchema = z.object({
@@ -74,14 +73,12 @@ export function generateGuildSchema(api: HypixelAPI) {
             members: z.array(memberSchema).nullish().default([]).readonly().transform((members) => {
                 const transformedMembers: z.infer<typeof memberSchema>[] = [];
                 for(const member of members ?? []) {
-                    transformedMembers.push(Object.assign(new HypixelEntity(api), {
-                        ...member,
-
+                    transformedMembers.push(Object.assign(member, {
                         /**
                          *
                          */
-                        async getPlayer(this: HypixelEntity): Promise<HypixelPlayer | null> {
-                            return this.getRoot().getPlayer(member.uuid);
+                        async getPlayer(this: typeof member): Promise<HypixelPlayer | null> {
+                            return api.getPlayer(member.uuid);
                         }
                     }))
                 }
@@ -95,8 +92,7 @@ export function generateGuildSchema(api: HypixelAPI) {
             ranks: z.array(rankSchema).nullish().default([]).readonly().transform((ranks) => {
                 const transformedRanks: z.infer<typeof rankSchema>[] = [];
                 for(const rank of ranks ?? []) {
-                    transformedRanks.push(Object.assign(new HypixelEntity(api), {
-                        ...rank,
+                    transformedRanks.push(Object.assign(rank, {
                         // TODO - Not sure how to implement this. Need some way to refer to parent.
                         // getMembers(this: HypixelEntity & z.infer<HypixelAPIGuildModule["rankSchema"]>) {
                         //     const root = this.getRoot();
@@ -115,14 +111,12 @@ export function generateGuildSchema(api: HypixelAPI) {
             tagColor: ZodEnumMinecraftFormatting.nullish(),
             preferredGames: z.array(ZodEnumHypixelGames).default([]).readonly(),
             guildExpByGameType: z.record(ZodEnumHypixelGames, z.number()).default({}).readonly()
-        }).nullish().readonly().transform((guild) => {
-            return Object.assign(new HypixelEntity(api), {
-                ...guild,
-
+        }).nullish().transform((guild) => {
+            return guild ? Object.assign(guild, {
                 /**
                  *
                  */
-                getLevel(): number {
+                getLevel(this: typeof guild): number {
                     if(!this.exp) {
                         return 0;
                     }
@@ -136,7 +130,7 @@ export function generateGuildSchema(api: HypixelAPI) {
                         return GUILD_CUMULATIVE_EXP.findIndex(levelReq => (this.exp ?? 0) < levelReq);
                     }
                 }
-            })
-        })
+            }) : null;
+        }).readonly() 
     })
 }

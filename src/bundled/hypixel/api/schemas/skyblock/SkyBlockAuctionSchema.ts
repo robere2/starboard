@@ -1,7 +1,6 @@
 import type {HypixelAPI} from "../../HypixelAPI.ts";
 import z from "zod";
 import {UUID_REGEX} from "../../../../../util.ts";
-import {HypixelEntity} from "../../HypixelEntity.ts";
 import {BaseSchema} from "../BaseSchema.ts";
 import {ZodUnixDate} from "../ZodUnixDate.ts";
 import {HypixelPlayer} from "../PlayerSchema.ts";
@@ -46,34 +45,32 @@ const baseAuctionSchema = z.object({
 function getFullBidSchema(api: HypixelAPI) {
     const bidSchema: z.ZodType<
         z.infer<typeof baseBidSchema> &
-        HypixelEntity &
         {
             getAuction(): Promise<HypixelSkyBlockAuction | null>,
             getBidder(): Promise<HypixelPlayer | null>,
             getBidderProfile(): Promise<HypixelSkyBlockProfile | null>
         }
     > = baseBidSchema.transform((bid) => {
-        return Object.assign(new HypixelEntity(api), {
-            ...bid,
+        return Object.assign(bid, {
 
             /**
              *
              */
-            async getAuction(this: HypixelEntity & typeof bid): Promise<HypixelSkyBlockAuction[] | null> {
+            async getAuction(this: typeof bid): Promise<HypixelSkyBlockAuction[] | null> {
                 return await api.getSkyBlockAuctionById(this.auction_id)
             },
 
             /**
              *
              */
-            async getBidder(this: HypixelEntity & typeof bid): Promise<HypixelPlayer | null> {
+            async getBidder(this: typeof bid): Promise<HypixelPlayer | null> {
                 return await api.getPlayer(this.bidder);
             },
 
             /**
              *
              */
-            async getBidderProfile(this: HypixelEntity & typeof bid): Promise<HypixelSkyBlockProfile | null> {
+            async getBidderProfile(this: typeof bid): Promise<HypixelSkyBlockProfile | null> {
                 return await api.getSkyBlockProfile(this.profile_id)
             }
         })
@@ -85,7 +82,6 @@ function getFullBidSchema(api: HypixelAPI) {
 function getFullAuctionSchema(api: HypixelAPI) {
     const auctionSchema: z.ZodType<
         z.infer<typeof baseAuctionSchema> &
-        HypixelEntity &
         {
             getAuctioneer(): Promise<HypixelPlayer | null>,
             getAuctioneerProfile(): Promise<HypixelSkyBlockProfile | null>,
@@ -95,27 +91,26 @@ function getFullAuctionSchema(api: HypixelAPI) {
     > = baseAuctionSchema.extend({
         bids: z.array(getFullBidSchema(api).readonly()).default([]).readonly(),
     }).readonly().transform((auction) => {
-        return Object.assign(new HypixelEntity(api), {
-            ...auction,
+        return Object.assign(auction, {
 
             /**
              *
              */
-            async getAuctioneer(this: HypixelEntity & typeof auction): Promise<HypixelPlayer | null> {
+            async getAuctioneer(this: typeof auction): Promise<HypixelPlayer | null> {
                 return await api.getPlayer(this.auctioneer);
             },
 
             /**
              *
              */
-            async getAuctioneerProfile(this: HypixelEntity & typeof auction): Promise<HypixelSkyBlockProfile | null> {
+            async getAuctioneerProfile(this: typeof auction): Promise<HypixelSkyBlockProfile | null> {
                 return await api.getSkyBlockProfile(this.profile_id)
             },
 
             /**
              *
              */
-            async *coopMembersIterator(this: HypixelEntity & typeof auction): AsyncIterableIterator<HypixelPlayer | null> {
+            async *coopMembersIterator(this: typeof auction): AsyncIterableIterator<HypixelPlayer | null> {
                 for(const uuid of this.coop ?? []) {
                     yield await api.getPlayer(uuid)
                 }
@@ -124,7 +119,7 @@ function getFullAuctionSchema(api: HypixelAPI) {
             /**
              *
              */
-            async *claimedBiddersIterator(this: HypixelEntity & typeof auction): AsyncIterableIterator<HypixelPlayer | null> {
+            async *claimedBiddersIterator(this: typeof auction): AsyncIterableIterator<HypixelPlayer | null> {
                 for(const uuid of this.claimed_bidders ?? []) {
                     yield await api.getPlayer(uuid)
                 }
@@ -167,34 +162,33 @@ export function generateSkyBlockEndedAuctionsSchema(api: HypixelAPI) {
                 bin: z.boolean().optional(),
                 item_bytes: z.string().optional()
             }).transform((bid) => {
-                return Object.assign(new HypixelEntity(api), {
-                    ...bid,
+                return Object.assign(bid, {
 
                     /**
                      *
                      */
-                    async getAuction(this: HypixelEntity & typeof bid): Promise<HypixelSkyBlockAuction[] | null> {
+                    async getAuction(this: typeof bid): Promise<HypixelSkyBlockAuction[] | null> {
                         return await api.getSkyBlockAuctionById(this.auction_id)
                     },
 
                     /**
                      *
                      */
-                    async getSeller(this: HypixelEntity & typeof bid): Promise<HypixelPlayer | null> {
+                    async getSeller(this: typeof bid): Promise<HypixelPlayer | null> {
                         return await api.getPlayer(this.seller);
                     },
 
                     /**
                      *
                      */
-                    async getSellerProfile(this: HypixelEntity & typeof bid): Promise<HypixelSkyBlockProfile | null> {
+                    async getSellerProfile(this: typeof bid): Promise<HypixelSkyBlockProfile | null> {
                         return await api.getSkyBlockProfile(this.seller_profile)
                     },
 
                     /**
                      *
                      */
-                    async getBuyer(this: HypixelEntity & typeof bid): Promise<HypixelPlayer | null> {
+                    async getBuyer(this: typeof bid): Promise<HypixelPlayer | null> {
                         return this.buyer ? await api.getPlayer(this.buyer) : null;
                     }
                 })
