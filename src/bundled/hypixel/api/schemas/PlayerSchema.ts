@@ -6,6 +6,7 @@ import {
     ZodEnumMinecraftFormatting
 } from "./enums.ts";
 import {networkExpToLevel, UUID_REGEX} from "../../../../util.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
 import {BaseSchema} from "./BaseSchema.ts";
 import {ZodUnixDate} from "./ZodUnixDate.ts";
 import {HypixelGuild} from "./GuildSchema.ts";
@@ -13,7 +14,7 @@ import {HypixelRecentGame} from "./RecentGamesSchema.ts";
 import {HypixelSession} from "./StatusSchema.ts";
 
 export type PlayerSchema = ReturnType<typeof generatePlayerSchema>;
-export type HypixelPlayer = z.infer<PlayerSchema>["player"];
+export type HypixelPlayer = HypixelEntity & z.infer<PlayerSchema>["player"];
 export function generatePlayerSchema(api: HypixelAPI) {
 
     return BaseSchema.extend({
@@ -245,33 +246,37 @@ export function generatePlayerSchema(api: HypixelAPI) {
             })
 
         }).nullish().readonly().transform((player) => {
-            return player ? Object.assign(player, {
+            return Object.assign(new HypixelEntity(api), {
+                ...player,
 
                 /**
                  *
                  */
-                getLevel(this: typeof player): number {
+                getLevel(this: HypixelEntity & typeof player): number {
                     return networkExpToLevel(this.networkExp ?? 0);
                 },
 
                 /**
                  *
                  */
-                async getGuild(this: typeof player): Promise<HypixelGuild | null> {
+                async getGuild(this: HypixelEntity & typeof player): Promise<HypixelGuild | null> {
+                    if(!this.uuid) {
+                        return null;
+                    }
                     return api.getGuild(this.uuid)
                 },
 
                 /**
                  *
                  */
-                async getRecentGames(this: typeof player): Promise<HypixelRecentGame[]> {
+                async getRecentGames(this: HypixelEntity & typeof player): Promise<HypixelRecentGame[]> {
                     return api.getRecentGames(this.uuid)
                 },
 
                 /**
                  *
                  */
-                async getSession(this: typeof player): Promise<HypixelSession | null> {
+                async getSession(this: HypixelEntity & typeof player): Promise<HypixelSession | null> {
                     return api.getStatus(this.uuid);
                 }
 
@@ -280,7 +285,7 @@ export function generatePlayerSchema(api: HypixelAPI) {
                 // TODO getSkyBlockProfiles
                 // TODO getSkyBlockAuctions
                 // TODO getSkyBlockBingoBoards
-            }) : null
+            })
         })
     })
 }

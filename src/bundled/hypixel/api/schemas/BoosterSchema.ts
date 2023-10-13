@@ -1,13 +1,14 @@
 import type {HypixelAPI} from "../HypixelAPI.ts";
 import z from "zod";
 import {UUID_REGEX} from "../../../../util.ts";
+import {HypixelEntity} from "../HypixelEntity.ts";
 import {BaseSchema} from "./BaseSchema.ts";
 import {ZodUnixDate} from "./ZodUnixDate.ts";
 import {HypixelPlayer} from "./PlayerSchema.ts";
 import {HypixelGame} from "./resources/GamesResourceSchema.ts";
 
 export type BoosterSchema = ReturnType<typeof generateBoosterSchema>;
-export type HypixelBooster = z.infer<BoosterSchema>["boosters"][number];
+export type HypixelBooster = HypixelEntity & z.infer<BoosterSchema>["boosters"][number];
 
 export function generateBoosterSchema(api: HypixelAPI) {
     return BaseSchema.extend({
@@ -22,23 +23,24 @@ export function generateBoosterSchema(api: HypixelAPI) {
                 dateActivated: ZodUnixDate.nullish().readonly(),
                 stacked: z.union([z.array(z.string()).nullish().readonly(), z.boolean()]).readonly()
             }).transform((booster) => {
-                return Object.assign(booster, {
+                return Object.assign(new HypixelEntity(api), {
+                    ...booster,
 
                     /**
                      *
                      */
-                    async getPurchaser(this: typeof booster): Promise<HypixelPlayer | null> {
+                    async getPurchaser(this: HypixelEntity & typeof booster): Promise<HypixelPlayer | null> {
                         if(!this.purchaserUuid) {
                             return null;
                         }
-                        return await api.getPlayer(this.purchaserUuid);
+                        return await this.getRoot().getPlayer(this.purchaserUuid);
                     },
 
                     /**
                      *
                      */
-                    async getGame(this: typeof booster): Promise<HypixelGame | null> {
-                        const games = api.getResources().games;
+                    async getGame(this: HypixelEntity & typeof booster): Promise<HypixelGame | null> {
+                        const games = this.getRoot().getResources().games;
                         const matchingGameId = Object.entries(games).find(([, game]) => game.id === this.gameType)?.[0]
                         return matchingGameId ? games[matchingGameId] : null;
                     },
@@ -46,7 +48,7 @@ export function generateBoosterSchema(api: HypixelAPI) {
                     /**
                      *
                      */
-                    async *stackedIterator(this: typeof booster): AsyncIterableIterator<HypixelPlayer | null> {
+                    async *stackedIterator(this: HypixelEntity & typeof booster): AsyncIterableIterator<HypixelPlayer | null> {
                         if(!Array.isArray(this.stacked)) {
                             return;
                         }

@@ -6,6 +6,7 @@ import {ZodUnixDate} from "../ZodUnixDate.ts";
 import {MinecraftInventoryDataSchema} from "../MinecraftInventoryDataSchema.ts";
 import {ZodEnumHypixelSkyBlockDungeonClasses, ZodEnumMinecraftFormatting} from "../enums.ts";
 import {HypixelPlayer} from "../PlayerSchema.ts";
+import {HypixelEntity} from "../../HypixelEntity.ts";
 
 export type SkyBlockProfileSchema = ReturnType<typeof generateSkyBlockProfileSchema>;
 export type SkyBlockProfilesSchema = ReturnType<typeof generateSkyBlockProfilesSchema>;
@@ -30,15 +31,16 @@ function skyBlockProfile(api: HypixelAPI) {
                 started_ms: ZodUnixDate.readonly(),
                 who_started: z.string().regex(UUID_REGEX) // TODO getter
             }).readonly().nullish().transform((upgrade) => {
-                return upgrade ? Object.assign(upgrade, {
+                return Object.assign(new HypixelEntity(api), {
+                    ...upgrade,
 
                     /**
                      *
                      */
-                    async getStarter(this: typeof upgrade): Promise<HypixelPlayer | null> {
+                    async getStarter(this: HypixelEntity & typeof upgrade): Promise<HypixelPlayer | null> {
                         return await api.getPlayer(this.who_started);
                     },
-                }) : null;
+                })
             }),
             upgrade_states: z.array(
                 z.object({
@@ -50,18 +52,20 @@ function skyBlockProfile(api: HypixelAPI) {
                     claimed_by: z.string().regex(UUID_REGEX),
                     fasttracked: z.boolean().nullish()
                 }).readonly().transform((upgrade) => {
-                    return Object.assign(upgrade, {
+                    return Object.assign(new HypixelEntity(api), {
+                        ...upgrade,
+
                         /**
                          *
                          */
-                        async getStarter(this: typeof upgrade): Promise<HypixelPlayer | null> {
+                        async getStarter(this: HypixelEntity & typeof upgrade): Promise<HypixelPlayer | null> {
                             return await api.getPlayer(this.started_by);
                         },
 
                         /**
                          *
                          */
-                        async getClaimer(this: typeof upgrade): Promise<HypixelPlayer | null> {
+                        async getClaimer(this: HypixelEntity & typeof upgrade): Promise<HypixelPlayer | null> {
                             return await api.getPlayer(this.claimed_by);
                         }
                     })
@@ -375,11 +379,13 @@ function skyBlockProfile(api: HypixelAPI) {
                                     display_name: z.string(),
                                     class_milestone: z.number().nonnegative()
                                 }).readonly().transform((participant) => {
-                                    return Object.assign(participant, {
+                                    return Object.assign(new HypixelEntity(api), {
+                                        ...participant,
+
                                         /**
                                          *
                                          */
-                                        async getPlayer(this: typeof participant): Promise<HypixelPlayer | null> {
+                                        async getPlayer(this: HypixelEntity & typeof participant): Promise<HypixelPlayer | null> {
                                             return api.getPlayer(participant.player_uuid)
                                         }
                                     })
