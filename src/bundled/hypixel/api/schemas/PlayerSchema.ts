@@ -17,12 +17,27 @@ export type PlayerSchema = ReturnType<typeof generatePlayerSchema>;
 export type HypixelPlayer = HypixelEntity & z.infer<PlayerSchema>["player"];
 export function generatePlayerSchema(api: HypixelAPI) {
 
+    const urlTransformer = (v: string | undefined | null) => {
+        if(!v) {
+            return v;
+        }
+        if(!v.startsWith("http") && !v.startsWith("//")) {
+            v = "https://" + v
+        }
+        return new URL(v);
+    }
+
     return BaseSchema.extend({
         player: z.object({
             _id: z.string(),
             uuid: z.string().regex(UUID_REGEX),
-            achievements: z.record(z.string(), z.number().nonnegative()).default({}).readonly(), // TODO improve specificity + add getter
-            achievementsOneTime: z.array(z.string()).default([]).readonly(), // TODO improve specificity + add getter
+            achievements: z.record(z.string(), z.number().nonnegative()).default({}).readonly(), // TODO add getter
+            // For some reason, some players can have empty arrays here. We filter them out. Example: a621a7a7-9f32-4b5c-8344-9e4453ad454d
+            achievementsOneTime: z.array(z.any())
+                .transform(arr =>arr.filter((v) => !Array.isArray(v) || v.length > 0))
+                .pipe(
+                    z.array(z.string()).default([]).readonly()
+                ), // TODO add getter
             auto_spawn_pet: z.boolean().nullish(),
             channel: z.string().nullish(), // TODO improve specificity
             chat: z.boolean().nullish(),
@@ -35,8 +50,8 @@ export function generatePlayerSchema(api: HypixelAPI) {
                     shape: ZodEnumMinecraftFireworkShapes.nullish(),
                     trail: z.boolean().nullish(),
                     twinkle: z.boolean().nullish(),
-                    colors: z.string().regex(/\d{1,3},\d{1,3},\d{1,3}(?::\d{1,3},\d{1,3},\d{1,3})*/).nullish(),
-                    fade_colors: z.string().regex(/\d{1,3},\d{1,3},\d{1,3}(?::\d{1,3},\d{1,3},\d{1,3})*/).nullish(),
+                    colors: z.string().regex(/(\d{1,3},\d{1,3},\d{1,3})?(?::\d{1,3},\d{1,3},\d{1,3})*/).nullish(),
+                    fade_colors: z.string().regex(/(\d{1,3},\d{1,3},\d{1,3})?(?::\d{1,3},\d{1,3},\d{1,3})*/).nullish(),
                     selected: z.boolean().nullish()
                 }).readonly()
             ).nullish().readonly(),
@@ -132,11 +147,11 @@ export function generatePlayerSchema(api: HypixelAPI) {
             transformation: z.string().nullish(),
             socialMedia: z.object({
                 links: z.object({
-                    TWITTER: z.string().url().nullish().transform(v => v ? new URL(v) : v),
-                    YOUTUBE:  z.string().url().nullish().transform(v => v ? new URL(v) : v),
-                    INSTAGRAM: z.string().url().nullish().transform(v => v ? new URL(v) : v),
-                    TWITCH: z.string().url().nullish().transform(v => v ? new URL(v) : v),
-                    HYPIXEL: z.string().url().nullish().transform(v => v ? new URL(v) : v),
+                    TWITTER: z.string().nullish().transform(urlTransformer),
+                    YOUTUBE:  z.string().nullish().transform(urlTransformer),
+                    INSTAGRAM: z.string().nullish().transform(urlTransformer),
+                    TWITCH: z.string().nullish().transform(urlTransformer),
+                    HYPIXEL: z.string().nullish().transform(urlTransformer),
                     DISCORD: z.string().nullish()
                 }).nullish().readonly(),
                 prompt: z.boolean().nullish(),

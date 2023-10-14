@@ -1,76 +1,73 @@
 import {MojangAPI} from "../../MojangAPI.ts";
-import {ParsedOptions, UUID_REGEX} from "../../../util.ts";
+import {MONGODB_ID_REGEX, ParsedOptions, UUID_REGEX} from "../../../util.ts";
 import {APIOptions, BaseAPI} from "../../BaseAPI.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 import crypto from "crypto";
 import z from "zod";
-import {BaseResponse, BaseSchema} from "./schemas/BaseSchema.ts";
+import {BaseResponse, BaseSchema} from "./schemas";
 import {HypixelEntity} from "./HypixelEntity.ts";
 import {
     generateBoosterSchema,
     HypixelBooster,
     BoosterSchema
-} from "./schemas/BoosterSchema.ts";
-import {generateGuildSchema, HypixelGuild, GuildSchema} from "./schemas/GuildSchema.ts";
-import {generateLeaderboardsSchema, HypixelLeaderboards, LeaderboardsSchema} from "./schemas/LeaderboardsSchema.ts";
+} from "./schemas";
+import {generateGuildSchema, HypixelGuild, GuildSchema} from "./schemas";
+import {generateLeaderboardsSchema, HypixelLeaderboards, LeaderboardsSchema} from "./schemas";
 import {
     generatePlayerCountsSchema,
     HypixelPlayerCounts,
     PlayerCountsSchema
-} from "./schemas/PlayerCountsSchema.ts";
+} from "./schemas";
 import {
     generatePunishmentStatisticsSchema,
     HypixelPunishmentStatistics,
     PunishmentStatisticsSchema
-} from "./schemas/PunishmentStatisticsSchema.ts";
+} from "./schemas";
 import {
     generateRecentGamesSchema,
     HypixelRecentGame,
     RecentGamesSchema
-} from "./schemas/RecentGamesSchema.ts";
-import {generateStatusSchema, HypixelSession, StatusSchema} from "./schemas/StatusSchema.ts";
+} from "./schemas";
+import {generateStatusSchema, HypixelSession, StatusSchema} from "./schemas";
 import {
     generateSkyBlockAuctionSchema,
     generateSkyBlockAuctionsSchema, generateSkyBlockEndedAuctionsSchema,
     HypixelSkyBlockAuction,
     HypixelSkyBlockAuctions, HypixelSkyBlockEndedAuction, SkyBlockAuctionSchema,
     SkyBlockAuctionsSchema, SkyBlockEndedAuctionsSchema
-} from "./schemas/skyblock/SkyBlockAuctionSchema.ts";
-import {generatePlayerSchema, HypixelPlayer, PlayerSchema} from "./schemas/PlayerSchema.ts";
+} from "./schemas";
+import {generatePlayerSchema, HypixelPlayer, PlayerSchema} from "./schemas";
 import {
     generateSkyBlockNewsSchema,
     HypixelSkyBlockNews,
     SkyBlockNewsSchema
-} from "./schemas/skyblock/SkyBlockNewsSchema.ts";
+} from "./schemas";
 import {
     generateSkyBlockBazaarSchema,
     HypixelSkyBlockBazaarProduct,
     SkyBlockBazaarSchema
-} from "./schemas/skyblock/SkyBlockBazaarSchema.ts";
+} from "./schemas";
 import {
     generateSkyBlockBingoSchema,
     HypixelSkyBlockBingoProfile,
     SkyBlockBingoSchema
-} from "./schemas/skyblock/SkyBlockBingoSchema.ts";
+} from "./schemas";
 import {
     generateSkyBlockFiresalesSchema,
     HypixelSkyBlockFiresale,
     SkyBlockFiresalesSchema
-} from "./schemas/skyblock/SkyBlockFiresalesSchema.ts";
+} from "./schemas";
 import {
     generateSkyBlockMuseumSchema,
     HypixelSkyBlockMuseum,
     SkyBlockMuseumSchema
-} from "./schemas/skyblock/SkyBlockMuseumSchema.ts";
+} from "./schemas";
 import {
     generateSkyBlockProfileSchema, generateSkyBlockProfilesSchema,
     HypixelSkyBlockProfile,
     SkyBlockProfileSchema,
     SkyBlockProfilesSchema
-} from "./schemas/skyblock/SkyBlockProfileSchema.ts";
-
-
-const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
+} from "./schemas";
 
 export type HypixelAPIOptions = APIOptions & {
     /**
@@ -174,7 +171,12 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             });
         } else {
             if(mutator) {
-                return mutator(schema.readonly().parse(json))
+                try {
+                    return mutator(schema.readonly().parse(json))
+                } catch(e) {
+                    console.log(e);
+                    throw e;
+                }
             } else {
                 return schema.readonly().parse(json);
             }
@@ -406,9 +408,9 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         return await this.request(`skyblock/auctions?page=${page ?? 0}`, raw, this.skyBlockAuctionsSchema)
     }
 
-    public async getSkyBlockAuctionById(id: string, raw?: false): Promise<HypixelSkyBlockAuction[]>;
-    public async getSkyBlockAuctionById(id: string, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockAuctionById(id: string, raw = false): Promise<HypixelSkyBlockAuction[] | BaseResponse> {
+    public async getSkyBlockAuctionsById(id: string, raw?: false): Promise<HypixelSkyBlockAuction[]>;
+    public async getSkyBlockAuctionsById(id: string, raw?: true): Promise<BaseResponse>;
+    public async getSkyBlockAuctionsById(id: string, raw = false): Promise<HypixelSkyBlockAuction[] | BaseResponse> {
         return await this.request(`skyblock/auctions?uuid=${id}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
     }
 

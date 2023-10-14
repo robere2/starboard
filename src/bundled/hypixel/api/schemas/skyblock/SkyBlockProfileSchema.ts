@@ -4,7 +4,7 @@ import {BaseSchema} from "../BaseSchema.ts";
 import {UUID_REGEX} from "../../../../../util.ts";
 import {ZodUnixDate} from "../ZodUnixDate.ts";
 import {MinecraftInventoryDataSchema} from "../MinecraftInventoryDataSchema.ts";
-import {ZodEnumHypixelSkyBlockDungeonClasses, ZodEnumMinecraftFormatting} from "../enums.ts";
+import {ZodEnumHypixelSkyBlockDungeonClasses} from "../enums.ts";
 import {HypixelPlayer} from "../PlayerSchema.ts";
 import {HypixelEntity} from "../../HypixelEntity.ts";
 
@@ -75,7 +75,7 @@ function skyBlockProfile(api: HypixelAPI) {
         members: z.record(z.string().regex(UUID_REGEX), z.object({
             pets: z.array(
                 z.object({
-                    uuid: z.string().regex(UUID_REGEX),
+                    uuid: z.string().regex(UUID_REGEX).nullish(),
                     uniqueId: z.string().nullish(),
                     type: z.string().nullish(),
                     exp: z.number().nonnegative().nullish(),
@@ -146,7 +146,7 @@ function skyBlockProfile(api: HypixelAPI) {
                 }).nullish().readonly(),
                 west_village: z.object({
                     crazy_kloon: z.object({
-                        selected_colors: z.record(z.string(), ZodEnumMinecraftFormatting.nullish()).default({}).readonly(),
+                        selected_colors: z.record(z.string(), z.string().nullish()).default({}).readonly(),
                         talked: z.boolean().nullish(),
                         hacked_terminals: z.array(z.string()).default([]).readonly(),
                         quest_complete: z.boolean().nullish()
@@ -233,7 +233,7 @@ function skyBlockProfile(api: HypixelAPI) {
                     }), z.boolean().nullish()).default({}).readonly(),
                     xp: z.number().nonnegative().nullish()
                 }).catchall(z.number().nonnegative().nullish()).readonly() // https://github.com/colinhacks/zod/issues/2200
-            ),
+            ).default({}).readonly(),
             stats: z.record(z.string(), z.number().nullish()).default({}).readonly(),
             death_count: z.number().nonnegative().nullish(),
             first_join_hub: z.number().nonnegative().nullish(), // TODO convert to Date
@@ -320,22 +320,24 @@ function skyBlockProfile(api: HypixelAPI) {
                         tier_completions: z.record(numberStringType, z.number().nullish()).default({}).readonly(),
                         fastest_time: z.record(numberStringType, z.number().nullish()).default({}).readonly(),
                         best_runs: z.record(numberStringType,
-                            z.object({
-                                timestamp: z.number().nullish(),
-                                score_exploration: z.number().nullish(),
-                                score_speed: z.number().nullish(),
-                                score_skill: z.number().nullish(),
-                                score_bonus: z.number().nullish(),
-                                dungeon_class: z.string().nullish(),
-                                teammates: z.array(z.string().regex(UUID_REGEX)).default([]).readonly(),
-                                elapsed_time: z.number().nullish(),
-                                damage_dealt: z.number().nullish(),
-                                deaths: z.number().nullish(),
-                                mobs_killed: z.number().nullish(),
-                                secrets_found: z.number().nullish(),
-                                damage_mitigated: z.number().nullish(),
-                                ally_healing: z.number().nullish(),
-                            }).nullish().readonly()
+                            z.array(
+                                z.object({
+                                    timestamp: z.number().nullish(),
+                                    score_exploration: z.number().nullish(),
+                                    score_speed: z.number().nullish(),
+                                    score_skill: z.number().nullish(),
+                                    score_bonus: z.number().nullish(),
+                                    dungeon_class: z.string().nullish(),
+                                    teammates: z.array(z.string().regex(UUID_REGEX)).default([]).readonly(),
+                                    elapsed_time: z.number().nullish(),
+                                    damage_dealt: z.number().nullish(),
+                                    deaths: z.number().nullish(),
+                                    mobs_killed: z.number().nullish(),
+                                    secrets_found: z.number().nullish(),
+                                    damage_mitigated: z.number().nullish(),
+                                    ally_healing: z.number().nullish(),
+                                }).readonly()
+                            ).default([]).readonly()
                         ).default({}).readonly(),
                         best_score: z.record(numberStringType, z.number().nullish()).default({}).readonly(),
                         mobs_killed: z.record(numberStringType, z.number().nullish()).default({}).readonly(),
@@ -398,12 +400,10 @@ function skyBlockProfile(api: HypixelAPI) {
                             run_id: z.string().regex(UUID_REGEX),
                             chest_id: z.string().regex(UUID_REGEX),
                             treasure_type: z.string(),
-                            rewards: z.array(
-                                z.object({
-                                    rewards: z.array(z.string()).default([]).readonly(),
-                                    rolled_rng_meter_randomly: z.boolean().nullish()
-                                }).readonly()
-                            ).default([]).readonly(),
+                            rewards: z.object({
+                                rewards: z.array(z.string()).default([]).readonly(),
+                                rolled_rng_meter_randomly: z.boolean().nullish()
+                            }).readonly(),
                             quality: z.number(),
                             shiny_eligible: z.boolean().nullish(),
                             paid: z.boolean().nullish(),
@@ -416,10 +416,12 @@ function skyBlockProfile(api: HypixelAPI) {
                 z.object({
                     effect: z.string().nullish(),
                     level: z.number().nonnegative().nullish(),
-                    modifiers: z.object({
-                        key: z.string().nullish(),
-                        amp: z.number().nonnegative().nullish()
-                    }).nullish().readonly(),
+                    modifiers: z.array(
+                        z.object({
+                            key: z.string().nullish(),
+                            amp: z.number().nonnegative().nullish()
+                        }).readonly()
+                    ).default([]).readonly(),
                     ticks_remaining: z.number().nullish(),
                     infinite: z.boolean().nullish()
                 }).readonly()
@@ -547,7 +549,7 @@ function skyBlockProfile(api: HypixelAPI) {
             visited_modes: z.array(z.string()).default([]).readonly(),
             disabled_potion_effects: z.array(z.string()).default([]).readonly(),
             mining_core: z.object({
-                nodes: z.record(z.string(), z.number()).default({}).readonly(),
+                nodes: z.record(z.string(), z.union([z.number(), z.boolean()])).default({}).readonly(),
                 received_free_tier: z.boolean().nullish(),
                 tokens: z.number().nullish(),
                 powder_mithril: z.number().nullish(),

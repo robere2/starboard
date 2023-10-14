@@ -8,7 +8,7 @@ export function generateSkyBlockBingoSchema() {
     return BaseSchema.extend({
         events: z.array(
             z.object({
-                key: z.string(),
+                key: z.number(),
                 points: z.number().nonnegative(),
                 completed_goals: z.array(z.string()).default([]).readonly()
             })

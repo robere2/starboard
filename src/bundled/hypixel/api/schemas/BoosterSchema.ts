@@ -1,6 +1,6 @@
 import type {HypixelAPI} from "../HypixelAPI.ts";
 import z from "zod";
-import {UUID_REGEX} from "../../../../util.ts";
+import {MONGODB_ID_REGEX, UUID_REGEX} from "../../../../util.ts";
 import {HypixelEntity} from "../HypixelEntity.ts";
 import {BaseSchema} from "./BaseSchema.ts";
 import {ZodUnixDate} from "./ZodUnixDate.ts";
@@ -43,6 +43,17 @@ export function generateBoosterSchema(api: HypixelAPI) {
                         const games = this.getRoot().getResources().games;
                         const matchingGameId = Object.entries(games).find(([, game]) => game.id === this.gameType)?.[0]
                         return matchingGameId ? games[matchingGameId] : null;
+                    },
+
+                    /**
+                     *
+                     */
+                    getDateScheduled(this: HypixelEntity & typeof booster): Date | null {
+                        // First four bytes of MongoDB IDs contain the timestamp of document insertion
+                        if(!MONGODB_ID_REGEX.test(this._id)) {
+                            return null;
+                        }
+                        return new Date(parseInt(this._id.substring(0, 8), 16) * 1000);
                     },
 
                     /**
