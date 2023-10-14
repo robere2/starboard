@@ -20,3 +20,6 @@ jobs:
 
       - name: Compile TypeScript
         run: bun x tsc
+
+      - name: Circular Dependencies Check
+        run: bun x madge --circular .
