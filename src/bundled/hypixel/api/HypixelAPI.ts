@@ -1,10 +1,9 @@
 import {MojangAPI} from "../../MojangAPI.ts";
 import {MONGODB_ID_REGEX, ParsedOptions, UUID_REGEX} from "../../../util.ts";
-import {APIOptions, BaseAPI} from "../../BaseAPI.ts";
+import {APIOptions, BaseAPI, BaseResponse, BaseSchema} from "../../BaseAPI.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 import crypto from "crypto";
 import {
-    BaseResponse, BaseSchema,
     BoosterSchema,
     generateBoosterSchema,
     generateGuildSchema,

@@ -21,7 +21,6 @@ export { HypixelSkyBlockMuseum } from './skyblock/SkyBlockMuseumSchema.ts';
 export { HypixelSkyBlockNews } from './skyblock/SkyBlockNewsSchema.ts';
 export { HypixelSkyBlockProfile } from './skyblock/SkyBlockProfileSchema.ts';
 
-export { BaseSchema, BaseResponse } from './BaseSchema.ts';
 export { HypixelBooster } from './BoosterSchema.ts';
 export { HypixelGuild } from './GuildSchema.ts';
 export { HypixelLeaderboards, HypixelLeaderboard } from './LeaderboardsSchema.ts';
@@ -56,7 +55,6 @@ export * from './skyblock/SkyBlockMuseumSchema.ts';
 export * from './skyblock/SkyBlockNewsSchema.ts';
 export * from './skyblock/SkyBlockProfileSchema.ts';
 
-export * from './BaseSchema.ts';
 export * from './BoosterSchema.ts';
 export * from './GuildSchema.ts';
 export * from './LeaderboardsSchema.ts';

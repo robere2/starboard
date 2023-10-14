@@ -2,7 +2,7 @@ import type {HypixelAPI} from "../HypixelAPI.ts";
 import z from "zod";
 import {MONGODB_ID_REGEX, UUID_REGEX} from "../../../../util.ts";
 import {HypixelEntity} from "../HypixelEntity.ts";
-import {BaseSchema} from "./BaseSchema.ts";
+import {BaseSchema} from "../../../BaseAPI.ts";
 import {ZodUnixDate} from "./ZodUnixDate.ts";
 import {HypixelPlayer} from "./PlayerSchema.ts";
 import {HypixelGame} from "./resources/GamesResourceSchema.ts";

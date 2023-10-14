@@ -1,8 +1,17 @@
 import {HttpClient} from "./http/HttpClient.ts";
 import {ParsedOptions} from "../util.ts";
-import {BaseResponse, BaseSchema} from "./hypixel/api";
 import z from "zod";
 import {IDeferPolicy} from "./hypixel/api/defer/IDeferPolicy.ts";
+
+export type BaseResponse = z.infer<typeof BaseSchema> & Record<string, any>
+
+export const BaseSchema = z.object({
+    success: z.boolean(),
+    cause: z.string().nullish(),
+    throttle: z.boolean().nullish(),
+    global: z.boolean().nullish()
+}).passthrough()
+
 
 export type APIOptions = {
     /**

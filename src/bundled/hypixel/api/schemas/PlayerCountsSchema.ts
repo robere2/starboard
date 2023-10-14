@@ -1,7 +1,7 @@
 import type {HypixelAPI} from "../HypixelAPI.ts";
 import z from "zod";
 import {HypixelEntity} from "../HypixelEntity.ts";
-import {BaseSchema} from "./BaseSchema.ts";
+import {BaseSchema} from "../../../BaseAPI.ts";
 import {ZodEnumHypixelPlayerCounts} from "./enums.ts";
 
 export type PlayerCountsSchema = ReturnType<typeof generatePlayerCountsSchema>;

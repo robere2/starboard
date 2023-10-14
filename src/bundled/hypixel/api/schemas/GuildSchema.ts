@@ -3,7 +3,7 @@ import z from "zod";
 import {ZodEnumHypixelGames, ZodEnumHypixelGuildAchievements, ZodEnumMinecraftFormatting} from "./enums.ts";
 import {UUID_REGEX} from "../../../../util.ts";
 import {HypixelEntity} from "../HypixelEntity.ts";
-import {BaseSchema} from "./BaseSchema.ts";
+import {BaseSchema} from "../../../BaseAPI.ts";
 import {ZodUnixDate} from "./ZodUnixDate.ts";
 import {HypixelPlayer} from "./PlayerSchema.ts";
 

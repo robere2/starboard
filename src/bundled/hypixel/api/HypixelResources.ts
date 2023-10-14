@@ -1,10 +1,9 @@
-import {APIOptions, BaseAPI} from "../../BaseAPI.ts";
+import {APIOptions, BaseAPI, BaseResponse, BaseSchema} from "../../BaseAPI.ts";
 import {ParsedOptions} from "../../../util.ts";
-import {HypixelAPI} from "./HypixelAPI.ts";
+import type {HypixelAPI} from "./HypixelAPI.ts";
 import {ResourcesNotReadyError} from "./throwables/ResourcesNotReadyError.ts";
 import {HypixelEntity} from "./HypixelEntity.ts";
 import {
-    BaseResponse,
     ChallengesResourceSchema,
     generateChallengesResourceSchema,
     HypixelChallenge,
@@ -35,7 +34,7 @@ import {
     generateSkyBlockSkillsResourceSchema,
     HypixelSkyBlockSkill, SkyBlockSkillsResourceSchema,
     generateSkyBlockItemsResourceSchema,
-    HypixelSkyBlockItem, SkyBlockItemsResourceSchema, BaseSchema
+    HypixelSkyBlockItem, SkyBlockItemsResourceSchema
 } from "./schemas";
 import {TypeOf} from "zod";
 

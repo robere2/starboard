@@ -1,5 +1,5 @@
 import z from "zod";
-import {BaseSchema} from "../BaseSchema.ts";
+import {BaseSchema} from "../../../../BaseAPI.ts";
 import {ZodUnixDate} from "../ZodUnixDate.ts";
 import {ZodEnumMinecraftFormatting} from "../enums.ts";
 
