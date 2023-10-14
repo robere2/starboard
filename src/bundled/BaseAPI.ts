@@ -39,7 +39,7 @@ export abstract class BaseAPI<T extends APIOptions> {
     }
 
     protected async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: z.infer<T>) => U): Promise<BaseResponse | U> {
-        const req = new Request(`https://api.hypixel.net/${path}`, {
+        const req = new Request(path, {
             headers: this.genHeaders()
         });
 

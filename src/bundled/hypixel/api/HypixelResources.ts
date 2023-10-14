@@ -35,8 +35,9 @@ import {
     generateSkyBlockSkillsResourceSchema,
     HypixelSkyBlockSkill, SkyBlockSkillsResourceSchema,
     generateSkyBlockItemsResourceSchema,
-    HypixelSkyBlockItem, SkyBlockItemsResourceSchema
+    HypixelSkyBlockItem, SkyBlockItemsResourceSchema, BaseSchema
 } from "./schemas";
+import {TypeOf} from "zod";
 
 export class HypixelResources extends BaseAPI<APIOptions> {
 
@@ -106,6 +107,10 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         resources._skyBlockBingo = await resources.fetchSkyBlockBingo();
         resources.ready = true;
         return resources;
+    }
+
+    protected async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: TypeOf<T>) => U): Promise<BaseResponse | U> {
+        return super.request(`https://api.hypixel.net/resources/${path}`, raw, schema, mutator);
     }
 
     public isReady(): boolean {

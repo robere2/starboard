@@ -4,7 +4,7 @@ import {APIOptions, BaseAPI} from "../../BaseAPI.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 import crypto from "crypto";
 import {
-    BaseResponse,
+    BaseResponse, BaseSchema,
     BoosterSchema,
     generateBoosterSchema,
     generateGuildSchema,
@@ -57,6 +57,7 @@ import {
 } from "./schemas";
 import {HypixelEntity} from "./HypixelEntity.ts";
 import {RateLimitDeferPolicy} from "./defer/RateLimitDeferPolicy.ts";
+import {TypeOf} from "zod";
 
 export type HypixelAPIOptions = APIOptions & {
     /**
@@ -144,6 +145,10 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         // Resources won't be null as long as we don't use them somewhere in the initialization of this class. The
         //   HypixelAPI object isn't returned from create() until resources have been fetched.
         return this.resources as HypixelResources;
+    }
+
+    protected async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: TypeOf<T>) => U): Promise<BaseResponse | U> {
+        return super.request(`https://api.hypixel.net/${path}`, raw, schema, mutator);
     }
 
     /**
