@@ -1,5 +1,8 @@
 import {HttpClient} from "./http/HttpClient.ts";
 import {ParsedOptions} from "../util.ts";
+import {BaseResponse, BaseSchema} from "./hypixel/api";
+import z from "zod";
+import {IDeferPolicy} from "./hypixel/api/defer/IDeferPolicy.ts";
 
 export type APIOptions = {
     /**
@@ -12,7 +15,7 @@ export type APIOptions = {
      *   delay between each request. This value can also be a boolean, where `true` means enable queueing at any
      *   percentage (same as providing 0.0) and `false` means disable queueing entirely (same as providing 1.0).
      */
-    defer?: boolean | number;
+    deferPolicy?: IDeferPolicy | null;
     /**
      * Custom HTTP client to use for HTTP requests to the Mojang API. If not provided, a default HTTP client will be
      *   used, which simply uses the {@link fetch} function. Custom HTTP clients are particularly useful for
@@ -31,6 +34,46 @@ export abstract class BaseAPI<T extends APIOptions> {
 
     protected abstract parseOptions(options: T): ParsedOptions<T>;
 
+    protected genHeaders(): Headers {
+        return new Headers();
+    }
+
+    protected async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: z.infer<T>) => U): Promise<BaseResponse | U> {
+        const req = new Request(`https://api.hypixel.net/${path}`, {
+            headers: this.genHeaders()
+        });
+
+        if(this.options.deferPolicy) {
+            await this.options.deferPolicy.poll(req);
+        }
+
+        const res = await this.options.httpClient!.fetch(req);
+
+        if(this.options.deferPolicy) {
+            await this.options.deferPolicy.poll(res);
+        }
+        const json = BaseSchema.readonly().parse(await res.json());
+
+        if(raw) {
+            return json;
+        } else if(!json.success) {
+            throw new Error(`Hypixel API Error: ${json.cause}`, {
+                cause: json.cause
+            });
+        } else {
+            if(mutator) {
+                try {
+                    return mutator(schema.readonly().parse(json))
+                } catch(e) {
+                    console.log(e);
+                    throw e;
+                }
+            } else {
+                return schema.readonly().parse(json);
+            }
+        }
+    }
+
     /**
      * Parse an APIOptions input into an object with default values applied. This is a utility function that can parse
      *   all the default options found in APIOptions objects for you. Custom values found in classes that extend
@@ -45,7 +88,7 @@ export abstract class BaseAPI<T extends APIOptions> {
      */
     protected parseDefaultOptions(options: APIOptions): ParsedOptions<APIOptions> {
         return Object.freeze({
-            defer: options.defer ?? 0.0,
+            deferPolicy: options.deferPolicy ?? null,
             httpClient: options.httpClient ?? new HttpClient()
         })
     }

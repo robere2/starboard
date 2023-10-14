@@ -3,71 +3,60 @@ import {MONGODB_ID_REGEX, ParsedOptions, UUID_REGEX} from "../../../util.ts";
 import {APIOptions, BaseAPI} from "../../BaseAPI.ts";
 import {HypixelResources} from "./HypixelResources.ts";
 import crypto from "crypto";
-import z from "zod";
-import {BaseResponse, BaseSchema} from "./schemas";
-import {HypixelEntity} from "./HypixelEntity.ts";
 import {
+    BaseResponse,
+    BoosterSchema,
     generateBoosterSchema,
-    HypixelBooster,
-    BoosterSchema
-} from "./schemas";
-import {generateGuildSchema, HypixelGuild, GuildSchema} from "./schemas";
-import {generateLeaderboardsSchema, HypixelLeaderboards, LeaderboardsSchema} from "./schemas";
-import {
+    generateGuildSchema,
+    generateLeaderboardsSchema,
     generatePlayerCountsSchema,
-    HypixelPlayerCounts,
-    PlayerCountsSchema
-} from "./schemas";
-import {
+    generatePlayerSchema,
     generatePunishmentStatisticsSchema,
-    HypixelPunishmentStatistics,
-    PunishmentStatisticsSchema
-} from "./schemas";
-import {
     generateRecentGamesSchema,
-    HypixelRecentGame,
-    RecentGamesSchema
-} from "./schemas";
-import {generateStatusSchema, HypixelSession, StatusSchema} from "./schemas";
-import {
     generateSkyBlockAuctionSchema,
-    generateSkyBlockAuctionsSchema, generateSkyBlockEndedAuctionsSchema,
-    HypixelSkyBlockAuction,
-    HypixelSkyBlockAuctions, HypixelSkyBlockEndedAuction, SkyBlockAuctionSchema,
-    SkyBlockAuctionsSchema, SkyBlockEndedAuctionsSchema
-} from "./schemas";
-import {generatePlayerSchema, HypixelPlayer, PlayerSchema} from "./schemas";
-import {
-    generateSkyBlockNewsSchema,
-    HypixelSkyBlockNews,
-    SkyBlockNewsSchema
-} from "./schemas";
-import {
+    generateSkyBlockAuctionsSchema,
     generateSkyBlockBazaarSchema,
-    HypixelSkyBlockBazaarProduct,
-    SkyBlockBazaarSchema
-} from "./schemas";
-import {
     generateSkyBlockBingoSchema,
-    HypixelSkyBlockBingoProfile,
-    SkyBlockBingoSchema
-} from "./schemas";
-import {
+    generateSkyBlockEndedAuctionsSchema,
     generateSkyBlockFiresalesSchema,
-    HypixelSkyBlockFiresale,
-    SkyBlockFiresalesSchema
-} from "./schemas";
-import {
     generateSkyBlockMuseumSchema,
-    HypixelSkyBlockMuseum,
-    SkyBlockMuseumSchema
-} from "./schemas";
-import {
-    generateSkyBlockProfileSchema, generateSkyBlockProfilesSchema,
-    HypixelSkyBlockProfile,
+    generateSkyBlockNewsSchema,
+    generateSkyBlockProfileSchema,
+    generateSkyBlockProfilesSchema,
+    generateStatusSchema,
+    GuildSchema,
+    HypixelBooster,
+    HypixelGuild,
+    HypixelLeaderboards,
+    HypixelPlayer,
+    HypixelPlayerCounts,
+    HypixelPunishmentStatistics,
+    HypixelRecentGame,
+    HypixelSession,
+    HypixelSkyBlockAuction,
+    HypixelSkyBlockAuctions,
+    HypixelSkyBlockBazaarProduct, HypixelSkyBlockBingoProfile,
+    HypixelSkyBlockEndedAuction, HypixelSkyBlockFiresale, HypixelSkyBlockMuseum,
+    HypixelSkyBlockNews, HypixelSkyBlockProfile,
+    LeaderboardsSchema,
+    PlayerCountsSchema,
+    PlayerSchema,
+    PunishmentStatisticsSchema,
+    RecentGamesSchema,
+    SkyBlockAuctionSchema,
+    SkyBlockAuctionsSchema,
+    SkyBlockBazaarSchema,
+    SkyBlockBingoSchema,
+    SkyBlockEndedAuctionsSchema,
+    SkyBlockFiresalesSchema,
+    SkyBlockMuseumSchema,
+    SkyBlockNewsSchema,
     SkyBlockProfileSchema,
-    SkyBlockProfilesSchema
+    SkyBlockProfilesSchema,
+    StatusSchema
 } from "./schemas";
+import {HypixelEntity} from "./HypixelEntity.ts";
+import {RateLimitDeferPolicy} from "./defer/RateLimitDeferPolicy.ts";
 
 export type HypixelAPIOptions = APIOptions & {
     /**
@@ -155,32 +144,6 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         // Resources won't be null as long as we don't use them somewhere in the initialization of this class. The
         //   HypixelAPI object isn't returned from create() until resources have been fetched.
         return this.resources as HypixelResources;
-    }
-
-    private async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: z.infer<T>) => U): Promise<BaseResponse | U> {
-        const res = await this.options.httpClient.fetch(`https://api.hypixel.net/${path}`, {
-            headers: this.genHeaders()
-        });
-        const json = BaseSchema.readonly().parse(await res.json());
-
-        if(raw) {
-            return json;
-        } else if(!json.success) {
-            throw new Error(`Hypixel API Error: ${json.cause}`, {
-                cause: json.cause
-            });
-        } else {
-            if(mutator) {
-                try {
-                    return mutator(schema.readonly().parse(json))
-                } catch(e) {
-                    console.log(e);
-                    throw e;
-                }
-            } else {
-                return schema.readonly().parse(json);
-            }
-        }
     }
 
     /**
@@ -469,7 +432,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     }
 
     protected genHeaders(): Headers {
-        const headers = new Headers();
+        const headers = super.genHeaders();
         headers.set("API-Key", this.options.apiKey);
         return headers;
     }
@@ -477,7 +440,13 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     protected parseOptions(options: HypixelAPIOptions): ParsedOptions<HypixelAPIOptions> {
         return Object.freeze({
             ...this.parseDefaultOptions(options),
-            apiKey: options.apiKey
+            apiKey: options.apiKey,
+            // default defer policy based on Rate limit headers
+            deferPolicy: options.deferPolicy ? options.deferPolicy : new RateLimitDeferPolicy(
+                "RateLimit-Limit",
+                "RateLimit-Remaining",
+                "RateLimit-Reset"
+            )
         })
     }
 }

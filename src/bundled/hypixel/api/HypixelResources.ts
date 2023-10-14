@@ -3,61 +3,40 @@ import {ParsedOptions} from "../../../util.ts";
 import {HypixelAPI} from "./HypixelAPI.ts";
 import {ResourcesNotReadyError} from "./throwables/ResourcesNotReadyError.ts";
 import {HypixelEntity} from "./HypixelEntity.ts";
-import {BaseResponse, BaseSchema} from "./schemas";
-import z from "zod";
 import {
+    BaseResponse,
     ChallengesResourceSchema,
     generateChallengesResourceSchema,
-    HypixelChallenge
-} from "./schemas/resources/ChallengesResourceSchema.ts";
-import {
+    HypixelChallenge,
     GamesResourceSchema,
     generateGamesResourceSchema,
-    HypixelGame
-} from "./schemas/resources/GamesResourceSchema.ts";
-import {
+    HypixelGame,
     AchievementsResourceSchema,
     generateAchievementsResourceSchema,
-    HypixelGameAchievements
-} from "./schemas/resources/AchievementsResourceSchema.ts";
-import {
+    HypixelGameAchievements,
     generateQuestsResourceSchema,
     HypixelQuest,
-    QuestsResourceSchema
-} from "./schemas/resources/QuestsResourceSchema.ts";
-import {
+    QuestsResourceSchema,
     generateGuildAchievementsResourceSchema,
-    GuildAchievementsResourceSchema, HypixelGuildAchievements
-} from "./schemas/resources/GuildAchievementsResourceSchema.ts";
-import {
+    GuildAchievementsResourceSchema, HypixelGuildAchievements,
     generatePetsResourceSchema,
     HypixelPet,
     HypixelRarity,
-    PetsResourceSchema
-} from "./schemas/resources/PetsResourceSchema.ts";
-import {
+    PetsResourceSchema,
     generateSkyBlockBingoResourceSchema,
     HypixelSkyBlockBingo,
-    SkyBlockBingoResourceSchema
-} from "./schemas/resources/skyblock/SkyBlockBingoResourceSchema.ts";
-import {
+    SkyBlockBingoResourceSchema,
     generateSkyBlockElectionResourceSchema,
     HypixelSkyBlockElection, HypixelSkyBlockMayor,
-    SkyBlockElectionResourceSchema
-} from "./schemas/resources/skyblock/SkyBlockElectionResourceSchema.ts";
-import {
+    SkyBlockElectionResourceSchema,
     generateSkyBlockCollectionsResourceSchema,
     HypixelSkyBlockCollection,
-    SkyBlockCollectionsResourceSchema
-} from "./schemas/resources/skyblock/SkyBlockCollectionsResourceSchema.ts";
-import {
+    SkyBlockCollectionsResourceSchema,
     generateSkyBlockSkillsResourceSchema,
-    HypixelSkyBlockSkill, SkyBlockSkillsResourceSchema
-} from "./schemas/resources/skyblock/SkyBlockSkillsResourceSchema.ts";
-import {
+    HypixelSkyBlockSkill, SkyBlockSkillsResourceSchema,
     generateSkyBlockItemsResourceSchema,
     HypixelSkyBlockItem, SkyBlockItemsResourceSchema
-} from "./schemas/resources/skyblock/SkyBlockItemsResourceSchema.ts";
+} from "./schemas";
 
 export class HypixelResources extends BaseAPI<APIOptions> {
 
@@ -350,27 +329,6 @@ export class HypixelResources extends BaseAPI<APIOptions> {
     public async fetchSkyBlockBingo(raw?: true): Promise<BaseResponse>;
     public async fetchSkyBlockBingo(raw = false): Promise<HypixelSkyBlockBingo | BaseResponse | null> {
         return this.request(`skyblock/bingo`, raw, this.skyBlockBingoResourceSchema)
-    }
-
-
-
-    private async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: z.infer<T>) => U): Promise<BaseResponse | U> {
-        const res = await this.options.httpClient.fetch(`https://api.hypixel.net/resources/${path}`);
-        const json = BaseSchema.readonly().parse(await res.json());
-
-        if(raw) {
-            return json;
-        } else if(!json.success) {
-            throw new Error("Hypixel API Error", {
-                cause: json.cause
-            });
-        } else {
-            if(mutator) {
-                return mutator(schema.readonly().parse(json))
-            } else {
-                return schema.readonly().parse(json);
-            }
-        }
     }
 
     protected parseOptions(options: APIOptions): ParsedOptions<APIOptions> {
