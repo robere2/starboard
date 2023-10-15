@@ -449,7 +449,8 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             deferPolicy: options.deferPolicy ? options.deferPolicy : new RateLimitDeferPolicy(
                 "RateLimit-Limit",
                 "RateLimit-Remaining",
-                "RateLimit-Reset"
+                "RateLimit-Reset",
+                300_000
             )
         })
     }

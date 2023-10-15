@@ -53,13 +53,13 @@ export abstract class BaseAPI<T extends APIOptions> {
         });
 
         if(this.options.deferPolicy) {
-            await this.options.deferPolicy.poll(req);
+            await this.options.deferPolicy.poll();
         }
 
         const res = await this.options.httpClient!.fetch(req);
 
         if(this.options.deferPolicy) {
-            await this.options.deferPolicy.poll(res);
+            this.options.deferPolicy.update(res);
         }
         const json = BaseSchema.readonly().parse(await res.json());
 
