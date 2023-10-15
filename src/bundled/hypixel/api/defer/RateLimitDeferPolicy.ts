@@ -15,19 +15,35 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
     protected defaultResetInterval: number;
     protected buffer: number;
 
+
     protected resetDateTime: Date;
     // Infinity disables rate limiting until the first response is received, at which point this value will be updated.
     protected remaining: number = Infinity;
     protected total: number = Infinity;
     protected queue: Set<QueueItem> = new Set();
 
-    constructor(limitHeaderName: string, remainingHeaderName: string, resetHeaderName: string, defaultResetInterval: number, buffer = 0.02) {
+    protected burstCount: number = 0;
+    protected burstCap: number;
+    protected burstRequiredRatio: number;
+    protected burstIntervalTimer: Timer;
+
+    constructor(limitHeaderName: string, remainingHeaderName: string, resetHeaderName: string, defaultResetInterval: number, buffer = 0.02, burstCap = 3, burstInterval = 3000, burstRequiredRatio = 0.5) {
         this.limitHeaderName = limitHeaderName;
         this.remainingHeaderName = remainingHeaderName;
         this.resetHeaderName = resetHeaderName;
         this.defaultResetInterval = defaultResetInterval;
         this.buffer = buffer;
+        this.burstCap = burstCap;
+        this.burstRequiredRatio = burstRequiredRatio;
         this.resetDateTime = new Date(Date.now() + this.defaultResetInterval);
+
+        this.burstIntervalTimer = setInterval(() => {
+            this.burstCount = 0;
+        }, burstInterval);
+    }
+
+    public destroy(): void {
+        clearInterval(this.burstIntervalTimer);
     }
 
     public poll(): Promise<void> {
@@ -57,14 +73,19 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
     }
 
     protected async runDefer(): Promise<void> {
-
         const now = Date.now();
         const timeTilReset = this.resetDateTime.getTime() - now;
         const deferTime = timeTilReset / Math.max(this.remaining - this.buffer * this.total, 1)
 
         if(this.remaining === Infinity) {
             return;
+        } else if(this.burstCount < this.burstCap && this.remaining / this.total > this.burstRequiredRatio) {
+            console.log("Bursting. Ratio: " + (this.remaining / this.total))
+            this.burstCount++;
+            return;
         } else {
+            console.log("Waiting " + deferTime + "ms")
+            console.log(`Limit: ${this.total} Remaining: ${this.remaining} Reset: ${timeTilReset}`)
             await new Promise(resolve => setTimeout(resolve, deferTime));
         }
     }
