@@ -5,7 +5,7 @@ import {Plugin} from "./Plugin.ts";
 import {Executor} from "./Executor.ts";
 
 class DummyEndpoint extends Endpoint {
-    handle(): Response | Promise<Response> {
+    async handle(): Promise<Response> {
         return new Response("");
     }
 }

@@ -1,3 +1,3 @@
 export interface Executor {
-    handle(req: Request): Response | Promise<Response>
+    handle(req: Request): Promise<Response>
 }

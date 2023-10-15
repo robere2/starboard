@@ -2,5 +2,5 @@ import {Executor} from "./Executor.ts";
 
 export abstract class Endpoint implements Executor {
 
-    public abstract handle(req: Request): Response | Promise<Response>;
+    public abstract handle(req: Request): Promise<Response>;
 }
