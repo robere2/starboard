@@ -1,7 +1,7 @@
 import type {HypixelAPI} from "../../HypixelAPI.ts";
 import z from "zod";
 import {HypixelEntity} from "../../HypixelEntity.ts";
-import {BaseSchema} from "../../../../BaseAPI.ts";
+import {BaseSchema} from "../../BaseAPI.ts";
 
 export type SkyBlockBazaarSchema = ReturnType<typeof generateSkyBlockBazaarSchema>;
 export type HypixelSkyBlockBazaarProduct = HypixelEntity & z.infer<SkyBlockBazaarSchema>["products"][string];

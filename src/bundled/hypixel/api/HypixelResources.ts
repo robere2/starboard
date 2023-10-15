@@ -1,7 +1,7 @@
-import {APIOptions, BaseAPI, BaseResponse, BaseSchema} from "../../BaseAPI.ts";
+import {APIOptions, BaseAPI, BaseResponse, BaseSchema} from "./BaseAPI.ts";
 import {ParsedOptions} from "../../../util.ts";
 import type {HypixelAPI} from "./HypixelAPI.ts";
-import {ResourcesNotReadyError} from "./throwables/ResourcesNotReadyError.ts";
+import {ResourcesNotReadyError} from "./throwables";
 import {HypixelEntity} from "./HypixelEntity.ts";
 import {
     ChallengesResourceSchema,

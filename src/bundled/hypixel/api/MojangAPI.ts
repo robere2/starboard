@@ -1,5 +1,5 @@
 import {APIOptions, BaseAPI} from "./BaseAPI.ts";
-import {ParsedOptions} from "../util.ts";
+import {ParsedOptions} from "../../../util.ts";
 import crypto from "crypto";
 import {MojangProfile} from "./MojangProfile.ts";
 

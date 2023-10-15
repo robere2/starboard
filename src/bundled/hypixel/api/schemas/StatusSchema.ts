@@ -1,6 +1,6 @@
 import z from "zod";
 import {UUID_REGEX} from "../../../../util.ts";
-import {BaseSchema} from "../../../BaseAPI.ts";
+import {BaseSchema} from "../BaseAPI.ts";
 
 export type StatusSchema = ReturnType<typeof generateStatusSchema>;
 export type HypixelStatus = z.infer<StatusSchema>;

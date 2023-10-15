@@ -1,7 +1,7 @@
-import {HttpClient} from "./http/HttpClient.ts";
-import {ParsedOptions} from "../util.ts";
+import {HttpClient} from "./http";
+import {ParsedOptions} from "../../../util.ts";
 import z from "zod";
-import {IDeferPolicy} from "./hypixel/api/defer/IDeferPolicy.ts";
+import {IDeferPolicy} from "./defer";
 
 export type BaseResponse = z.infer<typeof BaseSchema> & Record<string, any>
 

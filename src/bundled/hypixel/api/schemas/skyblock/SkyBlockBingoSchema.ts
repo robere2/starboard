@@ -1,5 +1,5 @@
 import z from "zod";
-import {BaseSchema} from "../../../../BaseAPI.ts";
+import {BaseSchema} from "../../BaseAPI.ts";
 
 export type SkyBlockBingoSchema = ReturnType<typeof generateSkyBlockBingoSchema>;
 export type HypixelSkyBlockBingoProfile = z.infer<SkyBlockBingoSchema>["events"][number];

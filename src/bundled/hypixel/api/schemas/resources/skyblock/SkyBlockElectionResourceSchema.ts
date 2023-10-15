@@ -1,5 +1,5 @@
 import z from "zod";
-import {BaseSchema} from "../../../../../BaseAPI.ts";
+import {BaseSchema} from "../../../BaseAPI.ts";
 import {ZodUnixDate} from "../../ZodUnixDate.ts";
 
 export type SkyBlockElectionResourceSchema = ReturnType<typeof generateSkyBlockElectionResourceSchema>;

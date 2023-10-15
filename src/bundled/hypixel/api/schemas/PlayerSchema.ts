@@ -7,7 +7,7 @@ import {
 } from "./enums.ts";
 import {networkExpToLevel, UUID_REGEX} from "../../../../util.ts";
 import {HypixelEntity} from "../HypixelEntity.ts";
-import {BaseSchema} from "../../../BaseAPI.ts";
+import {BaseSchema} from "../BaseAPI.ts";
 import {ZodUnixDate} from "./ZodUnixDate.ts";
 import type {HypixelGuild} from "./GuildSchema.ts";
 import {HypixelRecentGame} from "./RecentGamesSchema.ts";

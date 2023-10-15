@@ -1,5 +1,5 @@
-import packageJson from "../../../package.json";
-import {Cache} from "../cache/Cache.ts";
+import packageJson from "../../../../../package.json";
+import {Cache} from "../cache";
 import crypto from "crypto";
 
 /**

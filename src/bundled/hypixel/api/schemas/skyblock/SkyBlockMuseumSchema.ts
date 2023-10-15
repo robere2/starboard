@@ -1,5 +1,5 @@
 import z from "zod";
-import {BaseSchema} from "../../../../BaseAPI.ts";
+import {BaseSchema} from "../../BaseAPI.ts";
 import {UUID_REGEX} from "../../../../../util.ts";
 import {ZodUnixDate} from "../ZodUnixDate.ts";
 import {MinecraftInventoryDataSchema} from "../MinecraftInventoryDataSchema.ts";

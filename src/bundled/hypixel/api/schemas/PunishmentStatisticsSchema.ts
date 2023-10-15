@@ -1,5 +1,5 @@
 import z from "zod";
-import {BaseSchema} from "../../../BaseAPI.ts";
+import {BaseSchema} from "../BaseAPI.ts";
 
 export type PunishmentStatisticsSchema = ReturnType<typeof generatePunishmentStatisticsSchema>;
 export type HypixelPunishmentStatistics = z.infer<PunishmentStatisticsSchema>;

@@ -1,6 +1,6 @@
 
 import z from "zod";
-import {BaseSchema} from "../../../../BaseAPI.ts";
+import {BaseSchema} from "../../BaseAPI.ts";
 
 export type SkyBlockNewsSchema = ReturnType<typeof generateSkyBlockNewsSchema>;
 export type HypixelSkyBlockNews = z.infer<SkyBlockNewsSchema>["items"][number];

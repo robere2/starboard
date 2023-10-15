@@ -1,6 +1,6 @@
 import type {HypixelAPI} from "../../../HypixelAPI.ts";
 import z from "zod";
-import {BaseSchema} from "../../../../../BaseAPI.ts";
+import {BaseSchema} from "../../../BaseAPI.ts";
 import {ZodUnixDate} from "../../ZodUnixDate.ts";
 import {HypixelEntity} from "../../../HypixelEntity.ts";
 import {HypixelSkyBlockCollection} from "./SkyBlockCollectionsResourceSchema.ts";
