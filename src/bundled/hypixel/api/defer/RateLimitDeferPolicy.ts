@@ -78,6 +78,7 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
         const deferTime = timeTilReset / Math.max(this.remaining - this.buffer * this.total, 1)
 
         if(this.remaining === Infinity) {
+            console.log('Rate limit unknown, no defer')
             return;
         } else if(this.burstCount < this.burstCap && this.remaining / this.total > this.burstRequiredRatio) {
             console.log("Bursting. Ratio: " + (this.remaining / this.total))

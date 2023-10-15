@@ -52,15 +52,20 @@ export abstract class BaseAPI<T extends APIOptions> {
             headers: this.genHeaders()
         });
 
-        if(this.options.deferPolicy) {
-            await this.options.deferPolicy.poll();
+        let res = await this.options.httpClient!.fetch(req, undefined, true);
+        if(!res) {
+            if(this.options.deferPolicy) {
+                await this.options.deferPolicy.poll();
+            }
+
+            res = await this.options.httpClient!.fetch(req);
+
+            if(this.options.deferPolicy) {
+                this.options.deferPolicy.update(res);
+            }
         }
 
-        const res = await this.options.httpClient!.fetch(req);
 
-        if(this.options.deferPolicy) {
-            this.options.deferPolicy.update(res);
-        }
         const json = BaseSchema.readonly().parse(await res.json());
 
         if(raw) {

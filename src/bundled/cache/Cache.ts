@@ -19,20 +19,26 @@ export abstract class Cache<T = any> {
         if(options.startGarbageCollection) {
             options.startGarbageCollection();
         } else {
-            setTimeout(() => this.garbageCollect(), 1000 * 60);
+            setInterval(() => this.garbageCollect(), 1000 * 60);
         }
     }
 
     public abstract write(key: string, value: T): void | Promise<void>;
     public abstract write(key: string, value: T): void | Promise<void>;
 
-    public async get(key: string, fn: (() => T | Promise<T>)): Promise<T> {
+    public async get(key: string): Promise<T | null>;
+    public async get(key: string, fn: (() => T | Promise<T>)): Promise<T>;
+    public async get(key: string, fn?: (() => T | Promise<T>)): Promise<T | null> {
         this.garbageCollect(); // We don't want to await here. Garbage collection can happen in the background.
         const item = await this.access(key);
 
         // If item is set and still valid according to cache policy, return the item
         if(item && this.policy.check(item)) {
             return item.value;
+        }
+
+        if(!fn) {
+            return null;
         }
 
         // If the item is not set, or if item is set but invalid, try to set/update it with the fn
