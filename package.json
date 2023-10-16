@@ -1,20 +1,23 @@
 {
   "name": "starboard",
-  "version": "0.1-alpha1",
-  "module": "src/index.ts",
-  "type": "module",
+  "packageManager": "npm@10.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun --inspect playground.ts\"",
-    "watch-test": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun --inspect test --coverage\""
-  },
-  "devDependencies": {
-    "bun-types": "^1.0.3",
-    "typescript": "^5.2.2"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "prettier": "^3.0.3",
+    "tsconfig": "*",
+    "turbo": "latest"
   }
 }
