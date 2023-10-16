@@ -1,5 +1,5 @@
 import {HypixelEndpoint} from "../HypixelEndpoint";
-import {HypixelAPI} from "api";
+import {HypixelAPI} from "@mcsb/api";
 
 export class HypixelPlayerEndpoint extends HypixelEndpoint {
     constructor(api: HypixelAPI) {

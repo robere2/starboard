@@ -4,5 +4,8 @@
     ".",
     "../../node_modules/bun-types/types.d.ts"
   ],
-  "exclude": ["dist", "build", "node_modules"]
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "exclude": ["dist", "scripts", "node_modules"]
 }

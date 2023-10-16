@@ -117,3 +117,6 @@ jspm_packages/
 apps/playground
 !apps/playground/README.md
 !apps/playground/package.json
+
+# Build files
+dist

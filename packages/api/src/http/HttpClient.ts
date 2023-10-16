@@ -1,4 +1,4 @@
-import packageJson from "../../package.json";
+import { version } from "../../package.json";
 import {Cache} from "../cache";
 import * as crypto from "crypto";
 
@@ -23,12 +23,12 @@ export class HttpClient {
 
     /**
      * Constructor for a new HTTP client.
-     * @param userAgent The user agent to use for requests. Defaults to Starboard v{packageJson.version}. If null
+     * @param userAgent The user agent to use for requests. Defaults to Starboard v{version}. If null
      *   is passed, the default Bun user agent will be used.
      * @param cache A Cache to use for storing Responses. If not provided, no cache will be used.
      */
     constructor(userAgent?: string | null | undefined, cache?: Cache<SerializableResponse>) {
-        this.userAgent = userAgent === undefined ? `Starboard v${packageJson.version}` : userAgent;
+        this.userAgent = userAgent === undefined ? `Starboard v${version}` : userAgent;
         this.cache = cache ?? null;
     }
 

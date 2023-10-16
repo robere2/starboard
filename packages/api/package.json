@@ -1,16 +1,24 @@
 {
-  "name": "api",
-  "version": "0.0.0",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "name": "@mcsb/api",
+  "version": "1.0.0-alpha1",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.js",
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint .",
-    "watch-test": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun --inspect test --coverage\""
+    "lint": "eslint . && madge --circular src",
+    "test": "bun --inspect test --coverage",
+    "test:watch": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun test\"",
+    "dev": "bun x nodemon -L --ext \"ts,json\" --watch ./src --exec \"tsc && bun run build\" --delay 3",
+    "build": "esbuild `find src \\\\( -name '*.ts' \\\\)` --packages=external --outdir=dist/src --platform=node --sourcemap=external && esbuild src/http/HttpClient.ts --bundle --packages=external --outdir=dist/src/http --platform=node --sourcemap=external",
+    "types": "tsc --build && echo \"Types built\""
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "bun-types": "^1.0.6",
+    "esbuild": "^0.19.4",
     "eslint-config-custom": "*",
     "tsconfig": "*",
     "typescript": "^5.0.0"

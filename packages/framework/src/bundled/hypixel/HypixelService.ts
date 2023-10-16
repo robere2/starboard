@@ -1,6 +1,6 @@
 import {Service} from "../../Service";
 import {HypixelPlayerEndpoint} from "./endpoints/HypixelPlayerEndpoint";
-import {HypixelAPI, HypixelAPIOptions} from "api";
+import {HypixelAPI, HypixelAPIOptions} from "@mcsb/api";
 
 export class HypixelService extends Service {
 

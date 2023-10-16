@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "pg": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun --inspect index.ts\""
+    "dev": "[ -f index.ts ] && bun x nodemon -L --ext \"ts,json\" --watch . --watch ../../packages/api/dist/*.js --watch ../../packages/framework/dist/*.js --exec \"tsc && bun --inspect index.ts\""
   },
   "dependencies": {
-    "api": "*",
+    "@mcsb/api": "*",
     "eslint-config-custom": "*",
-    "framework": "*",
+    "@mcsb/framework": "*",
     "tsconfig": "*"
   }
 }
