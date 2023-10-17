@@ -1,23 +1,24 @@
 {
   "name": "starboard",
-  "packageManager": "npm@10.1.0",
+  "private": true,
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
+    "build": "lerna run build",
+    "dev": "lerna watch -- lerna run build --scope=\\$LERNA_PACKAGE_NAME",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
     "test:watch": "turbo run test:watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "eslint": "^8.48.0",
+    "lerna": "^7.3.1",
     "madge": "^6.1.0",
     "prettier": "^3.0.3",
-    "tsconfig": "*",
-    "turbo": "latest"
-  }
+    "tsconfig": "*"
+  },
+  "dependencies": {}
 }

@@ -9,8 +9,8 @@
     "lint": "eslint . && madge --circular src",
     "test": "bun --inspect test --coverage",
     "test:watch": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun test\"",
-    "dev": "bun x nodemon -L --ext \"ts,json\" --watch ./src --exec \"tsc && bun run build\" --delay 3",
-    "build": "esbuild `find src \\\\( -name '*.ts' \\\\)` --packages=external --outdir=dist/src --platform=node --sourcemap=external && esbuild src/http/HttpClient.ts --bundle --packages=external --outdir=dist/src/http --platform=node --sourcemap=external",
+    "dev": "bun run build",
+    "build": "bun run types && esbuild `find src \\\\( -name '*.ts' \\\\)` --packages=external --outdir=dist/src --platform=node --sourcemap=external && esbuild src/http/HttpClient.ts --bundle --packages=external --outdir=dist/src/http --platform=node --sourcemap=external",
     "types": "tsc --build && echo \"Types built\""
   },
   "dependencies": {
