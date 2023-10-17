@@ -114,9 +114,8 @@ jspm_packages/
 .idea
 
 # Development playground files
-apps/playground
-!apps/playground/README.md
-!apps/playground/package.json
+apps/playground/src
+apps/playground/index.ts
 
 # Build files
 dist
