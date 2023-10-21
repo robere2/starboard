@@ -1,6 +1,6 @@
 import {Endpoint} from "./Endpoint";
-import path from "path";
 import {Plugin} from "./Plugin";
+import urlJoin from "url-join";
 
 
 export class Service {
@@ -9,7 +9,7 @@ export class Service {
     public readonly path: string;
 
     constructor(inputPath: string) {
-        this.path = path.normalize(inputPath);
+        this.path = inputPath;
         if(this.path.startsWith("..")) {
             throw new Error('Path cannot start with ".."');
         }
@@ -39,7 +39,7 @@ export class Service {
         // Map the Map values to prepend this service's path to the endpoint path
         return new Map(
             Array.from(this.endpoints)
-                .map(([endpointPath, endpoint]) => [path.join(this.path, endpointPath), endpoint])
+                .map(([endpointPath, endpoint]) => [urlJoin(this.path, endpointPath), endpoint])
         )
     }
 
@@ -48,7 +48,7 @@ export class Service {
 
         for (const subservice of this.subservices) {
             for (const [endpointPath, endpoint] of subservice.allEndpoints()) {
-                const joinedPath = path.join(this.path, endpointPath);
+                const joinedPath = urlJoin(this.path, endpointPath);
                 if (endpoints.has(joinedPath)) {
                     throw new Error(`Duplicate endpoint path ${joinedPath}`);
                 }

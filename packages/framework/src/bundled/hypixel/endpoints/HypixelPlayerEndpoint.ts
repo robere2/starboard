@@ -10,6 +10,7 @@ export class HypixelPlayerEndpoint extends HypixelEndpoint {
         const url = new URL(req.url);
         const queryString = url.searchParams;
 
+
         try {
             if(queryString.has('uuid')) {
                 const uuid = queryString.get('uuid');

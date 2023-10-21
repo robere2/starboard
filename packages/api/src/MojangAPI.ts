@@ -18,12 +18,17 @@ export class MojangAPI extends BaseAPI<APIOptions> {
     }
 
     public async getUuid(name: string): Promise<string | null> {
-        // Request Mojang API with the user agent injected if it is set. Otherwise, Bun default is used.
+        // Request Mojang API with the user agent injected if it is set. Otherwise, Node default is used.
         const res = await this.options.httpClient.fetch(new Request(`https://api.mojang.com/users/profiles/minecraft/${name}`));
 
         if(res.ok) {
             const json = await res.json();
-            return json.id;
+            if(typeof json !== "object" || json === null) {
+                throw new Error('Request to Mojang API failed', {
+                    cause: json
+                })
+            }
+            return (json as Record<string, any>).id;
         } else {
             throw new Error('Request to Mojang API failed', {
                 cause: await res.json()
@@ -35,6 +40,11 @@ export class MojangAPI extends BaseAPI<APIOptions> {
         const res = await this.options.httpClient.fetch(new Request(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`));
         if(res.ok) {
             const json = await res.json();
+            if(typeof json !== "object" || json === null) {
+                throw new Error('Request to Mojang API failed', {
+                    cause: json
+                })
+            }
             return new MojangProfile(json);
         } else {
             throw new Error('Request to Mojang API failed', {

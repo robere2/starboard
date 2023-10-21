@@ -1,5 +1,5 @@
 /*
-// FIXME Blocked by https://github.com/oven-sh/bun/issues/5426
+// FIXME Blocked by https://github.com/oven-sh/bun/issues/5426 - Node
 export { HypixelSkyBlockBingoGoal, HypixelSkyBlockBingo } from './resources/skyblock/SkyBlockBingoResourceSchema';
 export { HypixelSkyBlockCollection } from './resources/skyblock/SkyBlockCollectionsResourceSchema';
 export { HypixelSkyBlockMayor, HypixelSkyBlockMayorCandidate, HypixelSkyBlockElection } from './resources/skyblock/SkyBlockElectionResourceSchema';

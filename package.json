@@ -5,20 +5,31 @@
     "apps/*",
     "packages/*"
   ],
+  "type": "module",
   "scripts": {
+    "dev": "lerna run dev",
     "build": "lerna run build",
-    "dev": "lerna watch -- lerna run build --scope=\\$LERNA_PACKAGE_NAME",
     "lint": "lerna run lint",
     "test": "lerna run test",
-    "test:watch": "turbo run test:watch",
+    "dev:watch": "mcsb-watch dev",
+    "build:watch": "mcsb-watch build",
+    "lint:watch": "mcsb-watch lint",
+    "test:watch": "mcsb-watch test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@mcsb/watch": "^1.0.0-alpha1",
+    "@types/node": "^20.8.6",
     "eslint": "^8.48.0",
     "lerna": "^7.3.1",
     "madge": "^6.1.0",
     "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
     "tsconfig": "*"
   },
-  "dependencies": {}
+  "watcherOptions": {
+    "logLevel": "DEBUG",
+    "immediate": true,
+    "files": ["src", "index.ts"]
+  }
 }

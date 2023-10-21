@@ -1,14 +1,23 @@
 {
   "name": "playground",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha1",
   "private": true,
+  "main": "index.ts",
+  "type": "module",
   "scripts": {
-    "dev": "[ -f index.ts ] && tsc && bun --inspect index.ts"
+    "dev": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm bin/index-exists.ts && node --enable-source-maps --no-warnings=ExperimentalWarning --inspect --loader ts-node/esm index.ts"
   },
   "dependencies": {
     "@mcsb/api": "*",
-    "eslint-config-custom": "*",
     "@mcsb/framework": "*",
+    "eslint-config-custom": "*",
     "tsconfig": "*"
+  },
+  "devDependencies": {
+    "@manypkg/get-packages": "^2.2.0",
+    "chokidar": "^3.5.3",
+    "nodemon": "^3.0.1",
+    "touch": "^3.1.0",
+    "ts-node": "^10.9.1"
   }
 }

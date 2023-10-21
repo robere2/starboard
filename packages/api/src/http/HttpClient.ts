@@ -24,7 +24,7 @@ export class HttpClient {
     /**
      * Constructor for a new HTTP client.
      * @param userAgent The user agent to use for requests. Defaults to Starboard v{version}. If null
-     *   is passed, the default Bun user agent will be used.
+     *   is passed, the default Node/Bun user agent will be used.
      * @param cache A Cache to use for storing Responses. If not provided, no cache will be used.
      */
     constructor(userAgent?: string | null | undefined, cache?: Cache<SerializableResponse>) {
@@ -58,7 +58,7 @@ export class HttpClient {
      *   cache, it will return null if `cacheOnly` was set to true. If `cacheOnly` is set to false, the HTTP request
      *   will be set and the Response will be returned.
      */
-    public fetch(url: string | URL | Request, init?: FetchRequestInit, cacheOnly?: false): Promise<Response>;
+    public fetch(url: string | URL | Request, init?: RequestInit, cacheOnly?: false): Promise<Response>;
     /**
      * Send an HTTP Request to the provided URL or Request. The specification for this method mirrors that of the
      *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API}, minus the differences outlined
@@ -112,7 +112,7 @@ export class HttpClient {
      *   cache, it will return null if `cacheOnly` was set to true. If `cacheOnly` is set to false, the HTTP request
      *   will be set and the Response will be returned.
      */
-    public fetch(url: string | URL | Request, init?: FetchRequestInit, cacheOnly?: true): Promise<Response | null>;
+    public fetch(url: string | URL | Request, init?: RequestInit, cacheOnly?: true): Promise<Response | null>;
     /**
      * Send an HTTP Request to the provided URL or Request. The specification for this method mirrors that of the
      *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API}, minus the differences outlined
@@ -146,10 +146,7 @@ export class HttpClient {
 
         // If a URL/string is passed, we can convert it into a Request with the RequestInit options
         if(typeof input === "string" || input instanceof URL) {
-            input = new Request({
-                url: input.toString(),
-                ...init,
-            });
+            input = new Request(input.toString(), init);
         }
 
 

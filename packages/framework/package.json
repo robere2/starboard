@@ -1,24 +1,41 @@
 {
   "name": "@mcsb/framework",
-  "version": "0.0.0",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.js",
+  "version": "1.0.0-alpha1",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
   "license": "MIT",
   "scripts": {
     "lint": "eslint . && madge --circular src",
-    "test": "bun --inspect test --coverage",
-    "test:watch": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun test\"",
-    "dev": "bun run build",
-    "build": "bun run types && esbuild `find src \\\\( -name '*.ts' \\\\)` --packages=external --outdir=dist/src --platform=node --sourcemap=external",
-    "types": "tsc --build && echo \"Types built\""
+    "test": "node --inspect test --coverage",
+    "test:watch": "npx nodemon -L --ext \"ts,json\" --exec \"tsc && node test\"",
+
+    "prebuild": "rimraf dist",
+    "build": "rollup --config rollup.config.ts --configPlugin typescript",
+    "postbuild": "rimraf -g dist/rollup.config.* dist/src"
   },
   "dependencies": {
-    "@mcsb/api": "*"
+    "@mcsb/api": "*",
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
-    "bun-types": "^1.0.6",
+    "@rollup/plugin-typescript": "^11.1.5",
     "eslint-config-custom": "*",
+    "rollup": "^4.1.4",
     "tsconfig": "*",
     "typescript": "^5.0.0"
+  },
+  "watcherOptions": {
+    "files": [
+      "src",
+      "index.ts",
+      "rollup.config.ts",
+      "package.json",
+      "tsconfig.json"
+    ]
   }
 }

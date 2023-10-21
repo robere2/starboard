@@ -25,7 +25,7 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
     protected burstCount: number = 0;
     protected burstCap: number;
     protected burstRequiredRatio: number;
-    protected burstIntervalTimer: Timer;
+    protected burstIntervalTimer: ReturnType<typeof setTimeout>;
 
     constructor(limitHeaderName: string, remainingHeaderName: string, resetHeaderName: string, defaultResetInterval: number, buffer = 0.02, burstCap = 3, burstInterval = 3000, burstRequiredRatio = 0.5) {
         this.limitHeaderName = limitHeaderName;

@@ -1,32 +1,35 @@
-import {Server} from "bun";
 import {Service} from "./Service";
+import {serve, ServeOptions} from "./serve";
+import {Server} from "http";
 
 export class Starboard extends Service {
 
     private server?: Server;
-    private readonly port: number;
-    private readonly hostname: string;
+    private options: ServeOptions | undefined;
 
-    constructor(port = 4381, hostname = "localhost") {
+    constructor(options?: ServeOptions) {
         super('/');
-        this.port = port;
-        this.hostname = hostname;
+        this.options = options;
     }
 
-    public start(): void {
-        this.assertServerStopped()
-        this.server = Bun.serve({
-            port: this.port,
-            hostname: this.hostname,
-            fetch: async (req: Request): Promise<Response> => {
-                const endpoint = this.allEndpoints().get(new URL(req.url).pathname)
-                if(endpoint) {
-                    return endpoint.handle(req);
-                }
-                return new Response(JSON.stringify({error: 404}), {
-                    status: 404
-                });
+    public async start(): Promise<void> {
+        if(this.server) {
+            throw new Error('Server is already running')
+        }
+
+        this.server = await serve(async (req: Request): Promise<Response> => {
+            const endpoint = this.allEndpoints().get(new URL(req.url).pathname)
+            if(endpoint) {
+                return endpoint.handle(req);
             }
+            return new Response(JSON.stringify({error: 404}), {
+                status: 404
+            });
+        }, {
+            port: this.options?.port ?? 4381,
+            hostname: this.options?.hostname ?? "localhost",
+            allowedHosts: this.options?.allowedHosts || [this.options?.hostname ?? "localhost"],
+            https: this.options?.https ?? false
         })
     }
 
@@ -39,29 +42,14 @@ export class Starboard extends Service {
     }
 
     public stop(): void {
-        this.assertServerRunning();
-        this.server?.stop();
-        this.server = undefined;
+        throw new Error("Not implemented");
     }
 
     public getPort(): number {
-        this.assertServerRunning();
-        return this.server?.port as number
+        throw new Error("Not implemented");
     }
 
     public getHostname(): string {
-        this.assertServerRunning();
-        return this.server?.hostname as string
-    }
-
-    private assertServerStopped(): void {
-        if(this.server) {
-            throw new Error('Server is already running')
-        }
-    }
-    private assertServerRunning(): void {
-        if(!this.server) {
-            throw new Error('Server is not running')
-        }
+        throw new Error("Not implemented");
     }
 }
