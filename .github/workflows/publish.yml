@@ -1,0 +1,43 @@
+name: Build & Publish
+on:
+  push:
+    branches:
+      - master
+      - dev
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+      - dev
+
+jobs:
+  build:
+    name: Build & Publish
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Build Packages
+        run: lerna run build --since origin/master
+
+      - name: Publish Packages
+        run: | # Once we reach v1.0.0, we should change --conventional-prerelease to --conventional-graduate for master
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+        
+          if [ ${{ github.base_ref }} = dev ]; then
+            lerna version --conventional-commits --conventional-prerelease --preid pre --create-release github --yes
+          else
+            lerna version --conventional-commits --conventional-prerelease --preid pre --create-release github --yes
+          fi
+          
+          lerna publish from-git --yes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
