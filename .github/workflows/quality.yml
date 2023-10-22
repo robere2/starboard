@@ -21,4 +21,4 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Run Lint Tests
-        run: lerna run lint --since master
+        run: lerna run lint --since origin/master

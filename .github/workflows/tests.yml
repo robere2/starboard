@@ -24,4 +24,4 @@ jobs:
         run: lerna list --all
 
       - name: Run Tests
-        run: lerna run test --since master
+        run: lerna run test --since origin/master
