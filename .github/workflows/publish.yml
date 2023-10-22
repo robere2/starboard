@@ -1,0 +1,41 @@
+name: Build & Publish
+on:
+  push:
+    branches:
+      - master
+      - dev
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+      - dev
+
+jobs:
+  build:
+    name: Unit Tests
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Build Packages
+        run: lerna run build --since origin/master
+
+      - name: Publish Packages
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+        
+          if [ ${{ github.base_ref }} = development ]; then
+            lerna version --conventional-commits --conventional-prerelease --create-release github --yes
+          else
+            lerna version --conventional-commits --conventional-prerelease --create-release github --yes
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
