@@ -38,5 +38,9 @@
       "package.json",
       "tsconfig.json"
     ]
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
