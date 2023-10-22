@@ -11,7 +11,8 @@
     "lint": "tsc && eslint . && madge --circular src",
     "prebuild": "rimraf dist",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
-    "postbuild": "rimraf -g dist/rollup.config.* dist/src"
+    "postbuild": "rimraf -g dist/rollup.config.* dist/src",
+    "prepublishOnly": "lerna run build --scope @mcsb/watch"
   },
   "author": "",
   "license": "MIT",

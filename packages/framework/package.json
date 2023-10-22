@@ -14,7 +14,8 @@
     "test": "globstar -- node --inspect --experimental-specifier-resolution=node --no-warnings=ExperimentalWarning --loader ts-node/esm --test \"src/**/*.test.ts\"",
     "prebuild": "rimraf dist",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
-    "postbuild": "rimraf -g dist/rollup.config.* dist/src"
+    "postbuild": "rimraf -g dist/rollup.config.* dist/src",
+    "prepublishOnly": "lerna run build --scope @mcsb/framework"
   },
   "dependencies": {
     "@mcsb/api": "*",
