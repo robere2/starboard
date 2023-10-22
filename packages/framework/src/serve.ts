@@ -62,7 +62,6 @@ export async function serve(cb: (req: Request) => Promise<Response> | Response, 
             return;
         }
 
-        console.log("Testing!")
         const url = new URL(req.url);
         const allowedHosts = opts?.allowedHosts ?? [];
         if(!allowedHosts.includes(url.hostname)) {
