@@ -29,18 +29,10 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           
           if [ ${{ github.base_ref }} = dev ]; then
-            lerna version --conventional-commits --conventional-prerelease --no-push --preid pre --create-release github --yes
+            lerna publish --conventional-prerelease --yes
           else
-            lerna version --conventional-commits --conventional-prerelease --no-push --preid pre --create-release github --yes
+            lerna publish --conventional-prerelease --yes
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish Packages
-        run: lerna publish from-git --yes
-        env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Push Publish
-        if: success()
-        run: git push
