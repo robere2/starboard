@@ -27,14 +27,19 @@ jobs:
         run: | # Once we reach v1.0.0, we should change --conventional-prerelease to --conventional-graduate for master
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-        
+          
           if [ ${{ github.base_ref }} = dev ]; then
-            lerna version --conventional-commits --conventional-prerelease --preid pre --create-release github --yes
+            lerna version --conventional-commits --conventional-prerelease --no-push --preid pre --create-release github --yes
           else
-            lerna version --conventional-commits --conventional-prerelease --preid pre --create-release github --yes
+            lerna version --conventional-commits --conventional-prerelease --no-push --preid pre --create-release github --yes
           fi
+          
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           
           lerna publish from-git --yes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push Publish
+        if: success()
+        run: git push
