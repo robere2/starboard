@@ -4,11 +4,6 @@ on:
     branches:
       - master
       - dev
-  pull_request:
-    types: [closed]
-    branches:
-      - master
-      - dev
 
 jobs:
   build:
