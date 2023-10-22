@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - name: Pull Git Tags # Used by Lerna
-      run: git fetch --depth=1 origin +refs/tags*:refs/tags/*
+      run: git fetch --depth=1 origin +refs/tags*:refs/tags*
       shell: bash
 
     - name: Setup Node
