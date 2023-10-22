@@ -1,6 +1,6 @@
 {
   "name": "@mcsb/watch",
-  "version": "1.0.0-alpha2",
+  "version": "1.0.0-pre.0",
   "description": "CLI tool for watching for changes within a monorepo",
   "type": "module",
   "main": "dist/index.js",
@@ -26,7 +26,7 @@
     "rimraf": "^5.0.5",
     "rollup": "^4.1.4",
     "rollup-plugin-dts": "^6.1.0",
-    "tsconfig": "^1.0.0-alpha2"
+    "tsconfig": "^1.0.0-pre.0"
   },
   "watcherOptions": {
     "files": [

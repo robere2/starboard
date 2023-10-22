@@ -1,6 +1,6 @@
 {
   "name": "playground",
-  "version": "1.0.0-alpha2",
+  "version": "1.0.0-pre.0",
   "private": true,
   "main": "index.ts",
   "type": "module",
@@ -10,8 +10,8 @@
   "dependencies": {
     "@mcsb/api": "*",
     "@mcsb/framework": "*",
-    "eslint-config-custom": "^1.0.0-alpha2",
-    "tsconfig": "^1.0.0-alpha2"
+    "eslint-config-custom": "^1.0.0-pre.0",
+    "tsconfig": "^1.0.0-pre.0"
   },
   "devDependencies": {
     "@manypkg/get-packages": "^2.2.0",
