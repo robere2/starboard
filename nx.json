@@ -9,11 +9,29 @@
       }
     }
   },
+  "namedInputs": {
+    "all": ["{projectRoot}/**/*"],
+    "production": ["all", "!{projectRoot}/dist/**/*", "!{projectRoot}/**/*.test.ts", "runtime"],
+    "dist": ["{projectRoot}/dist/**/*"],
+    "tests": ["{projectRoot}/**/*.test.ts"],
+    "runtime": [{"runtime": "node -v"}]
+  },
   "targetDefaults": {
+    "lint": {
+      "inputs": ["all", "!{projectRoot}/dist/**/*"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^dist"]
+    },
+    "test:watch": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^dist"]
+    },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["{workspaceRoot}/src/**/*.ts", "{workspaceRoot}/package.json"],
-      "outputs": ["{workspaceRoot}/dist"]
+      "inputs": ["production"],
+      "outputs": ["{projectRoot}/dist"]
     }
   }
 }
