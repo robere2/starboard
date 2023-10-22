@@ -13,7 +13,6 @@
     "lint": "eslint . && madge --circular src",
     "test": "node --inspect test --coverage",
     "test:watch": "npx nodemon -L --ext \"ts,json\" --exec \"tsc && node test\"",
-
     "prebuild": "rimraf dist",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "postbuild": "rimraf -g dist/rollup.config.* dist/src"
@@ -24,9 +23,9 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.5",
-    "eslint-config-custom": "*",
+    "eslint-config-custom": "^1.0.0-alpha1",
     "rollup": "^4.1.4",
-    "tsconfig": "*",
+    "tsconfig": "^1.0.0-alpha1",
     "typescript": "^5.0.0"
   },
   "watcherOptions": {

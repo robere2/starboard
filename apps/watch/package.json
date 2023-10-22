@@ -26,9 +26,15 @@
     "rimraf": "^5.0.5",
     "rollup": "^4.1.4",
     "rollup-plugin-dts": "^6.1.0",
-    "tsconfig": "*"
+    "tsconfig": "^1.0.0-alpha1"
   },
   "watcherOptions": {
-    "files": ["src", "index.ts", "rollup.config.ts", "package.json", "tsconfig.json"]
+    "files": [
+      "src",
+      "index.ts",
+      "rollup.config.ts",
+      "package.json",
+      "tsconfig.json"
+    ]
   }
 }
