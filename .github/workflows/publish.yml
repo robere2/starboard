@@ -31,7 +31,7 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
         
-          if [ ${{ github.base_ref }} = development ]; then
+          if [ ${{ github.base_ref }} = dev ]; then
             lerna version --conventional-commits --conventional-prerelease --preid pre --create-release github --yes
           else
             lerna version --conventional-commits --conventional-prerelease --preid pre --create-release github --yes
