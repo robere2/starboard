@@ -21,4 +21,4 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Run Tests
-        run: lerna run test --since master
+        run: lerna run test --since origin/master

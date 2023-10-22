@@ -18,7 +18,8 @@
   },
   "targetDefaults": {
     "lint": {
-      "inputs": ["all", "notDist", "runtime"]
+      "dependsOn": ["^build"],
+      "inputs": ["all", "notDist", "^dist", "runtime"]
     },
     "test": {
       "dependsOn": ["^build"],
