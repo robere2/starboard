@@ -2,10 +2,10 @@ import {IncomingMessage, Server} from "http";
 import * as http from "http";
 
 export type ServeOptions = {
-    hostname: string;
-    port: number;
-    allowedHosts: string[];
-    https: boolean;
+    hostname?: string;
+    port?: number;
+    allowedHosts?: string[];
+    https?: boolean;
 }
 
 function incomingMessageBody(req: IncomingMessage): Promise<string | undefined> {

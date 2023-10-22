@@ -11,26 +11,26 @@
   },
   "namedInputs": {
     "all": ["{projectRoot}/**/*"],
-    "production": ["all", "!{projectRoot}/dist/**/*", "!{projectRoot}/**/*.test.ts", "runtime"],
+    "notDist": ["!{projectRoot}/dist/**/*"],
     "dist": ["{projectRoot}/dist/**/*"],
-    "tests": ["{projectRoot}/**/*.test.ts"],
+    "notTests": ["!{projectRoot}/**/*.test.ts"],
     "runtime": [{"runtime": "node -v"}]
   },
   "targetDefaults": {
     "lint": {
-      "inputs": ["all", "!{projectRoot}/dist/**/*"]
+      "inputs": ["all", "notDist", "runtime"]
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["production", "^dist"]
+      "inputs": ["all", "notDist", "^dist", "runtime"]
     },
     "test:watch": {
       "dependsOn": ["^build"],
-      "inputs": ["production", "^dist"]
+      "inputs": ["all", "notDist", "^dist", "runtime"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["production"],
+      "inputs": ["all", "notDist", "notTests", "runtime"],
       "outputs": ["{projectRoot}/dist"]
     }
   }

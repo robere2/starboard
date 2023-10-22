@@ -41,15 +41,33 @@ export class Starboard extends Service {
         return this.server;
     }
 
-    public stop(): void {
-        throw new Error("Not implemented");
+    public async stop(): Promise<void> {
+        await new Promise<void>((resolve, reject) => {
+            this.server?.close((err) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            })
+        })
+        this.destroy();
+        this.server = undefined;
     }
 
     public getPort(): number {
-        throw new Error("Not implemented");
+        const addr =this.server?.address()
+        if(addr && typeof addr === "object") {
+            return addr.port;
+        }
+        throw new Error(`Unable to get port from address ${addr}`)
     }
 
     public getHostname(): string {
-        throw new Error("Not implemented");
+        const addr = this.server?.address();
+        if(addr && typeof addr === "object") {
+            return addr.address
+        }
+        throw new Error(`Unable to get hostname from address ${addr}`)
     }
 }

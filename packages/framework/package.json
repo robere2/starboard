@@ -10,9 +10,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "eslint . && madge --circular src",
-    "test": "node --inspect test --coverage",
-    "test:watch": "npx nodemon -L --ext \"ts,json\" --exec \"tsc && node test\"",
+    "lint": "tsc && eslint . && madge --circular src",
+    "test": "globstar -- node --inspect --experimental-specifier-resolution=node --no-warnings=ExperimentalWarning --loader ts-node/esm --test \"src/**/*.test.ts\"",
     "prebuild": "rimraf dist",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "postbuild": "rimraf -g dist/rollup.config.* dist/src"

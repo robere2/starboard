@@ -3,6 +3,7 @@ import {CachePolicy} from "./CachePolicy";
 export type CacheOptions<T> = {
     policy: CachePolicy<T>,
     startGarbageCollection?: () => void;
+    stopGarbageCollection?: () => void;
 }
 
 export type CacheItem<T = any> = {
@@ -13,13 +14,16 @@ export type CacheItem<T = any> = {
 export abstract class Cache<T = any> {
 
     public readonly policy: CachePolicy<T>;
+    private readonly options: CacheOptions<T>;
+    private garbageCollectionInterval?: ReturnType<typeof setInterval>;
 
     public constructor(options: CacheOptions<T>) {
         this.policy = options.policy;
+        this.options = options;
         if(options.startGarbageCollection) {
             options.startGarbageCollection();
         } else {
-            setInterval(() => this.garbageCollect(), 1000 * 60);
+            this.garbageCollectionInterval = setInterval(() => this.garbageCollect(), 1000 * 60);
         }
     }
 
@@ -55,6 +59,15 @@ export abstract class Cache<T = any> {
                 continue;
             }
             await this.delete(key);
+        }
+    }
+
+    public destroy(): void {
+        if(this.options.stopGarbageCollection) {
+            this.options.stopGarbageCollection();
+        } else if(this.garbageCollectionInterval) {
+            clearInterval(this.garbageCollectionInterval);
+            this.garbageCollectionInterval = undefined;
         }
     }
 

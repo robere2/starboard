@@ -191,6 +191,10 @@ export class HttpClient {
         }
     }
 
+    public destroy() {
+        this.cache?.destroy();
+    }
+
     /**
      * Generate a hash string for a Request. Request hashes are used by this `HttpClient` in managing the cache. The
      *   hash for a given Request is used as a key within the cache to reference the accompanying Response. If a Cache

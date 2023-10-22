@@ -88,6 +88,10 @@ export abstract class BaseAPI<T extends APIOptions> {
         }
     }
 
+    public destroy(): void {
+        this.options.httpClient!.destroy();
+    }
+
     /**
      * Parse an APIOptions input into an object with default values applied. This is a utility function that can parse
      *   all the default options found in APIOptions objects for you. Custom values found in classes that extend

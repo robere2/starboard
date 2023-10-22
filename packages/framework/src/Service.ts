@@ -2,6 +2,22 @@ import {Endpoint} from "./Endpoint";
 import {Plugin} from "./Plugin";
 import urlJoin from "url-join";
 
+function normalizeUrlPath(str: string): string {
+    const components = str.split('/').filter((v) => v !== '');
+    const normalizedComponents: string[] = [];
+    for(const comp of components) {
+        if(comp === '..' && normalizedComponents.length > 0) {
+            normalizedComponents.pop()
+        } else if(comp !== '.') {
+            normalizedComponents.push(comp);
+        }
+    }
+    let result = normalizedComponents.join('/');
+    if(str.endsWith('/')) {
+        result += '/';
+    }
+    return result || '.';
+}
 
 export class Service {
     private readonly endpoints: Map<string, Endpoint> = new Map();
@@ -9,7 +25,7 @@ export class Service {
     public readonly path: string;
 
     constructor(inputPath: string) {
-        this.path = inputPath;
+        this.path = normalizeUrlPath(inputPath);
         if(this.path.startsWith("..")) {
             throw new Error('Path cannot start with ".."');
         }
@@ -18,6 +34,7 @@ export class Service {
     public addService(service: Service): this {
         this.subservices.push(service);
         if(this.searchForCircularStructure()) {
+            this.subservices.pop()
             throw new Error('Circular service structure detected');
         }
         return this;
@@ -61,6 +78,12 @@ export class Service {
 
     public getServices(): Service[] {
         return [...this.subservices];
+    }
+
+    public destroy(): void {
+        for(const svc of this.subservices) {
+            svc.destroy();
+        }
     }
 
     protected searchForCircularStructure(visited: Service[] = []): boolean {

@@ -12,4 +12,10 @@ export class HypixelService extends Service {
             this.addEndpoint('player', new HypixelPlayerEndpoint(this.api));
         })
     }
+
+
+    destroy() {
+        super.destroy();
+        this.api?.destroy()
+    }
 }
