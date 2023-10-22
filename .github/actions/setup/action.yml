@@ -3,19 +3,23 @@ description: 'Set up testing environment'
 runs:
   using: "composite"
   steps:
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@v1
+    - name: Pull Git Tags # Used by Lerna
+      run: git fetch --depth=1 origin +refs/tags*:refs/tags/*
+      shell: bash
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
       with:
-        bun-version: latest
+        node-version-file: '.nvmrc'
 
     - name: Load Dependencies from Cache
       id: cache-deps
       uses: actions/cache@v3
       with:
         path: node_modules
-        key: ${{ runner.os }}-node_modules-${{ hashFiles('**/bun.lockb') }}
+        key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
 
     - name: Install Dependencies
       if: steps.cache-deps.outputs.cache-hit != 'true'
-      run: bun install
+      run: npm ci
       shell: bash

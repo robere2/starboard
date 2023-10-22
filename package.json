@@ -1,20 +1,41 @@
 {
   "name": "starboard",
-  "version": "0.1-alpha1",
-  "module": "src/index.ts",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "type": "module",
   "scripts": {
-    "dev": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun --inspect playground.ts\"",
-    "watch-test": "bun x nodemon -L --ext \"ts,json\" --exec \"tsc && bun --inspect test --coverage\""
+    "dev": "lerna run dev",
+    "build": "lerna run build",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "dev:watch": "mcsb-watch dev",
+    "build:watch": "mcsb-watch build",
+    "lint:watch": "mcsb-watch lint",
+    "test:watch": "mcsb-watch test",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "bun-types": "^1.0.3",
-    "typescript": "^5.2.2"
+    "@mcsb/watch": "^1.0.0-alpha1",
+    "@types/node": "^20.8.6",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.48.0",
+    "globstar": "^1.0.0",
+    "lerna": "^7.3.1",
+    "madge": "^6.1.0",
+    "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "tsconfig": "*"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "zod": "^3.22.4"
+  "watcherOptions": {
+    "logLevel": "DEBUG",
+    "immediate": true,
+    "files": [
+      "src",
+      "index.ts"
+    ]
   }
 }

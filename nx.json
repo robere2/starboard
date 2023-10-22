@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/nx/schemas/nx-schema.json",
+  "tasksRunnerOptions": {
+    "default": {
+      "options": {
+        "cacheableOperations": [
+          "build", "lint", "test"
+        ]
+      }
+    }
+  },
+  "namedInputs": {
+    "all": ["{projectRoot}/**/*"],
+    "notDist": ["!{projectRoot}/dist/**/*"],
+    "dist": ["{projectRoot}/dist/**/*"],
+    "notTests": ["!{projectRoot}/**/*.test.ts"],
+    "runtime": [{"runtime": "node -v"}]
+  },
+  "targetDefaults": {
+    "lint": {
+      "inputs": ["all", "notDist", "runtime"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["all", "notDist", "^dist", "runtime"]
+    },
+    "test:watch": {
+      "dependsOn": ["^build"],
+      "inputs": ["all", "notDist", "^dist", "runtime"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["all", "notDist", "notTests", "runtime"],
+      "outputs": ["{projectRoot}/dist"]
+    }
+  }
+}

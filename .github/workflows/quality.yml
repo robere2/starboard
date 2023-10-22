@@ -9,17 +9,16 @@ on:
 
 jobs:
   typescript:
-    name: Compile TypeScript
+    name: Lint
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
 
       - name: Setup Environment
         uses: ./.github/actions/setup
 
-      - name: Compile TypeScript
-        run: bun x tsc
-
-      - name: Circular Dependencies Check
-        run: bun x madge --circular .
+      - name: Run Lint Tests
+        run: lerna run lint --since master
