@@ -46,7 +46,7 @@ export abstract class Logger<T = string> {
             return;
         }
         this.write(level, message);
-    };
+    }
 
     public verbose(message: T): void {
         this.log(LogLevel.VERBOSE, message);

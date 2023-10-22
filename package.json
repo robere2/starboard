@@ -20,6 +20,8 @@
   "devDependencies": {
     "@mcsb/watch": "^1.0.0-alpha1",
     "@types/node": "^20.8.6",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
     "eslint": "^8.48.0",
     "lerna": "^7.3.1",
     "madge": "^6.1.0",
@@ -30,6 +32,9 @@
   "watcherOptions": {
     "logLevel": "DEBUG",
     "immediate": true,
-    "files": ["src", "index.ts"]
+    "files": [
+      "src",
+      "index.ts"
+    ]
   }
 }

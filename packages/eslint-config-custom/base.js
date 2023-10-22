@@ -4,8 +4,7 @@ const project = resolve(process.cwd(), "tsconfig.json");
 
 /*
  * This is a custom ESLint configuration for use with
- * internal (bundled by their consumer) libraries
- * that utilize React.
+ * typescript packages.
  *
  * This config extends the Vercel Engineering Style Guide.
  * For more information, see https://github.com/vercel/style-guide
@@ -13,15 +12,18 @@ const project = resolve(process.cwd(), "tsconfig.json");
  */
 
 module.exports = {
+  root: true,
   extends: [
-    "@vercel/style-guide/eslint/browser",
-    "@vercel/style-guide/eslint/typescript",
-    "@vercel/style-guide/eslint/react",
-  ].map(require.resolve),
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   parserOptions: {
     project,
   },
   globals: {
+    React: true,
     JSX: true,
   },
   settings: {
@@ -31,9 +33,8 @@ module.exports = {
       },
     },
   },
-  ignorePatterns: ["node_modules/", "dist/", ".eslintrc.js"],
-
+  ignorePatterns: ["node_modules/", "dist/"],
   rules: {
-    // add specific rules configurations here
-  },
+    "@typescript-eslint/no-explicit-any": "off"
+  }
 };

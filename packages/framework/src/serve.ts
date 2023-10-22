@@ -33,6 +33,7 @@ async function incomingMessageToRequest(message: IncomingMessage, opts?: ServeOp
     const headers = new Headers();
     for(const [key, value] of Object.entries(message.headers)) {
         if(typeof value === "string") {
+            headers.append(key, value);
         } else if(Array.isArray(value)) {
             for(const v of value) {
                 headers.append(key, v);

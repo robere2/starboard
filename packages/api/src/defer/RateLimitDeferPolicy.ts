@@ -48,7 +48,7 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
 
     public poll(): Promise<void> {
         const localQueueItem = new QueueItem()
-        const promise = new Promise<void>(async resolve => {
+        const promise = (async () => {
             for(const queueItem of this.queue) {
                 if(queueItem.id === localQueueItem.id) {
                     this.attemptValuesReset();
@@ -57,15 +57,13 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
                     }
                     this.remaining--;
                     await this.runDefer();
-                    resolve();
                     this.queue.delete(queueItem);
                     return;
                 } else {
                     await queueItem.promise;
                 }
             }
-            resolve();
-        })
+        })()
         localQueueItem.promise = promise;
         this.queue.add(localQueueItem);
         return promise;
