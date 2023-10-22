@@ -34,11 +34,10 @@ jobs:
             lerna version --conventional-commits --conventional-prerelease --no-push --preid pre --create-release github --yes
           fi
           
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-          
           lerna publish from-git --yes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push Publish
         if: success()
