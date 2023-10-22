@@ -27,15 +27,17 @@ jobs:
         run: lerna run build --since origin/master
 
       - name: Publish Packages
-        run: |
+        run: | # Once we reach v1.0.0, we should change --conventional-prerelease to --conventional-graduate for master
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
         
           if [ ${{ github.base_ref }} = development ]; then
-            lerna version --conventional-commits --conventional-prerelease --create-release github --yes
+            lerna version --conventional-commits --conventional-prerelease --preid pre --create-release github --yes
           else
-            lerna version --conventional-commits --conventional-prerelease --create-release github --yes
+            lerna version --conventional-commits --conventional-prerelease --preid pre --create-release github --yes
           fi
+          
+          lerna publish from-git --yes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
