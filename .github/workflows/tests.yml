@@ -20,8 +20,5 @@ jobs:
       - name: Setup Environment
         uses: ./.github/actions/setup
 
-      - name: Print Projects
-        run: lerna list --all
-
       - name: Run Tests
         run: lerna run test --since origin/master
