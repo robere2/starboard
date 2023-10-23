@@ -8,13 +8,16 @@ export default defineConfig({
   markdown: {
       lineNumbers: true
   },
+  head: [['link', { rel: 'icon', href: '/assets/logo/ico/logo256.ico' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'CLI', link: '/cli' },
+      { text: 'Framework', link: '/framework' },
+      { text: 'API', link: '/api' }
     ],
-
+    logo: '/assets/logo/png/logo128.png',
     sidebar: [
       {
         text: 'Examples',
@@ -24,9 +27,21 @@ export default defineConfig({
         ]
       }
     ],
+    search: {
+      provider: 'local'
+    },
 
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © ' + new Date().getFullYear()
+    },
+    editLink: {
+      pattern: 'https://github.com/robere2/starboard/edit/master/apps/docs/src/:path',
+      text: 'Edit this page on GitHub'
+    },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/robere2/starboard' }
+      { icon: 'github', link: 'https://github.com/robere2/starboard' },
+      { icon: 'discord', link: 'https://discord.com/invite/ZuwscGD' }
     ]
   }
 })
