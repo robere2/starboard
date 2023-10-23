@@ -5,7 +5,6 @@ export default defineConfig({
   title: "Starboard",
   description: "Built for Minecraft Developers",
   srcDir: "src",
-  base: "/starboard/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
