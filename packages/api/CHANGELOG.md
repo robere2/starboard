@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.6](https://github.com/robere2/starboard/compare/@mcsb/api@1.0.0-pre.5...@mcsb/api@1.0.0-pre.6) (2023-10-23)
+
+**Note:** Version bump only for package @mcsb/api
+
 # [1.0.0-pre.5](https://github.com/robere2/starboard/compare/@mcsb/api@1.0.0-pre.4...@mcsb/api@1.0.0-pre.5) (2023-10-23)
 
 ### Bug Fixes
