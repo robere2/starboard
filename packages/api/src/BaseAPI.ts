@@ -99,7 +99,7 @@ export abstract class BaseAPI<T extends APIOptions> {
      *   options (i.e., it uses just a APIOptions object), {@link parseOptions} can just call this function and return
      *   the returned value.
      * @param options APIOptions object with potentially undefined property values
-     * @returns ParsedOptions<APIOptions> An object with all the values found in the passed options object, with default
+     * @returns ParsedOptions\<APIOptions> An object with all the values found in the passed options object, with default
      *   values applied to all supported properties that are otherwise undefined. This means the returned value is
      *   guaranteed to have no more undefined configuration values.
      * @protected

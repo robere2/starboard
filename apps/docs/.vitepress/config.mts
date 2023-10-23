@@ -6,6 +6,9 @@ export default defineConfig({
   description: "Built for Minecraft Developers",
   srcDir: "src",
   head: [['link', { rel: 'icon', href: '/assets/logo/ico/logo256.ico' }]],
+  rewrites: {
+    ':pkg/reference/modules.md': ':pkg/reference/index.md'
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     lastUpdated: true,
@@ -53,10 +56,25 @@ export default defineConfig({
       ],
       '/framework/': [
         { text: '← Back to home', link: '/introduction' },
-        { text: 'Introduction', link: '/framework/'},
-        { text: 'Installation', link: '/framework/installation' },
-        { text: 'Quick Start', link: '/framework/quick-start' },
-        { text: 'Configuration', link: '/framework/configuration' }
+        {
+          text: 'Getting Started', items: [
+            { text: 'Introduction', link: '/framework/'},
+            { text: 'Installation', link: '/framework/installation' },
+            { text: 'Quick Start', link: '/framework/quick-start' },
+            { text: 'Configuration', link: '/framework/configuration' },
+          ]
+        },
+        {
+          text: 'Essentials', items: [
+
+          ]
+        },
+        {
+          text: 'Recipes', items: [
+
+          ]
+        },
+        { text: 'Reference', link: '/framework/reference/' }
       ],
       '/api/': [
         { text: '← Back to home', link: '/introduction' },

@@ -12,6 +12,7 @@
   "scripts": {
     "lint": "tsc && eslint . && madge --circular src",
     "test": "globstar -- node --inspect --experimental-specifier-resolution=node --no-warnings=ExperimentalWarning --loader ts-node/esm --test \"src/**/*.test.ts\"",
+    "typedoc": "typedoc --plugin typedoc-plugin-markdown --excludePrivate --excludeProtected --excludeExternals --excludeNotDocumented",
     "prebuild": "rimraf dist",
     "build": "rollup --config rollup.config.ts --configPlugin typescript",
     "postbuild": "rimraf -g dist/rollup.config.* dist/src",

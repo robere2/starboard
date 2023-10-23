@@ -121,3 +121,4 @@ apps/playground/index.ts
 dist
 apps/docs/.vitepress/cache
 apps/docs/.vitepress/dist
+apps/docs/src/*/reference

@@ -30,6 +30,8 @@
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "tsconfig": "*",
+    "typedoc": "^0.25.2",
+    "typedoc-plugin-markdown": "^3.16.0",
     "vue-eslint-parser": "^9.3.2"
   },
   "watcherOptions": {
