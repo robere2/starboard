@@ -5,7 +5,9 @@ layout: home
 hero:
   name: "Starboard"
   text: "Built for Minecraft Developers"
-  tagline: My great project tagline
+  image:
+    src: /assets/logo/png/logo512.png
+    alt: Starboard
   actions:
     - theme: brand
       text: Markdown Examples
