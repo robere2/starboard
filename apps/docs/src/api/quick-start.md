@@ -30,4 +30,4 @@ Caching and request debouncing are both enabled by default. You can configure th
 `HypixelAPI`. Check their documentation for more information:
 
 - [Request debouncing](request-debouncing)
-- [Response caching](http#cache)
+- [Response caching](customizing-http-client#cache)
