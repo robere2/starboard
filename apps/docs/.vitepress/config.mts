@@ -70,12 +70,15 @@ export default defineConfig({
         {
           text: 'Essentials', items: [
             { text: 'Request Debouncing', link: '/api/request-debouncing' },
-            { text: 'HTTP Client', link: '/api/http/', items: [
-                { text: 'Response Caching', link: '/api/http/cache' }
-              ]
-            }
+            { text: 'Customizing the HTTP Client', link: '/api/customizing-http-client' }
           ]
-        }
+        },
+        {
+          text: 'Recipes', items: [
+
+          ]
+        },
+        { text: 'Reference', link: '/api/reference/' }
       ]
     },
     footer: {

@@ -15,6 +15,6 @@ API into your application has never been easier.
 
 - Built-in caching and request debouncing
 - Complete type safety <Badge type="warning" text="Coming Soon" />
-- Mojang API integration <Badge type="warning" text="Coming Soon" />
+- Mojang API integration
 - Minecraft authentication flow API <Badge type="warning" text="Coming Soon" />
 - Extensible API system

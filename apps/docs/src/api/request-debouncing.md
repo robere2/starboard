@@ -6,7 +6,8 @@ apart enough such that you never go over your rate limit. The downside to this i
 for seconds before being sent to the API, which can cause a poor user experience. Regardless, we recommend keeping
 debouncing enabled in most situations.
 
-Debouncing is controlled through the `deferPolicy` option, which takes any `IDeferPolicy` instance. The default is:
+Debouncing is controlled through the `deferPolicy` option, which takes any `IDeferPolicy` instance. The default is a
+`RateLimitDeferPolicy` with the following options:
 
 ```ts [TypeScript]
 const hypixel = new HypixelAPI({
@@ -19,3 +20,19 @@ const hypixel = new HypixelAPI({
     )
 })
 ```
+
+## Bursts
+
+The default Hypixel API key rate limit is 300 requests per 5 minutes. With debouncing enabled, this could result in
+every API request being delayed for up to a second. This doesn't seem like a long time, but it can be detrimental to the
+user experience. To solve this issue, `RateLimitDeferPolicy` allows you to make a burst of requests in quick succession
+without debouncing them.
+
+With bursts enabled, the first few requests within a given interval will be sent out immediately, allowing you
+to get a speedy response to your API query. However, if your remaining number of requests for the current rate limit
+interval falls below a certain threshold, or if the number of API requests you send is too rapid for bursting to keep
+up, then the debouncing delay will gradually increase beyond one second when it is used.
+
+All burst thresholds and timings are customizable; refer to the `RateLimitDeferPolicy` reference to view them and their
+defaults. If you notice that the debounce period for requests is too large for your use-case, consider modifying your
+debounce or cache settings. If all else fails, you may consider applying for a Hypixel API key rate limit increase.
