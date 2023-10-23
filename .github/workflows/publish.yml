@@ -23,7 +23,7 @@ jobs:
       - name: Build Packages
         run: lerna run build --since origin/master
 
-      - name: Bump Package Versions
+      - name: Publish Packages
         run: | # Once we reach v1.0.0, we should change --conventional-prerelease to --conventional-graduate for master
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
