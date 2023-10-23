@@ -18,9 +18,8 @@ easy to integrate with your Minecraft mod.
 While Starboard offers no-code solutions via the CLI, developers with more complex use-cases may still wish to
 extend Starboard with their own logic. For this, the Starboard Framework and API may be a perfect fit for the job.
 
-## Which module is right for me?
-
-Jerry is excited to help you figure out what module is right for you. 
+If you need help figuring out which module is right for you, Jerry is here to help. Otherwise, feel free to jump into
+the documentation for the module of your choice.
 
 <ModulePicker />
 

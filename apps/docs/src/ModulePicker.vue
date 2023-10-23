@@ -50,7 +50,7 @@ const modules: {cli: Module, api: Module, framework: Module} = {
     path: '/framework/',
     comingSoon: true,
     description: "The Starboard framework allows you to design your own web server's interface without having to " +
-      "worry about the nasty details. Starboard will set up the web server, handle authentication, and serve an " +
+      "worry about the nasty details. Starboard will set up the web server, handle authentication, serve an " +
       "admin dashboard, and more, letting you work on the fun stuff."
   },
   api:{
@@ -71,7 +71,18 @@ const decisionTree: Question = {
     },
     {
       answer: "No",
-      next: modules.framework
+      next: {
+        question: "Do you need a custom web interface?",
+        options: [
+          {
+            answer: "Yes",
+            next: modules.framework
+          }, {
+            answer: "No",
+            next: modules.cli
+          }
+        ]
+      }
     }
   ]
 }
@@ -88,7 +99,7 @@ const otherModules = computed<Module[]>(() => {
   <div class="picker-wrapper">
     <div class="jerry">
       <VPImage
-        image="/assets/villager.webp"
+        image="/assets/jerry.png"
         alt="Jerry"
       />
     </div>
@@ -108,7 +119,7 @@ const otherModules = computed<Module[]>(() => {
         />
       </div>
       <div v-else>
-        <p class="picked-module">
+        <p class="picked-module-header">
           I think the <a
             class="module-name"
             :href="pickedModule.path"
@@ -127,7 +138,9 @@ const otherModules = computed<Module[]>(() => {
           :href="pickedModule.path"
         />
         <hr>
-        <p>However, you could also try...</p>
+        <p class="picked-module-header">
+          However, you could also try...
+        </p>
         <div
           v-for="module of otherModules"
           :key="module.name"
@@ -164,7 +177,7 @@ const otherModules = computed<Module[]>(() => {
 .option {
   margin: 0 0.5em;
 }
-.picked-module {
+.picked-module-header {
   font-weight: bold;
   font-size: 1.3em;
 }
