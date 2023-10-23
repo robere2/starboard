@@ -174,7 +174,7 @@ export class HttpClient {
                 serializableResponse = await this.cache.get(hash);
             } else {
                 serializableResponse = (await this.cache.get(hash,  async () => {
-                    console.log(`Sending HTTP request to ${(input as Request).url}`);
+                    // console.log(`Sending HTTP request to ${(input as Request).url}`);
                     const response = await fetch(input);
                     return {
                         body: await response.text(),
@@ -186,7 +186,7 @@ export class HttpClient {
             }
             return serializableResponse ? new Response(serializableResponse.body, serializableResponse) : null;
         } else {
-            console.log(`Sending HTTP request to ${input.url}`);
+            // console.log(`Sending HTTP request to ${input.url}`);
             return await fetch(input);
         }
     }
