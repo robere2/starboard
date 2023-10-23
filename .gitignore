@@ -117,5 +117,7 @@ jspm_packages/
 apps/playground/src
 apps/playground/index.ts
 
-# Build files
+# Build files/artifacts
 dist
+apps/docs/.vitepress/cache
+apps/docs/.vitepress/dist

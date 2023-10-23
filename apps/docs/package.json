@@ -2,7 +2,11 @@
   "name": "docs",
   "version": "1.0.0-pre.4",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
   "dependencies": {
     "next": "^13.4.19",
     "react": "^18.2.0",
@@ -15,6 +19,8 @@
     "@types/react-dom": "^18.0.7",
     "eslint-config-custom": "^1.0.0-pre.4",
     "tsconfig": "^1.0.0-pre.4",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitepress": "^1.0.0-rc.23",
+    "vue": "^3.3.6"
   }
 }
