@@ -1,8 +1,8 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "tsconfig/base.json",
   "compilerOptions": {
-    "plugins": [{ "name": "next" }]
+    "target": "esnext"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
