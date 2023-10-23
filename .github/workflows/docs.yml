@@ -29,7 +29,7 @@ jobs:
         uses: actions/configure-pages@v3
 
       - name: Build Docs
-        working-directory: app/docs
+        working-directory: apps/docs
         run: |
           lerna run build --scope docs --since origin/master
           touch .vitepress/dist/.nojekyll
