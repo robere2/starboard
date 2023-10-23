@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.7](https://github.com/robere2/starboard/compare/@mcsb/api@1.0.0-pre.6...@mcsb/api@1.0.0-pre.7) (2023-10-23)
+
+### Features
+
+- add reference generation for docs ([698a695](https://github.com/robere2/starboard/commit/698a695e13bc3124006ada2c610c8bbfa29b0e02))
+
 # [1.0.0-pre.6](https://github.com/robere2/starboard/compare/@mcsb/api@1.0.0-pre.5...@mcsb/api@1.0.0-pre.6) (2023-10-23)
 
 **Note:** Version bump only for package @mcsb/api
