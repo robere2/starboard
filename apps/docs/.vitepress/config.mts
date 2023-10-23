@@ -5,9 +5,6 @@ export default defineConfig({
   title: "Starboard",
   description: "Built for Minecraft Developers",
   srcDir: "src",
-  markdown: {
-      lineNumbers: true
-  },
   head: [['link', { rel: 'icon', href: '/assets/logo/ico/logo256.ico' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -63,9 +60,22 @@ export default defineConfig({
       ],
       '/api/': [
         { text: '← Back to home', link: '/introduction' },
-        { text: 'Introduction', link: '/api/'},
-        { text: 'Installation', link: '/framework/installation' },
-        { text: 'Quick Start', link: '/framework/quick-start' }
+        {
+          text: 'Getting Started', items: [
+            { text: 'Introduction', link: '/api/'},
+            { text: 'Installation', link: '/api/installation' },
+            { text: 'Quick Start', link: '/api/quick-start' },
+          ]
+        },
+        {
+          text: 'Essentials', items: [
+            { text: 'Request Debouncing', link: '/api/request-debouncing' },
+            { text: 'HTTP Client', link: '/api/http/', items: [
+                { text: 'Response Caching', link: '/api/http/cache' }
+              ]
+            }
+          ]
+        }
       ]
     },
     footer: {
