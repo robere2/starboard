@@ -7,7 +7,8 @@
     "version": {
       "message": "chore(release): publish",
       "preid": "pre",
-      "createRelease": "github"
+      "createRelease": "github",
+      "private": false
     }
   },
   "version": "independent"
