@@ -1,7 +1,6 @@
 # Quick Start
 
-The `HypixelAPI` class allows you to communicate with the Hypixel API. The Starboard API supports both ESM and CommonJS 
-imports:
+The `HypixelAPI` class allows you to communicate with the Hypixel API. Starboard supports both ESM and CommonJS imports:
 
 ::: code-group
 
@@ -19,7 +18,7 @@ The `apiKey` option is required when instantiating `HypixelAPI`. Hypixel API key
 your application. You can request one on the [Hypixel Developer Dashboard](https://developer.hypixel.net/dashboard).
 
 ```ts [TypeScript]
-const hypixel = new HypixelAPI({
+const hypixel = await HypixelAPI.create({
     apiKey: "98cb0f8d-b14d-4b29-ae84-0a4d2bf35039"
 })
 

@@ -10,7 +10,7 @@ Debouncing is controlled through the `deferPolicy` option, which takes any `IDef
 `RateLimitDeferPolicy` with the following options:
 
 ```ts [TypeScript]
-const hypixel = new HypixelAPI({
+const hypixel = await HypixelAPI.create({
     apiKey: "98cb0f8d-b14d-4b29-ae84-0a4d2bf35039",
     deferPolicy: new RateLimitDeferPolicy(
         "RateLimit-Limit",

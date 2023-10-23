@@ -26,6 +26,8 @@
 
 ### `MojangProfile`
 
+### `RateLimitDeferPolicy`
+
 ### `TTLCachePolicy<T>`
 
 ### `UnixDate`
