@@ -20,10 +20,7 @@ jobs:
       - name: Setup Environment
         uses: ./.github/actions/setup
 
-      - name: Build Packages
-        run: lerna run build --since origin/master
-
-      - name: Publish Packages
+      - name: Build & Publish Packages
         run: | # Once we reach v1.0.0, we should change --conventional-prerelease to --conventional-graduate for master
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
