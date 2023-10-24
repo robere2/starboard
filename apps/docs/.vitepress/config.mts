@@ -7,8 +7,10 @@ export default defineConfig({
   srcDir: "src",
   head: [['link', { rel: 'icon', href: '/assets/logo/ico/logo256.ico' }]],
   rewrites: {
-    ':pkg/reference/modules.md': ':pkg/reference/index.md',
-    ':pkg/reference/classes/:class': ':pkg/reference/:class'
+    ':pkg/reference/modules.md': ':pkg/reference/index.md'
+  },
+  sitemap: {
+    hostname: "https://starboard.ecr.dev"
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config

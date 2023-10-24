@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "cp-external": "node bin/cp-external.js",
     "dev": "vitepress dev",
+    "prebuild": "rimraf .vitepress/dist && rimraf -g src/*/reference && node bin/cp-external.js && lerna run typedoc && node bin/move-class-refs.js",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
