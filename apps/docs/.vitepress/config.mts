@@ -23,9 +23,9 @@ export default defineConfig({
       { text: 'API', link: '/api' },
       { text: 'About', items: [
           { text: 'Releases', link: 'https://github.com/robere2/starboard/releases' },
-          { text: 'Contributing', link: 'https://github.com/robere2/starboard/blob/master/CONTRIBUTING.md'},
-          { text: 'License', link: 'https://github.com/robere2/starboard/blob/master/LICENSE' },
-          { text: 'Code of Conduct', link: 'https://github.com/robere2/starboard/blob/master/CODE_OF_CONDUCT.md'}
+          { text: 'Contributing', link: '/CONTRIBUTING'},
+          { text: 'License', link: '/LICENSE' },
+          { text: 'Code of Conduct', link: '/CODE_OF_CONDUCT'}
         ]},
       { text: 'Sponsor', link: ''}
     ],

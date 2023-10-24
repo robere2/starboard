@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "cp-external": "node bin/cp-external.js",
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"

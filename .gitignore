@@ -119,6 +119,10 @@ apps/playground/index.ts
 
 # Build files/artifacts
 dist
+# Docs
 apps/docs/.vitepress/cache
 apps/docs/.vitepress/dist
 apps/docs/src/*/reference
+apps/docs/src/LICENSE.md
+apps/docs/src/CODE_OF_CONDUCT.md
+apps/docs/src/CONTRIBUTING.md
