@@ -18,16 +18,16 @@ export default defineConfig({
     },
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'CLI', link: '/cli' },
-      { text: 'Framework', link: '/framework' },
-      { text: 'API', link: '/api' },
+      { text: 'CLI', link: '/cli/' },
+      { text: 'Framework', link: '/framework/' },
+      { text: 'API', link: '/api/' },
       { text: 'About', items: [
           { text: 'Releases', link: 'https://github.com/robere2/starboard/releases' },
           { text: 'Contributing', link: '/CONTRIBUTING'},
           { text: 'License', link: '/LICENSE' },
           { text: 'Code of Conduct', link: '/CODE_OF_CONDUCT'}
         ]},
-      { text: 'Sponsor', link: ''}
+      { text: 'Sponsor', link: 'https://discord.com/servers/quickplay-418938033325211649'}
     ],
     sidebar: {
       '/': [
