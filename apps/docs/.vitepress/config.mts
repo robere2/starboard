@@ -7,7 +7,8 @@ export default defineConfig({
   srcDir: "src",
   head: [['link', { rel: 'icon', href: '/assets/logo/ico/logo256.ico' }]],
   rewrites: {
-    ':pkg/reference/modules.md': ':pkg/reference/index.md'
+    ':pkg/reference/modules.md': ':pkg/reference/index.md',
+    ':pkg/reference/classes/:class': ':pkg/reference/:class'
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -87,6 +88,7 @@ export default defineConfig({
         },
         {
           text: 'Essentials', items: [
+            { text: 'Schemas', link: '/api/schemas' },
             { text: 'Request Debouncing', link: '/api/request-debouncing' },
             { text: 'Customizing the HTTP Client', link: '/api/customizing-http-client' }
           ]

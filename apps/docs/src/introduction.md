@@ -1,5 +1,5 @@
 <script setup>
-import ModulePicker from "./ModulePicker.vue"
+import ModulePicker from "./components/ModulePicker.vue"
 </script>
 # Starboard
 
