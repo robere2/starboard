@@ -17,6 +17,9 @@
     "runtime": [{"runtime": "node -v"}]
   },
   "targetDefaults": {
+    "typedoc": {
+      "dependsOn": ["build"]
+    },
     "lint": {
       "dependsOn": ["^build"],
       "inputs": ["all", "notDist", "^dist", "runtime"]
