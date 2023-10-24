@@ -1,5 +1,5 @@
 import {APIOptions, BaseAPI, BaseResponse, BaseSchema} from "./BaseAPI";
-import {ParsedOptions} from "./util";
+import {NonOptional} from "./util";
 import type {HypixelAPI} from "./HypixelAPI";
 import {ResourcesNotReadyError} from "./throwables";
 import {HypixelEntity} from "./HypixelEntity";
@@ -335,7 +335,7 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         return this.request(`skyblock/bingo`, raw, this.skyBlockBingoResourceSchema)
     }
 
-    protected parseOptions(options: APIOptions): ParsedOptions<APIOptions> {
+    protected parseOptions(options: APIOptions): NonOptional<APIOptions> {
         return this.parseDefaultOptions(options);
     }
 }

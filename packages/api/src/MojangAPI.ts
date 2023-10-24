@@ -1,5 +1,5 @@
 import {APIOptions, BaseAPI} from "./BaseAPI";
-import {ParsedOptions} from "./util";
+import {NonOptional} from "./util";
 import * as crypto from "crypto";
 import {MojangProfile} from "./MojangProfile";
 
@@ -136,7 +136,7 @@ export class MojangAPI extends BaseAPI<APIOptions> {
         return [serverAddress, ...this.getServerNamespaces(parts.join('.'))];
     }
 
-    protected parseOptions(options: APIOptions): ParsedOptions<APIOptions> {
+    protected parseOptions(options: APIOptions): NonOptional<APIOptions> {
         return this.parseDefaultOptions(options);
     }
 }

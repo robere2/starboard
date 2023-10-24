@@ -1,5 +1,5 @@
 import {HttpClient} from "./http";
-import {ParsedOptions} from "./util";
+import {NonOptional} from "./util";
 import * as z from "zod";
 import {IDeferPolicy} from "./defer";
 
@@ -35,13 +35,13 @@ export type APIOptions = {
 }
 
 export abstract class BaseAPI<T extends APIOptions> {
-    protected readonly options: ParsedOptions<T>;
+    protected readonly options: NonOptional<T>;
 
     protected constructor(options: T) {
         this.options = this.parseOptions(options);
     }
 
-    protected abstract parseOptions(options: T): ParsedOptions<T>;
+    protected abstract parseOptions(options: T): NonOptional<T>;
 
     protected genHeaders(): Headers {
         return new Headers();
@@ -104,7 +104,7 @@ export abstract class BaseAPI<T extends APIOptions> {
      *   guaranteed to have no more undefined configuration values.
      * @protected
      */
-    protected parseDefaultOptions(options: APIOptions): ParsedOptions<APIOptions> {
+    protected parseDefaultOptions(options: APIOptions): NonOptional<APIOptions> {
         return Object.freeze({
             deferPolicy: options.deferPolicy ?? null,
             httpClient: options.httpClient ?? new HttpClient()

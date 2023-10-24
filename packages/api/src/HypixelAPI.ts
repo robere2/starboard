@@ -1,5 +1,5 @@
 import {MojangAPI} from "./MojangAPI";
-import {MONGODB_ID_REGEX, ParsedOptions, UUID_REGEX} from "./util";
+import {MONGODB_ID_REGEX, NonOptional, UUID_REGEX} from "./util";
 import {APIOptions, BaseAPI, BaseResponse, BaseSchema} from "./BaseAPI";
 import {HypixelResources} from "./HypixelResources";
 import * as crypto from "crypto";
@@ -441,7 +441,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
         return headers;
     }
 
-    protected parseOptions(options: HypixelAPIOptions): ParsedOptions<HypixelAPIOptions> {
+    protected parseOptions(options: HypixelAPIOptions): NonOptional<HypixelAPIOptions> {
         return Object.freeze({
             ...this.parseDefaultOptions(options),
             apiKey: options.apiKey,

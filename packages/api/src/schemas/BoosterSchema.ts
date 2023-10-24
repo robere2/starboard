@@ -41,7 +41,7 @@ export function generateBoosterSchema(api: HypixelAPI) {
                      */
                     async getGame(this: HypixelEntity & typeof booster): Promise<HypixelGame | null> {
                         const games = this.getRoot().getResources().games;
-                        const matchingGameId = Object.entries(games).find(([, game]) => game.id === this.gameType)?.[0]
+                        const matchingGameId = Object.entries(games).find(([, game]) => game?.id === this.gameType)?.[0]
                         return matchingGameId ? games[matchingGameId] : null;
                     },
 

@@ -6,6 +6,18 @@ export const ZodEnumHypixelGuildAchievements = z.enum([
     "ONLINE_PLAYERS"
 ])
 
+/**
+ * Enumerable object containing all the currently-known guild achievement keys.
+ *
+ * @example
+ * const guild = await hypixel.getGuild("b876ec32-e396-476b-a115-8438d83c67d4")
+ * const onlinePlayersValue = guild?.achievements.ONLINE_PLAYERS ?? 0
+ * // same as
+ * const onlinePlayersValue = guild?.achievements[EnumHypixelGuildAchievements.ONLINE_PLAYERS] ?? 0
+ * @see {@link HypixelGuild}
+ */
+export const EnumHypixelGuildAchievements = ZodEnumHypixelGuildAchievements.enum;
+
 export const ZodEnumHypixelGames = z.enum([
     'QUAKECRAFT',
     'SKYCLASH',
@@ -39,6 +51,19 @@ export const ZodEnumHypixelGames = z.enum([
     'GINGERBREAD'
 ]);
 
+/**
+ * Enumerable object containing all the currently-known game types available in the Hypixel API. Specifically, this
+ *   enum mirrors the "Type Name" column {@link https://api.hypixel.net/#section/Introduction/GameTypes|found on the
+ *   official Hypixel API documentation}. It is also used as the key in the value {@link HypixelResources.games}.
+ *
+ * @example
+ * const bedwarsModes = hypixel.getResources().games.BEDWARS.modeNames
+ * // same as
+ * const bedwarsModes = hypixel.getResources().games[EnumHypixelGames.BEDWARS].modeNames
+ * @see {@link HypixelGame}
+ */
+export const EnumHypixelGames = ZodEnumHypixelGames.enum;
+
 export const ZodEnumHypixelSkyBlockDungeonClasses = z.enum([
     "healer",
     "archer",
@@ -46,6 +71,23 @@ export const ZodEnumHypixelSkyBlockDungeonClasses = z.enum([
     "tank",
     "berserk"
 ])
+
+/**
+ * Enumerable object containing all the currently-known classes available in SkyBlock dungeons. Each value is all
+ * lowercase.
+ *
+ * @example
+ * const profile = await hypixel.getSkyBlockProfile("b876ec32-e396-476b-a115-8438d83c67d4")
+ * const dungeons = profile?.members["b876ec32-e396-476b-a115-8438d83c67d4"]?.dungeons;
+ *
+ * const healerExp = dungeons?.player_classes?.healer?.experience ?? 0;
+ * // same as
+ * const healerExp = dungeons?.player_classes?.[EnumHypixelSkyBlockDungeonClasses.healer]?.experience ?? 0;
+ *
+ * console.log(`Player has ${healerExp} experience in the healer class.`);
+ * @see {@link HypixelSkyBlockProfile}
+ */
+export const EnumHypixelSkyBlockDungeonClasses = ZodEnumHypixelSkyBlockDungeonClasses.enum;
 
 export const ZodEnumHypixelPlayerCounts = z.enum([
     ...ZodEnumHypixelGames.options,
@@ -55,6 +97,19 @@ export const ZodEnumHypixelPlayerCounts = z.enum([
     "IDLE",
     "QUEUE"
 ])
+
+/**
+ * Enumerable object containing all the currently-known "game types" that are listed in the player counts from the
+ *   Hypixel API endpoint `/counts`. Each game type is formatted in CAMEL_CASE.
+ *
+ * @example
+ * const playerCounts = await hypixel.getPlayerCounts()
+ * const bedwarsPlayerCount = playerCounts.BEDWARS?.players
+ * // same as
+ * const bedwarsPlayerCount = playerCounts[EnumHypixelPlayerCounts.BEDWARS]?.players
+ * @see {@link HypixelPlayer}
+ */
+export const EnumHypixelPlayerCounts = ZodEnumHypixelPlayerCounts.enum;
 
 export const ZodEnumHypixelPetConsumables = z.enum([
     "CARROT_ITEM",
@@ -86,6 +141,18 @@ export const ZodEnumHypixelPetConsumables = z.enum([
     "MELON"
 ])
 
+/**
+ * Enumerable object containing all the currently-known types of food that is available for lobby pets to eat. Each
+ *   value is a CAMEL_CASE representation of the item name.
+ * @example
+ * const player = await hypixel.getPlayer("b876ec32-e396-476b-a115-8438d83c67d4")
+ * const slimeBallsRemaining = player?.petConsumables?.SLIME_BALL
+ * // same as
+ * const slimeBallsRemaining = player?.petConsumables?.[EnumHypixelPetConsumables.SLIME_BALL]
+ * @see {@link HypixelPlayer}
+ */
+export const EnumHypixelPetConsumables = ZodEnumHypixelPetConsumables.enum;
+
 export const ZodEnumMinecraftFireworkShapes = z.enum([
     "BURST",
     "STAR",
@@ -93,6 +160,22 @@ export const ZodEnumMinecraftFireworkShapes = z.enum([
     "BALL",
     "CREEPER"
 ]);
+
+/**
+ * Enumerable object containing all the currently-known firework shapes available in the lobby fireworks customizer. Each
+ *   value is a CAMEL_CASE representation of the item name.
+ * @example
+ * const player = await hypixel.getPlayer("b876ec32-e396-476b-a115-8438d83c67d4")
+ * const playerFireworks = player?.fireworkStorage ?? [];
+ *
+ * for(const firework of playerFireworks) {
+ *    if(firework.shape === EnumMinecraftFireworkShapes.CREEPER) {
+ *        console.log("Sssssssss...")
+ *    }
+ * }
+ * @see {@link HypixelPlayer}
+ */
+export const EnumMinecraftFireworkShapes = ZodEnumMinecraftFireworkShapes.enum;
 
 export const ZodEnumMinecraftFormatting = z.enum([
     "BLACK",
@@ -119,55 +202,21 @@ export const ZodEnumMinecraftFormatting = z.enum([
     "RESET"
 ])
 
-type MinecraftFormattingCode = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'k' | 'l' | 'm' | 'n' | 'o' | 'r';
+/**
+ * Enumerable object containing all the currently-used Minecraft formatting styles on Hypixel. Each value is a
+ *   CAMEL_CASE representation of the color code name. For the formatting style's code, use {@link getFormattingCode} to convert
+ *   it.
+ * @see https://minecraft.wiki/w/Formatting_codes
+ * @see {@link MinecraftFormattingCode}
+ * @see {@link getFormattingCode}
+ */
+export const EnumMinecraftFormatting = ZodEnumMinecraftFormatting.enum;
 
-export function getCode(color: z.infer<typeof ZodEnumMinecraftFormatting>): MinecraftFormattingCode {
-    switch (color) {
-        default:
-            throw new Error("Invalid color: " + color)
-        case "BLACK":
-            return 0;
-        case "DARK_BLUE":
-            return 1;
-        case "DARK_GREEN":
-            return 2;
-        case "DARK_AQUA":
-            return 3;
-        case "DARK_RED":
-            return 4;
-        case "DARK_PURPLE":
-            return 5;
-        case "GOLD":
-            return 6;
-        case "GRAY":
-            return 7;
-        case "DARK_GRAY":
-            return 8;
-        case "BLUE":
-            return 9;
-        case "GREEN":
-            return 'a';
-        case "AQUA":
-            return 'b';
-        case "RED":
-            return 'c';
-        case "LIGHT_PURPLE":
-            return 'd';
-        case "YELLOW":
-            return 'e';
-        case "WHITE":
-            return 'f';
-        case "OBFUSCATED":
-            return 'k';
-        case "BOLD":
-            return 'l';
-        case "STRIKE":
-            return 'm';
-        case "UNDERLINE":
-            return 'n';
-        case "ITALIC":
-            return 'o';
-        case "RESET":
-            return 'r';
-    }
-}
+/**
+ * Type containing all the currently-used Minecraft formatting codes on Hypixel.
+ *
+ * @see https://minecraft.wiki/w/Formatting_codes
+ * @see {@link EnumMinecraftFormatting}
+ * @see {@link getFormattingCode}
+ */
+export type MinecraftFormattingCode = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'k' | 'l' | 'm' | 'n' | 'o' | 'r';

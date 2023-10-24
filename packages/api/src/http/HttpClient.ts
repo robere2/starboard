@@ -9,7 +9,7 @@ import * as crypto from "crypto";
  *   via the Response constructor, which is the downside to this method, and we should replace it as soon as #6348 is
  *   resolved.
  */
-export type SerializableResponse = {
+type SerializableResponse = {
     status: number,
     statusText: string,
     headers?: Record<string, string>,
