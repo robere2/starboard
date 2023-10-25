@@ -3,12 +3,14 @@ import {EnumMinecraftFormatting, MinecraftFormattingCode} from "./schemas";
 /**
  * Regular expression for v4 UUIDs, with the dashes being optional. The Hypixel API uses and accepts them
  *   interchangeably.
+ * @see https://api.hypixel.net/#section/Introduction/Notes
  */
 export const UUID_REGEX = /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/i;
 
 /**
  * Regular expression for MongoDB object IDs. Guilds can be fetched from the Hypixel API based on their ID, which is
  *   in this format.
+ * @see https://www.mongodb.com/docs/manual/reference/method/ObjectId/
  */
 export const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
 
@@ -43,8 +45,7 @@ export class UnixDate extends Date {
  *   on the curve. This is often not the desired value, but this function is available for when it is. To get a linear
  *   progression to the next level instead, use {@link networkExpToLevel} and {@link networkLevelProgress}.
  * @param exp Amount of network experience to get the corresponding level for. Must be an integer
- *   greater than or equal to 0. Behavior is undefined when greater than
- *   {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}.
+ *   greater than or equal to 0. Behavior is undefined when greater than `Number.MAX_SAFE_INTEGER`.
  * @throws Error if the provided value is not an integer greater than or equal to 0.
  * @returns The maximum network level that the given amount of experience is able to get a player to.
  *
@@ -74,8 +75,7 @@ export function networkExpToLevelQuadratic(exp: number): number {
  *   you want this value, use {@link networkExpToLevelQuadratic}. To get a linear progression to the
  *   next level, use {@link networkLevelProgress}.
  * @param exp Amount of network experience to get the corresponding level for. Must be an integer
- *   greater than or equal to 0. Behavior is undefined when greater than
- *   {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}.
+ *   greater than or equal to 0. Behavior is undefined when greater than `Number.MAX_SAFE_INTEGER`.
  * @throws Error if the provided value is not an integer greater than or equal to 0.
  * @returns The network level that the given amount of experience is able to get a player to, but no
  *   more.
@@ -105,7 +105,7 @@ export function networkExpToLevel(exp: number): number {
  *   {@link networkLevelExpDifference}. Getting the quadratic partial level is currently not supported.
  * @param level Network level to calculate the amount of experience required to reach. Must be an integer greater than
  *   or equal to 1. Behavior is undefined when greater than 2,684,352, as above this, the required experience is greater
- *   than {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}.
+ *   than `Number.MAX_SAFE_INTEGER`.
  * @throws Error if the provided value is not an integer greater than or equal to 1.
  * @returns The minimum amount of experience a player would need to get in order to get from 0 EXP to the provided
  *   level.
@@ -134,10 +134,10 @@ export function networkLevelToExp(level: number): number {
  *    `networkLevelToExp(b) - networkLevelToExp(a)`. As a result, this function cannot handle partial levels.
  * @param a First network level, inclusive. Must be an integer greater than or equal to 1. Behavior is undefined when
  *   greater than 2,684,352, as above this, the required experience for the level is greater than
- *   {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}.
+ *   `Number.MAX_SAFE_INTEGER`.
  * @param b Second network level, exclusive. Must be an integer greater than or equal to 1. Behavior is undefined when
  *   greater than 2,684,352, as above this, the required experience for the level is greater than
- *   {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}.
+ *   `Number.MAX_SAFE_INTEGER`.
  * @throws Error if either of the provided values are less than 0 or not integers.
  * @returns The difference in experience required to reach the second level from the first level.
  *
@@ -159,12 +159,10 @@ export function networkLevelExpDifference(a: number, b: number): number {
 /**
  * Calculates the amount of experience needed to reach a given network level starting from the provided experience.
  * @param exp Base amount of network experience, e.g. what a player has already earned. Behavior is undefined
- *   when greater than
- *   {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}.
+ *   when greater than `Number.MAX_SAFE_INTEGER`.
  * @param level Network level to calculate the amount of remaining experience required to reach.
  *   Must be an integer greater than or equal to 1. Behavior is undefined when greater than 2,684,352, as above
- *   this, the required experience is greater than
- *   {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}.
+ *   this, the required experience is greater than `Number.MAX_SAFE_INTEGER`.
  * @throws Error if the provided level is less than 0 or not an integer.
  * @returns The remaining amount of XP required to reach the provided level. If the starting amount of XP is
  *   already passed the required amount of XP for the level, a negative number will be returned, indicative of how much
@@ -190,15 +188,14 @@ export function networkLevelRemainingExp(exp: number, level: number): number {
  *   current experience.
  * @param target Network level to calculate the linear progression point for. Must be an integer greater than or equal
  *   to 1. Must not be equal to `start`. Behavior is undefined when greater than 2,684,352, as above this, the required
- *   experience for the level is greater than
- *   {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}.
+ *   experience for the level is greater than `Number.MAX_SAFE_INTEGER`.
  *
  * @param start Optional starting network level. Defaults to 1. Must be an integer greater than or equal to 1. Must not
  *   be equal to `start`. Behavior is undefined when greater than 2,684,352, as above this, the required experience for
- *   the level is greater than
- *   {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER|Number.MAX_SAFE_INTEGER}
- * @throws Error if either `start` or `target` are less than 0 or not integers.
- * @throws Error if `target` and `start` are equal to each other.
+ *   the level is greater than `Number.MAX_SAFE_INTEGER`
+ * @throws
+ *  - `Error` if either `start` or `target` are less than 0 or not integers.
+ *  - `Error` if `target` and `start` are equal to each other.
  * @returns A floating point value between 0 and 1 indicating the point at which `exp` sits on the
  *   linear scale between `start` and `target`. Value will be greater than 1 if `exp` is already greater than
  *   the required experience for the `target` level, or will be less than 0 if `exp` is less than the

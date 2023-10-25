@@ -18,6 +18,7 @@ export type PlayerSchema = ReturnType<typeof generatePlayerSchema>;
  * Type-safe representation of the Player object retrieved from the `/player` Hypixel endpoint. This type does not have
  *   its fields documented due to the size of the inferred type. Look at the source definition to see the data
  *   structure.
+ * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get
  */
 export type HypixelPlayer = HypixelEntity & z.infer<PlayerSchema>["player"];
 export function generatePlayerSchema(api: HypixelAPI) {
