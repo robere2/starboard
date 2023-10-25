@@ -27,7 +27,7 @@ async function copyOptionalFile(from, to) {
 }
 
 (async () => {
-    await copyOptionalFile("../../../LICENSE", "../src/LICENSE.md");
-    await copyOptionalFile("../../../CODE_OF_CONDUCT.md", "../src/CODE_OF_CONDUCT.md");
-    await copyOptionalFile("../../../CONTRIBUTING.md", "../src/CONTRIBUTING.md");
+    await copyOptionalFile("../../../LICENSE", "../src/embeds/LICENSE.md");
+    await copyOptionalFile("../../../CODE_OF_CONDUCT.md", "../src/embeds/CODE_OF_CONDUCT.md");
+    await copyOptionalFile("../../../CONTRIBUTING.md", "../src/embeds/CONTRIBUTING.md");
 })()

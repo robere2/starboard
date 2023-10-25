@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
-    "prebuild": "rimraf .vitepress/dist && rimraf -g src/*/reference && node bin/cp-external.js && lerna run typedoc && node bin/move-class-refs.js",
+    "prebuild": "rimraf .vitepress/dist && rimraf src/embeds && rimraf -g src/*/reference && node bin/cp-external.js && lerna run typedoc && node bin/move-class-refs.js",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
