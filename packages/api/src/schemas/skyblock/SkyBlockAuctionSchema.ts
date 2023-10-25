@@ -59,8 +59,8 @@ function getFullBidSchema(api: HypixelAPI) {
             /**
              *
              */
-            async getAuction(this: HypixelEntity & typeof bid): Promise<HypixelSkyBlockAuction[] | null> {
-                return await api.getSkyBlockAuctionsById(this.auction_id)
+            async getAuction(this: HypixelEntity & typeof bid): Promise<HypixelSkyBlockAuction | null> {
+                return await api.getSkyBlockAuctionById(this.auction_id)
             },
 
             /**
@@ -173,8 +173,8 @@ export function generateSkyBlockEndedAuctionsSchema(api: HypixelAPI) {
                     /**
                      *
                      */
-                    async getAuction(this: HypixelEntity & typeof bid): Promise<HypixelSkyBlockAuction[] | null> {
-                        return await api.getSkyBlockAuctionsById(this.auction_id)
+                    async getAuction(this: HypixelEntity & typeof bid): Promise<HypixelSkyBlockAuction | null> {
+                        return await api.getSkyBlockAuctionById(this.auction_id)
                     },
 
                     /**

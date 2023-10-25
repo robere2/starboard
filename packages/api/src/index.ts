@@ -5,10 +5,30 @@ export * from './throwables';
 
 export * from './HypixelAPI';
 export * from './HypixelResources';
-export * from './BaseAPI';
 export * from './MojangProfile';
 export * from './MojangAPI';
-export * from './util';
+
+export {
+    UUID_REGEX,
+    MONGODB_ID_REGEX,
+    UnixDate,
+    networkExpToLevelQuadratic,
+    networkExpToLevel,
+    networkLevelToExp,
+    networkLevelExpDifference,
+    networkLevelRemainingExp,
+    networkLevelProgress,
+    getFormattingCode
+} from "./util"
+
+export type {
+    BaseResponse,
+    APIOptions,
+} from "./BaseAPI"
+
+export {
+    BaseAPI
+} from "./BaseAPI"
 
 export type {
     HypixelBooster,
