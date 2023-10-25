@@ -1,6 +1,6 @@
 /**
  * Error that is thrown when you attempt to use {@link HypixelResources} before it has fetched all data from the
- *   Hypixel API. This should never happen unless you are overriding the default {@link HypixelResources} class, as
+ *   Hypixel API. This should never happen unless you are overriding the default `HypixelResources` class, as
  *   the {@link HypixelResources.create} method will not return a new instance until all resources have been fetched.
  */
 export class ResourcesNotReadyError extends Error {

@@ -20,7 +20,7 @@ type SerializableResponse = {
  * The `HttpClient` class is how our API classes, such as {@link HypixelAPI} and {@link MojangAPI} interact with their
  *   respective HTTP services. The `HttpClient` is responsible for caching responses and setting request headers.
  *   Otherwise, the {@link fetch} method largely matches the
- *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API}.
+ *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API Fetch API}.
  */
 export class HttpClient {
 
@@ -47,10 +47,10 @@ export class HttpClient {
 
     /**
      * Send an HTTP Request to the provided URL or Request. The specification for this method mirrors that of the
-     *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API}, minus the differences outlined
+     *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API Fetch API}, minus the differences outlined
      *   below. {@link HttpClient} will generate default headers for the request. By default, this is just the
      *   User-Agent, however overrides can add additional headers. Generated headers will be overwritten by any headers
-     *   already defined in the Request or RequestInit objects, if provided. If both a Request and RequestInit object
+     *   already defined in the `Request` or `RequestInit` objects, if provided. If both a Request and RequestInit object
      *   are provided, any values defined within the RequestInit take precedence over values already defined in the
      *   Request (this is the way Bun's `fetch` function works). Any values in the Request that are not defined in the
      *   RequestInit will still be used. This only applies to the top level (i.e., if the `headers` property exists in
@@ -64,8 +64,9 @@ export class HttpClient {
      *   always attempt to find the corresponding Response within the cache. When this value is true, if it's not found,
      *   null is returned. When this value is false, the HTTP request is actually sent like normal. Null will never be
      *   returned. If this client has no cache policy, null will always be returned.
-     * @throws Error if an invalid URL is provided
-     * @throws Error if the HTTP request fails
+     * @throws
+     * - `Error` if an invalid URL is provided
+     * - `Error` if the HTTP request fails
      * @returns The HTTP Response corresponding to the given Request and RequestInit. If this HttpClient has a cache,
      *   this will return the cached Response instead, and an HTTP request will not be sent. If there is no hit in the
      *   cache, it will return null if `cacheOnly` was set to true. If `cacheOnly` is set to false, the HTTP request
@@ -74,37 +75,10 @@ export class HttpClient {
     public fetch(url: string | URL | Request, init?: RequestInit, cacheOnly?: false): Promise<Response>;
     /**
      * Send an HTTP Request to the provided URL or Request. The specification for this method mirrors that of the
-     *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API}, minus the differences outlined
+     *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API Fetch API}, minus the differences outlined
      *   below. {@link HttpClient} will generate default headers for the request. By default, this is just the
      *   User-Agent, however overrides can add additional headers. Generated headers will be overwritten by any headers
-     *   already defined in the Request or RequestInit objects, if provided. If both a Request and RequestInit object
-     *   are provided, any values defined within the RequestInit take precedence over values already defined in the
-     *   Request (this is the way Bun's `fetch` function works). Any values in the Request that are not defined in the
-     *   RequestInit will still be used. This only applies to the top level (i.e., if the `headers` property exists in
-     *   the RequestInit object, the headers defined in the Request will be ignored). You can attempt to fetch the
-     *   Response exclusively from the cache with the `cacheOnly` argument. If there's no hit in the cache, `null` will
-     *   be returned.
-     * @param input The Request to send, or the URL to send the Request to.
-     * @param init Optional RequestInit object. If a Request is passed, any options that are also specified within the
-     *   passed Request will be ignored.
-     * @param cacheOnly Whether to only attempt to fetch from the cache. Before fetching a request, the client will
-     *   always attempt to find the corresponding Response within the cache. When this value is true, if it's not found,
-     *   null is returned. When this value is false, the HTTP request is actually sent like normal. Null will never be
-     *   returned. If this client has no cache policy, null will always be returned.
-     * @throws Error if an invalid URL is provided
-     * @throws Error if the HTTP request fails
-     * @returns The HTTP Response corresponding to the given Request and RequestInit. If this HttpClient has a cache,
-     *   this will return the cached Response instead, and an HTTP request will not be sent. If there is no hit in the
-     *   cache, it will return null if `cacheOnly` was set to true. If `cacheOnly` is set to false, the HTTP request
-     *   will be set and the Response will be returned.
-     */
-    public fetch(input: Request, init?: RequestInit, cacheOnly?: false): Promise<Response>;
-    /**
-     * Send an HTTP Request to the provided URL or Request. The specification for this method mirrors that of the
-     *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API}, minus the differences outlined
-     *   below. {@link HttpClient} will generate default headers for the request. By default, this is just the
-     *   User-Agent, however overrides can add additional headers. Generated headers will be overwritten by any headers
-     *   already defined in the Request or RequestInit objects, if provided. If both a Request and RequestInit object
+     *   already defined in the `Request` or `RequestInit` objects, if provided. If both a Request and RequestInit object
      *   are provided, any values defined within the RequestInit take precedence over values already defined in the
      *   Request (this is the way Bun's `fetch` function works). Any values in the Request that are not defined in the
      *   RequestInit will still be used. This only applies to the top level (i.e., if the `headers` property exists in
@@ -118,41 +92,15 @@ export class HttpClient {
      *   always attempt to find the corresponding Response within the cache. When this value is true, if it's not found,
      *   null is returned. When this value is false, the HTTP request is actually sent like normal. Null will never be
      *   returned. If this client has no cache policy, null will always be returned.
-     * @throws Error if an invalid URL is provided
-     * @throws Error if the HTTP request fails
+     * @throws
+     * - `Error` if an invalid URL is provided
+     * - `Error` if the HTTP request fails
      * @returns The HTTP Response corresponding to the given Request and RequestInit. If this HttpClient has a cache,
      *   this will return the cached Response instead, and an HTTP request will not be sent. If there is no hit in the
      *   cache, it will return null if `cacheOnly` was set to true. If `cacheOnly` is set to false, the HTTP request
      *   will be set and the Response will be returned.
      */
     public fetch(url: string | URL | Request, init?: RequestInit, cacheOnly?: true): Promise<Response | null>;
-    /**
-     * Send an HTTP Request to the provided URL or Request. The specification for this method mirrors that of the
-     *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API}, minus the differences outlined
-     *   below. {@link HttpClient} will generate default headers for the request. By default, this is just the
-     *   User-Agent, however overrides can add additional headers. Generated headers will be overwritten by any headers
-     *   already defined in the Request or RequestInit objects, if provided. If both a Request and RequestInit object
-     *   are provided, any values defined within the RequestInit take precedence over values already defined in the
-     *   Request (this is the way Bun's `fetch` function works). Any values in the Request that are not defined in the
-     *   RequestInit will still be used. This only applies to the top level (i.e., if the `headers` property exists in
-     *   the RequestInit object, the headers defined in the Request will be ignored). You can attempt to fetch the
-     *   Response exclusively from the cache with the `cacheOnly` argument. If there's no hit in the cache, `null` will
-     *   be returned.
-     * @param input The Request to send, or the URL to send the Request to.
-     * @param init Optional RequestInit object. If a Request is passed, any options that are also specified within the
-     *   passed Request will be ignored.
-     * @param cacheOnly Whether to only attempt to fetch from the cache. Before fetching a request, the client will
-     *   always attempt to find the corresponding Response within the cache. When this value is true, if it's not found,
-     *   null is returned. When this value is false, the HTTP request is actually sent like normal. Null will never be
-     *   returned. If this client has no cache policy, null will always be returned.
-     * @throws Error if an invalid URL is provided
-     * @throws Error if the HTTP request fails
-     * @returns The HTTP Response corresponding to the given Request and RequestInit. If this HttpClient has a cache,
-     *   this will return the cached Response instead, and an HTTP request will not be sent. If there is no hit in the
-     *   cache, it will return null if `cacheOnly` was set to true. If `cacheOnly` is set to false, the HTTP request
-     *   will be set and the Response will be returned.
-     */
-    public fetch(input: Request, init?: RequestInit, cacheOnly?: true): Promise<Response | null>;
     public async fetch(input: string | URL | Request, init?: RequestInit, cacheOnly = false): Promise<Response | null> {
 
         const generatedHeaders = this.genHeaders();
@@ -215,8 +163,8 @@ export class HttpClient {
 
     /**
      * Generate a hash string for a Request. Request hashes are used by this `HttpClient` in managing the cache. The
-     *   hash for a given Request is used as a key within the cache to reference the accompanying Response. If a Cache
-     *   is not provided to an instance of this HttpClient, this method won't be used by default.
+     *   hash for a given Request is used as a key within the cache to reference the accompanying Response. If a
+     *   {@link Cache} is not provided to an instance of this HttpClient, this method won't be used by default.
      * @param req Request to generate a hash for.
      * @returns A string which uniquely identifies this Request's associated Response.By default, this is in the form of
      *   an MD5 hash to a string resembling the HTTP message format as defined in
