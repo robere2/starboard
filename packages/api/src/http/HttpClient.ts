@@ -16,9 +16,22 @@ type SerializableResponse = {
     body?: string
 }
 
+/**
+ * The `HttpClient` class is how our API classes, such as {@link HypixelAPI} and {@link MojangAPI} interact with their
+ *   respective HTTP services. The `HttpClient` is responsible for caching responses and setting request headers.
+ *   Otherwise, the {@link fetch} method largely matches the
+ *   {@link https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API|Fetch API}.
+ */
 export class HttpClient {
 
+    /**
+     * User agent to send with requests in the `User-Agent` HTTP header. Assigned in the constructor, but can be
+     *   reassigned later.
+     */
     public userAgent: string | null;
+    /**
+     * The {@link Cache} being used by this `HttpClient`, or null if caching is disabled for this `HttpClient`.
+     */
     public readonly cache: Cache<SerializableResponse> | null;
 
     /**
@@ -191,6 +204,11 @@ export class HttpClient {
         }
     }
 
+    /**
+     * Destroy this `HttpClient`. This method will free up resources (primarily in the {@link Cache}), and further use
+     *   of this `HttpClient` may result in unexpected behavior. This method should be called if you're attempting to
+     *   discard this `HttpClient` instance, but are not yet shutting down your program entirely.
+     */
     public destroy() {
         this.cache?.destroy();
     }
