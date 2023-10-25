@@ -1,6 +1,7 @@
 ---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
+title: Built for Minecraft Developers
 
 hero:
   name: "Starboard"
