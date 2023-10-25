@@ -4,7 +4,6 @@ export * from './http';
 export * from './throwables';
 
 export * from './HypixelAPI';
-export * from './HypixelEntity';
 export * from './HypixelResources';
 export * from './BaseAPI';
 export * from './MojangProfile';
