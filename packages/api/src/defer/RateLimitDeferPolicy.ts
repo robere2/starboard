@@ -132,8 +132,8 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
      * @param remainingHeaderName The name of the header that contains the remaining number of allowed requests in our
      * current reset interval.
      * @param resetHeaderName The name of the header that contains the number of seconds until the next reset.
-     * @param defaultResetInterval The default number of seconds between reset intervals. This is used to estimate the
-     * required debounce before we've received our first response via {@link notify}.
+     * @param defaultResetInterval The default number of milliseconds between reset intervals. This is used to estimate
+     * the required debounce before we've received our first response via {@link notify}.
      * @param buffer A value between 0 and 1 representing how much of the total should NOT be used by the API. Setting
      * this to 0 could result in requests towards the end of the reset interval hitting the rate limit.
      * @param burstCap Max number of allowed burst requests within each burst interval. To disable bursting, you can set
@@ -148,10 +148,10 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
         limitHeaderName = "RateLimit-Limit",
         remainingHeaderName = "RateLimit-Remaining",
         resetHeaderName = "RateLimit-Reset",
-        defaultResetInterval = 300,
+        defaultResetInterval = 300_000,
         buffer = 0.02,
         burstCap = 3,
-        burstInterval = 3000,
+        burstInterval = 3_000,
         burstRequiredRatio = 0.5
     ) {
         this.limitHeaderName = limitHeaderName;
