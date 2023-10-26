@@ -61,7 +61,7 @@ export abstract class BaseAPI<T extends APIOptions> {
             res = await this.options.httpClient!.fetch(req);
 
             if(this.options.deferPolicy) {
-                this.options.deferPolicy.update(res);
+                this.options.deferPolicy.notify(res);
             }
         }
 
