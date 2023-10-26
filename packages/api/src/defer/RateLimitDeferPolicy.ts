@@ -139,7 +139,7 @@ export class RateLimitDeferPolicy implements IDeferPolicy {
      * @param burstCap Max number of allowed burst requests within each burst interval. To disable bursting, you can set
      * this to 0.
      * @param burstInterval Length of each burst interval in milliseconds. Internally `setInterval` is used, so setting
-     * this to a value less than 20 could have unintended effects.
+     * this to a value less than ~20 could have unintended effects.
      * @param burstRequiredRatio A value between 0 and 1 representing how many requests must be remaining within the
      * current reset interval for bursting to be used. This can be set to 0 to have bursting enabled all the time, or
      * 1 to disable bursting completely.
