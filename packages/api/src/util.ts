@@ -15,6 +15,11 @@ export const UUID_REGEX = /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?
 export const MONGODB_ID_REGEX = /^[0-9a-f]{24}$/i;
 
 /**
+ * Regular expression for base64-encoded strings.
+ */
+export const BASE_64_REGEX = /^[-A-Za-z0-9+/]*={0,3}$/
+
+/**
  * Utility type that removes the `?` flag from all optional properties of a type. The values are still allowed to be
  *   null if null was part of their original type.
  */

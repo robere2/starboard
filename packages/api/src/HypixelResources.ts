@@ -1,4 +1,4 @@
-import {APIOptions, BaseAPI, BaseResponse, BaseSchema} from "./BaseAPI";
+import {APIOptions, BaseAPI, RawResponse} from "./BaseAPI";
 import {NonOptional} from "./util";
 import type {HypixelAPI} from "./HypixelAPI";
 import {ResourcesNotReadyError} from "./throwables";
@@ -36,7 +36,8 @@ import {
     generateSkyBlockItemsResourceSchema,
     HypixelSkyBlockItem, SkyBlockItemsResourceSchema
 } from "./schemas";
-import {TypeOf} from "zod";
+import {HypixelBaseSchema} from "./schemas/hypixel/HypixelBaseSchema";
+import * as z from "zod";
 
 export class HypixelResources extends BaseAPI<APIOptions> {
 
@@ -108,8 +109,24 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         return resources;
     }
 
-    protected async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: TypeOf<T>) => U): Promise<BaseResponse | U> {
-        return super.request(`https://api.hypixel.net/resources/${path}`, raw, schema, mutator);
+    protected async request<S extends typeof HypixelBaseSchema, V>(path: string, raw: true, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<RawResponse>;
+    protected async request<S extends typeof HypixelBaseSchema>(path: string, raw: false, schema: S, mutator: undefined): Promise<z.infer<S>>;
+    protected async request<S extends typeof HypixelBaseSchema, V>(path: string, raw: false, schema: S, mutator: (input: z.infer<S>) => V): Promise<V>;
+    protected async request<S extends typeof HypixelBaseSchema, V>(path: string, raw: boolean, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<z.infer<S> | V | RawResponse> {
+        // Within the mutator we check whether the request was successful, and if so, parse + mutate again.
+        return await super.request(`https://api.hypixel.net/resources/${path}`, raw as any, HypixelBaseSchema.readonly(), (base) => {
+            if(!base.success) {
+                throw new Error(`Hypixel API Error: ${base.cause}`, {
+                    cause: base.cause
+                });
+            }
+
+            const parsed = schema!.parse(base);
+            if(mutator) {
+                return mutator(parsed);
+            }
+            return parsed;
+        });
     }
 
     public isReady(): boolean {
@@ -246,93 +263,93 @@ export class HypixelResources extends BaseAPI<APIOptions> {
     }
 
     public async fetchGames(raw?: false): Promise<Record<string, HypixelGame>>;
-    public async fetchGames(raw?: true): Promise<BaseResponse>;
-    public async fetchGames(raw = false): Promise<Record<string, HypixelGame> | BaseResponse> {
-        return this.request(`games`, raw, this.gamesResourceSchema, v => v.games)
+    public async fetchGames(raw?: true): Promise<RawResponse>;
+    public async fetchGames(raw = false): Promise<Record<string, HypixelGame> | RawResponse> {
+        return this.request(`games`, raw as any, this.gamesResourceSchema, v => v.games)
     }
 
     public async fetchAchievements(raw?: false): Promise<Record<string, HypixelGameAchievements>>;
-    public async fetchAchievements(raw?: true): Promise<BaseResponse>;
-    public async fetchAchievements(raw = false): Promise<Record<string, HypixelGameAchievements> | BaseResponse> {
-        return this.request(`achievements`, raw, this.achievementsResourceSchema, v => v.achievements)
+    public async fetchAchievements(raw?: true): Promise<RawResponse>;
+    public async fetchAchievements(raw = false): Promise<Record<string, HypixelGameAchievements> | RawResponse> {
+        return this.request(`achievements`, raw as any, this.achievementsResourceSchema, v => v.achievements)
     }
 
     public async fetchChallenges(raw?: false): Promise<Record<string, HypixelChallenge[]>>;
-    public async fetchChallenges(raw?: true): Promise<BaseResponse>;
-    public async fetchChallenges(raw = false): Promise<Record<string, HypixelChallenge[]> | BaseResponse> {
-        return this.request(`challenges`, raw, this.challengesResourceSchema, (v) => v.challenges)
+    public async fetchChallenges(raw?: true): Promise<RawResponse>;
+    public async fetchChallenges(raw = false): Promise<Record<string, HypixelChallenge[]> | RawResponse> {
+        return this.request(`challenges`, raw as any, this.challengesResourceSchema, (v) => v.challenges)
     }
 
     public async fetchQuests(raw?:  false): Promise<Record<string, HypixelQuest[]>>;
-    public async fetchQuests(raw?: true): Promise<BaseResponse>;
-    public async fetchQuests(raw = false): Promise<Record<string, HypixelQuest[]> | BaseResponse> {
-        return this.request(`quests`, raw, this.questsResourceSchema, v => v.quests)
+    public async fetchQuests(raw?: true): Promise<RawResponse>;
+    public async fetchQuests(raw = false): Promise<Record<string, HypixelQuest[]> | RawResponse> {
+        return this.request(`quests`, raw as any, this.questsResourceSchema, v => v.quests)
     }
 
     public async fetchGuildAchievements(raw?: false): Promise<HypixelGuildAchievements>;
-    public async fetchGuildAchievements(raw?: true): Promise<BaseResponse>;
-    public async fetchGuildAchievements(raw = false): Promise<HypixelGuildAchievements | BaseResponse> {
-        return this.request(`guilds/achievements`, raw, this.guildAchievementsResourceSchema)
+    public async fetchGuildAchievements(raw?: true): Promise<RawResponse>;
+    public async fetchGuildAchievements(raw = false): Promise<HypixelGuildAchievements | RawResponse> {
+        return this.request(`guilds/achievements`, raw as any, this.guildAchievementsResourceSchema)
     }
 
     public async fetchPets(raw?: false): Promise<HypixelPet[]>;
-    public async fetchPets(raw?: true): Promise<BaseResponse>;
-    public async fetchPets(raw = false): Promise<HypixelPet[] | BaseResponse> {
-        return this.request(`vanity/pets`, raw, this.petsResourceSchema, v => v.types)
+    public async fetchPets(raw?: true): Promise<RawResponse>;
+    public async fetchPets(raw = false): Promise<HypixelPet[] | RawResponse> {
+        return this.request(`vanity/pets`, raw as any, this.petsResourceSchema, v => v.types)
     }
 
     public async fetchPetRarities(raw?: false): Promise<HypixelRarity[]>;
-    public async fetchPetRarities(raw?: true): Promise<BaseResponse>;
-    public async fetchPetRarities(raw = false): Promise<HypixelRarity[] | BaseResponse> {
-        return this.request(`vanity/pets`, raw, this.petsResourceSchema, v => v.rarities)
+    public async fetchPetRarities(raw?: true): Promise<RawResponse>;
+    public async fetchPetRarities(raw = false): Promise<HypixelRarity[] | RawResponse> {
+        return this.request(`vanity/pets`, raw as any, this.petsResourceSchema, v => v.rarities)
     }
 
     public async fetchCompanions(raw?: false): Promise<HypixelPet[]>;
-    public async fetchCompanions(raw?: true): Promise<BaseResponse>;
-    public async fetchCompanions(raw = false): Promise<HypixelPet[] | BaseResponse> {
-        return this.request(`vanity/companions`, raw, this.petsResourceSchema, v => v.types)
+    public async fetchCompanions(raw?: true): Promise<RawResponse>;
+    public async fetchCompanions(raw = false): Promise<HypixelPet[] | RawResponse> {
+        return this.request(`vanity/companions`, raw as any, this.petsResourceSchema, v => v.types)
     }
 
     public async fetchCompanionRarities(raw?: false): Promise<HypixelRarity[]>;
-    public async fetchCompanionRarities(raw?: true): Promise<BaseResponse>;
-    public async fetchCompanionRarities(raw = false): Promise<HypixelRarity[] | BaseResponse> {
-        return this.request(`vanity/companions`, raw, this.petsResourceSchema, v => v.rarities)
+    public async fetchCompanionRarities(raw?: true): Promise<RawResponse>;
+    public async fetchCompanionRarities(raw = false): Promise<HypixelRarity[] | RawResponse> {
+        return this.request(`vanity/companions`, raw as any, this.petsResourceSchema, v => v.rarities)
     }
 
     public async fetchSkyBlockCollections(raw?: false): Promise<Record<string,HypixelSkyBlockCollection>>;
-    public async fetchSkyBlockCollections(raw?: true): Promise<BaseResponse>;
-    public async fetchSkyBlockCollections(raw = false): Promise<Record<string,HypixelSkyBlockCollection> | BaseResponse> {
-        return this.request(`skyblock/collections`, raw, this.skyBlockCollectionsResourceSchema, v => v.collections)
+    public async fetchSkyBlockCollections(raw?: true): Promise<RawResponse>;
+    public async fetchSkyBlockCollections(raw = false): Promise<Record<string,HypixelSkyBlockCollection> | RawResponse> {
+        return this.request(`skyblock/collections`, raw as any, this.skyBlockCollectionsResourceSchema, v => v.collections)
     }
 
     public async fetchSkyBlockSkills(raw?: false): Promise<Record<string, HypixelSkyBlockSkill>>;
-    public async fetchSkyBlockSkills(raw?: true): Promise<BaseResponse>;
-    public async fetchSkyBlockSkills(raw = false): Promise<Record<string, HypixelSkyBlockSkill> | BaseResponse> {
-        return this.request(`skyblock/skills`, raw, this.skyBlockSkillsResourceSchema, v => v.skills)
+    public async fetchSkyBlockSkills(raw?: true): Promise<RawResponse>;
+    public async fetchSkyBlockSkills(raw = false): Promise<Record<string, HypixelSkyBlockSkill> | RawResponse> {
+        return this.request(`skyblock/skills`, raw as any, this.skyBlockSkillsResourceSchema, v => v.skills)
     }
 
     public async fetchSkyBlockItems(raw?: false): Promise<HypixelSkyBlockItem[]>;
-    public async fetchSkyBlockItems(raw?: true): Promise<BaseResponse>;
-    public async fetchSkyBlockItems(raw = false): Promise<HypixelSkyBlockItem[] | BaseResponse> {
-        return this.request('skyblock/items', raw, this.skyBlockItemsResourceSchema, v => v.items)
+    public async fetchSkyBlockItems(raw?: true): Promise<RawResponse>;
+    public async fetchSkyBlockItems(raw = false): Promise<HypixelSkyBlockItem[] | RawResponse> {
+        return this.request('skyblock/items', raw as any, this.skyBlockItemsResourceSchema, v => v.items)
     }
 
     public async fetchCurrentSkyBlockMayor(raw?: false): Promise<HypixelSkyBlockMayor | null>;
-    public async fetchCurrentSkyBlockMayor(raw?: true): Promise<BaseResponse>;
-    public async fetchCurrentSkyBlockMayor(raw = false): Promise<HypixelSkyBlockMayor | BaseResponse | null> {
-        return this.request(`skyblock/election`, raw, this.skyBlockElectionResourceSchema, v => v.mayor)
+    public async fetchCurrentSkyBlockMayor(raw?: true): Promise<RawResponse>;
+    public async fetchCurrentSkyBlockMayor(raw = false): Promise<HypixelSkyBlockMayor | RawResponse | null> {
+        return this.request(`skyblock/election`, raw as any, this.skyBlockElectionResourceSchema, v => v.mayor)
     }
 
     public async fetchCurrentSkyBlockElection(raw?: false): Promise<HypixelSkyBlockElection | null>;
-    public async fetchCurrentSkyBlockElection(raw?: true): Promise<BaseResponse>;
-    public async fetchCurrentSkyBlockElection(raw = false): Promise<HypixelSkyBlockElection | BaseResponse | null> {
-        return this.request(`skyblock/election`, raw, this.skyBlockElectionResourceSchema, v => v.current)
+    public async fetchCurrentSkyBlockElection(raw?: true): Promise<RawResponse>;
+    public async fetchCurrentSkyBlockElection(raw = false): Promise<HypixelSkyBlockElection | RawResponse | null> {
+        return this.request(`skyblock/election`, raw as any, this.skyBlockElectionResourceSchema, v => v.current)
     }
 
     public async fetchSkyBlockBingo(raw?: false): Promise<HypixelSkyBlockBingo | null>;
-    public async fetchSkyBlockBingo(raw?: true): Promise<BaseResponse>;
-    public async fetchSkyBlockBingo(raw = false): Promise<HypixelSkyBlockBingo | BaseResponse | null> {
-        return this.request(`skyblock/bingo`, raw, this.skyBlockBingoResourceSchema)
+    public async fetchSkyBlockBingo(raw?: true): Promise<RawResponse>;
+    public async fetchSkyBlockBingo(raw = false): Promise<HypixelSkyBlockBingo | RawResponse | null> {
+        return this.request(`skyblock/bingo`, raw as any, this.skyBlockBingoResourceSchema)
     }
 
     protected parseOptions(options: APIOptions): NonOptional<APIOptions> {

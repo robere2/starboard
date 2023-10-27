@@ -2,16 +2,35 @@ import {HttpClient} from "./http";
 import {NonOptional} from "./util";
 import * as z from "zod";
 import {IDeferPolicy} from "./defer";
+import {ZodSchema} from "zod";
 
-export type BaseResponse = z.infer<typeof BaseSchema> & Record<string, any>
+export class RawResponse {
 
-export const BaseSchema = z.object({
-    success: z.boolean(),
-    cause: z.string().nullish(),
-    throttle: z.boolean().nullish(),
-    global: z.boolean().nullish()
-}).passthrough()
+    private bodyText!: string;
+    public readonly response: Response;
 
+    private constructor(response: Response) {
+        this.response = response;
+    }
+
+    public static async create(response: Response): Promise<RawResponse> {
+        const rawRes = new RawResponse(response);
+        rawRes.bodyText = await response.text();
+        return rawRes;
+    }
+
+    public async parse<T extends ZodSchema>(schema: T): Promise<z.infer<T>> {
+        return schema.parse(this.json())
+    }
+
+    public json(): any {
+        return JSON.parse(this.bodyText);
+    }
+
+    public text(): string {
+        return this.bodyText;
+    }
+}
 
 export type APIOptions = {
     /**
@@ -47,45 +66,38 @@ export abstract class BaseAPI<T extends APIOptions> {
         return new Headers();
     }
 
-    protected async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: z.infer<T>) => U): Promise<BaseResponse | U> {
+    protected async rawRequest(path: string): Promise<RawResponse> {
         const req = new Request(path, {
             headers: this.genHeaders()
         });
 
         let res = await this.options.httpClient!.fetch(req, undefined, true);
+        // fetch value from API if cache was not a hit
         if(!res) {
-            if(this.options.deferPolicy) {
-                await this.options.deferPolicy.poll();
-            }
-
+            await this.options.deferPolicy?.poll();
             res = await this.options.httpClient!.fetch(req);
-
-            if(this.options.deferPolicy) {
-                this.options.deferPolicy.notify(res);
-            }
+            this.options.deferPolicy?.notify(res);
         }
 
+        return await RawResponse.create(res)
+    }
 
-        const json = BaseSchema.readonly().parse(await res.json());
+    protected async request<S extends ZodSchema, V>(url: string, raw: true, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<RawResponse>;
+    protected async request<S extends ZodSchema, V>(url: string, raw: false, schema: S, mutator?: (input: z.infer<S>) => V): Promise<z.infer<S>>;
+    protected async request<S extends ZodSchema, V>(url: string, raw: false, schema: S, mutator: (input: z.infer<S>) => V): Promise<V>;
+    protected async request<S extends ZodSchema, V>(url: string, raw: boolean, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<z.infer<S> | V | RawResponse> {
+        const rawRes = await this.rawRequest(url);
 
         if(raw) {
-            return json;
-        } else if(!json.success) {
-            throw new Error(`Hypixel API Error: ${json.cause}`, {
-                cause: json.cause
-            });
-        } else {
-            if(mutator) {
-                try {
-                    return mutator(schema.readonly().parse(json))
-                } catch(e) {
-                    console.log(e);
-                    throw e;
-                }
-            } else {
-                return schema.readonly().parse(json);
-            }
+            return rawRes;
         }
+
+        // Schema can only be undefined if raw is true, which is no longer the case.
+        const parsed = await rawRes.parse(schema!);
+        if(mutator) {
+            return mutator(parsed);
+        }
+        return parsed;
     }
 
     public destroy(): void {

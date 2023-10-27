@@ -1,6 +1,6 @@
 import {MojangAPI} from "./MojangAPI";
 import {MONGODB_ID_REGEX, NonOptional, UUID_REGEX} from "./util";
-import {APIOptions, BaseAPI, BaseResponse, BaseSchema} from "./BaseAPI";
+import {APIOptions, BaseAPI, RawResponse} from "./BaseAPI";
 import {HypixelResources} from "./HypixelResources";
 import * as crypto from "crypto";
 import {
@@ -56,7 +56,8 @@ import {
 } from "./schemas";
 import {HypixelEntity} from "./HypixelEntity";
 import {RateLimitDeferPolicy} from "./defer";
-import {TypeOf} from "zod";
+import {HypixelBaseSchema} from "./schemas/hypixel/HypixelBaseSchema";
+import * as z from "zod";
 
 export type HypixelAPIOptions = APIOptions & {
     /**
@@ -178,8 +179,23 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @param mutator
      * @protected
      */
-    protected async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: TypeOf<T>) => U): Promise<BaseResponse | U> {
-        return super.request(`https://api.hypixel.net/${path}`, raw, schema, mutator);
+    protected async request<S extends typeof HypixelBaseSchema, V>(path: string, raw: true, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<RawResponse>;
+    protected async request<S extends typeof HypixelBaseSchema>(path: string, raw: false, schema: S, mutator: undefined): Promise<z.infer<S>>;
+    protected async request<S extends typeof HypixelBaseSchema, V>(path: string, raw: false, schema: S, mutator: (input: z.infer<S>) => V): Promise<V>;
+    protected async request<S extends typeof HypixelBaseSchema, V>(path: string, raw: boolean, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<z.infer<S> | V | RawResponse> {
+        return await super.request(`https://api.hypixel.net/${path}`, raw as any, HypixelBaseSchema.readonly(), (base) => {
+            if(!base.success) {
+                throw new Error(`Hypixel API Error: ${base.cause}`, {
+                    cause: base.cause
+                });
+            }
+
+            const parsed = schema!.parse(base);
+            if(mutator) {
+                return mutator(parsed);
+            }
+            return parsed;
+        });
     }
 
     /**
@@ -197,7 +213,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   will be converted to a UUID via {@link MojangAPI|The Mojang API}. Looking up data for a username directly is
      *   heavily rate limited per player. Attempts to call this method more than once per name approximately every five
      *   minutes will result in a 429 response.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelPlayer} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelPlayer} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelPlayer} object containing all the data of the player, or
      *   `null` if the player is not found.
@@ -213,7 +229,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get
      * @param uuid The UUID of the player. If a player with the given UUID is not in Hypixels database, `null` will be
      *   returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelPlayer} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelPlayer} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelPlayer} object containing all the data of the player, or
      *   `null` if the player is not found.
@@ -239,34 +255,34 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   will be converted to a UUID via {@link MojangAPI|The Mojang API}. Looking up data for a username directly is
      *   heavily rate limited per player. Attempts to call this method more than once per name approximately every five
      *   minutes will result in a 429 response.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelPlayer} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelPlayer} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getPlayer(name: string, direct?: boolean, raw?: true): Promise<BaseResponse>;
+    public async getPlayer(name: string, direct?: boolean, raw?: true): Promise<RawResponse>;
     /**
      * Retrieve data of a specific player from the Hypixel API via the `/player` endpoint using a player UUID.
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1player/get
      * @param uuid The UUID of the player. If a player with the given UUID is not in Hypixels database, `null` will be
      *   returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelPlayer} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelPlayer} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getPlayer(uuid: string, raw?: true): Promise<BaseResponse>;
-    public async getPlayer(player: string, direct = false, raw = false): Promise<HypixelPlayer | BaseResponse | null> {
+    public async getPlayer(uuid: string, raw?: true): Promise<RawResponse>;
+    public async getPlayer(player: string, direct = false, raw = false): Promise<HypixelPlayer | RawResponse | null> {
         if(UUID_REGEX.test(player)) {
-            return this.request(`player?uuid=${player}`, raw, this.playerSchema, (v) => v.player);
+            return this.request(`player?uuid=${player}`, raw as any, this.playerSchema, (v) => v.player);
         } else {
             const name = player; // Rename variable to make code clearer
             if(!direct) {
@@ -278,7 +294,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
                 }
             }
 
-            return await this.request(`player?name=${name}`, raw, this.playerSchema);
+            return await this.request(`player?name=${name}`, raw as any, this.playerSchema);
         }
     }
 
@@ -288,7 +304,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1recentgames/get
      * @param uuid The UUID of the player. If a player with the given UUID is not in Hypixels database, or if the player
      *   has not recently played any games, an empty array will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelRecentGame} array.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelRecentGame} array.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with an array of {@link HypixelRecentGame} objects, or an empty array if none
      *   are found or the player does not exist.
@@ -305,18 +321,18 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1recentgames/get
      * @param uuid The UUID of the player. If a player with the given UUID is not in Hypixels database, or if the player
      *   has not recently played any games, an empty array will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelRecentGame} array.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelRecentGame} array.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getRecentGames(uuid: string, raw?: true): Promise<BaseResponse>;
-    public async getRecentGames(uuid: string, raw = false): Promise<HypixelRecentGame[] | BaseResponse> {
-                return await this.request(`recentgames?uuid=${uuid}`, raw, this.recentGamesSchema, (val) => val.games ?? []);
+    public async getRecentGames(uuid: string, raw?: true): Promise<RawResponse>;
+    public async getRecentGames(uuid: string, raw = false): Promise<HypixelRecentGame[] | RawResponse> {
+        return await this.request(`recentgames?uuid=${uuid}`, raw as any, this.recentGamesSchema, (val) => val.games ?? []);
     }
 
     /**
@@ -324,7 +340,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1status/get
      * @param uuid The UUID of the player. If a player with the given UUID is not currently online, or is not in Hypixels
      *  database, `null` will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSession} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSession} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelSession} object, or `null` if the player is not online
      *   or does not exist.
@@ -340,18 +356,18 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1status/get
      * @param uuid The UUID of the player. If a player with the given UUID is not currently online, or is not in Hypixels
      *  database, `null` will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSession} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSession} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getStatus(uuid: string, raw?: true): Promise<BaseResponse>;
-    public async getStatus(uuid: string, raw = false): Promise<HypixelSession | BaseResponse | null> {
-        return await this.request(`status?uuid=${uuid}`, raw, this.statusSchema, (val) => val.session ?? null);
+    public async getStatus(uuid: string, raw?: true): Promise<RawResponse>;
+    public async getStatus(uuid: string, raw = false): Promise<HypixelSession | RawResponse | null> {
+        return await this.request(`status?uuid=${uuid}`, raw as any, this.statusSchema, (val) => val.session ?? null);
     }
 
     /**
@@ -359,7 +375,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1guild/get
      * @see https://www.mongodb.com/docs/manual/reference/method/ObjectId/
      * @param id The MongoDB object ID of the guild. If a guild with the given ID does not exist, `null` will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelGuild} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelGuild} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelGuild} object, or `null` if the guild does not exist.
      * @throws
@@ -373,7 +389,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * Retrieve data about a Hypixel Guild from the Hypixel API via the `/guild` endpoint.
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1guild/get
      * @param name The name of the guild. If a guild with the given name does not exist, `null` will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelGuild} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelGuild} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelGuild} object, or `null` if the guild does not exist.
      * @throws
@@ -388,7 +404,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1guild/get
      * @param playerUuid The UUID of a player in the guild. If the player is not in a guild, or if the player does not
      *   exist, `null` will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelGuild} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelGuild} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelGuild} object, or `null` if the guild does not exist.
      * @throws
@@ -403,46 +419,46 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1guild/get
      * @see https://www.mongodb.com/docs/manual/reference/method/ObjectId/
      * @param id The MongoDB object ID of the guild. If a guild with the given ID does not exist, `null` will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelGuild} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelGuild} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getGuild(id: string, raw?: true): Promise<BaseResponse>;
+    public async getGuild(id: string, raw?: true): Promise<RawResponse>;
     /**
      * Retrieve data about a Hypixel Guild from the Hypixel API via the `/guild` endpoint.
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1guild/get
      * @param name The name of the guild. If a guild with the given name does not exist, `null` will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelGuild} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelGuild} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getGuild(name: string, raw?: true): Promise<BaseResponse>;
+    public async getGuild(name: string, raw?: true): Promise<RawResponse>;
     /**
      * Retrieve data about a Hypixel Guild from the Hypixel API via the `/guild` endpoint.
      * @see https://api.hypixel.net/#tag/Player-Data/paths/~1guild/get
      * @param playerUuid The UUID of a player in the guild. If the player is not in a guild, or if the player does not
      *   exist, `null` will be returned.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelGuild} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelGuild} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getGuild(playerUuid: string, raw?: true): Promise<BaseResponse>;
-    public async getGuild(input: string, raw = false): Promise<HypixelGuild | null | BaseResponse> {
+    public async getGuild(playerUuid: string, raw?: true): Promise<RawResponse>;
+    public async getGuild(input: string, raw = false): Promise<HypixelGuild | null | RawResponse> {
         // Guilds can be searched by ID, name, or member UUID. All three of these are strings, but we can pretty safely
         //   (although not definitively) assume which format is being used based on the contents of the string.
         let paramType: "id" | "name" | "player";
@@ -454,7 +470,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             paramType = "name";
         }
 
-        return await this.request(`guild?${paramType}=${input}`, raw, this.guildSchema, (v) => v.guild);
+        return await this.request(`guild?${paramType}=${input}`, raw as any, this.guildSchema, (v) => v.guild);
     }
 
     /**
@@ -472,13 +488,13 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      */
     public async areBoostersActive(): Promise<boolean> {
         const boostersRes = await this.getBoosters(true);
-        return boostersRes.boosterState?.decrementing ?? false;
+        return boostersRes.json().boosterState?.decrementing ?? false;
     }
 
     /**
      * Retrieve a list of active Hypixel Boosters from the Hypixel API via the `/boosters` endpoint.
      * @see https://api.hypixel.net/#tag/Other/paths/~1boosters/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelBooster} array.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelBooster} array.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with an array of {@link HypixelBooster} objects, or an empty array if there
      *   are no active boosters.
@@ -492,25 +508,25 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     /**
      * Retrieve a list of active Hypixel Boosters from the Hypixel API via the `/boosters` endpoint.
      * @see https://api.hypixel.net/#tag/Other/paths/~1boosters/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelBooster} array.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelBooster} array.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getBoosters(raw?: true): Promise<BaseResponse>;
-    public async getBoosters(raw = false): Promise<HypixelBooster[] | BaseResponse> {
-        return await this.request("boosters", raw, this.boosterSchema, (v) => v.boosters);
+    public async getBoosters(raw?: true): Promise<RawResponse>;
+    public async getBoosters(raw = false): Promise<HypixelBooster[] | RawResponse> {
+        return await this.request("boosters", raw as any, this.boosterSchema, (v) => v.boosters);
     }
 
     /**
      * Retrieve a map of Hypixel game modes and their respective player counts from the Hypixel API via the `/counts`
      *   endpoint.
      * @see https://api.hypixel.net/#tag/Other/paths/~1counts/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelPlayerCounts} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelPlayerCounts} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelPlayerCounts} object.
      * @throws
@@ -524,25 +540,25 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * Retrieve a map of Hypixel game modes and their respective player counts from the Hypixel API via the `/counts`
      *   endpoint.
      * @see https://api.hypixel.net/#tag/Other/paths/~1counts/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelPlayerCounts} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelPlayerCounts} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getPlayerCounts(raw?: true): Promise<BaseResponse>;
-    public async getPlayerCounts(raw = false): Promise<HypixelPlayerCounts | BaseResponse> {
-        return await this.request("counts", raw, this.playerCountsSchema);
+    public async getPlayerCounts(raw?: true): Promise<RawResponse>;
+    public async getPlayerCounts(raw = false): Promise<HypixelPlayerCounts | RawResponse> {
+        return await this.request("counts", raw as any, this.playerCountsSchema);
     }
 
     /**
      * Retrieve an object containing the latest punishment statistics from the Hypixel API via the `/punishmentstats`
      *   endpoint.
      * @see https://api.hypixel.net/#tag/Other/paths/~1punishmentstats/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelPunishmentStatistics} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelPunishmentStatistics} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelPunishmentStatistics} object.
      * @throws
@@ -556,24 +572,24 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * Retrieve an object containing the latest punishment statistics from the Hypixel API via the `/punishmentstats`
      *   endpoint.
      * @see https://api.hypixel.net/#tag/Other/paths/~1punishmentstats/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelPunishmentStatistics} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelPunishmentStatistics} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getPunishmentStatistics(raw?: true): Promise<BaseResponse>;
-    public async getPunishmentStatistics(raw = false): Promise<HypixelPunishmentStatistics | BaseResponse> {
-        return await this.request("punishmentstats", raw, this.punishmentStatisticsSchema);
+    public async getPunishmentStatistics(raw?: true): Promise<RawResponse>;
+    public async getPunishmentStatistics(raw = false): Promise<HypixelPunishmentStatistics | RawResponse> {
+        return await this.request("punishmentstats", raw as any, this.punishmentStatisticsSchema);
     }
 
     /**
      * Retrieve an object containing the latest leaderboard data from the Hypixel API via the `/leaderboards` endpoint.
      * @see https://api.hypixel.net/#tag/Other/paths/~1leaderboards/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelLeaderboards} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelLeaderboards} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelLeaderboards} object.
      * @throws
@@ -586,25 +602,25 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     /**
      * Retrieve an object containing the latest leaderboard data from the Hypixel API via the `/leaderboards` endpoint.
      * @see https://api.hypixel.net/#tag/Other/paths/~1leaderboards/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelLeaderboards} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelLeaderboards} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getLeaderboards(raw?: true): Promise<BaseResponse>;
-    public async getLeaderboards(raw = false): Promise<HypixelLeaderboards | BaseResponse> {
-        return await this.request("leaderboards", raw, this.leaderboardsSchema, (v) => v.leaderboards);
+    public async getLeaderboards(raw?: true): Promise<RawResponse>;
+    public async getLeaderboards(raw = false): Promise<HypixelLeaderboards | RawResponse> {
+        return await this.request("leaderboards", raw as any, this.leaderboardsSchema, (v) => v.leaderboards);
     }
 
     /**
      * Retrieve an array of the latest Hypixel SkyBlock news posts from the Hypixel API via the `/skyblock/news`
      *   endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1news/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockNews} array.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockNews} array.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with an array of {@link HypixelSkyBlockNews} objects.
      * @throws
@@ -618,18 +634,18 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * Retrieve an array of the latest Hypixel SkyBlock news posts from the Hypixel API via the `/skyblock/news`
      *   endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1news/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockNews} array.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockNews} array.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if an invalid Hypixel API key was provided to the constructor.
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getSkyBlockNews(raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockNews(raw = false): Promise<HypixelSkyBlockNews[] | BaseResponse> {
-        return await this.request("skyblock/news", raw, this.skyBlockNewsSchema, (v) => v.items);
+    public async getSkyBlockNews(raw?: true): Promise<RawResponse>;
+    public async getSkyBlockNews(raw = false): Promise<HypixelSkyBlockNews[] | RawResponse> {
+        return await this.request("skyblock/news", raw as any, this.skyBlockNewsSchema, (v) => v.items);
     }
 
     /**
@@ -638,7 +654,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   contribute towards your rate limit cap.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auction/get
      * @param page The page number to fetch. Pages are zero-indexed, meaning the first page is page `0`.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockAuctions} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockAuctions} object.
      *   The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with a {@link HypixelSkyBlockAuctions} object.
      * @throws
@@ -654,25 +670,25 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   contribute towards your rate limit cap.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auction/get
      * @param page The page number to fetch. Pages are zero-indexed, meaning the first page is page `0`.
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockAuctions} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockAuctions} object.
      *   The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the passed page number does not exist.
      * - `Error` if Hypixel is currently accumulating the list of auctions and is not ready to respond to your request.
      *   Try again shortly.
      * - `Error` if the HTTP request to the Hypixel API failed
      */
-    public async getSkyBlockAuctions(page?: number, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockAuctions(page?: number, raw = false): Promise<HypixelSkyBlockAuctions | BaseResponse> {
-        return await this.request(`skyblock/auctions?page=${page ?? 0}`, raw, this.skyBlockAuctionsSchema)
+    public async getSkyBlockAuctions(page?: number, raw?: true): Promise<RawResponse>;
+    public async getSkyBlockAuctions(page?: number, raw = false): Promise<HypixelSkyBlockAuctions | RawResponse> {
+        return await this.request(`skyblock/auctions?page=${page ?? 0}`, raw as any, this.skyBlockAuctionsSchema)
     }
 
     /**
      * Retrieve a currently active SkyBlock auction from its auction ID from the Hypixel API via the `/skyblock/auction`
      *   endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auction/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockAuction} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockAuction} object.
      *   The raw response will bypass runtime type checking.
      * @param id The ID of the auction to fetch. This is a v4 UUID, with or without dashes.
      * @returns A `Promise` that resolves with a {@link HypixelSkyBlockAuction} object, or `null` if an auction with the
@@ -687,25 +703,25 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * Retrieve a currently active SkyBlock auction from its auction ID from the Hypixel API via the `/skyblock/auction`
      *   endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auction/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockAuction} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockAuction} object.
      *   The raw response will bypass runtime type checking.
      * @param id The ID of the auction to fetch. This is a v4 UUID, with or without dashes.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getSkyBlockAuctionById(id: string, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockAuctionById(id: string, raw = false): Promise<HypixelSkyBlockAuction | null | BaseResponse> {
-        return await this.request(`skyblock/auctions?uuid=${id}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions?.[0] ?? null)
+    public async getSkyBlockAuctionById(id: string, raw?: true): Promise<RawResponse>;
+    public async getSkyBlockAuctionById(id: string, raw = false): Promise<HypixelSkyBlockAuction | null | RawResponse> {
+        return await this.request(`skyblock/auctions?uuid=${id}`, raw as any, this.skyBlockAuctionSchema, (v) => v.auctions?.[0] ?? null)
     }
 
     /**
      * Retrieve a list of currently active SkyBlock auctions started by a given player from the Hypixel API via the
      *   `/skyblock/auction` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auction/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of {@link HypixelSkyBlockAuction}
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of {@link HypixelSkyBlockAuction}
      *   objects. The raw response will bypass runtime type checking.
      * @param playerUuid The UUID of the player whose auctions should be fetched.
      * @returns A `Promise` that resolves with an array of {@link HypixelSkyBlockAuction} objects.
@@ -719,25 +735,25 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * Retrieve a list of currently active SkyBlock auctions started by a given player from the Hypixel API via the
      *   `/skyblock/auction` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auction/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of {@link HypixelSkyBlockAuction}
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of {@link HypixelSkyBlockAuction}
      *   objects. The raw response will bypass runtime type checking.
      * @param playerUuid The UUID of the player whose auctions should be fetched.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw = false): Promise<HypixelSkyBlockAuction[] | BaseResponse> {
-        return await this.request(`skyblock/auctions?player=${playerUuid}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
+    public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw?: true): Promise<RawResponse>;
+    public async getSkyBlockAuctionsByPlayer(playerUuid: string, raw = false): Promise<HypixelSkyBlockAuction[] | RawResponse> {
+        return await this.request(`skyblock/auctions?player=${playerUuid}`, raw as any, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
     }
 
     /**
      * Retrieve a list of currently active SkyBlock auctions started by a given SkyBlock profile from the Hypixel API
      *   via the `/skyblock/auction` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auction/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of {@link HypixelSkyBlockAuction}
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of {@link HypixelSkyBlockAuction}
      *   objects. The raw response will bypass runtime type checking.
      * @param profileId The ID of the SkyBlock profile whose auctions should be fetched. This should be a v4 UUID.
      * @returns A `Promise` that resolves with an array of {@link HypixelSkyBlockAuction} objects.
@@ -751,18 +767,18 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * Retrieve a list of currently active SkyBlock auctions started by a given SkyBlock profile from the Hypixel API
      *   via the `/skyblock/auction` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auction/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of {@link HypixelSkyBlockAuction}
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of {@link HypixelSkyBlockAuction}
      *   objects. The raw response will bypass runtime type checking.
      * @param profileId The ID of the SkyBlock profile whose auctions should be fetched. This should be a v4 UUID.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getSkyBlockAuctionsByProfile(profileId: string, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockAuctionsByProfile(profileId: string, raw = false): Promise<HypixelSkyBlockAuction[] | BaseResponse> {
-        return await this.request(`skyblock/auctions?profile=${profileId}`, raw, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
+    public async getSkyBlockAuctionsByProfile(profileId: string, raw?: true): Promise<RawResponse>;
+    public async getSkyBlockAuctionsByProfile(profileId: string, raw = false): Promise<HypixelSkyBlockAuction[] | RawResponse> {
+        return await this.request(`skyblock/auctions?profile=${profileId}`, raw as any, this.skyBlockAuctionSchema, (v) => v.auctions ?? [])
     }
 
     /**
@@ -770,7 +786,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   `/skyblock/auctions_ended` endpoint. This data is cached by Hypixel for 60 seconds at a time. This method does
      *   not contribute towards your rate limit cap.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auctions_ended/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of {@link HypixelSkyBlockEndedAuction}
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of {@link HypixelSkyBlockEndedAuction}
      *   objects. The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with an array of {@link HypixelSkyBlockEndedAuction} objects.
      * @throws
@@ -782,15 +798,15 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   `/skyblock/auctions_ended` endpoint. This data is cached by Hypixel for 60 seconds at a time. This method does
      *   not contribute towards your rate limit cap.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1auctions_ended/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of {@link HypixelSkyBlockEndedAuction}
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of {@link HypixelSkyBlockEndedAuction}
      *   objects. The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      */
-    public async getSkyBlockEndedAuctions(raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockEndedAuctions(raw = false): Promise<HypixelSkyBlockEndedAuction[] | BaseResponse> {
-        return await this.request(`skyblock/auctions_ended`, raw, this.skyBlockEndedAuctionsSchema, (v) => v.auctions ?? [])
+    public async getSkyBlockEndedAuctions(raw?: true): Promise<RawResponse>;
+    public async getSkyBlockEndedAuctions(raw = false): Promise<HypixelSkyBlockEndedAuction[] | RawResponse> {
+        return await this.request(`skyblock/auctions_ended`, raw as any, this.skyBlockEndedAuctionsSchema, (v) => v.auctions ?? [])
     }
 
     /**
@@ -799,7 +815,7 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   rate limit cap. The response is a map of item IDs in CAMEL_CASE to {@link HypixelSkyBlockBazaarProduct} objects.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1bazaar/get
      * @see {@link HypixelSkyBlockItem}
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a map of item IDs to
+     * @param raw Whether to return the raw {@link RawResponse} instead of a map of item IDs to
      *   {@link HypixelSkyBlockBazaarProduct} objects. The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with an object mapping CAMEL_CASE item IDs to
      *   {@link HypixelSkyBlockBazaarProduct} objects.
@@ -815,23 +831,23 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      *   rate limit cap. The response is a map of item IDs in CAMEL_CASE to {@link HypixelSkyBlockBazaarProduct} objects.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1bazaar/get
      * @see {@link HypixelSkyBlockItem}
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a map of item IDs to
+     * @param raw Whether to return the raw {@link RawResponse} instead of a map of item IDs to
      *   {@link HypixelSkyBlockBazaarProduct} objects. The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if Hypixel is currently accumulating the list of auctions and is not ready to respond to your request.
      *   Try again shortly.
      * - `Error` if the HTTP request to the Hypixel API failed
      */
-    public async getSkyBlockBazaarProducts(raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockBazaarProducts(raw = false): Promise<Record<string, HypixelSkyBlockBazaarProduct> | BaseResponse> {
-        return await this.request(`skyblock/bazaar`, raw, this.skyBlockBazaarSchema, (v) => v.products ?? {})
+    public async getSkyBlockBazaarProducts(raw?: true): Promise<RawResponse>;
+    public async getSkyBlockBazaarProducts(raw = false): Promise<Record<string, HypixelSkyBlockBazaarProduct> | RawResponse> {
+        return await this.request(`skyblock/bazaar`, raw as any, this.skyBlockBazaarSchema, (v) => v.products ?? {})
     }
 
     /**
      * Retrieve data about a SkyBlock profile from the Hypixel API via the `/skyblock/profile` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1profile/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockProfile} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockProfile} object.
      *   The raw response will bypass runtime type checking.
      * @param profileId The ID of the SkyBlock profile to fetch. This should be a v4 UUID.
      * @returns A `Promise` that resolves with a {@link HypixelSkyBlockProfile}, or null if the profile does not exist.
@@ -844,24 +860,24 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     /**
      * Retrieve data about a SkyBlock profile from the Hypixel API via the `/skyblock/profile` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1profile/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockProfile} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockProfile} object.
      *   The raw response will bypass runtime type checking.
      * @param profileId The ID of the SkyBlock profile to fetch. This should be a v4 UUID.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getSkyBlockProfile(profileId: string, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockProfile(profileId: string, raw = false): Promise<HypixelSkyBlockProfile | null | BaseResponse> {
-        return await this.request(`skyblock/profile?profile=${profileId}`, raw, this.skyBlockProfileSchema, (v) => v.profile ?? null);
+    public async getSkyBlockProfile(profileId: string, raw?: true): Promise<RawResponse>;
+    public async getSkyBlockProfile(profileId: string, raw = false): Promise<HypixelSkyBlockProfile | null | RawResponse> {
+        return await this.request(`skyblock/profile?profile=${profileId}`, raw as any, this.skyBlockProfileSchema, (v) => v.profile ?? null);
     }
 
     /**
      * Retrieve an array of a player's SkyBlock profiles from the Hypixel API via the `/skyblock/profiles` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1profiles/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockProfile} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockProfile} object.
      *   The raw response will bypass runtime type checking.
      * @param playerUuid The UUID of the player whose profiles should be fetched.
      * @returns A `Promise` that resolves with an array of {@link HypixelSkyBlockProfile} objects.
@@ -874,24 +890,24 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     /**
      * Retrieve an array of a player's SkyBlock profiles from the Hypixel API via the `/skyblock/profiles` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1profiles/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of a {@link HypixelSkyBlockProfile} object.
+     * @param raw Whether to return the raw {@link RawResponse} instead of a {@link HypixelSkyBlockProfile} object.
      *   The raw response will bypass runtime type checking.
      * @param playerUuid The UUID of the player whose profiles should be fetched.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getSkyBlockProfiles(playerUuid: string, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockProfiles(playerUuid: string, raw = false): Promise<HypixelSkyBlockProfile[] | BaseResponse> {
-        return await this.request(`skyblock/profiles?uuid=${playerUuid}`,  raw, this.skyBlockProfilesSchema, (v) => v.profiles ?? [])
+    public async getSkyBlockProfiles(playerUuid: string, raw?: true): Promise<RawResponse>;
+    public async getSkyBlockProfiles(playerUuid: string, raw = false): Promise<HypixelSkyBlockProfile[] | RawResponse> {
+        return await this.request(`skyblock/profiles?uuid=${playerUuid}`,  raw as any, this.skyBlockProfilesSchema, (v) => v.profiles ?? [])
     }
 
     /**
      * Retrieve the museum data for a SkyBlock profile from the Hypixel API via the `/skyblock/museum` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1museum/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of the parsed museum data.
+     * @param raw Whether to return the raw {@link RawResponse} instead of the parsed museum data.
      *   The raw response will bypass runtime type checking.
      * @param profileId The ID of the SkyBlock profile to fetch the museum data for. This should be a v4 UUID.
      * @returns A `Promise` that resolves with an object mapping the UUIDs of each player in the profile to their
@@ -905,24 +921,24 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     /**
      * Retrieve the museum data for a SkyBlock profile from the Hypixel API via the `/skyblock/museum` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1museum/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of the parsed museum data.
+     * @param raw Whether to return the raw {@link RawResponse} instead of the parsed museum data.
      *   The raw response will bypass runtime type checking.
      * @param profileId The ID of the SkyBlock profile to fetch the museum data for. This should be a v4 UUID.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getSkyBlockMuseums(profileId: string, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockMuseums(profileId: string, raw = false): Promise<Record<string, HypixelSkyBlockMuseum> | BaseResponse> {
-       return await this.request(`skyblock/museum?profile=${profileId}`, raw, this.skyBlockMuseumSchema, (v) => v.members ?? {})
+    public async getSkyBlockMuseums(profileId: string, raw?: true): Promise<RawResponse>;
+    public async getSkyBlockMuseums(profileId: string, raw = false): Promise<Record<string, HypixelSkyBlockMuseum> | RawResponse> {
+        return await this.request(`skyblock/museum?profile=${profileId}`, raw as any, this.skyBlockMuseumSchema, (v) => v.members ?? {})
     }
 
     /**
      * Retrieve an array of a player's SkyBlock bingo profiles from the Hypixel API via the `/skyblock/bingo` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1bingo/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of
      *   {@link HypixelSkyBlockBingoProfile} objects. The raw response will bypass runtime type checking.
      * @param playerUuid The UUID of the player whose bingo profiles should be fetched.
      * @returns A `Promise` that resolves with an array of {@link HypixelSkyBlockBingoProfile} objects.
@@ -935,25 +951,25 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
     /**
      * Retrieve an array of a player's SkyBlock bingo profiles from the Hypixel API via the `/skyblock/bingo` endpoint.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1bingo/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of
      *   {@link HypixelSkyBlockBingoProfile} objects. The raw response will bypass runtime type checking.
      * @param playerUuid The UUID of the player whose bingo profiles should be fetched.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      * - `Error` if the Hypixel API rate limit has been reached. {@link APIOptions.deferPolicy} can help avoid this.
      *   Can occur if the API has an emergency global throttle applied as well.
      */
-    public async getSkyBlockBingoProfiles(playerUuid: string, raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockBingoProfiles(playerUuid: string, raw = false): Promise<HypixelSkyBlockBingoProfile[] | BaseResponse> {
-        return await this.request(`skyblock/bingo?uuid=${playerUuid}`, raw, this.skyBlockBingoProfileSchema, (v) => v.events ?? [])
+    public async getSkyBlockBingoProfiles(playerUuid: string, raw?: true): Promise<RawResponse>;
+    public async getSkyBlockBingoProfiles(playerUuid: string, raw = false): Promise<HypixelSkyBlockBingoProfile[] | RawResponse> {
+        return await this.request(`skyblock/bingo?uuid=${playerUuid}`, raw as any, this.skyBlockBingoProfileSchema, (v) => v.events ?? [])
     }
 
     /**
      * Retrieve an array of active or upcoming SkyBlock firesales from the Hypixel API via the `/skyblock/firesales`
      *   endpoint. This method does not contribute towards your rate limit cap.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1firesales/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of {@link HypixelSkyBlockFiresale}
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of {@link HypixelSkyBlockFiresale}
      *   objects. The raw response will bypass runtime type checking.
      * @returns A `Promise` that resolves with an array of {@link HypixelSkyBlockFiresale} objects.
      * @throws
@@ -964,15 +980,15 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
      * Retrieve an array of active or upcoming SkyBlock firesales from the Hypixel API via the `/skyblock/firesales`
      *   endpoint. This method does not contribute towards your rate limit cap.
      * @see https://api.hypixel.net/#tag/SkyBlock/paths/~1skyblock~1firesales/get
-     * @param raw Whether to return the raw {@link BaseResponse} instead of an array of {@link HypixelSkyBlockFiresale}
+     * @param raw Whether to return the raw {@link RawResponse} instead of an array of {@link HypixelSkyBlockFiresale}
      *   objects. The raw response will bypass runtime type checking.
-     * @returns A `Promise` that resolves with a {@link BaseResponse} containing the raw data fetched from the Hypixel API.
+     * @returns A `Promise` that resolves with a {@link RawResponse} containing the raw data fetched from the Hypixel API.
      * @throws
      * - `Error` if the HTTP request to the Hypixel API failed
      */
-    public async getSkyBlockFiresales(raw?: true): Promise<BaseResponse>;
-    public async getSkyBlockFiresales(raw = false): Promise<HypixelSkyBlockFiresale[] | BaseResponse> {
-        return await this.request(`skyblock/firesales`, raw, this.skyBlockFiresalesSchema, (v) => v.sales ?? [])
+    public async getSkyBlockFiresales(raw?: true): Promise<RawResponse>;
+    public async getSkyBlockFiresales(raw = false): Promise<HypixelSkyBlockFiresale[] | RawResponse> {
+        return await this.request(`skyblock/firesales`, raw as any, this.skyBlockFiresalesSchema, (v) => v.sales ?? [])
     }
 
     /**

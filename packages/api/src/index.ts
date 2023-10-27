@@ -5,7 +5,6 @@ export * from './throwables';
 
 export * from './HypixelAPI';
 export * from './HypixelResources';
-export * from './MojangProfile';
 export * from './MojangAPI';
 
 export {
@@ -22,12 +21,12 @@ export {
 } from "./util"
 
 export type {
-    BaseResponse,
-    APIOptions,
+    APIOptions
 } from "./BaseAPI"
 
 export {
-    BaseAPI
+    BaseAPI,
+    RawResponse
 } from "./BaseAPI"
 
 export type {
@@ -70,7 +69,8 @@ export type {
     HypixelSkyBlockElection,
     HypixelSkyBlockItem,
     HypixelSkyBlockSkill,
-    MinecraftFormattingCode
+    MinecraftFormattingCode,
+    MojangProfile
 } from './schemas';
 
 export {

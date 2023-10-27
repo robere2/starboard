@@ -1,7 +1,7 @@
-import {APIOptions, BaseAPI} from "./BaseAPI";
+import {APIOptions, BaseAPI, RawResponse} from "./BaseAPI";
 import {NonOptional} from "./util";
 import * as crypto from "crypto";
-import {MojangProfile} from "./MojangProfile";
+import {MojangProfile, UuidToProfileSchema, MojangUsernameToUuidSchema} from "./schemas";
 
 export class MojangAPI extends BaseAPI<APIOptions> {
 
@@ -17,40 +17,28 @@ export class MojangAPI extends BaseAPI<APIOptions> {
         return this;
     }
 
-    public async getUuid(name: string): Promise<string | null> {
-        // Request Mojang API with the user agent injected if it is set. Otherwise, Node default is used.
-        const res = await this.options.httpClient.fetch(new Request(`https://api.mojang.com/users/profiles/minecraft/${name}`));
-
-        if(res.ok) {
-            const json = await res.json();
-            if(typeof json !== "object" || json === null) {
-                throw new Error('Request to Mojang API failed', {
-                    cause: json
-                })
+    public async getUuid(name: string, raw?: false): Promise<string | null>;
+    public async getUuid(name: string, raw?: true): Promise<RawResponse>;
+    public async getUuid(name: string, raw = false): Promise<RawResponse | string | null> {
+        return await this.request(`https://api.mojang.com/users/profiles/minecraft/${name}`, raw as any, MojangUsernameToUuidSchema, (res) => {
+            // If either error or errorMessage are set, throw one of them (preferably errorMessage)
+            if(res.error || res.errorMessage) {
+                throw new Error(res.errorMessage ?? res.error!)
             }
-            return (json as Record<string, any>).id;
-        } else {
-            throw new Error('Request to Mojang API failed', {
-                cause: await res.json()
-            })
-        }
+            return res.id ?? null;
+        })
     }
 
-    public async getProfile(uuid: string): Promise<MojangProfile | null> {
-        const res = await this.options.httpClient.fetch(new Request(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`));
-        if(res.ok) {
-            const json = await res.json();
-            if(typeof json !== "object" || json === null) {
-                throw new Error('Request to Mojang API failed', {
-                    cause: json
-                })
+    public async getProfile(uuid: string, raw?: false): Promise<MojangProfile | null>;
+    public async getProfile(uuid: string, raw?: true): Promise<RawResponse>;
+    public async getProfile(uuid: string, raw = false): Promise<RawResponse | MojangProfile | null> {
+        return await this.request(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`, raw as any, UuidToProfileSchema, (res) => {
+            // If either error or errorMessage are set, throw one of them (preferably errorMessage)
+            if(res.errorMessage || res.error) {
+                throw new Error(res.errorMessage ?? res.error!)
             }
-            return new MojangProfile(json);
-        } else {
-            throw new Error('Request to Mojang API failed', {
-                cause: await res.json()
-            })
-        }
+            return res ?? null;
+        })
     }
 
     public async getBlockedServerHashes(): Promise<string[]> {
