@@ -2,7 +2,6 @@ import {APIOptions, BaseAPI, RawResponse} from "./BaseAPI";
 import {NonOptional} from "./util";
 import type {HypixelAPI} from "./HypixelAPI";
 import {ResourcesNotReadyError} from "./throwables";
-import {HypixelEntity} from "./HypixelEntity";
 import {
     ChallengesResourceSchema,
     generateChallengesResourceSchema,
@@ -193,10 +192,6 @@ export class HypixelResources extends BaseAPI<HypixelResourcesOptions> {
 
     public isReady(): boolean {
         return this.ready;
-    }
-
-    protected getRoot(): HypixelAPI {
-        return HypixelEntity.getRoot(this._rootId);
     }
 
     /**

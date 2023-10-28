@@ -54,7 +54,6 @@ import {
     SkyBlockProfilesSchema,
     StatusSchema
 } from "./schemas";
-import {HypixelEntity} from "./HypixelEntity";
 import {RateLimitDeferPolicy} from "./defer";
 import {HypixelBaseSchema} from "./schemas/hypixel/HypixelBaseSchema";
 import * as z from "zod";
@@ -126,26 +125,24 @@ export class HypixelAPI extends BaseAPI<HypixelAPIOptions> {
             return this.resources = resources
         })
 
-        this.recentGamesSchema = generateRecentGamesSchema(this);
+        this.recentGamesSchema = generateRecentGamesSchema();
         this.statusSchema = generateStatusSchema();
-        this.guildSchema = generateGuildSchema(this);
+        this.guildSchema = generateGuildSchema();
         this.boosterSchema = generateBoosterSchema(this);
-        this.playerCountsSchema = generatePlayerCountsSchema(this);
+        this.playerCountsSchema = generatePlayerCountsSchema();
         this.punishmentStatisticsSchema = generatePunishmentStatisticsSchema();
         this.leaderboardsSchema = generateLeaderboardsSchema(this);
         this.playerSchema = generatePlayerSchema(this);
         this.skyBlockNewsSchema = generateSkyBlockNewsSchema();
-        this.skyBlockAuctionsSchema = generateSkyBlockAuctionsSchema(this);
-        this.skyBlockEndedAuctionsSchema = generateSkyBlockEndedAuctionsSchema(this);
-        this.skyBlockAuctionSchema = generateSkyBlockAuctionSchema(this);
-        this.skyBlockBazaarSchema = generateSkyBlockBazaarSchema(this);
-        this.skyBlockProfileSchema = generateSkyBlockProfileSchema(this);
-        this.skyBlockProfilesSchema = generateSkyBlockProfilesSchema(this);
+        this.skyBlockAuctionsSchema = generateSkyBlockAuctionsSchema();
+        this.skyBlockEndedAuctionsSchema = generateSkyBlockEndedAuctionsSchema();
+        this.skyBlockAuctionSchema = generateSkyBlockAuctionSchema();
+        this.skyBlockBazaarSchema = generateSkyBlockBazaarSchema();
+        this.skyBlockProfileSchema = generateSkyBlockProfileSchema();
+        this.skyBlockProfilesSchema = generateSkyBlockProfilesSchema();
         this.skyBlockMuseumSchema = generateSkyBlockMuseumSchema();
         this.skyBlockBingoProfileSchema = generateSkyBlockBingoSchema();
         this.skyBlockFiresalesSchema = generateSkyBlockFiresalesSchema();
-
-        HypixelEntity.registerAPI(this);
     }
 
     /**

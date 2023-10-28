@@ -2,11 +2,10 @@ import type {HypixelAPI} from "../../../../HypixelAPI";
 import * as z from "zod";
 import {HypixelBaseSchema} from "../../HypixelBaseSchema";
 import {ZodUnixDate} from "../../../ZodUnixDate";
-import {HypixelEntity} from "../../../../HypixelEntity";
 import {HypixelSkyBlockCollection} from "./SkyBlockCollectionsResourceSchema";
 
 export type SkyBlockSkillsResourceSchema = ReturnType<typeof generateSkyBlockSkillsResourceSchema>;
-export type HypixelSkyBlockSkill = HypixelEntity & z.infer<SkyBlockSkillsResourceSchema>["skills"][string];
+export type HypixelSkyBlockSkill = z.infer<SkyBlockSkillsResourceSchema>["skills"][string];
 
 export function generateSkyBlockSkillsResourceSchema(api: HypixelAPI) {
     return HypixelBaseSchema.extend({
@@ -25,13 +24,12 @@ export function generateSkyBlockSkillsResourceSchema(api: HypixelAPI) {
                     }).readonly()
                 ).default([]).readonly()
             }).readonly().transform(skill => {
-                return Object.assign(new HypixelEntity(api), {
-                    ...skill,
+                return Object.assign(skill, {
 
                     /**
                      *
                      */
-                    getCollection(): HypixelSkyBlockCollection {
+                    getCollection(this: typeof skill): HypixelSkyBlockCollection {
                         return api.getResources().skyBlockCollections[this.name.toUpperCase()];
                     }
                 })
