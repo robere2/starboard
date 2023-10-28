@@ -4,34 +4,71 @@ import * as z from "zod";
 import {IDeferPolicy} from "./defer";
 import {ZodSchema} from "zod";
 
+/**
+ * A container around `Response` for HTTP responses from APIs that integrates Zod schema parsing.
+ * @see https://zod.dev/
+ */
 export class RawResponse {
 
     private bodyText!: string;
+    /**
+     * The original `Response` from the `fetch()` call. This can be used to read headers and status codes from the
+     * response, however it should not be used to read the body. Instead, use {@link json} or {@link text}.
+     */
     public readonly response: Response;
 
+    /**
+     * @internal
+     * @param response
+     * @private
+     */
     private constructor(response: Response) {
         this.response = response;
     }
 
+    /**
+     * @internal
+     * @param response
+     */
     public static async create(response: Response): Promise<RawResponse> {
         const rawRes = new RawResponse(response);
         rawRes.bodyText = await response.text();
         return rawRes;
     }
 
+    /**
+     * Parse this responses JSON body using a Zod schema.
+     * @param schema The Zod schema to parse the body with.
+     * @throws
+     * - `Error` if the response is not JSON.
+     * - `Error` if the response JSON does not match the given schema.
+     * @returns the parsed API response
+     * @see https://zod.dev/
+     */
     public async parse<T extends ZodSchema>(schema: T): Promise<z.infer<T>> {
         return schema.parse(this.json())
     }
 
+    /**
+     * Get the API response body and attempt to parse it as JSON.
+     * @throws
+     * - `Error` if the API response is not valid JSON.
+     */
     public json(): any {
         return JSON.parse(this.bodyText);
     }
 
+    /**
+     * Get the API response body as plain text.
+     */
     public text(): string {
         return this.bodyText;
     }
 }
 
+/**
+ * Default options that all implementations of {@link BaseAPI} accept.
+ */
 export type APIOptions = {
     /**
      * Rate limit usage percentage at which to enable queuing requests to help ensure that your over-usage of the API
@@ -53,7 +90,41 @@ export type APIOptions = {
     httpClient?: HttpClient;
 }
 
+/**
+ * An extensible API interface, used by {@link MojangAPI} and {@link HypixelAPI}.
+ * @typeParam T The type of the options that can be provided to this API. Must extend {@link APIOptions}.
+ * @example
+ * type YourOptions extends APIOptions {
+ *     apiKey: string;
+ * }
+ *
+ * class YourAPI extends BaseAPI<YourOptions> {
+ *
+ *     protected genHeaders(): Headers {
+ *         const headers = super.genHeaders();
+ *         headers.set("Authorization", "Bearer " + this.options.apiKey);
+ *         return headers;
+ *     }
+ *
+ *     protected parseOptions(options: YourOptions): NonOptional<YourOptions> {
+ *         return Object.freeze({
+ *             ...this.parseDefaultOptions(options),
+ *             apiKey: options.apiKey,
+ *         })
+ *     }
+ *
+ *     public async sendRequest(): Promise<string> {
+ *         return await this.request("https://example.com/get-data", false, ResponseSchema, res => res.someStringValue);
+ *     }
+ * }
+ */
 export abstract class BaseAPI<T extends APIOptions> {
+
+    /**
+     * The options provided to the constructor, parsed by {@link parseOptions}.
+     * @hidden
+     * @protected
+     */
     protected readonly options: NonOptional<T>;
 
     /**
@@ -77,7 +148,9 @@ export abstract class BaseAPI<T extends APIOptions> {
     protected abstract parseOptions(options: T): NonOptional<T>;
 
     /**
-     * @internal
+     * Generate the `Headers` object to be sent with requests to the API.
+     * @hidden
+     * @returns a `Headers` instance with all the headers to send with requests.
      * @protected
      */
     protected genHeaders(): Headers {
@@ -128,6 +201,7 @@ export abstract class BaseAPI<T extends APIOptions> {
      * @throws
      * - `Error` if the HTTP request fails.
      * - `Error` if the schema parsing fails.
+     * @see https://zod.dev/
      * @protected
      */
     protected async request<S extends ZodSchema, V>(url: string, raw: true, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<RawResponse>;
@@ -147,6 +221,7 @@ export abstract class BaseAPI<T extends APIOptions> {
      * @throws
      * - `Error` if the HTTP request fails.
      * - `Error` if the schema parsing fails.
+     * @see https://zod.dev/
      * @protected
      */
     protected async request<S extends ZodSchema, V>(url: string, raw: false, schema: S, mutator?: (input: z.infer<S>) => V): Promise<z.infer<S>>;
@@ -166,6 +241,7 @@ export abstract class BaseAPI<T extends APIOptions> {
      * @throws
      * - `Error` if the HTTP request fails.
      * - `Error` if the schema parsing fails.
+     * @see https://zod.dev/
      * @protected
      */
     protected async request<S extends ZodSchema, V>(url: string, raw: false, schema: S, mutator: (input: z.infer<S>) => V): Promise<V>;
@@ -203,7 +279,7 @@ export abstract class BaseAPI<T extends APIOptions> {
      *   values applied to all supported properties that are otherwise undefined. This means the returned value is
      *   guaranteed to have no more undefined configuration values.
      * @protected
-     * @internal
+     * @hidden
      */
     protected parseDefaultOptions(options: APIOptions): NonOptional<APIOptions> {
         return Object.freeze({
