@@ -88,6 +88,16 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         this.skyBlockBingoResourceSchema = generateSkyBlockBingoResourceSchema();
     }
 
+    /**
+     * Create a new instance of `HypixelResources`. Instead of using this directly, you may want to use
+     * {@link HypixelAPI.getResources()}.
+     * @param root Parent instance of {@link HypixelAPI}.
+     * @param options Options to use when creating the `HypixelResources`.
+     * @returns A `Promise` that resolves to a new `HypixelResources` instance. The `Promise` resolves after all resources
+     *   have been fetched to avoid a {@link ResourcesNotReadyError}.
+     * @see {@link HypixelAPIOptions}
+     * @see {@link HypixelAPI}
+     */
     public static async create(root: HypixelAPI, options?: APIOptions): Promise<HypixelResources> {
         const resources = new HypixelResources(root, options ?? {});
         resources._games = await resources.fetchGames();
@@ -137,6 +147,11 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         return HypixelEntity.getRoot(this._rootId);
     }
 
+    /**
+     * Since all the resource values are getters, we need to override `toJSON` if we want them included in the output.
+     * @internal
+     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+     */
     public toJSON() {
         // Getters are normally not serialized with JSON.stringify. This includes them all.
         return {
@@ -352,6 +367,11 @@ export class HypixelResources extends BaseAPI<APIOptions> {
         return this.request(`skyblock/bingo`, raw as any, this.skyBlockBingoResourceSchema)
     }
 
+    /**
+     * @internal
+     * @param options
+     * @protected
+     */
     protected parseOptions(options: APIOptions): NonOptional<APIOptions> {
         return this.parseDefaultOptions(options);
     }
