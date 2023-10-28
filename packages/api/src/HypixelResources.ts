@@ -44,8 +44,8 @@ import {z} from "zod";
  */
 export type HypixelResourcesOptions = APIOptions & {
     /**
-     * Number of seconds between resource refreshes. This does not bypass the {@link httpClient} cache, so if the
-     * {@link httpClient}'s cache still contains the resources, it's cached values will be returned.
+     * Number of seconds between resource refreshes. This does not bypass the {@link HttpClient} cache, so if the
+     * {@link HttpClient}'s cache still contains the resources, it's cached values will be returned.
      * @default 3_600_000
      */
     refreshInterval?: number
