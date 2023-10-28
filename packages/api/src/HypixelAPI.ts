@@ -59,6 +59,9 @@ import {RateLimitDeferPolicy} from "./defer";
 import {HypixelBaseSchema} from "./schemas/hypixel/HypixelBaseSchema";
 import * as z from "zod";
 
+/**
+ * Extension of {@link APIOptions} that also requires a Hypixel API key.
+ */
 export type HypixelAPIOptions = APIOptions & {
     /**
      * API key to use in requests to the Hypixel API. Should be a valid UUID with or without dashes retrieved from
