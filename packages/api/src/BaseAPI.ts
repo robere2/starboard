@@ -122,7 +122,6 @@ export abstract class BaseAPI<T extends APIOptions> {
 
     /**
      * The options provided to the constructor, parsed by {@link parseOptions}.
-     * @hidden
      * @protected
      */
     protected readonly options: NonOptional<T>;
@@ -139,19 +138,32 @@ export abstract class BaseAPI<T extends APIOptions> {
     /**
      * Parse the options input into the constructor into a structurally identical object but with all unset values set
      * to their default.
-     * @remarks Within this method call {@link parseDefaultOptions} to parse the options set within {@link APIOptions}.
+     * @remarks Within this method call `parseDefaultOptions` to parse the options set within {@link APIOptions}.
      * Any additional values you have in your extensions to these options must be parsed by you.
-     * @internal
      * @param options
      * @protected
+     * @example
+     *
+     * protected parseOptions(options: YourOptions): NonOptional<YourOptions> {
+     *     return Object.freeze({
+     *         ...this.parseDefaultOptions(options),
+     *         apiKey: options.apiKey,
+     *     })
+     * }
      */
     protected abstract parseOptions(options: T): NonOptional<T>;
 
     /**
      * Generate the `Headers` object to be sent with requests to the API.
-     * @hidden
-     * @returns a `Headers` instance with all the headers to send with requests.
+     * @returns A `Headers` instance with all the headers to send with requests.
      * @protected
+     * @example
+     *
+     * protected genHeaders(): Headers {
+     *     const headers = super.genHeaders();
+     *     headers.set("Authorization", "Bearer " + this.options.apiKey);
+     *     return headers;
+     * }
      */
     protected genHeaders(): Headers {
         return new Headers();

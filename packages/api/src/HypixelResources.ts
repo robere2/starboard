@@ -37,7 +37,7 @@ import {
     HypixelSkyBlockItem, SkyBlockItemsResourceSchema
 } from "./schemas";
 import {HypixelBaseSchema} from "./schemas/hypixel/HypixelBaseSchema";
-import * as z from "zod";
+import {z} from "zod";
 
 export class HypixelResources extends BaseAPI<APIOptions> {
 
@@ -374,5 +374,15 @@ export class HypixelResources extends BaseAPI<APIOptions> {
      */
     protected parseOptions(options: APIOptions): NonOptional<APIOptions> {
         return this.parseDefaultOptions(options);
+    }
+
+    /**
+     * Override just to hide from docs
+     * @override
+     * @internal
+     * @protected
+     */
+    protected genHeaders(): Headers {
+        return super.genHeaders();
     }
 }
