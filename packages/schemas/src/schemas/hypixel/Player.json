@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "HypixelGames": {
+      "type": "number",
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "HypixelRecentGamesResponse": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "games": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "gameType": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/HypixelGames"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "mode": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "map": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "ended": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "games"
+      ]
+    }
+  }
+}
