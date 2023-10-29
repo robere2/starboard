@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.7](https://github.com/robere2/starboard/compare/@mcsb/framework@1.0.0-pre.6...@mcsb/framework@1.0.0-pre.7) (2023-10-29)
+
+### Bug Fixes
+
+- add typedoc options to config ([d4c9983](https://github.com/robere2/starboard/commit/d4c9983c324c0ba62d8427084eb49c51b5894177))
+
+### Features
+
+- Docs for Cache-related entities ([970a65c](https://github.com/robere2/starboard/commit/970a65c047040c7636ee2690d159728616c111ff))
+
 # [1.0.0-pre.6](https://github.com/robere2/starboard/compare/@mcsb/framework@1.0.0-pre.5...@mcsb/framework@1.0.0-pre.6) (2023-10-23)
 
 ### Features
