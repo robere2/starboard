@@ -1,18 +1,74 @@
 import {HttpClient} from "./http";
-import {ParsedOptions} from "./util";
+import {NonOptional} from "./util";
 import * as z from "zod";
 import {IDeferPolicy} from "./defer";
+import {ZodSchema} from "zod";
 
-export type BaseResponse = z.infer<typeof BaseSchema> & Record<string, any>
+/**
+ * A container around `Response` for HTTP responses from APIs that integrates Zod schema parsing.
+ * @see https://zod.dev/
+ */
+export class RawResponse {
 
-export const BaseSchema = z.object({
-    success: z.boolean(),
-    cause: z.string().nullish(),
-    throttle: z.boolean().nullish(),
-    global: z.boolean().nullish()
-}).passthrough()
+    private bodyText!: string;
+    /**
+     * The original `Response` from the `fetch()` call. This can be used to read headers and status codes from the
+     * response, however it should not be used to read the body. Instead, use {@link json} or {@link text}.
+     */
+    public readonly response: Response;
 
+    /**
+     * @internal
+     * @param response
+     * @private
+     */
+    private constructor(response: Response) {
+        this.response = response;
+    }
 
+    /**
+     * @internal
+     * @param response
+     */
+    public static async create(response: Response): Promise<RawResponse> {
+        const rawRes = new RawResponse(response);
+        rawRes.bodyText = await response.text();
+        return rawRes;
+    }
+
+    /**
+     * Parse this responses JSON body using a Zod schema.
+     * @param schema The Zod schema to parse the body with.
+     * @throws
+     * - `Error` if the response is not JSON.
+     * - `Error` if the response JSON does not match the given schema.
+     * @returns the parsed API response
+     * @see https://zod.dev/
+     */
+    public async parse<T extends ZodSchema>(schema: T): Promise<z.infer<T>> {
+        return schema.parse(this.json())
+    }
+
+    /**
+     * Get the API response body and attempt to parse it as JSON.
+     * @throws
+     * - `Error` if the API response is not valid JSON.
+     */
+    public json(): any {
+        return JSON.parse(this.bodyText);
+    }
+
+    /**
+     * Get the API response body as plain text.
+     */
+    public text(): string {
+        return this.bodyText;
+    }
+}
+
+/**
+ * Default options that all implementations of {@link BaseAPI} accept.
+ */
 export type APIOptions = {
     /**
      * Rate limit usage percentage at which to enable queuing requests to help ensure that your over-usage of the API
@@ -34,60 +90,192 @@ export type APIOptions = {
     httpClient?: HttpClient;
 }
 
+/**
+ * An extensible API interface, used by {@link MojangAPI} and {@link HypixelAPI}.
+ * @typeParam T The type of the options that can be provided to this API. Must extend {@link APIOptions}.
+ * @example
+ * type YourOptions extends APIOptions {
+ *     apiKey: string;
+ * }
+ *
+ * class YourAPI extends BaseAPI<YourOptions> {
+ *
+ *     protected genHeaders(): Headers {
+ *         const headers = super.genHeaders();
+ *         headers.set("Authorization", "Bearer " + this.options.apiKey);
+ *         return headers;
+ *     }
+ *
+ *     protected parseOptions(options: YourOptions): NonOptional<YourOptions> {
+ *         return Object.freeze({
+ *             ...this.parseDefaultOptions(options),
+ *             apiKey: options.apiKey,
+ *         })
+ *     }
+ *
+ *     public async sendRequest(): Promise<string> {
+ *         return await this.request("https://example.com/get-data", false, ResponseSchema, res => res.someStringValue);
+ *     }
+ * }
+ */
 export abstract class BaseAPI<T extends APIOptions> {
-    protected readonly options: ParsedOptions<T>;
 
+    /**
+     * The options provided to the constructor, parsed by {@link parseOptions}.
+     * @protected
+     */
+    protected readonly options: NonOptional<T>;
+
+    /**
+     * @hidden
+     * @param options
+     * @protected
+     */
     protected constructor(options: T) {
         this.options = this.parseOptions(options);
     }
 
-    protected abstract parseOptions(options: T): ParsedOptions<T>;
+    /**
+     * Parse the options input into the constructor into a structurally identical object but with all unset values set
+     * to their default.
+     * @remarks Within this method call `parseDefaultOptions` to parse the options set within {@link APIOptions}.
+     * Any additional values you have in your extensions to these options must be parsed by you.
+     * @param options
+     * @protected
+     * @example
+     *
+     * protected parseOptions(options: YourOptions): NonOptional<YourOptions> {
+     *     return Object.freeze({
+     *         ...this.parseDefaultOptions(options),
+     *         apiKey: options.apiKey,
+     *     })
+     * }
+     */
+    protected abstract parseOptions(options: T): NonOptional<T>;
 
+    /**
+     * Generate the `Headers` object to be sent with requests to the API.
+     * @returns A `Headers` instance with all the headers to send with requests.
+     * @protected
+     * @example
+     *
+     * protected genHeaders(): Headers {
+     *     const headers = super.genHeaders();
+     *     headers.set("Authorization", "Bearer " + this.options.apiKey);
+     *     return headers;
+     * }
+     */
     protected genHeaders(): Headers {
         return new Headers();
     }
 
-    protected async request<T extends typeof BaseSchema, U>(path: string, raw: boolean, schema: T, mutator?: (input: z.infer<T>) => U): Promise<BaseResponse | U> {
-        const req = new Request(path, {
+    /**
+     * Send a request to a given URL using this APIs {@link HttpClient} provided {@link options}. If the `HttpClient`
+     * has a cached response, then that response is returned immediately. Otherwise, we send a new request to the URL.
+     * Before sending the request, if an {@link IDeferPolicy} was provided to {@link options}, the defer policy is
+     * polled first.
+     * @param url The complete URL to send a request to. Relative URLs are not supported.
+     * @returns A `Promise` which resolves to a `RawResponse` from the API.
+     * @throws
+     * - `Error` if the HTTP request fails
+     * @protected
+     * @see {@link request}
+     */
+    protected async rawRequest(url: string): Promise<RawResponse> {
+        const req = new Request(url, {
             headers: this.genHeaders()
         });
 
         let res = await this.options.httpClient!.fetch(req, undefined, true);
+        // fetch value from API if cache was not a hit
         if(!res) {
-            if(this.options.deferPolicy) {
-                await this.options.deferPolicy.poll();
-            }
-
+            await this.options.deferPolicy?.poll();
             res = await this.options.httpClient!.fetch(req);
-
-            if(this.options.deferPolicy) {
-                this.options.deferPolicy.update(res);
-            }
+            this.options.deferPolicy?.notify(res);
         }
 
-
-        const json = BaseSchema.readonly().parse(await res.json());
-
-        if(raw) {
-            return json;
-        } else if(!json.success) {
-            throw new Error(`Hypixel API Error: ${json.cause}`, {
-                cause: json.cause
-            });
-        } else {
-            if(mutator) {
-                try {
-                    return mutator(schema.readonly().parse(json))
-                } catch(e) {
-                    console.log(e);
-                    throw e;
-                }
-            } else {
-                return schema.readonly().parse(json);
-            }
-        }
+        return await RawResponse.create(res)
     }
 
+    /**
+     * Send an API request to the given URL using the provided {@link HttpClient} and {@link IDeferPolicy}.
+     * @param url URL to send the request to. Relative URLs not supported.
+     * @param raw Whether to receive a {@link RawResponse}.
+     * @param schema **In this overload, this value is unused.** - The Zod schema to use to parse the API response.
+     * @param mutator **In this overload, this value is unused.** - A function that takes in the schema-parsed response
+     * and returns another value. This can also be used to perform additional validation on the response and throw an
+     * `Error` if it fails.
+     * @returns
+     * - **If `raw` is true, the `RawResponse` from {@link rawRequest} is returned.**
+     * - If `raw` is `false` and the `mutator` argument is undefined, the API response parsed by the provided schema is
+     * returned.
+     * - If `raw` is `false` and a `mutator` argument is provided, the value returned by the mutator is returned.
+     * @throws
+     * - `Error` if the HTTP request fails.
+     * - `Error` if the schema parsing fails.
+     * @see https://zod.dev/
+     * @protected
+     */
+    protected async request<S extends ZodSchema, V>(url: string, raw: true, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<RawResponse>;
+    /**
+     * Send an API request to the given URL using the provided {@link HttpClient} and {@link IDeferPolicy}.
+     * @param url URL to send the request to. Relative URLs not supported.
+     * @param raw Whether to receive a {@link RawResponse}.
+     * @param schema The Zod schema to use to parse the API response.
+     * @param mutator **In this overload, this value is unused.** - A function that takes in the schema-parsed response
+     * and returns another value. This can also be used to perform additional validation on the response and throw an
+     * `Error` if it fails.
+     * @returns
+     * - If `raw` is true, the `RawResponse` from {@link rawRequest} is returned.
+     * - **If `raw` is `false` and the `mutator` argument is undefined, the API response parsed by the provided schema
+     * is returned.**
+     * - If `raw` is `false` and a `mutator` argument is provided, the value returned by the mutator is returned.
+     * @throws
+     * - `Error` if the HTTP request fails.
+     * - `Error` if the schema parsing fails.
+     * @see https://zod.dev/
+     * @protected
+     */
+    protected async request<S extends ZodSchema, V>(url: string, raw: false, schema: S, mutator?: (input: z.infer<S>) => V): Promise<z.infer<S>>;
+    /**
+     * Send an API request to the given URL using the provided {@link HttpClient} and {@link IDeferPolicy}.
+     * @param url URL to send the request to. Relative URLs not supported.
+     * @param raw Whether to receive a {@link RawResponse}.
+     * @param schema The Zod schema to use to parse the API response.
+     * @param mutator A function that takes in the schema-parsed response
+     * and returns another value. This can also be used to perform additional validation on the response and throw an
+     * `Error` if it fails.
+     * @returns
+     * - If `raw` is true, the `RawResponse` from {@link rawRequest} is returned.
+     * - If `raw` is `false` and the `mutator` argument is undefined, the API response parsed by the provided schema is
+     * returned.
+     * - **If `raw` is `false` and a `mutator` argument is provided, the value returned by the mutator is returned.**
+     * @throws
+     * - `Error` if the HTTP request fails.
+     * - `Error` if the schema parsing fails.
+     * @see https://zod.dev/
+     * @protected
+     */
+    protected async request<S extends ZodSchema, V>(url: string, raw: false, schema: S, mutator: (input: z.infer<S>) => V): Promise<V>;
+    protected async request<S extends ZodSchema, V>(url: string, raw: boolean, schema?: S, mutator?: (input: z.infer<S>) => V): Promise<z.infer<S> | V | RawResponse> {
+        const rawRes = await this.rawRequest(url);
+
+        if(raw) {
+            return rawRes;
+        }
+
+        // Schema can only be undefined if raw is true, which is no longer the case.
+        const parsed = await rawRes.parse(schema!);
+        if(mutator) {
+            return mutator(parsed);
+        }
+        return parsed;
+    }
+
+    /**
+     * Destroy this API instance, primarily by shutting down the {@link HttpClient}. Failure to do so may
+     * leave your program hanging if you do not explicitly interrupt it.
+     */
     public destroy(): void {
         this.options.httpClient!.destroy();
     }
@@ -103,8 +291,9 @@ export abstract class BaseAPI<T extends APIOptions> {
      *   values applied to all supported properties that are otherwise undefined. This means the returned value is
      *   guaranteed to have no more undefined configuration values.
      * @protected
+     * @hidden
      */
-    protected parseDefaultOptions(options: APIOptions): ParsedOptions<APIOptions> {
+    protected parseDefaultOptions(options: APIOptions): NonOptional<APIOptions> {
         return Object.freeze({
             deferPolicy: options.deferPolicy ?? null,
             httpClient: options.httpClient ?? new HttpClient()

@@ -5,11 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
-    "prebuild": "rimraf .vitepress/dist && rimraf -g src/*/reference && node bin/cp-external.js && lerna run typedoc && node bin/move-class-refs.js",
+    "prebuild": "rimraf .vitepress/dist && rimraf src/embeds && rimraf -g src/*/reference && node bin/cp-external.js && lerna run typedoc && node bin/move-class-refs.js",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^17.0.12",
     "eslint-config-custom": "^1.0.0-pre.4",
@@ -21,8 +20,15 @@
   "nx": {
     "targets": {
       "build": {
-        "inputs": ["all", "!{projectRoot}/.vitepress/dist/**/*", "!{projectRoot}/.vitepress/cache/**/*", "runtime"],
-        "outputs": ["{projectRoot}/.vitepress/dist"]
+        "inputs": [
+          "all",
+          "!{projectRoot}/.vitepress/dist/**/*",
+          "!{projectRoot}/.vitepress/cache/**/*",
+          "runtime"
+        ],
+        "outputs": [
+          "{projectRoot}/.vitepress/dist"
+        ]
       }
     }
   }

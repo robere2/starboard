@@ -1,5 +1,8 @@
 import type {HypixelAPI} from "./HypixelAPI";
 
+/**
+ *
+ */
 export class HypixelEntity {
     // A global API registry allows children entities to be able to use the parent API without creating a circular
     //   reference structure. Instead, they store the ID of the HypixelAPI. We store them here to avoid circular
@@ -7,14 +10,25 @@ export class HypixelEntity {
     private static apiRegistry: Map<string, HypixelAPI> = new Map();
     private readonly __starboardRootId__: string;
 
+    /**
+     *
+     * @param root
+     */
     public constructor(root: HypixelAPI) {
         this.__starboardRootId__ = root.id;
     }
 
+    /**
+     *
+     */
     public getRoot(): HypixelAPI {
         return HypixelEntity.getRoot(this.__starboardRootId__);
     }
 
+    /**
+     *
+     * @param id
+     */
     public static getRoot(id: string): HypixelAPI {
         const root = HypixelEntity.apiRegistry.get(id);
         if(!root) {
@@ -23,10 +37,17 @@ export class HypixelEntity {
         return root;
     }
 
+    /**
+     *
+     * @param api
+     */
     public static registerAPI(api: HypixelAPI) {
         HypixelEntity.apiRegistry.set(api.id, api);
     }
 
+    /**
+     *
+     */
     public toJSON() {
         const result: Record<string, unknown> = {};
         for(const key in this) {

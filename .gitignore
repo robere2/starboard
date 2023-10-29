@@ -123,6 +123,6 @@ dist
 apps/docs/.vitepress/cache
 apps/docs/.vitepress/dist
 apps/docs/src/*/reference
-apps/docs/src/LICENSE.md
-apps/docs/src/CODE_OF_CONDUCT.md
-apps/docs/src/CONTRIBUTING.md
+apps/docs/src/embeds/LICENSE.md
+apps/docs/src/embeds/CODE_OF_CONDUCT.md
+apps/docs/src/embeds/CONTRIBUTING.md

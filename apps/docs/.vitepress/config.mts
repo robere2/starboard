@@ -92,7 +92,8 @@ export default defineConfig({
           text: 'Essentials', items: [
             { text: 'Schemas', link: '/api/schemas' },
             { text: 'Request Debouncing', link: '/api/request-debouncing' },
-            { text: 'Customizing the HTTP Client', link: '/api/customizing-http-client' }
+            { text: 'Customizing the HTTP Client', link: '/api/customizing-http-client' },
+            { text: 'Raw Requests', link: '/api/raw-requests' },
           ]
         },
         {

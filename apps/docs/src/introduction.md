@@ -1,3 +1,6 @@
+---
+title: Introduction
+---
 <script setup>
 import ModulePicker from "./components/ModulePicker.vue"
 </script>
