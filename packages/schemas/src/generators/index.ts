@@ -37,73 +37,73 @@ const data = {
 
 findNewProperties(schema, data);
 
-function findNewProperties(schema: any, input: unknown): string[] {
-    const unstrippedInput = structuredClone(input)
-    const strippedInput = structuredClone(input)
+function crawl(obj: any, cb: (identifier: Identifier, value: any) => void) {
+    const valuesToCrawl: { value: any, namespace: Identifier}[] = [{
+        value: obj,
+        namespace: []
+    }];
+    while(valuesToCrawl.length > 0) {
+        const next = valuesToCrawl.shift();
+        const value = next!.value;
+        const namespace = next!.namespace;
+        cb(namespace, value)
 
-    const validate = ajv.compile(schema);
-    validate(unstrippedInput);
-
-    const validateRemoveAdditional = ajvRemoveAdditional.compile(schema);
-    validateRemoveAdditional(strippedInput);
-
-    console.log(unstrippedInput);
-    console.log(strippedInput);
-
-    const newProps: string[][] = [];
-    const stack: string[] = [];
-    function recursiveNewValueSearch(key: string | null, knownValues: unknown, allValues: unknown) {
-        if(knownValues === undefined && typeof allValues !== "undefined") {
-            if(typeof allValues !== "object") {
-                return;
+        if(Array.isArray(value)) {
+            for(let i = 0; i < value.length; i++) {
+                valuesToCrawl.push({
+                    value: value[i],
+                    namespace: [...namespace, i]
+                })
             }
-            for(const key in allValues) {
-                stack.push(key);
-                newProps.push([...stack]);
-                recursiveNewValueSearch(key, undefined, (allValues as any)[key])
-                stack.pop();
+        } else if(typeof value === "object" && value !== null) {
+            for(const key in value) {
+                valuesToCrawl.push({
+                    value: value[key],
+                    namespace: [...namespace, key]
+                })
             }
-            return;
-        }
-
-        if(typeof knownValues !== typeof allValues || Array.isArray(knownValues) !== Array.isArray(allValues)) {
-            throw new Error("Known values is not a subset of all values");
-        }
-
-        if(typeof knownValues !== "object") {
-            return;
-        }
-        if(Array.isArray(knownValues)) {
-            for(let i = 0; i < knownValues.length; i++) {
-                stack.push(i.toString());
-                recursiveNewValueSearch(i.toString(), knownValues[i], (allValues as unknown[])[i])
-                stack.pop()
-            }
-            return;
-        }
-
-        for(const key in allValues as object) {
-            stack.push(key);
-            if(Object.hasOwn(allValues as object, key) && !Object.hasOwn(knownValues as object, key)) {
-                newProps.push([...stack]);
-            }
-            recursiveNewValueSearch(key, (knownValues as any)[key], (allValues as any)[key])
-            stack.pop();
         }
     }
+}
 
-    recursiveNewValueSearch(null, strippedInput, unstrippedInput);
-    console.log(JSON.stringify(newProps));
+type Identifier = (string | number | symbol)[];
+function access(obj: any, identifier: Identifier): any {
+    let currentValue = obj;
+    for(let i = 0; i < identifier.length; i++) {
+        const next = identifier[i];
+        if(currentValue[next] === undefined) {
+            return undefined;
+        } else if(currentValue[next] === null) {
+            return i === identifier.length - 1 ? null : undefined
+        } else {
+            currentValue = currentValue[next];
+        }
+    }
+    return currentValue;
+}
 
-    //
-    // if(typeof data !== "object") {
-    //     return [];
-    // }
-    // const stack = [];
-    // if(Array.isArray(data)) {
-    //     for(const item of data) {
-    //         const itemNewProps = findNewProperties(schema, item);
-    //     }
-    // }
+function findNewProperties(schema: any, input: Record<string, any>): Record<string, any> {
+    const allValues = structuredClone(input)
+    const definedValues = structuredClone(input)
+
+    const validate = ajv.compile(schema);
+    const validateAndRemove = ajvRemoveAdditional.compile(schema);
+
+    validate(allValues);
+    validateAndRemove(definedValues);
+
+    const newProps: Record<string, any> = {};
+
+    crawl(allValues, (identifier) => {
+        const value = access(allValues, identifier);
+        const definedValue = access(definedValues, identifier);
+
+        if(value && (definedValue === null || definedValue === undefined)) {
+
+        }
+        console.log(value, definedValue)
+    })
+
+    return newProps;
 }
 
