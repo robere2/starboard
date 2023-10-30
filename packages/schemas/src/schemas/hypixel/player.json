@@ -44,12 +44,10 @@
           "type": "string",
           "pattern": "^[0-9a-f]{24}$"
         },
-        "achievements": {
-          "type": "object",
-          "properties": {
-            "arena_bossed": {
-              "type": "number"
-            }
+        "test": {
+          "type": "array",
+          "items": {
+            "type": "integer"
           }
         }
       },
