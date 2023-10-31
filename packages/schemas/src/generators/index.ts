@@ -62,6 +62,7 @@ function getSchemaDefinition(schema: Record<string, any>, name: string): Record<
  */
 function combineSchemas(originalSchema: Record<string, any>, newSchema: Record<string, any>): Record<string, any> {
     const finalSchema = structuredClone(originalSchema);
+
     crawl(newSchema, (identifier, value) => {
         if(identifier.length === 0) {
             return;
@@ -95,6 +96,42 @@ export async function writeSchemaTypedefs(schema: Record<string, any>, name: str
     // Write compiled TypeScript to .d.ts files
     await fs.promises.mkdir(outdir, { recursive: true });
     await fs.promises.writeFile(join(outdir, `${name}.d.ts`), ts)
+}
+
+type CrawlCallbackEntry = {
+    path: (number | symbol | string)[],
+    value: any,
+    update(newValue: any): void
+}
+type CrawlCallback = (entries: CrawlCallbackEntry[]) => any | Promise<any>;
+
+export function crawlv2(objs: any[], cb: CrawlCallback): any {
+    const queue: { values: any[], path: (string | number | symbol)[]}[] = [];
+
+    queue.push({
+        values: objs,
+        path: []
+    });
+
+    while(queue.length > 0) {
+        const item = queue.shift()!;
+        const entries: CrawlCallbackEntry[] = [];
+        for(const obj of item.values) {
+            entries.push({
+                path: item.path,
+                value: obj,
+                update: (newValue: any) => {
+
+                }
+            })
+        }
+        const result = cb(entries);
+        if(result !== undefined) {
+            return result;
+        }
+
+
+    }
 }
 
 /**
