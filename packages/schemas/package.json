@@ -13,7 +13,7 @@
     "eslint-config-custom": "*",
     "json-diff": "^1.0.6",
     "json-schema-to-typescript": "^13.1.1",
-    "to-json-schema": "^0.2.5",
+    "gen-json-schema": "^0.2.6",
     "tsconfig": "*"
   },
   "keywords": [],
@@ -24,7 +24,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@types/json-diff": "^1.0.1",
-    "@types/to-json-schema": "^0.2.3"
+    "@types/json-diff": "^1.0.1"
   }
 }
