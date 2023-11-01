@@ -1,39 +1,28 @@
-import {compile} from 'json-schema-to-typescript'
-import * as fs from "fs";
-import {dirname, join} from "path"
-import {fileURLToPath} from "url"
-import Ajv from "ajv";
-import { diff } from "json-diff";
-import toJsonSchema, {JSONSchema3or4} from "gen-json-schema";
 import {SchemaData} from "./SchemaData";
-import dotenv from "dotenv";
-dotenv.config();
+import fs from "fs";
+import toJsonSchema, {JSONSchema3or4} from "gen-json-schema";
+import {compile} from "json-schema-to-typescript";
+import {join} from "path";
+import Ajv from "ajv";
+import {diff} from "json-diff";
 
-declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace NodeJS {
-        interface ProcessEnv {
-            [key: string]: string | undefined;
-            HYPIXEL_API_KEY: string;
-        }
-    }
-}
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
-
-if(!process.env.HYPIXEL_API_KEY) {
-    throw new Error('Required environment variable "HYPIXEL_API_KEY" is missing or malformed. Visit https://developer.hypixel.net/dashboard to get one.')
-}
-
-await processHypixelSchemaChanges({
-    defName: "HypixelPlayer",
-    schemaPath: join(__dirname, '..', 'schemas', 'hypixel', 'player.json'),
-    dtsOutDir: join(__dirname, '..', '..', 'types'),
-    dataPreprocess: (input) => input.player,
-    testUrls: ["https://api.hypixel.net/player?uuid=b876ec32e396476ba1158438d83c67d4"]
-})
-
-async function processHypixelSchemaChanges(input: SchemaData): Promise<{responses: Record<string, any>, schema: Record<string, any> | undefined}> {
+/**
+ * Read a Hypixel API schema from the file system and test it against various URLs to search for new changes. Any
+ * changes that are found will be written back to the schema, and new type definitions will be generated.
+ * @param input Required information about the schema, such as its file location.
+ * @see {@link SchemaData} for more information on the input.
+ * @returns A `Promise` that resolves to an object containing a `responses` property and a `schema` property. The
+ * `responses` property is a record mapping each of the input URLs to the response body, JSON-parsed. The `schema`
+ * property contains the new schema that was just written to the file system.
+ * @throws
+ * - `Error` if the schema file does not exist
+ * - `Error` if the given schema file is not a valid JSON schema
+ * - `Error` if the schema definition does not exist in the given schema file
+ * - `Error` if the HTTP request(s) fail
+ * - `Error` if file writing for the new schema or type definitions file fails
+ * - `Error` if the schema is very deep (this method currently features recursion)
+ */
+export async function processHypixelSchemaChanges(input: SchemaData): Promise<{responses: Record<string, any>, schema: Record<string, any> | undefined}> {
     const fullSchema = JSON.parse((await fs.promises.readFile(input.schemaPath)).toString())
     const schemaDef: JSONSchema3or4 | undefined = fullSchema.definitions?.[input.defName] ?? undefined;
 
@@ -116,7 +105,7 @@ async function processHypixelSchemaChanges(input: SchemaData): Promise<{response
  * - `Error` if `newSchema` contains an `items` array at any point. Only singular item types are currently supported.
  * - Stack overflow for very deep schemas (this method is recursive)
  */
-function combineSchemas(originalSchema: JSONSchema3or4, newSchema: JSONSchema3or4): JSONSchema3or4 {
+export function combineSchemas(originalSchema: JSONSchema3or4, newSchema: JSONSchema3or4): JSONSchema3or4 {
     const finalSchema = structuredClone(originalSchema);
 
     if(newSchema.properties) {
@@ -162,7 +151,7 @@ function combineSchemas(originalSchema: JSONSchema3or4, newSchema: JSONSchema3or
  * - `Error` on file system error
  * - `Error` if `schema` is not a valid JSON schema
  */
-async function writeSchemaTypedefs(schema: Record<string, any>, name: string, outdir: string) {
+export async function writeSchemaTypedefs(schema: Record<string, any>, name: string, outdir: string) {
     // compile schema to TypeScript
     const ts = await compile(schema, name, {
         additionalProperties: true
@@ -200,7 +189,7 @@ async function writeSchemaTypedefs(schema: Record<string, any>, name: string, ou
  * console.log(output)
  * // Output: { prop_two__added: false }
  */
-function findSchemaChanges(schema: JSONSchema3or4, input: Record<string, any>): Record<string, any> {
+export function findSchemaChanges(schema: JSONSchema3or4, input: Record<string, any>): Record<string, any> {
     const allValues = structuredClone(input)
     const definedValues = structuredClone(input)
 
@@ -214,4 +203,3 @@ function findSchemaChanges(schema: JSONSchema3or4, input: Record<string, any>): 
         keysOnly: true
     })
 }
-
