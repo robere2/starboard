@@ -6,17 +6,34 @@ import Ajv from "ajv";
 import { diff } from "json-diff";
 import toJsonSchema, {JSONSchema3or4} from "gen-json-schema";
 import {SchemaData} from "./SchemaData";
+import dotenv from "dotenv";
+dotenv.config();
+
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace NodeJS {
+        interface ProcessEnv {
+            [key: string]: string | undefined;
+            HYPIXEL_API_KEY: string;
+        }
+    }
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-await processSchemaChanges({
+if(!process.env.HYPIXEL_API_KEY) {
+    throw new Error('Required environment variable "HYPIXEL_API_KEY" is missing or malformed. Visit https://developer.hypixel.net/dashboard to get one.')
+}
+
+await processHypixelSchemaChanges({
     defName: "HypixelPlayer",
     schemaPath: join(__dirname, '..', 'schemas', 'hypixel', 'player.json'),
     dtsOutDir: join(__dirname, '..', '..', 'types'),
+    dataPreprocess: (input) => input.player,
     testUrls: []
 })
 
-async function processSchemaChanges(input: SchemaData) {
+async function processHypixelSchemaChanges(input: SchemaData): Promise<{responses: Record<string, any>, diff: Record<string, any> | undefined}> {
     const fullSchema = JSON.parse((await fs.promises.readFile(input.schemaPath)).toString())
     const schemaDef: JSONSchema3or4 | undefined = fullSchema.definitions?.[input.defName] ?? undefined;
 
@@ -31,9 +48,25 @@ async function processSchemaChanges(input: SchemaData) {
         urls = await input.testUrls();
     }
 
+    const summaryDiff: Record<string, any> = {};
+
     for(const url of urls) {
-        const req = new 
-        const changesDiff = findSchemaChangesFromRequest(schemaDef, );
+        const res = await fetch(url, {
+            headers: {"API-Key": process.env.HYPIXEL_API_KEY}
+        });
+
+        let data: Record<string, any> = await res.json() as any; // Type checking is done below
+        // Assert that a valid Hypixel API response was received
+        if(typeof data !== "object" || Array.isArray(data) || data == null) {
+            throw new Error('HTTP response did not include a JSON object.');
+        }
+        if(!data.success) {
+            throw new Error('Hypixel API Error: ' + data.cause);
+        }
+
+        data = input.dataPreprocess ? input.dataPreprocess(data) : data;
+
+        const changesDiff = findSchemaChanges(schemaDef, data);
     }
 
     if(!changesDiff) {
@@ -171,22 +204,5 @@ function findSchemaChanges(schema: JSONSchema3or4, input: Record<string, any>): 
     return diff(definedValues, allValues, {
         keysOnly: true
     })
-}
-
-async function findSchemaChangesFromRequest(schema: JSONSchema3or4, req: Request, preprocessor?: (v: Record<string, any>) => Record<string, any>): Promise<Record<string, any>> {
-    const res = await fetch(req);
-
-    // Type check JSON before re-assigning to a different variale to gain the new type inference
-    const unknownData = await res.json();
-    if(typeof unknownData !== "object" || Array.isArray(unknownData) || unknownData == null) {
-        throw new Error('HTTP response did not include a JSON object.');
-    }
-    let data = unknownData;
-
-    if(preprocessor) {
-        data = preprocessor(data);
-    }
-
-    return findSchemaChanges(schema, data)
 }
 
