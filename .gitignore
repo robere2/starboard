@@ -126,3 +126,6 @@ apps/docs/src/*/reference
 apps/docs/src/embeds/LICENSE.md
 apps/docs/src/embeds/CODE_OF_CONDUCT.md
 apps/docs/src/embeds/CONTRIBUTING.md
+
+# Built types from schemas
+packages/schemas/types

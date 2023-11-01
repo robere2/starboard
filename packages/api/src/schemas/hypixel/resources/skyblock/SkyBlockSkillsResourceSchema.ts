@@ -23,7 +23,7 @@ export function generateSkyBlockSkillsResourceSchema(api: HypixelAPI) {
                         unlocks: z.array(z.string()).default([]).readonly()
                     }).readonly()
                 ).default([]).readonly()
-            }).readonly().transform(skill => {
+            }).transform(skill => {
                 return Object.assign(skill, {
 
                     /**
@@ -33,7 +33,7 @@ export function generateSkyBlockSkillsResourceSchema(api: HypixelAPI) {
                         return api.getResources().skyBlockCollections[this.name.toUpperCase()];
                     }
                 })
-            })
+            }).readonly()
         ).default({}).readonly()
     })
 }
