@@ -39128,9 +39128,6 @@
         "xmas2019_PTL_3": {
           "type": "boolean"
         },
-        "claimed_solo_bank_b876ec32-e396-476b-a115-8438d83c67d4": {
-          "type": "integer"
-        },
         "anniversaryNPCVisited2020": {
           "type": "array",
           "items": {
@@ -39284,6 +39281,11 @@
         },
         "disabledProjectileTrails": {
           "type": "boolean"
+        }
+      },
+      "patternProperties": {
+        "^claimed_solo_bank_[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$": {
+          "type": "integer"
         }
       },
       "required": [
