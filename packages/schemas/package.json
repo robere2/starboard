@@ -1,5 +1,5 @@
 {
-  "name": "schemas",
+  "name": "@mcsb/schemas",
   "version": "1.0.0",
   "description": "Self-generative JSON schemas for the Hypixel API",
   "type": "module",
