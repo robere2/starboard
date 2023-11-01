@@ -59,6 +59,29 @@ const leaderboardChanges = await processHypixelSchemaChanges({
     },
     testUrls: ["https://api.hypixel.net/leaderboards"]
 })
+
+// Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to remove
+// duplicates. Spread back into array so we can get values at an index.
+let allUniqueLeaderboardPlayers = [
+    ...new Set<string>(
+        Object.values(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"].leaderboards)
+            .flat()
+            .map(v => (v as any).leaders ?? [])
+            .flat()
+    )
+]
+
+// Pick 25 random players from all leaderboards
+let leaderboardPlayersCount = 25;
+if(allUniqueLeaderboardPlayers.length < leaderboardPlayersCount) {
+    leaderboardPlayersCount = allUniqueLeaderboardPlayers.length;
+}
+for(let i = 0; i < leaderboardPlayersCount; i++) {
+    const randomIndex = Math.floor(allUniqueLeaderboardPlayers.length * Math.random());
+    playersToScan.push(`https://api.hypixel.net/player?uuid=${allUniqueLeaderboardPlayers[randomIndex]}`);
+    allUniqueLeaderboardPlayers = allUniqueLeaderboardPlayers.splice(randomIndex, 1);
+}
+
 const guildChanges = await processHypixelSchemaChanges({
     defName: "HypixelGuild",
     schemaPath: join(__dirname, 'schemas', 'hypixel', 'guild.json'),
@@ -103,6 +126,7 @@ function md5(str: string): string {
  * - `Error` if the schema is very deep (this method currently features recursion)
  */
 export async function processHypixelSchemaChanges(input: SchemaData): Promise<{responses: Record<string, any>, schema: Record<string, any> | undefined}> {
+    console.log("Processing schema changes for type", input.defName);
     const fullSchema = JSON.parse((await fs.promises.readFile(input.schemaPath)).toString())
     const schemaDef: JSONSchema3or4 | undefined = fullSchema.definitions?.[input.defName] ?? undefined;
 
@@ -126,6 +150,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     }).compile(fullSchema)
 
     for (const url of urls) {
+        console.log("Sending request to", url)
         const res = await fetch(url, {
             headers: {"API-Key": process.env.HYPIXEL_API_KEY}
         });
