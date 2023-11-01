@@ -30,48 +30,49 @@ await processHypixelSchemaChanges({
     schemaPath: join(__dirname, '..', 'schemas', 'hypixel', 'player.json'),
     dtsOutDir: join(__dirname, '..', '..', 'types'),
     dataPreprocess: (input) => input.player,
-    testUrls: []
+    testUrls: ["https://api.hypixel.net/player?uuid=b876ec32e396476ba1158438d83c67d4"]
 })
 
-async function processHypixelSchemaChanges(input: SchemaData): Promise<{responses: Record<string, any>, diff: Record<string, any> | undefined}> {
+async function processHypixelSchemaChanges(input: SchemaData): Promise<{responses: Record<string, any>, schema: Record<string, any> | undefined}> {
     const fullSchema = JSON.parse((await fs.promises.readFile(input.schemaPath)).toString())
     const schemaDef: JSONSchema3or4 | undefined = fullSchema.definitions?.[input.defName] ?? undefined;
 
-    if(!schemaDef) {
+    if (!schemaDef) {
         throw new Error(`Schema definition ${input.defName} could not be found in the given schema!\nPath: ${input.schemaPath}`);
     }
 
     let urls: string[];
-    if(Array.isArray(input.testUrls)) {
+    if (Array.isArray(input.testUrls)) {
         urls = input.testUrls;
     } else {
         urls = await input.testUrls();
     }
 
-    const summaryDiff: Record<string, any> = {};
+    let newSchemaDef = schemaDef;
+    const responses: Record<string, any> = {};
 
-    for(const url of urls) {
+    for (const url of urls) {
         const res = await fetch(url, {
             headers: {"API-Key": process.env.HYPIXEL_API_KEY}
         });
 
-        let data: Record<string, any> = await res.json() as any; // Type checking is done below
+        responses[url] = await res.json() as any; // Type checking is done below
         // Assert that a valid Hypixel API response was received
-        if(typeof data !== "object" || Array.isArray(data) || data == null) {
+        if (typeof responses[url] !== "object" || Array.isArray(responses[url]) || responses[url] == null) {
             throw new Error('HTTP response did not include a JSON object.');
         }
-        if(!data.success) {
-            throw new Error('Hypixel API Error: ' + data.cause);
+        if (!responses[url].success) {
+            throw new Error('Hypixel API Error: ' + responses[url].cause);
         }
 
-        data = input.dataPreprocess ? input.dataPreprocess(data) : data;
-
-        const changesDiff = findSchemaChanges(schemaDef, data);
-    }
-
-    if(!changesDiff) {
-        console.log(undefined);
-    } else {
+        const data = input.dataPreprocess ? input.dataPreprocess(responses[url]) : responses[url];
+        // changesDiff is an object with all values that are already in the schema removed, even if the value doesn't
+        // match the schema (e.g. an "object" is where there's supposed to be a "number"
+        const changesDiff = findSchemaChanges(newSchemaDef, data);
+        if(!changesDiff) {
+            continue;
+        }
+        // The changesDiff converted into a schema, to be combined with original schema.
         const changesSchema = toJsonSchema(changesDiff, {
             strings: {
                 detectFormat: false
@@ -81,7 +82,7 @@ async function processHypixelSchemaChanges(input: SchemaData): Promise<{response
                     return defaultFunc(Object.fromEntries(Object
                         .entries(obj)
                         .map(([key, value]) => {
-                            if(key.endsWith("__added")) {
+                            if (key.endsWith("__added")) {
                                 key = key.slice(0, -7)
                             }
                             return [key, value]
@@ -90,9 +91,17 @@ async function processHypixelSchemaChanges(input: SchemaData): Promise<{response
                 }
             }
         })
-        console.log(JSON.stringify(combineSchemas(schemaDef, changesSchema)));
 
-        await writeSchemaTypedefs(fullSchema, input.defName, input.dtsOutDir)
+        newSchemaDef = combineSchemas(schemaDef, changesSchema);
+    }
+
+    fullSchema.definitions[input.defName] = newSchemaDef;
+    await fs.promises.writeFile(input.schemaPath, JSON.stringify(fullSchema, null, 2))
+    await writeSchemaTypedefs(fullSchema, input.defName, input.dtsOutDir)
+
+    return {
+        responses,
+        schema: fullSchema
     }
 }
 
