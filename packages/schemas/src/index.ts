@@ -293,7 +293,6 @@ export async function writeSchemaTypedefs(schema: Record<string, any>, name: str
  * // Output: { prop_two__added: false }
  */
 export function findSchemaChanges(schema: JSONSchema3or4, input: Record<string, any>): Record<string, any> {
-    const start = performance.now();
     const allValues = structuredClone(input)
     const definedValues = structuredClone(input)
 
