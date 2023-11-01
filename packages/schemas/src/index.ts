@@ -62,7 +62,7 @@ const leaderboardChanges = await processHypixelSchemaChanges({
 
 // Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to remove
 // duplicates. Spread back into array so we can get values at an index.
-let allUniqueLeaderboardPlayers = [
+const allUniqueLeaderboardPlayers = [
     ...new Set<string>(
         Object.values(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"].leaderboards)
             .flat()
@@ -77,9 +77,10 @@ if(allUniqueLeaderboardPlayers.length < leaderboardPlayersCount) {
     leaderboardPlayersCount = allUniqueLeaderboardPlayers.length;
 }
 for(let i = 0; i < leaderboardPlayersCount; i++) {
+
     const randomIndex = Math.floor(allUniqueLeaderboardPlayers.length * Math.random());
     playersToScan.push(`https://api.hypixel.net/player?uuid=${allUniqueLeaderboardPlayers[randomIndex]}`);
-    allUniqueLeaderboardPlayers = allUniqueLeaderboardPlayers.splice(randomIndex, 1);
+    allUniqueLeaderboardPlayers.splice(randomIndex, 1);
 }
 
 const guildChanges = await processHypixelSchemaChanges({
