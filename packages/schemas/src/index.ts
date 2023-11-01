@@ -5,9 +5,12 @@ import {SchemaData} from "./SchemaData";
 import fs from "fs";
 import toJsonSchema, {JSONSchema3or4} from "gen-json-schema";
 import {compile} from "json-schema-to-typescript";
-import Ajv, {Options} from "ajv";
+import Ajv, {Options, ValidateFunction} from "ajv";
 import {diff} from "json-diff";
+import * as crypto from "crypto";
 dotenv.config();
+
+const ajvCache: Record<string, ValidateFunction> = {}
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -25,19 +28,27 @@ if(!process.env.HYPIXEL_API_KEY) {
     throw new Error('Required environment variable "HYPIXEL_API_KEY" is missing or malformed. Visit https://developer.hypixel.net/dashboard to get one.')
 }
 
+// The URLs we scan are dynamically determined from API responses. For example, for the `player.json` schema, we scan a
+// sample of the top players on the leaderboards. In addition to that, we have some starting points for types of data
+// which can't be collected from the leaderboards, or which may be edge cases. These are arrays of URLs to be scanned.
+const guildsToScan: string[] = [ // Top 3 guilds
+    "https://api.hypixel.net/guild?id=5363aa4eed50df539dca00ad",
+    "https://api.hypixel.net/guild?id=53bd67d7ed503e868873eceb",
+    "https://api.hypixel.net/guild?id=56ece7c40cf2e4f9ffcc284e",
+];
+const playersToScan: string[] = [
+    "https://api.hypixel.net/player?uuid=f7c77d999f154a66a87dc4a51ef30d19", // hypixel
+    "https://api.hypixel.net/player?uuid=b876ec32e396476ba1158438d83c67d4", // Technoblade
+    "https://api.hypixel.net/player?uuid=869c2a8943b041a8865667a2cc8c7923", // X
+];
+
+
 const boosterChanges = await processHypixelSchemaChanges({
     defName: "HypixelBooster",
     schemaPath: join(__dirname, 'schemas', 'hypixel', 'boosters.json'),
     dtsOutDir: join(__dirname, '..', 'types'),
     dataPreprocess: (input) => input.boosters,
     testUrls: ["https://api.hypixel.net/boosters"]
-})
-const guildChanges = await processHypixelSchemaChanges({
-    defName: "HypixelGuild",
-    schemaPath: join(__dirname, 'schemas', 'hypixel', 'guild.json'),
-    dtsOutDir: join(__dirname, '..', 'types'),
-    dataPreprocess: (input) => input.guild,
-    testUrls: ["https://api.hypixel.net/guild?id=5363aa4eed50df539dca00ad"]
 })
 const leaderboardChanges = await processHypixelSchemaChanges({
     defName: "HypixelLeaderboard",
@@ -48,17 +59,32 @@ const leaderboardChanges = await processHypixelSchemaChanges({
     },
     testUrls: ["https://api.hypixel.net/leaderboards"]
 })
+const guildChanges = await processHypixelSchemaChanges({
+    defName: "HypixelGuild",
+    schemaPath: join(__dirname, 'schemas', 'hypixel', 'guild.json'),
+    dtsOutDir: join(__dirname, '..', 'types'),
+    dataPreprocess: (input) => input.guild,
+    testUrls: guildsToScan
+})
 
 await processHypixelSchemaChanges({
     defName: "HypixelPlayer",
     schemaPath: join(__dirname, 'schemas', 'hypixel', 'player.json'),
     dtsOutDir: join(__dirname, '..', 'types'),
     dataPreprocess: (input) => input.player,
-    testUrls: ["https://api.hypixel.net/player?uuid=b876ec32e396476ba1158438d83c67d4"]
+    testUrls: playersToScan
 })
 
 // -------------------------------------------------------------
 
+/**
+ * Hash a string into it's md5 hexadecimal output.
+ * @param str String to hash
+ * @returns An MD5 hash encoded in a hexadecimal string
+ */
+function md5(str: string): string {
+    return crypto.createHash("md5").update(str).digest().toString("hex");
+}
 
 /**
  * Read a Hypixel API schema from the file system and test it against various URLs to search for new changes. Any
@@ -91,6 +117,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
         urls = await input.testUrls();
     }
 
+    // newSchemaDef is modified after each URL and written back to disk after all URLs are done.
     let newSchemaDef = schemaDef;
     const responses: Record<string, any> = {};
 
@@ -156,7 +183,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
                 }
             })
 
-            newSchemaDef = combineSchemas(schemaDef, changesSchema);
+            newSchemaDef = combineSchemas(newSchemaDef, changesSchema);
         }
     }
 
@@ -266,17 +293,32 @@ export async function writeSchemaTypedefs(schema: Record<string, any>, name: str
  * // Output: { prop_two__added: false }
  */
 export function findSchemaChanges(schema: JSONSchema3or4, input: Record<string, any>): Record<string, any> {
+    const start = performance.now();
     const allValues = structuredClone(input)
     const definedValues = structuredClone(input)
 
+    // Compiling an AJV validator is expensive. We want to cache the compiled validator for use in future checks.
+    // To do this we just hash the schema and store it in an object. For the validateAndRemove function, we just hash
+    // the hash to get a new unique value.
+    const schemaHash = md5(JSON.stringify(schema));
+    const schemaDoubleHash = md5(schemaHash);
+
+    let validate = ajvCache[schemaHash];
+    let validateAndRemove = ajvCache[schemaDoubleHash];
     const ajvOptions: Options = {
         allErrors: true
     }
-    const validate = new Ajv(ajvOptions).compile(schema);
-    const validateAndRemove = new Ajv({
-        ...ajvOptions,
-        removeAdditional: "all"
-    }).compile(schema);
+    if(!validate) {
+        validate = new Ajv(ajvOptions).compile(schema);
+        ajvCache[schemaHash] = validate;
+    }
+    if(!validateAndRemove) {
+        validateAndRemove = new Ajv({
+            ...ajvOptions,
+            removeAdditional: "all"
+        }).compile(schema);
+        ajvCache[schemaDoubleHash] = validateAndRemove;
+    }
 
     validate(allValues);
     validateAndRemove(definedValues);

@@ -1256,6 +1256,9 @@
                       "properties": {
                         "killblitz10": {
                           "type": "integer"
+                        },
+                        "winblitz": {
+                          "type": "integer"
                         }
                       }
                     }
@@ -1626,6 +1629,15 @@
                           "type": "integer"
                         },
                         "vampirezkillhuman": {
+                          "type": "integer"
+                        },
+                        "paintballwin": {
+                          "type": "integer"
+                        },
+                        "tntwin": {
+                          "type": "integer"
+                        },
+                        "arenawin2": {
                           "type": "integer"
                         }
                       }
@@ -5612,6 +5624,25 @@
                   }
                 }
               }
+            },
+            "tutorials": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "object",
+                  "properties": {
+                    "objectives": {
+                      "type": "object"
+                    },
+                    "started": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "use_firework": {
+              "type": "object"
             }
           }
         },
@@ -5871,6 +5902,43 @@
                     },
                     "fails": {
                       "type": "integer"
+                    },
+                    "map_stats": {
+                      "type": "object",
+                      "properties": {
+                        "bbq": {
+                          "type": "object",
+                          "properties": {
+                            "best_time": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "city": {
+                          "type": "object",
+                          "properties": {
+                            "best_time": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "geometry": {
+                          "type": "object",
+                          "properties": {
+                            "best_time": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "toilet": {
+                          "type": "object",
+                          "properties": {
+                            "best_time": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 },
@@ -6274,6 +6342,21 @@
                 },
                 "woolhunt_wools_stolen": {
                   "type": "integer"
+                },
+                "deaths_grind": {
+                  "type": "integer"
+                },
+                "kills_grind": {
+                  "type": "integer"
+                },
+                "kills_spaceraiders": {
+                  "type": "integer"
+                },
+                "wins_spaceraiders": {
+                  "type": "integer"
+                },
+                "language": {
+                  "type": "string"
                 }
               }
             },
@@ -6416,6 +6499,57 @@
                   "type": "string"
                 },
                 "rune_level_damage": {
+                  "type": "integer"
+                },
+                "damage_error": {
+                  "type": "integer"
+                },
+                "damage_taken_error": {
+                  "type": "integer"
+                },
+                "heal_error": {
+                  "type": "integer"
+                },
+                "kills_error": {
+                  "type": "integer"
+                },
+                "mage_spec": {
+                  "type": "string"
+                },
+                "paladin_spec": {
+                  "type": "string"
+                },
+                "penalty": {
+                  "type": "integer"
+                },
+                "rune_level_slowing": {
+                  "type": "integer"
+                },
+                "rune_level_speed": {
+                  "type": "integer"
+                },
+                "warrior_spec": {
+                  "type": "string"
+                },
+                "healed_1v1": {
+                  "type": "integer"
+                },
+                "wins_1v1": {
+                  "type": "integer"
+                },
+                "kills_1v1": {
+                  "type": "integer"
+                },
+                "damage_1v1": {
+                  "type": "integer"
+                },
+                "win_streaks_1v1": {
+                  "type": "integer"
+                },
+                "games_1v1": {
+                  "type": "integer"
+                },
+                "losses_1v1": {
                   "type": "integer"
                 }
               }
@@ -7145,6 +7279,15 @@
                 },
                 "simplifiedresourcepack": {
                   "type": "boolean"
+                },
+                "losses_protector": {
+                  "type": "integer"
+                },
+                "hotkeymode": {
+                  "type": "boolean"
+                },
+                "losses_earthwarden": {
+                  "type": "integer"
                 }
               }
             },
@@ -7596,6 +7739,9 @@
                 },
                 "kills_teams_normal": {
                   "type": "integer"
+                },
+                "kit_permutations_hunter": {
+                  "type": "string"
                 }
               }
             },
@@ -7864,6 +8010,33 @@
                 },
                 "game_wins_carrier": {
                   "type": "integer"
+                },
+                "killsNew_5_11_2014": {
+                  "type": "integer"
+                },
+                "kills_5_11_2014": {
+                  "type": "integer"
+                },
+                "mp5_cost_reduction": {
+                  "type": "integer"
+                },
+                "mp5_damage_increase": {
+                  "type": "integer"
+                },
+                "mp5_range_increase": {
+                  "type": "integer"
+                },
+                "mp5_recoil_reduction": {
+                  "type": "integer"
+                },
+                "smg_damage_increase": {
+                  "type": "integer"
+                },
+                "sniper_recoil_reduction": {
+                  "type": "integer"
+                },
+                "show_lobby_prefix": {
+                  "type": "boolean"
                 }
               }
             },
@@ -8123,6 +8296,12 @@
                 },
                 "messageCoin": {
                   "type": "boolean"
+                },
+                "daily_kills": {
+                  "type": "integer"
+                },
+                "weekly_kills": {
+                  "type": "integer"
                 }
               }
             },
@@ -8730,6 +8909,9 @@
                   "type": "integer"
                 },
                 "monthly_kills__b": {
+                  "type": "integer"
+                },
+                "deaths_solo_brawl": {
                   "type": "integer"
                 }
               }
@@ -13041,6 +13223,87 @@
                   "type": "integer"
                 },
                 "skeleton_arrows_fired_face_off": {
+                  "type": "integer"
+                },
+                "deaths_Dreadlord": {
+                  "type": "integer"
+                },
+                "dreadlord_a": {
+                  "type": "integer"
+                },
+                "dreadlord_d": {
+                  "type": "integer"
+                },
+                "golem_a": {
+                  "type": "integer"
+                },
+                "losses_Dreadlord": {
+                  "type": "integer"
+                },
+                "mutations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "weeklyLosses_Dreadlord": {
+                  "type": "integer"
+                },
+                "losses_practice_Blaze": {
+                  "type": "integer"
+                },
+                "weeklyLosses_practice_Blaze": {
+                  "type": "integer"
+                },
+                "weeklyLosses_practice_Hunter": {
+                  "type": "integer"
+                },
+                "losses_practice_Hunter": {
+                  "type": "integer"
+                },
+                "pirate_a": {
+                  "type": "integer"
+                },
+                "pirate_b": {
+                  "type": "integer"
+                },
+                "pirate_c": {
+                  "type": "integer"
+                },
+                "pirate_d": {
+                  "type": "integer"
+                },
+                "pirate_g": {
+                  "type": "integer"
+                },
+                "enderman_games_played": {
+                  "type": "integer"
+                },
+                "enderman_meters_walked": {
+                  "type": "integer"
+                },
+                "enderman_games_played_standard": {
+                  "type": "integer"
+                },
+                "enderman_meters_walked_standard": {
+                  "type": "integer"
+                },
+                "arcanist_enderchest_level": {
+                  "type": "integer"
+                },
+                "enderman_meters_fallen_face_off": {
+                  "type": "integer"
+                },
+                "enderman_meters_fallen": {
+                  "type": "integer"
+                },
+                "enderman_time_played": {
+                  "type": "integer"
+                },
+                "enderman_time_played_face_off": {
+                  "type": "integer"
+                },
+                "enderman_meters_walked_face_off": {
                   "type": "integer"
                 }
               }
@@ -19283,6 +19546,75 @@
                 },
                 "shard_lab_team": {
                   "type": "integer"
+                },
+                "survived_players_solo_insane": {
+                  "type": "integer"
+                },
+                "deaths_kit_ranked_ranked_bowman": {
+                  "type": "integer"
+                },
+                "games_kit_ranked_ranked_bowman": {
+                  "type": "integer"
+                },
+                "survived_players_kit_ranked_ranked_bowman": {
+                  "type": "integer"
+                },
+                "losses_kit_ranked_ranked_bowman": {
+                  "type": "integer"
+                },
+                "winstreak_kit_enderchest_solo_enderchest": {
+                  "type": "integer"
+                },
+                "chests_opened_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "deaths_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "losses_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "assists_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "survived_players_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "games_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "time_played_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "arrows_hit_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "kills_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "void_kills_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "arrows_shot_lab_kit_advanced_solo_hunter": {
+                  "type": "integer"
+                },
+                "winstreak_kit_basic_solo_scout": {
+                  "type": "integer"
+                },
+                "deaths_lab_kit_mining_team_default": {
+                  "type": "integer"
+                },
+                "games_lab_kit_mining_team_default": {
+                  "type": "integer"
+                },
+                "losses_lab_kit_mining_team_default": {
+                  "type": "integer"
+                },
+                "survived_players_lab_kit_mining_team_default": {
+                  "type": "integer"
+                },
+                "time_played_lab_kit_mining_team_default": {
+                  "type": "integer"
                 }
               }
             },
@@ -19629,6 +19961,12 @@
                             },
                             "smasher_teams": {
                               "type": "integer"
+                            },
+                            "smashed": {
+                              "type": "integer"
+                            },
+                            "smashed_teams": {
+                              "type": "integer"
                             }
                           }
                         },
@@ -19672,6 +20010,9 @@
                               "type": "integer"
                             },
                             "smasher_teams": {
+                              "type": "integer"
+                            },
+                            "smashed_teams": {
                               "type": "integer"
                             }
                           }
@@ -20017,6 +20358,23 @@
                               "type": "integer"
                             },
                             "smashed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "friend_losses": {
+                          "type": "integer"
+                        },
+                        "friend_losses_normal": {
+                          "type": "integer"
+                        },
+                        "grappling_hook": {
+                          "type": "object",
+                          "properties": {
+                            "damage_dealt": {
+                              "type": "integer"
+                            },
+                            "damage_dealt_normal": {
                               "type": "integer"
                             }
                           }
@@ -20811,6 +21169,17 @@
                               "type": "integer"
                             }
                           }
+                        },
+                        "spooder_buddies": {
+                          "type": "object",
+                          "properties": {
+                            "smashed": {
+                              "type": "integer"
+                            },
+                            "smashed_teams": {
+                              "type": "integer"
+                            }
+                          }
                         }
                       }
                     },
@@ -21479,6 +21848,9 @@
                         },
                         "losses_2v2": {
                           "type": "integer"
+                        },
+                        "losses_teams": {
+                          "type": "integer"
                         }
                       }
                     },
@@ -21665,6 +22037,17 @@
                         },
                         "win_streak_normal": {
                           "type": "integer"
+                        },
+                        "reinforcements": {
+                          "type": "object",
+                          "properties": {
+                            "smashed": {
+                              "type": "integer"
+                            },
+                            "smashed_teams": {
+                              "type": "integer"
+                            }
+                          }
                         }
                       }
                     },
@@ -23008,6 +23391,9 @@
                             },
                             "kills_teams": {
                               "type": "integer"
+                            },
+                            "smashed_teams": {
+                              "type": "integer"
                             }
                           }
                         },
@@ -23033,6 +23419,12 @@
                               "type": "integer"
                             },
                             "kills_teams": {
+                              "type": "integer"
+                            },
+                            "smasher": {
+                              "type": "integer"
+                            },
+                            "smasher_normal": {
                               "type": "integer"
                             }
                           }
@@ -23159,6 +23551,48 @@
                           "type": "object",
                           "properties": {
                             "smashed_normal": {
+                              "type": "integer"
+                            },
+                            "smashed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "losses": {
+                          "type": "integer"
+                        },
+                        "losses_normal": {
+                          "type": "integer"
+                        },
+                        "losses_teams": {
+                          "type": "integer"
+                        },
+                        "laser_cannon": {
+                          "type": "object",
+                          "properties": {
+                            "smashed_teams": {
+                              "type": "integer"
+                            },
+                            "smashed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "homing_missiles": {
+                          "type": "object",
+                          "properties": {
+                            "smashed": {
+                              "type": "integer"
+                            },
+                            "smashed_teams": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "flaming_desert_eagle": {
+                          "type": "object",
+                          "properties": {
+                            "smashed_teams": {
                               "type": "integer"
                             },
                             "smashed": {
@@ -23316,6 +23750,15 @@
                             },
                             "kills": {
                               "type": "integer"
+                            },
+                            "smasher_normal": {
+                              "type": "integer"
+                            },
+                            "kills_normal": {
+                              "type": "integer"
+                            },
+                            "smasher": {
+                              "type": "integer"
                             }
                           }
                         },
@@ -23409,6 +23852,9 @@
                             },
                             "smashed_teams": {
                               "type": "integer"
+                            },
+                            "smashed_normal": {
+                              "type": "integer"
                             }
                           }
                         },
@@ -23422,6 +23868,48 @@
                               "type": "integer"
                             }
                           }
+                        },
+                        "losses": {
+                          "type": "integer"
+                        },
+                        "reinforcements": {
+                          "type": "object",
+                          "properties": {
+                            "smashed_normal": {
+                              "type": "integer"
+                            },
+                            "smashed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "losses_normal": {
+                          "type": "integer"
+                        },
+                        "desert_eagle": {
+                          "type": "object",
+                          "properties": {
+                            "smashed_teams": {
+                              "type": "integer"
+                            },
+                            "smashed": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "flaming_desert_eagle": {
+                          "type": "object",
+                          "properties": {
+                            "smashed": {
+                              "type": "integer"
+                            },
+                            "smashed_teams": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "losses_teams": {
+                          "type": "integer"
                         }
                       }
                     },
@@ -23448,6 +23936,9 @@
                             },
                             "smasher": {
                               "type": "integer"
+                            },
+                            "damage_dealt_teams": {
+                              "type": "integer"
                             }
                           }
                         },
@@ -23458,6 +23949,9 @@
                               "type": "integer"
                             },
                             "damage_dealt_normal": {
+                              "type": "integer"
+                            },
+                            "damage_dealt_teams": {
                               "type": "integer"
                             }
                           }
@@ -23484,6 +23978,9 @@
                               "type": "integer"
                             },
                             "kills_normal": {
+                              "type": "integer"
+                            },
+                            "damage_dealt_teams": {
                               "type": "integer"
                             }
                           }
@@ -23513,6 +24010,12 @@
                               "type": "integer"
                             },
                             "damage_dealt_normal": {
+                              "type": "integer"
+                            },
+                            "kills_teams": {
+                              "type": "integer"
+                            },
+                            "damage_dealt_teams": {
                               "type": "integer"
                             }
                           }
@@ -23628,6 +24131,27 @@
                               "type": "integer"
                             }
                           }
+                        },
+                        "damage_dealt_teams": {
+                          "type": "integer"
+                        },
+                        "games_teams": {
+                          "type": "integer"
+                        },
+                        "losses_teams": {
+                          "type": "integer"
+                        },
+                        "losses": {
+                          "type": "integer"
+                        },
+                        "kills_teams": {
+                          "type": "integer"
+                        },
+                        "wins_teams": {
+                          "type": "integer"
+                        },
+                        "win_streak_teams": {
+                          "type": "integer"
                         }
                       }
                     },
@@ -23998,6 +24522,24 @@
                   "type": "object",
                   "properties": {
                     "MARAUDER": {
+                      "type": "boolean"
+                    },
+                    "GOKU": {
+                      "type": "boolean"
+                    },
+                    "SKULLFIRE": {
+                      "type": "boolean"
+                    },
+                    "FROSTY": {
+                      "type": "boolean"
+                    },
+                    "SPODERMAN": {
+                      "type": "boolean"
+                    },
+                    "TINMAN": {
+                      "type": "boolean"
+                    },
+                    "SANIC": {
                       "type": "boolean"
                     }
                   }
@@ -25972,6 +26514,33 @@
                 },
                 "wins_perk_winged_boots": {
                   "type": "integer"
+                },
+                "deaths_kit_guardian": {
+                  "type": "integer"
+                },
+                "games_played_kit_guardian": {
+                  "type": "integer"
+                },
+                "assists_kit_guardian": {
+                  "type": "integer"
+                },
+                "fastest_win_four_teams_kit_guardian": {
+                  "type": "integer"
+                },
+                "enderchests_opened_kit_guardian": {
+                  "type": "integer"
+                },
+                "four_teams_wins_kit_guardian": {
+                  "type": "integer"
+                },
+                "assists_kit_archer": {
+                  "type": "integer"
+                },
+                "fastest_win_team_war_kit_archer": {
+                  "type": "integer"
+                },
+                "team_war_wins_kit_archer": {
+                  "type": "integer"
                 }
               }
             },
@@ -27537,6 +28106,12 @@
                 },
                 "eight_two_swap_void_final_deaths_bedwars": {
                   "type": "integer"
+                },
+                "Experience_new": {
+                  "type": "integer"
+                },
+                "free_event_key_bedwars_halloween_boxes_2021": {
+                  "type": "boolean"
                 }
               }
             },
@@ -29758,6 +30333,12 @@
                 },
                 "preferredChannel": {
                   "type": "string"
+                },
+                "leaderboard_paintball": {
+                  "type": "integer"
+                },
+                "leaderboard_arena": {
+                  "type": "integer"
                 }
               }
             },
@@ -30632,6 +31213,9 @@
                 },
                 "boxing_duel_rounds_played": {
                   "type": "integer"
+                },
+                "duels_winstreak_best_blitz_duel": {
+                  "type": "integer"
                 }
               }
             },
@@ -31428,6 +32012,9 @@
                       "type": "integer"
                     }
                   }
+                },
+                "lastTourneyAd": {
+                  "type": "integer"
                 }
               }
             }
@@ -31567,6 +32154,18 @@
               "type": "integer"
             },
             "last_mcf": {
+              "type": "integer"
+            },
+            "voteOne": {
+              "type": "integer"
+            },
+            "secondary_hytest": {
+              "type": "integer"
+            },
+            "total_hytest": {
+              "type": "integer"
+            },
+            "last_hytest": {
               "type": "integer"
             }
           }
@@ -36319,6 +36918,9 @@
                 },
                 "ARCADE__ender_spleef_challenge": {
                   "type": "integer"
+                },
+                "UHC__threat_challenge": {
+                  "type": "integer"
                 }
               }
             }
@@ -38737,6 +39339,19 @@
                       }
                     }
                   }
+                },
+                "2022": {
+                  "type": "object",
+                  "properties": {
+                    "levelling": {
+                      "type": "object",
+                      "properties": {
+                        "experience": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -38788,6 +39403,37 @@
               }
             },
             "halloween": {
+              "type": "object",
+              "properties": {
+                "2022": {
+                  "type": "object",
+                  "properties": {
+                    "levelling": {
+                      "type": "object",
+                      "properties": {
+                        "experience": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "2023": {
+                  "type": "object",
+                  "properties": {
+                    "levelling": {
+                      "type": "object",
+                      "properties": {
+                        "experience": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "summer": {
               "type": "object",
               "properties": {
                 "2023": {
@@ -39281,6 +39927,100 @@
         },
         "disabledProjectileTrails": {
           "type": "boolean"
+        },
+        "levelUp_VIP": {
+          "type": "integer"
+        },
+        "levelUp_MVP": {
+          "type": "integer"
+        },
+        "levelUp_MVP_PLUS": {
+          "type": "integer"
+        },
+        "chatAlerts": {
+          "type": "boolean"
+        },
+        "hypixel_tutorial_tutorial": {
+          "type": "boolean"
+        },
+        "votesMissed": {
+          "type": "integer"
+        },
+        "multiTunnel": {
+          "type": "array"
+        },
+        "buildTeam": {
+          "type": "boolean"
+        },
+        "adventRewards2018": {
+          "type": "object",
+          "properties": {
+            "day25": {
+              "type": "integer"
+            },
+            "day11": {
+              "type": "integer"
+            },
+            "day18": {
+              "type": "integer"
+            },
+            "day1": {
+              "type": "integer"
+            }
+          }
+        },
+        "xmas2019_MAIN_LOBBY_21": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_37": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_27": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_2": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_36": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_30": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_10": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_22": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_25": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_1": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_13": {
+          "type": "boolean"
+        },
+        "xmas2019_MAIN_LOBBY_9": {
+          "type": "boolean"
+        },
+        "dmcrates-4-2020": {
+          "type": "object",
+          "properties": {
+            "REGULAR": {
+              "type": "boolean"
+            }
+          }
+        },
+        "hasTheHotPotato": {
+          "type": "boolean"
+        },
+        "main2017Tutorial": {
+          "type": "boolean"
+        },
+        "claimed_century_cake200": {
+          "type": "integer"
         }
       },
       "patternProperties": {
