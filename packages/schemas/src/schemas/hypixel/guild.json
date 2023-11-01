@@ -11,10 +11,7 @@
           "const": true
         },
         "guild": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/HypixelGuild"
-          }
+          "$ref": "#/definitions/HypixelGuild"
         }
       },
       "required": [

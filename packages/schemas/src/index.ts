@@ -39,6 +39,15 @@ const guildChanges = await processHypixelSchemaChanges({
     dataPreprocess: (input) => input.guild,
     testUrls: ["https://api.hypixel.net/guild?id=5363aa4eed50df539dca00ad"]
 })
+const leaderboardChanges = await processHypixelSchemaChanges({
+    defName: "HypixelLeaderboard",
+    schemaPath: join(__dirname, 'schemas', 'hypixel', 'leaderboards.json'),
+    dtsOutDir: join(__dirname, '..', 'types'),
+    dataPreprocess: (input) => {
+        return Object.values(input.leaderboards).flat()
+    },
+    testUrls: ["https://api.hypixel.net/leaderboards"]
+})
 
 await processHypixelSchemaChanges({
     defName: "HypixelPlayer",
@@ -85,6 +94,10 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     let newSchemaDef = schemaDef;
     const responses: Record<string, any> = {};
 
+    const validateFullSchema = new Ajv({
+        allErrors: true
+    }).compile(fullSchema)
+
     for (const url of urls) {
         const res = await fetch(url, {
             headers: {"API-Key": process.env.HYPIXEL_API_KEY}
@@ -99,9 +112,19 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
             throw new Error('Hypixel API Error: ' + responses[url].cause);
         }
 
+        let data = responses[url];
+
+        // Perform full schema validation before preprocessing down to the schema definition
+        validateFullSchema(data)
+        if(validateFullSchema.errors) {
+            console.log(validateFullSchema.errors);
+        }
+
         // Currently all type definitions cannot be arrays. Thus, we can use arrays as a way to iterate multiple values
         // in the same response (e.g. all boosters from `/boosters`)
-        let data = input.dataPreprocess ? input.dataPreprocess(responses[url]) : responses[url];
+        if(input.dataPreprocess) {
+            data = input.dataPreprocess(responses[url])
+        }
         if(!Array.isArray(data)) {
             data = [data];
         }
@@ -258,7 +281,9 @@ export function findSchemaChanges(schema: JSONSchema3or4, input: Record<string, 
     validate(allValues);
     validateAndRemove(definedValues);
 
-    console.log(validate.errors);
+    if(validate.errors) {
+        console.log(validate.errors);
+    }
 
     return diff(definedValues, allValues, {
         keysOnly: true
