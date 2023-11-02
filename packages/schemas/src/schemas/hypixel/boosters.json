@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/HypixelBoostersResponse.json",
+  "title": "HypixelBoostersResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/boosters",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "boosters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HypixelBooster"
+          }
+        },
+        "boosterState": {
+          "type": "object",
+          "properties": {
+            "decrementing": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "required": [
+        "success",
+        "boosters",
+        "boosterState"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelBooster": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{24}$"
+        },
+        "purchaserUuid": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "originalLength": {
+          "type": "integer"
+        },
+        "length": {
+          "type": "integer"
+        },
+        "gameType": {
+          "type": "integer"
+        },
+        "dateActivated": {
+          "type": "integer"
+        },
+        "stacked": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "_id"
+      ]
+    }
+  }
+}

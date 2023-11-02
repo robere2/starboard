@@ -1,0 +1,37 @@
+name: Compile Schemas
+on:
+  schedule:
+    - cron: '0 0/6 * * *' # Top of every 6th hour (e.g. 6:00)
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: "0"
+
+    - name: Setup Environment
+      uses: ./.github/actions/setup
+
+    - name: Build Schemas
+      run: lerna run build --scope @mcsb/schemas
+      env:
+        HYPIXEL_GEN_API_KEY: ${{ secrets.HYPIXEL_GEN_API_KEY }}
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        branch: schemas/patch
+        commit-message: 'chore(schemas): compile schemas'
+        labels: 'Module: Schemas'
+        reviewers: robere2
+        title: '[Automated] JSON schema updates'
+        body: |
+          Changes were detected in the Hypixel API. This PR includes recommended changes. This system is still 
+          experimental, so all changes should be reviewed before merging.

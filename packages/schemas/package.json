@@ -1,0 +1,35 @@
+{
+  "name": "@mcsb/schemas",
+  "version": "1.0.0-pre.1",
+  "description": "Self-generative JSON schemas for the Hypixel API",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "tsc && eslint .",
+    "prebuild": "rimraf dist",
+    "build": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/build.ts",
+    "prepublishOnly": "lerna run build --scope @mcsb/schemas"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "dotenv": "^16.3.1",
+    "gen-json-schema": "^0.2.6",
+    "json-diff": "^1.0.6",
+    "json-schema-to-typescript": "^13.1.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@types/json-diff": "^1.0.1",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "rollup": "^4.1.4",
+    "tsconfig": "*",
+    "eslint-config-custom": "*"
+  }
+}

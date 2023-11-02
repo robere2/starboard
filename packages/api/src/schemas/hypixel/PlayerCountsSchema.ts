@@ -1,6 +1,4 @@
-import type {HypixelAPI} from "../../HypixelAPI";
 import * as z from "zod";
-import {HypixelEntity} from "../../HypixelEntity";
 import {EnumHypixelPlayerCounts, ZodEnumHypixelPlayerCounts} from "../enums";
 import {HypixelBaseSchema} from "./HypixelBaseSchema";
 
@@ -18,16 +16,15 @@ export type HypixelPlayerCounts = z.infer<PlayerCountsSchema>;
  *   see the data structure.
  * @see https://api.hypixel.net/#tag/Other/paths/~1counts/get
  */
-export type HypixelGamePlayerCount = HypixelEntity & HypixelPlayerCounts["games"][keyof typeof EnumHypixelPlayerCounts]
+export type HypixelGamePlayerCount = HypixelPlayerCounts["games"][keyof typeof EnumHypixelPlayerCounts]
 
-export function generatePlayerCountsSchema(api: HypixelAPI) {
+export function generatePlayerCountsSchema() {
     return HypixelBaseSchema.extend({
         games: z.record(ZodEnumHypixelPlayerCounts, z.object({
             players: z.number().nonnegative().nullish(),
             modes: z.record(z.string(), z.number().nonnegative()).nullish()
         }).default({}).readonly().transform((game) => {
-            return Object.assign(new HypixelEntity(api), {
-                ...game,
+            return Object.assign(game, {
 
                 // /**
                 //  *
