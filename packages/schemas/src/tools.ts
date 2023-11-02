@@ -47,6 +47,34 @@ export function pickRandomLeaderboardPlayers(body: any): string[] {
     return pickedPlayers;
 }
 
+/**
+ * While JSON schemas do not need to obey any specific order, when we write them to the file system, we want to make
+ * as small of a diff as possible. Additionally, similar properties may be discovered by the generator at vastly
+ * different times, which would normally place them potentially thousands of lines apart within the schema.
+ *
+ * To avoid both of these issues, we sort all of our schema's objects by key, and primitive arrays by value. Arrays of
+ * objects are not touched.
+ * @param input The schema to sort
+ * @returns A sorted schema
+ * @throws
+ * - Stack overflow on very deep object inputs (this method is recursive).
+ */
+export function sortObject<T>(input: T): T {
+    if(typeof input !== "object" || input === null) {
+        return input;
+    } else if(Array.isArray(input)) {
+        return input.sort().map(v => {
+            return sortObject(v);
+        }) as T;
+    } else {
+        const inputObj: Record<string, any> = input;
+        const newObj: T = {} as any;
+        for(const key of Object.keys(input).sort()) {
+            newObj[key as keyof T] = sortObject(inputObj[key])
+        }
+        return newObj;
+    }
+}
 
 /**
  * Crawl a selection of Hypixel API URLs to look for changes in the schemas. If changes exist, write them to the file
@@ -178,7 +206,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
         }
     }
 
-    fullSchema.definitions![input.defName] = newSchemaDef;
+    fullSchema.definitions![input.defName] = sortObject(newSchemaDef);
     await fs.promises.writeFile(input.schemaPath, JSON.stringify(fullSchema, null, 2))
 
     const output = {

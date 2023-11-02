@@ -55,30 +55,29 @@
   ],
   "definitions": {
     "HypixelBooster": {
-      "type": "object",
       "properties": {
         "_id": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{24}$"
-        },
-        "purchaserUuid": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$"
+          "pattern": "^[0-9a-f]{24}$",
+          "type": "string"
         },
         "amount": {
           "type": "number"
         },
-        "originalLength": {
-          "type": "integer"
-        },
-        "length": {
+        "dateActivated": {
           "type": "integer"
         },
         "gameType": {
           "type": "integer"
         },
-        "dateActivated": {
+        "length": {
           "type": "integer"
+        },
+        "originalLength": {
+          "type": "integer"
+        },
+        "purchaserUuid": {
+          "pattern": "^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$",
+          "type": "string"
         },
         "stacked": {
           "oneOf": [
@@ -86,17 +85,18 @@
               "type": "boolean"
             },
             {
-              "type": "array",
               "items": {
                 "type": "string"
-              }
+              },
+              "type": "array"
             }
           ]
         }
       },
       "required": [
         "_id"
-      ]
+      ],
+      "type": "object"
     }
   }
 }
