@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "lint": "tsc && eslint .",
-    "typedoc": "typedoc --tsconfig tsconfig.typedoc.json",
+    "typedoc": "npm run build && typedoc --tsconfig tsconfig.typedoc.json",
     "generate": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/generate.ts",
     "prebuild": "rimraf dist",
     "build": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/build.ts",
