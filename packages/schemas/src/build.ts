@@ -30,6 +30,7 @@ if(!process.env.HYPIXEL_GEN_API_KEY) {
 
 await updateAndBuildHypixelSchemas();
 await copyExtraFiles();
+await createIndexFiles();
 
 // -------------------------------------------------------------
 
@@ -80,7 +81,7 @@ async function updateAndBuildHypixelSchemas() {
         testUrls: ["https://api.hypixel.net/leaderboards"]
     })
 
-    playersToScan.push(...pickRandomLeaderboardPlayers(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"]));
+    // playersToScan.push(...pickRandomLeaderboardPlayers(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"]));
 
     // HypixelGuild
     await processHypixelSchemaChanges({
@@ -102,8 +103,8 @@ async function updateAndBuildHypixelSchemas() {
 
 /**
  * Copy static files that should be compiled with the distributed package, such as the schema `.json` files, README,
- * LICENSE, and package.json. Also writes an `index.js` with an empty exports object.
- * @returns A `Promise` that resolves when all files have been copied/written.
+ * LICENSE, and package.json.
+ * @returns A `Promise` that resolves when all files have been copied.
  * @throws
  * - `Error` on file I/O error
  */
@@ -111,15 +112,33 @@ async function copyExtraFiles() {
     // Tiny wrapper around fs.cp for logging the file we're copying
     async function copy(from: string, to: string) {
         console.log("Copying", from, "to", to);
-        await fs.promises.cp(from, to);
+        await fs.promises.cp(from, to, {
+            recursive: true
+        });
     }
     await copy(join(__dirname, "schemas"), join(__dirname, "..", "dist", "schemas"))
     await copy(join(__dirname, "..", "package.json"), join(__dirname, "..", "dist", "package.json"))
     await copy(join(__dirname, "..", "README.md"), join(__dirname, "..", "dist", "README.md"))
     await copy(join(__dirname, "..", "..", "..", "LICENSE"), join(__dirname, "..", "dist", "LICENSE"))
+}
 
+/**
+ * Create the `index.js` and `index.d.ts` files in the `dist` directory.
+ * @returns A `Promise` that resolves when all files have been written.
+ * @throws
+ * - `Error` on file I/O error
+ */
+async function createIndexFiles() {
     // Create a default index.js file with no contents
     await fs.promises.writeFile(join(__dirname, "..", "dist", "index.js"), "module.exports = {}")
+
+    // Create a default index.d.ts file that contains all types concatenated
+    const typeFiles = await fs.promises.readdir(join(__dirname, "..", "dist", "types"));
+    let indexContents = "";
+    for(const type of typeFiles) {
+        indexContents += `export * from "./types/${type}"\n`
+    }
+    await fs.promises.writeFile(join(__dirname, "..", "dist", "index.d.ts"), indexContents);
 }
 
 /**
