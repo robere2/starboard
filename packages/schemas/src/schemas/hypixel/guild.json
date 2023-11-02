@@ -11,7 +11,14 @@
           "const": true
         },
         "guild": {
-          "$ref": "#/definitions/HypixelGuild"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/HypixelGuild"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
