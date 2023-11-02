@@ -81,7 +81,7 @@ async function updateAndBuildHypixelSchemas() {
         testUrls: ["https://api.hypixel.net/leaderboards"]
     })
 
-    // playersToScan.push(...pickRandomLeaderboardPlayers(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"]));
+    playersToScan.push(...pickRandomLeaderboardPlayers(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"]));
 
     // HypixelGuild
     await processHypixelSchemaChanges({
