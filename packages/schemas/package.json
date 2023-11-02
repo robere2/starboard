@@ -1,6 +1,6 @@
 {
   "name": "@mcsb/schemas",
-  "version": "1.0.0-pre.5",
+  "version": "1.0.0-pre.6",
   "description": "Self-generative JSON schemas for the Hypixel API",
   "type": "module",
   "main": "dist/index.js",
@@ -35,8 +35,12 @@
   "nx": {
     "targets": {
       "build": {
-        "inputs": ["{projectRoot}/src/schemas/**/*.json"],
-        "outputs": ["{projectRoot}/dist/**/*"]
+        "inputs": [
+          "{projectRoot}/src/schemas/**/*.json"
+        ],
+        "outputs": [
+          "{projectRoot}/dist/**/*"
+        ]
       }
     }
   }

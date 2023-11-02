@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.6](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.5...@mcsb/schemas@1.0.0-pre.6) (2023-11-02)
+
+### Bug Fixes
+
+- duplicate schema keys ([26dc6a4](https://github.com/robere2/starboard/commit/26dc6a4d918af30629ec6e312b4603ffcaa47e46))
+
+### Features
+
+- Separate build and generate steps ([b52a36d](https://github.com/robere2/starboard/commit/b52a36d07f1be0bc344ef6f24a388dc5c5ed4209))
+
 # [1.0.0-pre.5](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.4...@mcsb/schemas@1.0.0-pre.5) (2023-11-02)
 
 **Note:** Version bump only for package @mcsb/schemas
