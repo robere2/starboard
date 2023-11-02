@@ -27,11 +27,12 @@ jobs:
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
-        branch: schemas/patch
-        commit-message: 'chore(schemas): compile schemas'
-        labels: 'Module: Schemas'
-        reviewers: robere2
-        title: [Automated] JSON schema updates
-        body: |
-          Changes were detected in the Hypixel API. This PR includes recommended changes. This system is still 
-          experimental, so all changes should be reviewed before merging.
+        with:
+          branch: schemas/patch
+          commit-message: 'chore(schemas): compile schemas'
+          labels: 'Module: Schemas'
+          reviewers: robere2
+          title: [Automated] JSON schema updates
+          body: |
+            Changes were detected in the Hypixel API. This PR includes recommended changes. This system is still 
+            experimental, so all changes should be reviewed before merging.
