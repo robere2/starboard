@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.8](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.7...@mcsb/schemas@1.0.0-pre.8) (2023-11-02)
+
+### Features
+
+- Sort schema objects to decrease commit diffs ([c6834c2](https://github.com/robere2/starboard/commit/c6834c24a766673647be6ef67e3df7174f525bd7))
+
 # [1.0.0-pre.7](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.6...@mcsb/schemas@1.0.0-pre.7) (2023-11-02)
 
 ### Bug Fixes
