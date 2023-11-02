@@ -5,5 +5,10 @@
     "outDir": "dist",
     "rootDir": "."
   },
+  "ts-node": {
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true,
+    "esm": true,
+  },
   "exclude": ["dist", "build", "node_modules"]
 }

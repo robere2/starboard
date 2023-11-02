@@ -7,6 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "lint": "tsc && eslint .",
+    "generate": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/generate.ts",
     "prebuild": "rimraf dist",
     "build": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/build.ts",
     "prepublishOnly": "lerna run build --scope @mcsb/schemas"
@@ -30,5 +31,13 @@
     "eslint-config-custom": "*",
     "rollup": "^4.1.4",
     "tsconfig": "*"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "inputs": ["{projectRoot}/src/schemas/**/*.json"],
+        "outputs": ["{projectRoot}/dist/**/*"]
+      }
+    }
   }
 }
