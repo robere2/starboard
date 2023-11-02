@@ -24,6 +24,10 @@ jobs:
         fi
       shell: bash
 
+    - name: Print output
+      run: echo ${{ steps.branch-pick.outputs.BRANCH }}
+      shell: bash
+
     - name: Checkout
       uses: actions/checkout@v4
       with:
