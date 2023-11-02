@@ -344,8 +344,6 @@ export async function copyExtraFiles() {
         });
     }
     await copy(join(__dirname, "schemas"), join(__dirname, "..", "dist", "schemas"))
-    await copy(join(__dirname, "..", "package.json"), join(__dirname, "..", "dist", "package.json"))
-    await copy(join(__dirname, "..", "README.md"), join(__dirname, "..", "dist", "README.md"))
     await copy(join(__dirname, "..", "..", "..", "LICENSE"), join(__dirname, "..", "dist", "LICENSE"))
 }
 

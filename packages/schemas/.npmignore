@@ -4,3 +4,4 @@ rollup.config.ts
 tsconfig.json
 .turbo
 CHANGELOG.md
+typedoc.json
