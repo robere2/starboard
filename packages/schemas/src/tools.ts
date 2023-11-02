@@ -53,6 +53,7 @@ export function sortObject<T>(input: T): T {
 export async function updateAndBuildHypixelSchemas() {
     // The order of these function calls matters. The API response of different endpoints feeds into the
     // list of other URLs to test.
+    await processHypixelSchemaChanges(Schemas.HypixelPlayerCounts)
     await processHypixelSchemaChanges(Schemas.HypixelBooster)
     await processHypixelSchemaChanges(Schemas.HypixelLeaderboard)
     await processHypixelSchemaChanges(Schemas.HypixelPlayer)

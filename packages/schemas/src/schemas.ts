@@ -22,6 +22,13 @@ const playersToScan: string[] = [
 const inDir = join(__dirname, 'schemas', 'hypixel');
 const outDir = join(__dirname, '..', 'dist', 'types');
 
+const HypixelPlayerCounts: SchemaData = {
+    defName: "HypixelPlayerCounts",
+    schemaPath: join(inDir, 'counts.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/counts"]
+}
+
 const HypixelBooster: SchemaData = {
     defName: "HypixelBooster",
     schemaPath: join(inDir, 'boosters.json'),
@@ -95,8 +102,9 @@ const HypixelGuild: SchemaData = {
 }
 
 export default {
+    HypixelPlayerCounts,
+    HypixelBooster,
+    HypixelLeaderboard,
     HypixelPlayer,
     HypixelGuild,
-    HypixelLeaderboard,
-    HypixelBooster
 }

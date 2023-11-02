@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://starboard.ecr.dev/schemas/hypixel/HypixelLeaderboardsResponse.json",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/leaderboards.json",
   "title": "HypixelLeaderboardsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/leaderboards",
   "oneOf": [
