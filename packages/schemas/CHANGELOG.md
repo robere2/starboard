@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.13](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.12...@mcsb/schemas@1.0.0-pre.13) (2023-11-02)
+
+### Bug Fixes
+
+- remove duplicate properties ([7317271](https://github.com/robere2/starboard/commit/7317271908fc4158be1ca9bf557176ddbdde7e70))
+
 # [1.0.0-pre.12](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.11...@mcsb/schemas@1.0.0-pre.12) (2023-11-02)
 
 ### Bug Fixes
