@@ -49,8 +49,19 @@
   ],
   "definitions": {
     "HypixelLeaderboard": {
-      "type": "object",
       "properties": {
+        "count": {
+          "type": "integer"
+        },
+        "leaders": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "location": {
+          "type": "string"
+        },
         "path": {
           "type": "string"
         },
@@ -59,21 +70,10 @@
         },
         "title": {
           "type": "string"
-        },
-        "location": {
-          "type": "string"
-        },
-        "count": {
-          "type": "integer"
-        },
-        "leaders": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       },
-      "required": []
+      "required": [],
+      "type": "object"
     }
   }
 }

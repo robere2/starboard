@@ -43,11 +43,65 @@
   ],
   "definitions": {
     "HypixelGuild": {
-      "type": "object",
       "properties": {
         "_id": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{24}$"
+          "pattern": "^[0-9a-f]{24}$",
+          "type": "string"
+        },
+        "achievements": {
+          "properties": {
+            "EXPERIENCE_KINGS": {
+              "type": "integer"
+            },
+            "ONLINE_PLAYERS": {
+              "type": "integer"
+            },
+            "WINNERS": {
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "banner": {
+          "properties": {
+            "Base": {
+              "oneOf": [
+                {
+                  "pattern": "\\d+",
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "Patterns": {
+              "items": {
+                "properties": {
+                  "Color": {
+                    "oneOf": [
+                      {
+                        "pattern": "\\d+",
+                        "type": "string"
+                      },
+                      {
+                        "type": "integer"
+                      }
+                    ]
+                  },
+                  "Pattern": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "chatMute": {
+          "type": "integer"
         },
         "coins": {
           "type": "integer"
@@ -58,120 +112,170 @@
         "created": {
           "type": "integer"
         },
+        "description": {
+          "type": "string"
+        },
+        "exp": {
+          "type": "integer"
+        },
+        "guildExpByGameType": {
+          "properties": {
+            "ARCADE": {
+              "type": "integer"
+            },
+            "ARENA": {
+              "type": "integer"
+            },
+            "BATTLEGROUND": {
+              "type": "integer"
+            },
+            "BEDWARS": {
+              "type": "integer"
+            },
+            "BUILD_BATTLE": {
+              "type": "integer"
+            },
+            "DUELS": {
+              "type": "integer"
+            },
+            "GINGERBREAD": {
+              "type": "integer"
+            },
+            "HOUSING": {
+              "type": "integer"
+            },
+            "LEGACY": {
+              "type": "integer"
+            },
+            "MCGO": {
+              "type": "integer"
+            },
+            "MURDER_MYSTERY": {
+              "type": "integer"
+            },
+            "PAINTBALL": {
+              "type": "integer"
+            },
+            "PIT": {
+              "type": "integer"
+            },
+            "PROTOTYPE": {
+              "type": "integer"
+            },
+            "QUAKECRAFT": {
+              "type": "integer"
+            },
+            "REPLAY": {
+              "type": "integer"
+            },
+            "SKYBLOCK": {
+              "type": "integer"
+            },
+            "SKYWARS": {
+              "type": "integer"
+            },
+            "SMP": {
+              "type": "integer"
+            },
+            "SPEED_UHC": {
+              "type": "integer"
+            },
+            "SUPER_SMASH": {
+              "type": "integer"
+            },
+            "SURVIVAL_GAMES": {
+              "type": "integer"
+            },
+            "TNTGAMES": {
+              "type": "integer"
+            },
+            "UHC": {
+              "type": "integer"
+            },
+            "VAMPIREZ": {
+              "type": "integer"
+            },
+            "WALLS": {
+              "type": "integer"
+            },
+            "WALLS3": {
+              "type": "integer"
+            },
+            "WOOL_GAMES": {
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
         "joinable": {
           "type": "boolean"
         },
+        "legacyRanking": {
+          "type": "integer"
+        },
         "members": {
-          "type": "array",
           "items": {
-            "type": "object",
             "properties": {
+              "expHistory": {
+                "patternProperties": {
+                  "\\d{4}-\\d{2}-\\d{2}": {
+                    "type": "integer"
+                  }
+                },
+                "type": "object"
+              },
               "joined": {
+                "type": "integer"
+              },
+              "mutedTill": {
                 "type": "integer"
               },
               "name": {
                 "type": "string"
+              },
+              "questParticipation": {
+                "type": "integer"
               },
               "rank": {
                 "type": "string"
               },
               "uuid": {
                 "type": "string"
-              },
-              "questParticipation": {
-                "type": "integer"
-              },
-              "mutedTill": {
-                "type": "integer"
-              },
-              "expHistory": {
-                "type": "object",
-                "patternProperties": {
-                  "\\d{4}-\\d{2}-\\d{2}": {
-                    "type": "integer"
-                  }
-                }
               }
-            }
-          }
+            },
+            "type": "object"
+          },
+          "type": "array"
         },
         "name": {
           "type": "string"
         },
+        "name_lower": {
+          "type": "string"
+        },
+        "preferredGames": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "publiclyListed": {
           "type": "boolean"
         },
-        "banner": {
-          "type": "object",
-          "properties": {
-            "Base": {
-              "oneOf": [
-                {
-                  "type": "string",
-                  "pattern": "\\d+"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "Patterns": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "Pattern": {
-                    "type": "string"
-                  },
-                  "Color": {
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "pattern": "\\d+"
-                      },
-                      {
-                        "type": "integer"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tagColor": {
-          "type": "string"
-        },
-        "achievements": {
-          "type": "object",
-          "properties": {
-            "WINNERS": {
-              "type": "integer"
-            },
-            "EXPERIENCE_KINGS": {
-              "type": "integer"
-            },
-            "ONLINE_PLAYERS": {
-              "type": "integer"
-            }
-          }
-        },
-        "exp": {
-          "type": "integer"
-        },
-        "legacyRanking": {
-          "type": "integer"
-        },
         "ranks": {
-          "type": "array",
           "items": {
-            "type": "object",
             "properties": {
-              "name": {
-                "type": "string"
+              "created": {
+                "type": "integer"
               },
               "default": {
                 "type": "boolean"
+              },
+              "name": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "integer"
               },
               "tag": {
                 "oneOf": [
@@ -182,128 +286,24 @@
                     "type": "null"
                   }
                 ]
-              },
-              "created": {
-                "type": "integer"
-              },
-              "priority": {
-                "type": "integer"
               }
-            }
-          }
-        },
-        "chatMute": {
-          "type": "integer"
-        },
-        "preferredGames": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "description": {
-          "type": "string"
-        },
-        "name_lower": {
-          "type": "string"
+            },
+            "type": "object"
+          },
+          "type": "array"
         },
         "tag": {
           "type": "string"
         },
-        "guildExpByGameType": {
-          "type": "object",
-          "properties": {
-            "SMP": {
-              "type": "integer"
-            },
-            "ARENA": {
-              "type": "integer"
-            },
-            "SPEED_UHC": {
-              "type": "integer"
-            },
-            "LEGACY": {
-              "type": "integer"
-            },
-            "DUELS": {
-              "type": "integer"
-            },
-            "WALLS": {
-              "type": "integer"
-            },
-            "UHC": {
-              "type": "integer"
-            },
-            "REPLAY": {
-              "type": "integer"
-            },
-            "PIT": {
-              "type": "integer"
-            },
-            "MURDER_MYSTERY": {
-              "type": "integer"
-            },
-            "BEDWARS": {
-              "type": "integer"
-            },
-            "TNTGAMES": {
-              "type": "integer"
-            },
-            "SURVIVAL_GAMES": {
-              "type": "integer"
-            },
-            "SUPER_SMASH": {
-              "type": "integer"
-            },
-            "BUILD_BATTLE": {
-              "type": "integer"
-            },
-            "WALLS3": {
-              "type": "integer"
-            },
-            "SKYWARS": {
-              "type": "integer"
-            },
-            "HOUSING": {
-              "type": "integer"
-            },
-            "PROTOTYPE": {
-              "type": "integer"
-            },
-            "ARCADE": {
-              "type": "integer"
-            },
-            "SKYBLOCK": {
-              "type": "integer"
-            },
-            "GINGERBREAD": {
-              "type": "integer"
-            },
-            "VAMPIREZ": {
-              "type": "integer"
-            },
-            "WOOL_GAMES": {
-              "type": "integer"
-            },
-            "PAINTBALL": {
-              "type": "integer"
-            },
-            "QUAKECRAFT": {
-              "type": "integer"
-            },
-            "BATTLEGROUND": {
-              "type": "integer"
-            },
-            "MCGO": {
-              "type": "integer"
-            }
-          }
+        "tagColor": {
+          "type": "string"
         }
       },
       "required": [
         "_id",
         "name"
-      ]
+      ],
+      "type": "object"
     }
   }
 }

@@ -28,7 +28,7 @@ const HypixelBooster: SchemaData = {
     dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/boosters"],
     dataPreprocess: (input) => input.boosters,
-    dataPostprocess(input) {
+    dataPostprocess() {
         // TODO - Add booster buyers to player list
     }
 }
@@ -52,7 +52,7 @@ const HypixelPlayer: SchemaData = {
     dtsOutDir: outDir,
     testUrls: playersToScan,
     dataPreprocess: (input) => input.player,
-    dataPostprocess: (input) => {
+    dataPostprocess: () => {
         // TODO - Add players to guild list
     }
 }
