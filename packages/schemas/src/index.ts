@@ -42,59 +42,43 @@ const playersToScan: string[] = [
     "https://api.hypixel.net/player?uuid=869c2a8943b041a8865667a2cc8c7923", // X
 ];
 
+const inDir = join(__dirname, 'schemas', 'hypixel');
+const outDir = join(__dirname, '..', 'dist', 'types');
 
-const boosterChanges = await processHypixelSchemaChanges({
+// HypixelBooster
+await processHypixelSchemaChanges({
     defName: "HypixelBooster",
-    schemaPath: join(__dirname, 'schemas', 'hypixel', 'boosters.json'),
-    dtsOutDir: join(__dirname, '..', 'types'),
+    schemaPath: join(inDir, 'boosters.json'),
+    dtsOutDir: outDir,
     dataPreprocess: (input) => input.boosters,
     testUrls: ["https://api.hypixel.net/boosters"]
 })
+// HypixelLeaderboard
 const leaderboardChanges = await processHypixelSchemaChanges({
     defName: "HypixelLeaderboard",
-    schemaPath: join(__dirname, 'schemas', 'hypixel', 'leaderboards.json'),
-    dtsOutDir: join(__dirname, '..', 'types'),
+    schemaPath: join(inDir, 'leaderboards.json'),
+    dtsOutDir: outDir,
     dataPreprocess: (input) => {
         return Object.values(input.leaderboards).flat()
     },
     testUrls: ["https://api.hypixel.net/leaderboards"]
 })
 
-// Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to remove
-// duplicates. Spread back into array so we can get values at an index.
-const allUniqueLeaderboardPlayers = [
-    ...new Set<string>(
-        Object.values(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"].leaderboards)
-            .flat()
-            .map(v => (v as any).leaders ?? [])
-            .flat()
-    )
-]
+playersToScan.push(...pickRandomLeaderboardPlayers(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"]));
 
-// Pick 25 random players from all leaderboards
-let leaderboardPlayersCount = 25;
-if(allUniqueLeaderboardPlayers.length < leaderboardPlayersCount) {
-    leaderboardPlayersCount = allUniqueLeaderboardPlayers.length;
-}
-for(let i = 0; i < leaderboardPlayersCount; i++) {
-
-    const randomIndex = Math.floor(allUniqueLeaderboardPlayers.length * Math.random());
-    playersToScan.push(`https://api.hypixel.net/player?uuid=${allUniqueLeaderboardPlayers[randomIndex]}`);
-    allUniqueLeaderboardPlayers.splice(randomIndex, 1);
-}
-
-const guildChanges = await processHypixelSchemaChanges({
+// HypixelGuild
+await processHypixelSchemaChanges({
     defName: "HypixelGuild",
-    schemaPath: join(__dirname, 'schemas', 'hypixel', 'guild.json'),
-    dtsOutDir: join(__dirname, '..', 'types'),
+    schemaPath: join(inDir, 'guild.json'),
+    dtsOutDir: outDir,
     dataPreprocess: (input) => input.guild,
     testUrls: guildsToScan
 })
-
+// HypixelPlayer
 await processHypixelSchemaChanges({
     defName: "HypixelPlayer",
-    schemaPath: join(__dirname, 'schemas', 'hypixel', 'player.json'),
-    dtsOutDir: join(__dirname, '..', 'types'),
+    schemaPath: join(inDir, 'player.json'),
+    dtsOutDir: outDir,
     dataPreprocess: (input) => input.player,
     testUrls: playersToScan
 })
@@ -108,6 +92,41 @@ await processHypixelSchemaChanges({
  */
 function md5(str: string): string {
     return crypto.createHash("md5").update(str).digest().toString("hex");
+}
+
+/**
+ * Pick 25 player UUIDs at random from the leaderboards in the response from the `/leaderboards` endpoint. This gives
+ * us a good sample of active players.
+ * @remarks The returned array's length could be less than 25 if there aren't at least 25 players on all leaderboards,
+ * but practically this will not happen (usually there is around 5,000 unique players, as of writing).
+ * @param body JSON-parsed response body from the Hypixel API
+ * @returns An array of 25 player UUIDs.
+ */
+function pickRandomLeaderboardPlayers(body: any): string[] {
+    // Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to
+    // remove duplicates. Spread back into array so we can get values at an index.
+    const allUniqueLeaderboardPlayers = [
+        ...new Set<string>(
+            Object.values(body.leaderboards)
+                .flat()
+                .map(v => (v as any).leaders ?? [])
+                .flat()
+        )
+    ]
+
+    // Pick 25 random players from all leaderboards
+    let leaderboardPlayersCount = 25;
+    const pickedPlayers: string[] = [];
+    if(allUniqueLeaderboardPlayers.length < leaderboardPlayersCount) {
+        leaderboardPlayersCount = allUniqueLeaderboardPlayers.length;
+    }
+    for(let i = 0; i < leaderboardPlayersCount; i++) {
+        const randomIndex = Math.floor(allUniqueLeaderboardPlayers.length * Math.random());
+        pickedPlayers.push(`https://api.hypixel.net/player?uuid=${allUniqueLeaderboardPlayers[randomIndex]}`);
+        allUniqueLeaderboardPlayers.splice(randomIndex, 1);
+    }
+
+    return pickedPlayers;
 }
 
 /**
