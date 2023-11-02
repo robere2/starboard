@@ -16,7 +16,7 @@ jobs:
     - name: Pick Base Branch
       id: branch_pick
       run: |
-        if git ls-remote --exit-code --heads https://github.com/robere2/starboard ${BRANCH}; then
+        if git ls-remote --exit-code --heads https://github.com/robere2/starboard schemas/patch; then
           echo "BRANCH=schemas/patch" >> $GITHUB_OUTPUT
           echo "Using branch \"schemas/patch\""
         else
