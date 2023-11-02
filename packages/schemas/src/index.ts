@@ -17,15 +17,15 @@ declare global {
     namespace NodeJS {
         interface ProcessEnv {
             [key: string]: string | undefined;
-            HYPIXEL_API_KEY: string;
+            HYPIXEL_GEN_API_KEY: string;
         }
     }
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-if(!process.env.HYPIXEL_API_KEY) {
-    throw new Error('Required environment variable "HYPIXEL_API_KEY" is missing or malformed. Visit https://developer.hypixel.net/dashboard to get one.')
+if(!process.env.HYPIXEL_GEN_API_KEY) {
+    throw new Error('Required environment variable "HYPIXEL_GEN_API_KEY" is missing or malformed. Visit https://developer.hypixel.net/dashboard to get one.')
 }
 
 // The URLs we scan are dynamically determined from API responses. For example, for the `player.json` schema, we scan a
@@ -153,7 +153,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     for (const url of urls) {
         console.log("Sending request to", url)
         const res = await fetch(url, {
-            headers: {"API-Key": process.env.HYPIXEL_API_KEY}
+            headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
         });
 
         responses[url] = await res.json() as any; // Type checking is done below
