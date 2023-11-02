@@ -28,62 +28,99 @@ if(!process.env.HYPIXEL_GEN_API_KEY) {
     throw new Error('Required environment variable "HYPIXEL_GEN_API_KEY" is missing or malformed. Visit https://developer.hypixel.net/dashboard to get one.')
 }
 
-// The URLs we scan are dynamically determined from API responses. For example, for the `player.json` schema, we scan a
-// sample of the top players on the leaderboards. In addition to that, we have some starting points for types of data
-// which can't be collected from the leaderboards, or which may be edge cases. These are arrays of URLs to be scanned.
-const guildsToScan: string[] = [ // Top 3 guilds
-    "https://api.hypixel.net/guild?id=5363aa4eed50df539dca00ad",
-    "https://api.hypixel.net/guild?id=53bd67d7ed503e868873eceb",
-    "https://api.hypixel.net/guild?id=56ece7c40cf2e4f9ffcc284e",
-];
-const playersToScan: string[] = [
-    "https://api.hypixel.net/player?uuid=f7c77d999f154a66a87dc4a51ef30d19", // hypixel
-    "https://api.hypixel.net/player?uuid=b876ec32e396476ba1158438d83c67d4", // Technoblade
-    "https://api.hypixel.net/player?uuid=869c2a8943b041a8865667a2cc8c7923", // X
-];
-
-const inDir = join(__dirname, 'schemas', 'hypixel');
-const outDir = join(__dirname, '..', 'dist', 'types');
-
-// HypixelBooster
-await processHypixelSchemaChanges({
-    defName: "HypixelBooster",
-    schemaPath: join(inDir, 'boosters.json'),
-    dtsOutDir: outDir,
-    dataPreprocess: (input) => input.boosters,
-    testUrls: ["https://api.hypixel.net/boosters"]
-})
-// HypixelLeaderboard
-const leaderboardChanges = await processHypixelSchemaChanges({
-    defName: "HypixelLeaderboard",
-    schemaPath: join(inDir, 'leaderboards.json'),
-    dtsOutDir: outDir,
-    dataPreprocess: (input) => {
-        return Object.values(input.leaderboards).flat()
-    },
-    testUrls: ["https://api.hypixel.net/leaderboards"]
-})
-
-playersToScan.push(...pickRandomLeaderboardPlayers(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"]));
-
-// HypixelGuild
-await processHypixelSchemaChanges({
-    defName: "HypixelGuild",
-    schemaPath: join(inDir, 'guild.json'),
-    dtsOutDir: outDir,
-    dataPreprocess: (input) => input.guild,
-    testUrls: guildsToScan
-})
-// HypixelPlayer
-await processHypixelSchemaChanges({
-    defName: "HypixelPlayer",
-    schemaPath: join(inDir, 'player.json'),
-    dtsOutDir: outDir,
-    dataPreprocess: (input) => input.player,
-    testUrls: playersToScan
-})
+await updateAndBuildHypixelSchemas();
+await copyExtraFiles();
 
 // -------------------------------------------------------------
+
+/**
+ * Crawl a selection of Hypixel API URLs to look for changes in the schemas. If changes exist, write them to the file
+ * system. Afterwards, TypeScript type definition files are generated and written to the output directory
+ * `../dist/types`
+ * @returns A `Promise` that resolves when all Hypixel schemas have been updated.
+ * @throws
+ * - `Error` on Hypixel API request failure
+ * - `Error` on file I/O error
+ * - `Error` if any of the required schema `.json` files are not present on the file system
+ */
+async function updateAndBuildHypixelSchemas() {
+    // The URLs we scan are dynamically determined from API responses. For example, for the `player.json` schema, we scan a
+    // sample of the top players on the leaderboards. In addition to that, we have some starting points for types of data
+    // which can't be collected from the leaderboards, or which may be edge cases. These are arrays of URLs to be scanned.
+    const guildsToScan: string[] = [ // Top 3 guilds
+        "https://api.hypixel.net/guild?id=5363aa4eed50df539dca00ad",
+        "https://api.hypixel.net/guild?id=53bd67d7ed503e868873eceb",
+        "https://api.hypixel.net/guild?id=56ece7c40cf2e4f9ffcc284e",
+    ];
+    const playersToScan: string[] = [
+        "https://api.hypixel.net/player?uuid=f7c77d999f154a66a87dc4a51ef30d19", // hypixel
+        "https://api.hypixel.net/player?uuid=b876ec32e396476ba1158438d83c67d4", // Technoblade
+        "https://api.hypixel.net/player?uuid=869c2a8943b041a8865667a2cc8c7923", // X
+    ];
+
+    const inDir = join(__dirname, 'schemas', 'hypixel');
+    const outDir = join(__dirname, '..', 'dist', 'types');
+
+    // HypixelBooster
+    await processHypixelSchemaChanges({
+        defName: "HypixelBooster",
+        schemaPath: join(inDir, 'boosters.json'),
+        dtsOutDir: outDir,
+        dataPreprocess: (input) => input.boosters,
+        testUrls: ["https://api.hypixel.net/boosters"]
+    })
+    // HypixelLeaderboard
+    const leaderboardChanges = await processHypixelSchemaChanges({
+        defName: "HypixelLeaderboard",
+        schemaPath: join(inDir, 'leaderboards.json'),
+        dtsOutDir: outDir,
+        dataPreprocess: (input) => {
+            return Object.values(input.leaderboards).flat()
+        },
+        testUrls: ["https://api.hypixel.net/leaderboards"]
+    })
+
+    playersToScan.push(...pickRandomLeaderboardPlayers(leaderboardChanges.responses["https://api.hypixel.net/leaderboards"]));
+
+    // HypixelGuild
+    await processHypixelSchemaChanges({
+        defName: "HypixelGuild",
+        schemaPath: join(inDir, 'guild.json'),
+        dtsOutDir: outDir,
+        dataPreprocess: (input) => input.guild,
+        testUrls: guildsToScan
+    })
+    // HypixelPlayer
+    await processHypixelSchemaChanges({
+        defName: "HypixelPlayer",
+        schemaPath: join(inDir, 'player.json'),
+        dtsOutDir: outDir,
+        dataPreprocess: (input) => input.player,
+        testUrls: playersToScan
+    })
+}
+
+/**
+ * Copy static files that should be compiled with the distributed package, such as the schema `.json` files, README,
+ * LICENSE, and package.json. Also writes an `index.js` with an empty exports object.
+ * @returns A `Promise` that resolves when all files have been copied/written.
+ * @throws
+ * - `Error` on file I/O error
+ */
+async function copyExtraFiles() {
+    // Tiny wrapper around fs.cp for logging the file we're copying
+    async function copy(from: string, to: string) {
+        console.log("Copying", from, "to", to);
+        await fs.promises.cp(from, to);
+    }
+    await copy(join(__dirname, "schemas"), join(__dirname, "..", "dist", "schemas"))
+    await copy(join(__dirname, "..", "package.json"), join(__dirname, "..", "dist", "package.json"))
+    await copy(join(__dirname, "..", "README.md"), join(__dirname, "..", "dist", "README.md"))
+    await copy(join(__dirname, "..", "..", "..", "LICENSE"), join(__dirname, "..", "dist", "LICENSE"))
+
+    // Create a default index.js file with no contents
+    await fs.promises.writeFile(join(__dirname, "..", "dist", "index.js"), "module.exports = {}")
+}
 
 /**
  * Hash a string into it's md5 hexadecimal output.
