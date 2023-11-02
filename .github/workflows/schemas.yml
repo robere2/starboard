@@ -14,25 +14,22 @@ jobs:
       contents: write
     steps:
     - name: Pick Base Branch
-      id: branch-pick
+      id: branch_pick
       run: |
-        BRANCH="schemas/patch" >> "$GITHUB_OUTPUT"
         if git ls-remote --exit-code --heads https://github.com/robere2/starboard ${BRANCH}; then
-          echo "Using branch $BRANCH"
+          echo "BRANCH=\"schemas/patch\"" >> $GITHUB_OUTPUT
+          echo "Using branch \"schemas/patch\""
         else
-          echo "BRANCH=master" >> "$GITHUB_OUTPUT"
+          echo "BRANCH=master" >> $GITHUB_OUTPUT
+          echo "Using branch \"master\""
         fi
-      shell: bash
-
-    - name: Print output
-      run: echo ${{ steps.branch-pick.outputs.BRANCH }}
       shell: bash
 
     - name: Checkout
       uses: actions/checkout@v4
       with:
         fetch-depth: "0"
-        ref: ${{ steps.branch-pick.outputs.BRANCH }}
+        ref: ${{ steps.branch_pick.outputs.BRANCH }}
 
     - name: Setup Environment
       uses: ./.github/actions/setup
