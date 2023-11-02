@@ -13,41 +13,6 @@ import {fileURLToPath} from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 /**
- * Pick 25 player UUIDs at random from the leaderboards in the response from the `/leaderboards` endpoint. This gives
- * us a good sample of active players.
- * @remarks The returned array's length could be less than 25 if there aren't at least 25 players on all leaderboards,
- * but practically this will not happen (usually there is around 5,000 unique players, as of writing).
- * @param body JSON-parsed response body from the Hypixel API
- * @returns An array of 25 player UUIDs.
- */
-export function pickRandomLeaderboardPlayers(body: any): string[] {
-    // Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to
-    // remove duplicates. Spread back into array so we can get values at an index.
-    const allUniqueLeaderboardPlayers = [
-        ...new Set<string>(
-            Object.values(body.leaderboards)
-                .flat()
-                .map(v => (v as any).leaders ?? [])
-                .flat()
-        )
-    ]
-
-    // Pick 25 random players from all leaderboards
-    let leaderboardPlayersCount = 25;
-    const pickedPlayers: string[] = [];
-    if(allUniqueLeaderboardPlayers.length < leaderboardPlayersCount) {
-        leaderboardPlayersCount = allUniqueLeaderboardPlayers.length;
-    }
-    for(let i = 0; i < leaderboardPlayersCount; i++) {
-        const randomIndex = Math.floor(allUniqueLeaderboardPlayers.length * Math.random());
-        pickedPlayers.push(`https://api.hypixel.net/player?uuid=${allUniqueLeaderboardPlayers[randomIndex]}`);
-        allUniqueLeaderboardPlayers.splice(randomIndex, 1);
-    }
-
-    return pickedPlayers;
-}
-
-/**
  * While JSON schemas do not need to obey any specific order, when we write them to the file system, we want to make
  * as small of a diff as possible. Additionally, similar properties may be discovered by the generator at vastly
  * different times, which would normally place them potentially thousands of lines apart within the schema.
@@ -92,6 +57,23 @@ export async function updateAndBuildHypixelSchemas() {
     await processHypixelSchemaChanges(Schemas.HypixelLeaderboard)
     await processHypixelSchemaChanges(Schemas.HypixelPlayer)
     await processHypixelSchemaChanges(Schemas.HypixelGuild)
+}
+
+/**
+ * Pick random values out of an array.
+ * @param arr Array to pick items out of.
+ * @param amount The number of items to pick. If less than or equal to 0, no items will be picked.
+ * If greater than or equal to the length of the array, all items will be picked, but in a random order.
+ * @returns An array with all of the randomly picked items.
+ */
+export function pickRandom<T>(arr: T[], amount: number): T[] {
+    const output: T[] = [];
+    const arrCopy = [...arr]
+    for(let i = 0; i < amount; i++) {
+        const randomIndex = Math.floor(Math.random() * arrCopy.length);
+        output.push(arrCopy.splice(randomIndex, 1)[0])
+    }
+    return output;
 }
 
 /**

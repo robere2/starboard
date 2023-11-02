@@ -1,7 +1,7 @@
 import {dirname, join} from "path";
 import {SchemaData} from "./SchemaData.js";
 import {fileURLToPath} from "url";
-import {pickRandomLeaderboardPlayers} from "./tools.js";
+import {pickRandom} from "./tools.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -28,8 +28,19 @@ const HypixelBooster: SchemaData = {
     dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/boosters"],
     dataPreprocess: (input) => input.boosters,
-    dataPostprocess() {
-        // TODO - Add booster buyers to player list
+    dataPostprocess(input) {
+        // There's only one value, so this is shorthand for accessing the value directly by its URL
+        const body = Object.values(input.responses)[0]
+
+        // Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to
+        // remove duplicates. Spread back into array so we can get values at an index.
+        const allUniqueBoosterPurchasers = [
+            ...new Set<string>(body.boosters?.map((b: any) => b.purchaserUuid) ?? [])
+        ]
+
+        pickRandom(allUniqueBoosterPurchasers, 10).forEach(uuid => {
+            playersToScan.push(`https://api.hypixel.net/player?uuid=${uuid}`)
+        });
     }
 }
 
@@ -42,7 +53,28 @@ const HypixelLeaderboard: SchemaData = {
         return Object.values(input.leaderboards).flat()
     },
     dataPostprocess: (input) => {
-        playersToScan.push(...pickRandomLeaderboardPlayers(input.responses["https://api.hypixel.net/leaderboards"]));
+        // Pick random players from the leaderboards to feed into other schema checks
+        // There's only one value, so this is shorthand for accessing the value directly by its URL
+        const body = Object.values(input.responses)[0]
+
+        // Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to
+        // remove duplicates. Spread back into array so we can get values at an index.
+        const allUniqueLeaderboardPlayers = [
+            ...new Set<string>(
+                Object.values(body.leaderboards)
+                    .flat()
+                    .map(v => (v as any).leaders ?? [])
+                    .flat()
+            )
+        ]
+
+        pickRandom(allUniqueLeaderboardPlayers, 25).forEach(uuid => {
+            playersToScan.push(`https://api.hypixel.net/player?uuid=${uuid}`)
+        });
+
+        pickRandom(allUniqueLeaderboardPlayers, 5).forEach(uuid => {
+            guildsToScan.push(`https://api.hypixel.net/guild?player=${uuid}`)
+        });
     }
 }
 
@@ -51,10 +83,7 @@ const HypixelPlayer: SchemaData = {
     schemaPath: join(inDir, 'player.json'),
     dtsOutDir: outDir,
     testUrls: playersToScan,
-    dataPreprocess: (input) => input.player,
-    dataPostprocess: () => {
-        // TODO - Add players to guild list
-    }
+    dataPreprocess: (input) => input.player
 }
 
 const HypixelGuild: SchemaData = {
