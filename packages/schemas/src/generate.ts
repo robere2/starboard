@@ -1,5 +1,6 @@
-import {updateAndBuildHypixelSchemas} from "./tools.js";
+import {processHypixelSchemaChanges} from "./tools.js";
 import dotenv from "dotenv";
+import Schemas from "./schemas.js";
 dotenv.config();
 
 declare global {
@@ -16,4 +17,13 @@ if(!process.env.HYPIXEL_GEN_API_KEY) {
     throw new Error('Required environment variable "HYPIXEL_GEN_API_KEY" is missing or malformed. Visit https://developer.hypixel.net/dashboard to get one.')
 }
 
-await updateAndBuildHypixelSchemas();
+// The order of these function calls matters. The API response of different endpoints feeds into the
+// list of other URLs to test.
+await processHypixelSchemaChanges(Schemas.HypixelPunishmentStatistics)
+await processHypixelSchemaChanges(Schemas.HypixelPlayerCounts)
+await processHypixelSchemaChanges(Schemas.HypixelBooster)
+await processHypixelSchemaChanges(Schemas.HypixelLeaderboard)
+await processHypixelSchemaChanges(Schemas.HypixelStatus)
+await processHypixelSchemaChanges(Schemas.HypixelRecentGames)
+await processHypixelSchemaChanges(Schemas.HypixelPlayer)
+await processHypixelSchemaChanges(Schemas.HypixelGuild)

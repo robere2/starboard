@@ -1,4 +1,3 @@
-import Schemas from "./schemas.js";
 import crypto from "crypto";
 import {SchemaData} from "./SchemaData";
 import {JSONSchema4} from "json-schema";
@@ -39,25 +38,6 @@ export function sortObject<T>(input: T): T {
         }
         return newObj;
     }
-}
-
-/**
- * Crawl a selection of Hypixel API URLs to look for changes in the schemas. If changes exist, write them to the file
- * system. The order of schemas is important, as the output of some schemas lead as input into others.
- * @returns A `Promise` that resolves when all Hypixel schemas have been updated.
- * @throws
- * - `Error` on Hypixel API request failure
- * - `Error` on file I/O error
- * - `Error` if any of the required schema `.json` files are not present on the file system
- */
-export async function updateAndBuildHypixelSchemas() {
-    // The order of these function calls matters. The API response of different endpoints feeds into the
-    // list of other URLs to test.
-    await processHypixelSchemaChanges(Schemas.HypixelPlayerCounts)
-    await processHypixelSchemaChanges(Schemas.HypixelBooster)
-    await processHypixelSchemaChanges(Schemas.HypixelLeaderboard)
-    await processHypixelSchemaChanges(Schemas.HypixelPlayer)
-    await processHypixelSchemaChanges(Schemas.HypixelGuild)
 }
 
 /**
