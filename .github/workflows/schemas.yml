@@ -18,9 +18,10 @@ jobs:
       run: |
         BRANCH="schemas/patch" >> "$GITHUB_OUTPUT"
         if git ls-remote --exit-code --heads https://github.com/robere2/starboard ${BRANCH}; then
+          echo "Using branch $BRANCH"
+        else
           echo "BRANCH=master" >> "$GITHUB_OUTPUT"
         fi
-        echo "Using branch $BRANCH"
       shell: bash
 
     - name: Checkout
@@ -45,6 +46,7 @@ jobs:
         author: 'GitHub <noreply@github.com>'
         labels: 'Module: Schemas'
         reviewers: robere2
+        delete-branch: true
         title: '[Automated] JSON schema updates'
         body: |
           Changes were detected in the Hypixel API. This PR includes recommended changes. This system is still 
