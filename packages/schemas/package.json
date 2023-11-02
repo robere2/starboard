@@ -1,6 +1,6 @@
 {
   "name": "@mcsb/schemas",
-  "version": "1.0.0-pre.9",
+  "version": "1.0.0-pre.10",
   "description": "Self-generative JSON schemas for the Hypixel API",
   "type": "module",
   "main": "dist/index.js",

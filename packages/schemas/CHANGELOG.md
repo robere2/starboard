@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.10](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.9...@mcsb/schemas@1.0.0-pre.10) (2023-11-02)
+
+### Bug Fixes
+
+- npmignore tsconfig.typedoc.json ([d188a4c](https://github.com/robere2/starboard/commit/d188a4c12a86d4ee6c4eb9d8df68c2cb7cc253fb))
+
+### Features
+
+- **docs:** Schema reference generation ([ecce95a](https://github.com/robere2/starboard/commit/ecce95a3233bb7ba1ad75376d421b2f5a249f326))
+
 # [1.0.0-pre.9](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.8...@mcsb/schemas@1.0.0-pre.9) (2023-11-02)
 
 **Note:** Version bump only for package @mcsb/schemas
