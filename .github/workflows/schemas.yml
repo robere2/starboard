@@ -43,6 +43,7 @@ jobs:
       uses: peter-evans/create-pull-request@v5
       with:
         branch: schemas/patch
+        base: master
         commit-message: 'chore(schemas): compile schemas'
         author: 'GitHub <noreply@github.com>'
         labels: 'Module: Schemas'
