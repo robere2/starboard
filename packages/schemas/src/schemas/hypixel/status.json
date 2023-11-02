@@ -47,16 +47,39 @@
   "definitions": {
     "HypixelStatus": {
       "properties": {
-        "online": {
-          "type": "boolean"
-        },
         "gameType": {
+          "type": "string"
+        },
+        "map": {
           "type": "string"
         },
         "mode": {
           "type": "string"
         },
-        "map": {
+        "online": {
+          "type": "boolean"
+        },
+        "session": {
+          "properties": {
+            "gameType": {
+              "type": "string"
+            },
+            "map": {
+              "type": "string"
+            },
+            "mode": {
+              "type": "string"
+            },
+            "online": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "uuid": {
           "type": "string"
         }
       },

@@ -53,17 +53,26 @@
         "date": {
           "type": "integer"
         },
+        "ended": {
+          "type": "integer"
+        },
         "gameType": {
+          "type": "string"
+        },
+        "games": {
+          "type": "array"
+        },
+        "map": {
           "type": "string"
         },
         "mode": {
           "type": "string"
         },
-        "map": {
-          "type": "string"
+        "success": {
+          "type": "boolean"
         },
-        "ended": {
-          "type": "integer"
+        "uuid": {
+          "type": "string"
         }
       },
       "type": "object"

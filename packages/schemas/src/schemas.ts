@@ -40,14 +40,14 @@ const HypixelStatus: SchemaData = {
     defName: "HypixelStatus",
     schemaPath: join(inDir, 'status.json'),
     dtsOutDir: outDir,
-    testUrls: playersToScan.map(uuid => `https://api.hypixel.net/status?uuid=${uuid}`)
+    testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/status?uuid=${uuid}`)
 }
 
 const HypixelRecentGames: SchemaData = {
     defName: "HypixelRecentGame",
     schemaPath: join(inDir, 'recentgames.json'),
     dtsOutDir: outDir,
-    testUrls: playersToScan.map(uuid => `https://api.hypixel.net/recentgames?uuid=${uuid}`)
+    testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/recentgames?uuid=${uuid}`)
 }
 
 const HypixelBooster: SchemaData = {
@@ -110,7 +110,7 @@ const HypixelPlayer: SchemaData = {
     defName: "HypixelPlayer",
     schemaPath: join(inDir, 'player.json'),
     dtsOutDir: outDir,
-    testUrls: playersToScan.map(uuid => `https://api.hypixel.net/player?uuid=${uuid}`),
+    testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/player?uuid=${uuid}`),
     dataPreprocess: (input) => input.player
 }
 

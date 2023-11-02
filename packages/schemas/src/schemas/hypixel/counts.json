@@ -47,6 +47,9 @@
                     "DRAGONWARS2": {
                       "type": "integer"
                     },
+                    "DRAW_THEIR_THING": {
+                      "type": "integer"
+                    },
                     "DROPPER": {
                       "type": "integer"
                     },
@@ -60,6 +63,9 @@
                       "type": "integer"
                     },
                     "HOLE_IN_THE_WALL": {
+                      "type": "integer"
+                    },
+                    "MINI_WALLS": {
                       "type": "integer"
                     },
                     "PARTY": {
@@ -99,6 +105,9 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "ctf_mini": {
+                      "type": "integer"
+                    },
                     "team_deathmatch": {
                       "type": "integer"
                     }
@@ -121,6 +130,9 @@
                     "BEDWARS_EIGHT_TWO": {
                       "type": "integer"
                     },
+                    "BEDWARS_EIGHT_TWO_ARMED": {
+                      "type": "integer"
+                    },
                     "BEDWARS_EIGHT_TWO_LUCKY": {
                       "type": "integer"
                     },
@@ -134,6 +146,9 @@
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR_RUSH": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_VOIDLESS": {
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_THREE": {
@@ -219,6 +234,9 @@
                     "DUELS_COMBO_DUEL": {
                       "type": "integer"
                     },
+                    "DUELS_MW_DOUBLES": {
+                      "type": "integer"
+                    },
                     "DUELS_MW_DUEL": {
                       "type": "integer"
                     },
@@ -247,6 +265,9 @@
                       "type": "integer"
                     },
                     "DUELS_UHC_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_UHC_FOUR": {
                       "type": "integer"
                     }
                   },
@@ -429,6 +450,9 @@
                     "crystal_hollows": {
                       "type": "integer"
                     },
+                    "dark_auction": {
+                      "type": "integer"
+                    },
                     "dungeon": {
                       "type": "integer"
                     },
@@ -484,7 +508,13 @@
                     "solo_insane_lucky": {
                       "type": "integer"
                     },
+                    "solo_insane_slime": {
+                      "type": "integer"
+                    },
                     "solo_normal": {
+                      "type": "integer"
+                    },
+                    "teams_insane": {
                       "type": "integer"
                     },
                     "teams_insane_lucky": {
@@ -525,7 +555,13 @@
                     "1v1_normal": {
                       "type": "integer"
                     },
+                    "friends_normal": {
+                      "type": "integer"
+                    },
                     "solo_normal": {
+                      "type": "integer"
+                    },
+                    "teams_normal": {
                       "type": "integer"
                     }
                   },
@@ -564,6 +600,9 @@
                       "type": "integer"
                     },
                     "CAPTURE": {
+                      "type": "integer"
+                    },
+                    "PVPRUN": {
                       "type": "integer"
                     },
                     "TNTAG": {

@@ -32,6 +32,12 @@
   "definitions": {
     "HypixelPunishmentStatistics": {
       "properties": {
+        "staff_rollingDaily": {
+          "type": "integer"
+        },
+        "staff_total": {
+          "type": "integer"
+        },
         "success": {
           "const": true
         },
@@ -42,12 +48,6 @@
           "type": "integer"
         },
         "watchdog_total": {
-          "type": "integer"
-        },
-        "staff_rollingDaily": {
-          "type": "integer"
-        },
-        "staff_total": {
           "type": "integer"
         }
       },
