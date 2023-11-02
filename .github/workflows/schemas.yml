@@ -1,4 +1,4 @@
-name: Compile Schemas
+name: Generate Schemas
 on:
   schedule:
     - cron: '0 0/6 * * *' # Top of every 6th hour (e.g. 6:00)
@@ -32,7 +32,7 @@ jobs:
     - name: Setup Environment
       uses: ./.github/actions/setup
 
-    - name: Build Schemas
+    - name: Generate Schemas
       run: lerna run build --scope @mcsb/schemas
       env:
         HYPIXEL_GEN_API_KEY: ${{ secrets.HYPIXEL_GEN_API_KEY }}
