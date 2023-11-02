@@ -42,6 +42,7 @@ jobs:
       with:
         branch: schemas/patch
         commit-message: 'chore(schemas): compile schemas'
+        author: 'GitHub <noreply@github.com>'
         labels: 'Module: Schemas'
         reviewers: robere2
         title: '[Automated] JSON schema updates'
