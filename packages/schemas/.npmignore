@@ -2,6 +2,7 @@ src
 .eslintrc.*
 rollup.config.ts
 tsconfig.json
+tsconfig.typedoc.json
 .turbo
 CHANGELOG.md
 typedoc.json
