@@ -86,10 +86,16 @@
                     "PVP_CTW": {
                       "type": "integer"
                     },
+                    "SIMON_SAYS": {
+                      "type": "integer"
+                    },
                     "SOCCER": {
                       "type": "integer"
                     },
                     "STARWARS": {
+                      "type": "integer"
+                    },
+                    "THROW_OUT": {
                       "type": "integer"
                     },
                     "ZOMBIES_ALIEN_ARCADIUM": {
@@ -151,6 +157,9 @@
                     "BEDWARS_EIGHT_TWO_RUSH": {
                       "type": "integer"
                     },
+                    "BEDWARS_EIGHT_TWO_ULTIMATE": {
+                      "type": "integer"
+                    },
                     "BEDWARS_EIGHT_TWO_UNDERWORLD": {
                       "type": "integer"
                     },
@@ -161,6 +170,9 @@
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR_RUSH": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_ULTIMATE": {
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR_VOIDLESS": {
@@ -370,6 +382,9 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "deathmatch": {
+                      "type": "integer"
+                    },
                     "gungame": {
                       "type": "integer"
                     },

@@ -19,6 +19,8 @@ const playersToScan: string[] = [
     "869c2a8943b041a8865667a2cc8c7923", // X
 ];
 
+const skyblockProfilesToScan: string[] = [];
+
 const inDir = join(__dirname, 'schemas', 'hypixel');
 const outDir = join(__dirname, '..', 'dist', 'types');
 
@@ -189,14 +191,12 @@ const HypixelBooster: SchemaData = {
     }
 }
 
-const HypixelLeaderboard: SchemaData = {
-    defName: "HypixelLeaderboard",
+const HypixelLeaderboards: SchemaData = {
+    defName: "HypixelLeaderboards",
     schemaPath: join(inDir, 'leaderboards.json'),
     dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/leaderboards"],
-    dataPreprocess: (input) => {
-        return Object.values(input.leaderboards).flat()
-    },
+    dataPreprocess: (input) => input.leaderboards,
     dataPostprocess: (input) => {
         // Pick random players from the leaderboards to feed into other schema checks
         // There's only one value, so this is shorthand for accessing the value directly by its URL
@@ -213,7 +213,7 @@ const HypixelLeaderboard: SchemaData = {
             )
         ]
 
-        pickRandom(allUniqueLeaderboardPlayers, 25).forEach(uuid => {
+        pickRandom(allUniqueLeaderboardPlayers, 20).forEach(uuid => {
             playersToScan.push(uuid)
         });
 
@@ -228,7 +228,27 @@ const HypixelPlayer: SchemaData = {
     schemaPath: join(inDir, 'player.json'),
     dtsOutDir: outDir,
     testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/player?uuid=${uuid}`),
-    dataPreprocess: (input) => input.player
+    dataPreprocess: (input) => input.player,
+    dataPostprocess: (input) => {
+        // Go through our list of players and add a random one of their SkyBlock profiles to be scanned.
+        // Adds a maximum of 15 profiles
+        const responseArray = Object.values(input);
+        const startingProfileCount = skyblockProfilesToScan.length;
+        const maxProfilesToAdd = 15;
+        console.log(skyblockProfilesToScan)
+        for(const response of responseArray) {
+            const playerProfiles = Object.values(response.player?.stats?.SkyBlock?.profiles ?? {});
+            const randomProfile = pickRandom(playerProfiles, 1);
+            if(!randomProfile || !(randomProfile as any).profile_id) {
+                continue;
+            }
+            skyblockProfilesToScan.push((randomProfile as any).profile_id)
+            if(skyblockProfilesToScan.length - maxProfilesToAdd >= startingProfileCount) {
+                break;
+            }
+        }
+        console.log(skyblockProfilesToScan)
+    }
 }
 
 const HypixelGuild: SchemaData = {
@@ -252,7 +272,79 @@ const HypixelSkyBlockEndedAuction: SchemaData = {
     schemaPath: join(inDir, 'skyblock', 'auctions_ended.json'),
     dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/skyblock/auctions_ended"],
-    dataPreprocess: (input) => input.auctions
+    dataPreprocess: (input) => input.auctions,
+    dataPostprocess: (input) => {
+        // There's only one value, so this is shorthand for accessing the value directly by its URL
+        const body = Object.values(input.responses)[0];
+
+        // Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to
+        // remove duplicates. Spread back into array so we can get values at an index.
+        const allUniqueProfiles = [
+            ...new Set<string>(
+                body.auctions?.map((auction: any) => auction.seller_profile)
+            )
+        ]
+        const allUniquePlayers = [
+            ...new Set<string>(
+                body.auctions?.map((auction: any) => [auction.seller, auction.buyer]).flat()
+            )
+        ]
+
+        pickRandom(allUniqueProfiles, 25).forEach(uuid => {
+            skyblockProfilesToScan.push(uuid)
+        });
+        pickRandom(allUniquePlayers, 15).forEach(uuid => {
+            playersToScan.push(uuid)
+        });
+    }
+}
+
+const HypixelSkyBlockBazaarProducts: SchemaData = {
+    defName: "HypixelSkyBlockBazaarProducts",
+    schemaPath: join(inDir, 'skyblock', 'bazaar.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/skyblock/bazaar"],
+    dataPreprocess: (input) => input.products
+}
+
+const HypixelSkyBlockBingoProfile: SchemaData = {
+    defName: "HypixelSkyBlockBingoProfile",
+    schemaPath: join(inDir, 'skyblock', 'bingo.json'),
+    dtsOutDir: outDir,
+    testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/skyblock/bingo?uuid=${uuid}`),
+    dataPreprocess: (input) => input.events
+}
+
+const HypixelSkyBlockFireSale: SchemaData = {
+    defName: "HypixelSkyBlockFireSale",
+    schemaPath: join(inDir, 'skyblock', 'firesales.json'),
+    dtsOutDir: outDir,
+    testUrls: () => ["https://api.hypixel.net/skyblock/firesales"],
+    dataPreprocess: (input) => input.sales
+}
+
+const HypixelSkyBlockMuseum: SchemaData = {
+    defName: "HypixelSkyBlockMuseum",
+    schemaPath: join(inDir, 'skyblock', 'museum.json'),
+    dtsOutDir: outDir,
+    testUrls: () => skyblockProfilesToScan.map(id => `https://api.hypixel.net/skyblock/museum?profile=${id}`),
+    dataPreprocess: (input) => Object.values(input.members)
+}
+
+const HypixelSkyBlockNews: SchemaData = {
+    defName: "HypixelSkyBlockNews",
+    schemaPath: join(inDir, 'skyblock', 'news.json'),
+    dtsOutDir: outDir,
+    testUrls: () => ["https://api.hypixel.net/skyblock/news"],
+    dataPreprocess: (input) => input.items
+}
+
+const HypixelSkyBlockProfile: SchemaData = {
+    defName: "HypixelSkyBlockProfile",
+    schemaPath: join(inDir, 'skyblock', 'profile.json'),
+    dtsOutDir: outDir,
+    testUrls: () => skyblockProfilesToScan.map(id => `https://api.hypixel.net/skyblock/profile?profile=${id}`),
+    dataPreprocess: (input) => input.profile
 }
 
 export default {
@@ -276,9 +368,15 @@ export default {
     HypixelStatus,
     HypixelRecentGames,
     HypixelBooster,
-    HypixelLeaderboard,
+    HypixelLeaderboards,
     HypixelPlayer,
     HypixelGuild,
     HypixelSkyBlockAuction,
-    HypixelSkyBlockEndedAuction
+    HypixelSkyBlockEndedAuction,
+    HypixelSkyBlockBazaarProducts,
+    HypixelSkyBlockBingoProfile,
+    HypixelSkyBlockFireSale,
+    HypixelSkyBlockMuseum,
+    HypixelSkyBlockNews,
+    HypixelSkyBlockProfile
 }

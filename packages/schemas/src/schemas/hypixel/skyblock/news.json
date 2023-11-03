@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://starboard.ecr.dev/schemas/hypixel/recentgames.json",
-  "title": "HypixelRecentGamesResponse",
-  "description": "Schema for data returned from https://api.hypixel.net/recentgames",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/news.json",
+  "title": "HypixelSkyBlockNewsResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/skyblock/news",
   "oneOf": [
     {
       "type": "object",
@@ -10,19 +10,16 @@
         "success": {
           "const": true
         },
-        "uuid": {
-          "type": "string"
-        },
-        "games": {
-          "type": "array",
+        "items": {
           "items": {
-            "$ref": "#/definitions/HypixelRecentGame"
-          }
+            "$ref": "#/definitions/HypixelSkyBlockNews"
+          },
+          "type": "array"
         }
       },
       "required": [
         "success",
-        "games"
+        "items"
       ]
     },
     {
@@ -48,21 +45,23 @@
     }
   ],
   "definitions": {
-    "HypixelRecentGame": {
+    "HypixelSkyBlockNews": {
       "properties": {
-        "date": {
-          "type": "integer"
+        "item": {
+          "properties": {
+            "material": {
+              "type": "string"
+            }
+          },
+          "type": "object"
         },
-        "ended": {
-          "type": "integer"
-        },
-        "gameType": {
+        "link": {
           "type": "string"
         },
-        "map": {
+        "text": {
           "type": "string"
         },
-        "mode": {
+        "title": {
           "type": "string"
         }
       },

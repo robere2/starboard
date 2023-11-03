@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://starboard.ecr.dev/schemas/hypixel/status.json",
-  "title": "HypixelStatusResponse",
-  "description": "Schema for data returned from https://api.hypixel.net/status",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/profile.json",
+  "title": "HypixelSkyBlockProfileResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/skyblock/profile",
   "oneOf": [
     {
       "type": "object",
@@ -10,16 +10,13 @@
         "success": {
           "const": true
         },
-        "uuid": {
-          "type": "string"
-        },
-        "session": {
-          "$ref": "#/definitions/HypixelStatus"
+        "profile": {
+          "$ref": "#/definitions/HypixelSkyBlockProfile"
         }
       },
       "required": [
         "success",
-        "session"
+        "profile"
       ]
     },
     {
@@ -45,22 +42,10 @@
     }
   ],
   "definitions": {
-    "HypixelStatus": {
+    "HypixelSkyBlockProfile": {
       "properties": {
-        "gameType": {
-          "type": "string"
-        },
-        "map": {
-          "type": "string"
-        },
-        "mode": {
-          "type": "string"
-        },
-        "online": {
-          "type": "boolean"
-        }
+
       },
-      "required": [],
       "type": "object"
     }
   }

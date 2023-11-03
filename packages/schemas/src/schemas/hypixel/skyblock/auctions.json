@@ -65,10 +65,11 @@
           "type": "string"
         },
         "bids": {
-          "type": "array",
           "items": {
-            "type": "object",
             "properties": {
+              "amount": {
+                "type": "number"
+              },
               "auction_id": {
                 "type": "string"
               },
@@ -78,14 +79,13 @@
               "profile_id": {
                 "type": "string"
               },
-              "amount": {
-                "type": "number"
-              },
               "timestamp": {
                 "type": "integer"
               }
-            }
-          }
+            },
+            "type": "object"
+          },
+          "type": "array"
         },
         "bin": {
           "type": "boolean"
@@ -97,10 +97,10 @@
           "type": "boolean"
         },
         "claimed_bidders": {
-          "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "type": "array"
         },
         "coop": {
           "items": {

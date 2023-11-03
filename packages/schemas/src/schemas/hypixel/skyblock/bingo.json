@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://starboard.ecr.dev/schemas/hypixel/recentgames.json",
-  "title": "HypixelRecentGamesResponse",
-  "description": "Schema for data returned from https://api.hypixel.net/recentgames",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/bingo.json",
+  "title": "HypixelSkyBlockBingoResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/skyblock/bingo",
   "oneOf": [
     {
       "type": "object",
@@ -10,19 +10,16 @@
         "success": {
           "const": true
         },
-        "uuid": {
-          "type": "string"
-        },
-        "games": {
+        "events": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/HypixelRecentGame"
+            "$ref": "#/definitions/HypixelSkyBlockBingoProfile"
           }
         }
       },
       "required": [
         "success",
-        "games"
+        "events"
       ]
     },
     {
@@ -48,22 +45,19 @@
     }
   ],
   "definitions": {
-    "HypixelRecentGame": {
+    "HypixelSkyBlockBingoProfile": {
       "properties": {
-        "date": {
+        "completed_goals": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "key": {
           "type": "integer"
         },
-        "ended": {
+        "points": {
           "type": "integer"
-        },
-        "gameType": {
-          "type": "string"
-        },
-        "map": {
-          "type": "string"
-        },
-        "mode": {
-          "type": "string"
         }
       },
       "type": "object"

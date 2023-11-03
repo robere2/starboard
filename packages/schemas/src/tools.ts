@@ -118,6 +118,11 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
             throw new Error('HTTP response did not include a JSON object.');
         }
         if (!responses[url].success) {
+            // Unlike the rest of the API, a player without a SkyBlock bingo card will mark the request as failed
+            // instead of just setting the requested value to null.
+            if(responses[url].cause === "No bingo data could be found") {
+                continue;
+            }
             throw new Error('Hypixel API Error: ' + responses[url].cause);
         }
 
