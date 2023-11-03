@@ -64,7 +64,6 @@ const HypixelPet: SchemaData = {
 const HypixelPetRarity: SchemaData = {
     defName: "HypixelPetRarity",
     schemaPath: join(inDir, 'resources', 'vanity', 'pets.json'),
-    dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/resources/vanity/pets"],
     dataPreprocess: (input) => input.rarities
 }
@@ -80,7 +79,6 @@ const HypixelCompanion: SchemaData = {
 const HypixelCompanionRarity: SchemaData = {
     defName: "HypixelCompanionRarity",
     schemaPath: join(inDir, 'resources', 'vanity', 'companions.json'),
-    dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/resources/vanity/companions"],
     dataPreprocess: (input) => input.rarities
 }
