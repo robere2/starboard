@@ -66,6 +66,15 @@ function md5(str: string): string {
     return crypto.createHash("md5").update(str).digest().toString("hex");
 }
 
+let totalRequests = 0;
+/**
+ * Get the total number of Hypixel API HTTP requests sent by the generator via {@link processHypixelSchemaChanges}.
+ * @returns The total number of requests sent, including unsuccessful ones.
+ */
+export function getTotalRequests(): number {
+    return totalRequests;
+}
+
 /**
  * Read a Hypixel API schema from the file system and test it against various URLs to search for new changes. Any
  * changes that are found will be written back to the schema, and new type definitions will be generated.
@@ -111,6 +120,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
         const res = await fetch(url, {
             headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
         });
+        totalRequests++;
 
         responses[url] = await res.json() as any; // Type checking is done below
         // Assert that a valid Hypixel API response was received

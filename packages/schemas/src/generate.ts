@@ -1,4 +1,4 @@
-import {processHypixelSchemaChanges} from "./tools.js";
+import {getTotalRequests, processHypixelSchemaChanges} from "./tools.js";
 import dotenv from "dotenv";
 import Schemas from "./schemas.js";
 dotenv.config();
@@ -16,6 +16,10 @@ declare global {
 if(!process.env.HYPIXEL_GEN_API_KEY) {
     throw new Error('Required environment variable "HYPIXEL_GEN_API_KEY" is missing or malformed. Visit https://developer.hypixel.net/dashboard to get one.')
 }
+
+// We want to track the number of requests we send out and at what frequency, so we can display them in the
+// logs later.
+const startTime = Date.now();
 
 // The order of these function calls matters. The API response of different endpoints feeds into the
 // list of other URLs to test.
@@ -54,3 +58,11 @@ await processHypixelSchemaChanges(Schemas.HypixelRecentGames)
 await processHypixelSchemaChanges(Schemas.HypixelPlayer)
 await processHypixelSchemaChanges(Schemas.HypixelGuild)
 await processHypixelSchemaChanges(Schemas.HypixelSkyBlockProfile)
+
+const endTime = Date.now();
+const timeTaken = endTime - startTime;
+
+console.log('----------------------------------------------------')
+console.log(`|         Generation complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000)}s         |`)
+console.log(`| Sent a total of ${getTotalRequests()} requests to the Hypixel API. |`)
+console.log('----------------------------------------------------')
