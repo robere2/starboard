@@ -1,7 +1,7 @@
 import {JSONSchema4} from "json-schema";
 
 export interface SchemaData {
-    dtsOutDir: string,
+    dtsOutDir?: string,
     schemaPath: string,
     defName: string,
     testUrls: string[] | (() => string[]) | (() => Promise<string[]>),

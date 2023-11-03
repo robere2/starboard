@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/auction.json",
+  "title": "HypixelSkyBlockAuctionResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/skyblock/auction",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "auctions": {
+          "type": "array",
+          "items": {
+            "$ref": "auctions.json#/definitions/HypixelSkyBlockAuction"
+          }
+        }
+      },
+      "required": [
+        "success",
+        "auctions"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/news.json",
+  "title": "HypixelSkyBlockNewsResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/skyblock/news",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/HypixelSkyBlockNews"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "success",
+        "items"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelSkyBlockNews": {
+      "properties": {
+        "item": {
+          "properties": {
+            "material": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "link": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

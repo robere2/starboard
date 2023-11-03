@@ -1,0 +1,809 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/skyblock/items.json",
+  "title": "HypixelSkyBlockItemsResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/resources/skyblock/items",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "lastUpdated": {
+          "type": "integer"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/definitions/HypixelSkyBlockItem"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "success",
+        "items"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelSkyBlockItem": {
+      "properties": {
+        "ability_damage_scaling": {
+          "type": "number"
+        },
+        "can_have_attributes": {
+          "type": "boolean"
+        },
+        "cannot_reforge": {
+          "type": "boolean"
+        },
+        "catacombs_requirements": {
+          "items": {
+            "properties": {
+              "dungeon_type": {
+                "type": "string"
+              },
+              "level": {
+                "type": "integer"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "category": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "crystal": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "dungeon_item": {
+          "type": "boolean"
+        },
+        "dungeon_item_conversion_cost": {
+          "properties": {
+            "amount": {
+              "type": "number"
+            },
+            "essence_type": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "durability": {
+          "type": "integer"
+        },
+        "enchantments": {
+          "properties": {
+            "aiming": {
+              "type": "integer"
+            },
+            "aqua_affinity": {
+              "type": "integer"
+            },
+            "big_brain": {
+              "type": "integer"
+            },
+            "counter_strike": {
+              "type": "integer"
+            },
+            "depth_strider": {
+              "type": "integer"
+            },
+            "efficiency": {
+              "type": "integer"
+            },
+            "feather_falling": {
+              "type": "integer"
+            },
+            "first_strike": {
+              "type": "integer"
+            },
+            "power": {
+              "type": "integer"
+            },
+            "quantum": {
+              "type": "integer"
+            },
+            "rainbow": {
+              "type": "integer"
+            },
+            "reflection": {
+              "type": "integer"
+            },
+            "replenish": {
+              "type": "integer"
+            },
+            "respiration": {
+              "type": "integer"
+            },
+            "scavenger": {
+              "type": "integer"
+            },
+            "sharpness": {
+              "type": "integer"
+            },
+            "transylvanian": {
+              "type": "integer"
+            },
+            "ultimate_the_one": {
+              "type": "integer"
+            },
+            "vampirism": {
+              "type": "integer"
+            },
+            "vicious": {
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "furniture": {
+          "type": "string"
+        },
+        "gear_score": {
+          "type": "integer"
+        },
+        "gemstone_slots": {
+          "items": {
+            "properties": {
+              "slot_type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "generator": {
+          "type": "string"
+        },
+        "generator_tier": {
+          "type": "integer"
+        },
+        "glowing": {
+          "type": "boolean"
+        },
+        "hide_from_viewrecipe_command": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "item_specific": {
+          "properties": {
+            "bonus_experience_chance": {
+              "type": "number"
+            },
+            "bonus_fishing_speed_per_bucket": {
+              "type": "number"
+            },
+            "bonus_heal": {
+              "type": "number"
+            },
+            "bonus_rift_damage_vs_vampire": {
+              "type": "number"
+            },
+            "bundled_amount": {
+              "type": "number"
+            },
+            "bundled_item_id": {
+              "type": "string"
+            },
+            "can_play_snake": {
+              "type": "boolean"
+            },
+            "can_play_tictactoe": {
+              "type": "boolean"
+            },
+            "charges": {
+              "type": "number"
+            },
+            "city_project": {
+              "type": "string"
+            },
+            "consumed_item": {
+              "type": "string"
+            },
+            "cooldown_seconds": {
+              "type": "number"
+            },
+            "damage_multiplier": {
+              "type": "number"
+            },
+            "damage_per_player": {
+              "type": "number"
+            },
+            "duration_seconds": {
+              "type": "number"
+            },
+            "duration_ticks": {
+              "type": "number"
+            },
+            "effect_duration_seconds": {
+              "type": "number"
+            },
+            "experience_gained": {
+              "type": "number"
+            },
+            "extra_pelts": {
+              "type": "number"
+            },
+            "flex_skins": {
+              "items": {
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "skin_value": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "has_contact_directory": {
+              "type": "boolean"
+            },
+            "has_dnd": {
+              "type": "boolean"
+            },
+            "heal": {
+              "type": "number"
+            },
+            "heal_on_hit": {
+              "type": "number"
+            },
+            "hearts_reduction": {
+              "type": "number"
+            },
+            "mana_cost": {
+              "type": "number"
+            },
+            "mana_refund": {
+              "type": "number"
+            },
+            "mana_regen_per_player": {
+              "type": "number"
+            },
+            "max_bonus_fishing_speed": {
+              "type": "number"
+            },
+            "max_contacts": {
+              "type": "number"
+            },
+            "max_musicdiscs": {
+              "type": "number"
+            },
+            "max_other_players": {
+              "type": "number"
+            },
+            "max_players": {
+              "type": "number"
+            },
+            "motes_on_join_per_eat": {
+              "type": "number"
+            },
+            "motes_percent_per_eat": {
+              "type": "number"
+            },
+            "permanent_crops_farming_fortune": {
+              "type": "number"
+            },
+            "permanent_health": {
+              "type": "number"
+            },
+            "portal": {
+              "properties": {
+                "description_name": {
+                  "type": "string"
+                },
+                "destination_mode": {
+                  "type": "string"
+                },
+                "holo_name": {
+                  "type": "string"
+                },
+                "location_tag": {
+                  "type": "string"
+                },
+                "offset": {
+                  "type": "string"
+                },
+                "schematic_file": {
+                  "type": "string"
+                },
+                "skill_requirement": {
+                  "properties": {
+                    "level": {
+                      "type": "integer"
+                    },
+                    "skill": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "range": {
+              "type": "number"
+            },
+            "range_blocks": {
+              "type": "number"
+            },
+            "regained_rift_time": {
+              "type": "number"
+            },
+            "rift_stats": {
+              "properties": {
+                "rift_damage": {
+                  "type": "number"
+                },
+                "rift_walk_speed": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "rift_time_gain": {
+              "type": "number"
+            },
+            "rift_time_per_eat": {
+              "type": "number"
+            },
+            "rift_time_regain_on_kill": {
+              "type": "number"
+            },
+            "scaling": {
+              "properties": {
+                "tiers": {
+                  "items": {
+                    "properties": {
+                      "numeric": {
+                        "type": "integer"
+                      },
+                      "stats": {
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "slow_duration_seconds": {
+              "type": "number"
+            },
+            "speed_boost": {
+              "type": "number"
+            },
+            "speed_duration_seconds": {
+              "type": "number"
+            },
+            "speed_on_farming_island": {
+              "type": "number"
+            },
+            "stats": {
+              "properties": {
+                "attack_speed": {
+                  "type": "number"
+                },
+                "critical_damage": {
+                  "type": "number"
+                },
+                "strength": {
+                  "type": "number"
+                },
+                "walk_speed": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "stats_on_rift": {
+              "properties": {
+                "rift_intelligence": {
+                  "type": "number"
+                },
+                "rift_mana_regen": {
+                  "type": "number"
+                },
+                "rift_time": {
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "lose_motes_value_on_transfer": {
+          "type": "boolean"
+        },
+        "material": {
+          "type": "string"
+        },
+        "motes_sell_price": {
+          "type": "number"
+        },
+        "museum": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "npc_sell_price": {
+          "type": "number"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "prestige": {
+          "properties": {
+            "costs": {
+              "items": {
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "item_id": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "private_island": {
+          "type": "string"
+        },
+        "rarity_salvageable": {
+          "type": "boolean"
+        },
+        "requirements": {
+          "items": {
+            "properties": {
+              "level": {
+                "type": "number"
+              },
+              "skill": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "rift_transferrable": {
+          "type": "boolean"
+        },
+        "salvage": {
+          "properties": {
+            "amount": {
+              "type": "number"
+            },
+            "item_id": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "salvageable_from_recipe": {
+          "type": "boolean"
+        },
+        "salvages": {
+          "items": {
+            "properties": {
+              "amount": {
+                "type": "number"
+              },
+              "essence_type": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "skin": {
+          "type": "string"
+        },
+        "soulbound": {
+          "type": "string"
+        },
+        "stats": {
+          "properties": {
+            "ABILITY_DAMAGE_PERCENT": {
+              "type": "number"
+            },
+            "ATTACK_SPEED": {
+              "type": "number"
+            },
+            "BREAKING_POWER": {
+              "type": "number"
+            },
+            "CRITICAL_CHANCE": {
+              "type": "number"
+            },
+            "CRITICAL_DAMAGE": {
+              "type": "number"
+            },
+            "DAMAGE": {
+              "type": "number"
+            },
+            "DEFENSE": {
+              "type": "number"
+            },
+            "FARMING_FORTUNE": {
+              "type": "number"
+            },
+            "FEROCITY": {
+              "type": "number"
+            },
+            "HEALTH": {
+              "type": "number"
+            },
+            "INTELLIGENCE": {
+              "type": "number"
+            },
+            "MAGIC_FIND": {
+              "type": "number"
+            },
+            "MINING_FORTUNE": {
+              "type": "number"
+            },
+            "MINING_SPEED": {
+              "type": "number"
+            },
+            "PET_LUCK": {
+              "type": "number"
+            },
+            "RIFT_DAMAGE": {
+              "type": "number"
+            },
+            "RIFT_INTELLIGENCE": {
+              "type": "number"
+            },
+            "RIFT_TIME": {
+              "type": "number"
+            },
+            "SEA_CREATURE_CHANCE": {
+              "type": "number"
+            },
+            "STRENGTH": {
+              "type": "number"
+            },
+            "SWING_RANGE": {
+              "type": "number"
+            },
+            "TRUE_DEFENSE": {
+              "type": "number"
+            },
+            "WALK_SPEED": {
+              "type": "number"
+            },
+            "WEAPON_ABILITY_DAMAGE": {
+              "type": "number"
+            },
+            "combat_wisdom": {
+              "type": "number"
+            },
+            "critical_damage": {
+              "type": "number"
+            },
+            "damage": {
+              "type": "number"
+            },
+            "defense": {
+              "type": "number"
+            },
+            "farming_wisdom": {
+              "type": "number"
+            },
+            "ferocity": {
+              "type": "number"
+            },
+            "fishing_speed": {
+              "type": "number"
+            },
+            "fishing_wisdom": {
+              "type": "number"
+            },
+            "foraging_wisdom": {
+              "type": "number"
+            },
+            "health": {
+              "type": "number"
+            },
+            "health_regeneration": {
+              "type": "number"
+            },
+            "intelligence": {
+              "type": "number"
+            },
+            "magic_find": {
+              "type": "number"
+            },
+            "mending": {
+              "type": "number"
+            },
+            "rift_Time": {
+              "type": "number"
+            },
+            "rift_damage": {
+              "type": "number"
+            },
+            "rift_health": {
+              "type": "number"
+            },
+            "rift_intelligence": {
+              "type": "number"
+            },
+            "rift_mana_regen": {
+              "type": "number"
+            },
+            "rift_time": {
+              "type": "number"
+            },
+            "rift_walk_speed": {
+              "type": "number"
+            },
+            "sea_creature_chance": {
+              "type": "number"
+            },
+            "strength": {
+              "type": "number"
+            },
+            "vitality": {
+              "type": "number"
+            },
+            "walk_speed": {
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "sword_type": {
+          "type": "string"
+        },
+        "tier": {
+          "type": "string"
+        },
+        "tiered_stats": {
+          "properties": {
+            "ATTACK_SPEED": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "CRITICAL_CHANCE": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "CRITICAL_DAMAGE": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "DAMAGE": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "DEFENSE": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "HEALTH": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "INTELLIGENCE": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "STRENGTH": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "WALK_SPEED": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "WEAPON_ABILITY_DAMAGE": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "unstackable": {
+          "type": "boolean"
+        },
+        "upgrade_costs": {
+          "items": {
+            "items": {
+              "properties": {
+                "amount": {
+                  "type": "number"
+                },
+                "essence_type": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "type": "array"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  }
+}

@@ -1,4 +1,3 @@
-import Schemas from "./schemas.js";
 import crypto from "crypto";
 import {SchemaData} from "./SchemaData";
 import {JSONSchema4} from "json-schema";
@@ -11,41 +10,6 @@ import {dirname, join} from "path";
 import {fileURLToPath} from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-
-/**
- * Pick 25 player UUIDs at random from the leaderboards in the response from the `/leaderboards` endpoint. This gives
- * us a good sample of active players.
- * @remarks The returned array's length could be less than 25 if there aren't at least 25 players on all leaderboards,
- * but practically this will not happen (usually there is around 5,000 unique players, as of writing).
- * @param body JSON-parsed response body from the Hypixel API
- * @returns An array of 25 player UUIDs.
- */
-export function pickRandomLeaderboardPlayers(body: any): string[] {
-    // Flatten all leaderboards down into an array containing just player UUIDs, then pass to the Set constructor to
-    // remove duplicates. Spread back into array so we can get values at an index.
-    const allUniqueLeaderboardPlayers = [
-        ...new Set<string>(
-            Object.values(body.leaderboards)
-                .flat()
-                .map(v => (v as any).leaders ?? [])
-                .flat()
-        )
-    ]
-
-    // Pick 25 random players from all leaderboards
-    let leaderboardPlayersCount = 25;
-    const pickedPlayers: string[] = [];
-    if(allUniqueLeaderboardPlayers.length < leaderboardPlayersCount) {
-        leaderboardPlayersCount = allUniqueLeaderboardPlayers.length;
-    }
-    for(let i = 0; i < leaderboardPlayersCount; i++) {
-        const randomIndex = Math.floor(allUniqueLeaderboardPlayers.length * Math.random());
-        pickedPlayers.push(`https://api.hypixel.net/player?uuid=${allUniqueLeaderboardPlayers[randomIndex]}`);
-        allUniqueLeaderboardPlayers.splice(randomIndex, 1);
-    }
-
-    return pickedPlayers;
-}
 
 /**
  * While JSON schemas do not need to obey any specific order, when we write them to the file system, we want to make
@@ -77,21 +41,20 @@ export function sortObject<T>(input: T): T {
 }
 
 /**
- * Crawl a selection of Hypixel API URLs to look for changes in the schemas. If changes exist, write them to the file
- * system. The order of schemas is important, as the output of some schemas lead as input into others.
- * @returns A `Promise` that resolves when all Hypixel schemas have been updated.
- * @throws
- * - `Error` on Hypixel API request failure
- * - `Error` on file I/O error
- * - `Error` if any of the required schema `.json` files are not present on the file system
+ * Pick random values out of an array.
+ * @param arr Array to pick items out of.
+ * @param amount The number of items to pick. If less than or equal to 0, no items will be picked.
+ * If greater than or equal to the length of the array, all items will be picked, but in a random order.
+ * @returns An array with all of the randomly picked items.
  */
-export async function updateAndBuildHypixelSchemas() {
-    // The order of these function calls matters. The API response of different endpoints feeds into the
-    // list of other URLs to test.
-    await processHypixelSchemaChanges(Schemas.HypixelBooster)
-    await processHypixelSchemaChanges(Schemas.HypixelLeaderboard)
-    await processHypixelSchemaChanges(Schemas.HypixelPlayer)
-    await processHypixelSchemaChanges(Schemas.HypixelGuild)
+export function pickRandom<T>(arr: T[], amount: number): T[] {
+    const output: T[] = [];
+    const arrCopy = [...arr]
+    for(let i = 0; i < amount; i++) {
+        const randomIndex = Math.floor(Math.random() * arrCopy.length);
+        output.push(arrCopy.splice(randomIndex, 1)[0])
+    }
+    return output;
 }
 
 /**
@@ -101,6 +64,15 @@ export async function updateAndBuildHypixelSchemas() {
  */
 function md5(str: string): string {
     return crypto.createHash("md5").update(str).digest().toString("hex");
+}
+
+let totalRequests = 0;
+/**
+ * Get the total number of Hypixel API HTTP requests sent by the generator via {@link processHypixelSchemaChanges}.
+ * @returns The total number of requests sent, including unsuccessful ones.
+ */
+export function getTotalRequests(): number {
+    return totalRequests;
 }
 
 /**
@@ -148,6 +120,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
         const res = await fetch(url, {
             headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
         });
+        totalRequests++;
 
         responses[url] = await res.json() as any; // Type checking is done below
         // Assert that a valid Hypixel API response was received
@@ -155,6 +128,11 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
             throw new Error('HTTP response did not include a JSON object.');
         }
         if (!responses[url].success) {
+            // Unlike the rest of the API, a player without a SkyBlock bingo card will mark the request as failed
+            // instead of just setting the requested value to null.
+            if(responses[url].cause === "No bingo data could be found") {
+                continue;
+            }
             throw new Error('Hypixel API Error: ' + responses[url].cause);
         }
 

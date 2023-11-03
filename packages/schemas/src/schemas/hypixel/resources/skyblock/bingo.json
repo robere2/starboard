@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/skyblock/bingo.json",
+  "title": "HypixelSkyBlockBingoResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/resources/skyblock/bingo",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "lastUpdated": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "goals": {
+          "items": {
+            "$ref": "#/definitions/HypixelSkyBlockBingoGoal"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "success",
+        "goals"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelSkyBlockBingoGoal": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "lore": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "progress": {
+          "type": "integer"
+        },
+        "requiredAmount": {
+          "type": "integer"
+        },
+        "tiers": {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}

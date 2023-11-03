@@ -1,0 +1,756 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/counts.json",
+  "title": "HypixelPlayerCountsResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/counts",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/HypixelPlayerCounts"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelPlayerCounts": {
+      "properties": {
+        "games": {
+          "properties": {
+            "ARCADE": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "DAYONE": {
+                      "type": "integer"
+                    },
+                    "DEFENDER": {
+                      "type": "integer"
+                    },
+                    "DRAGONWARS2": {
+                      "type": "integer"
+                    },
+                    "DRAW_THEIR_THING": {
+                      "type": "integer"
+                    },
+                    "DROPPER": {
+                      "type": "integer"
+                    },
+                    "ENDER": {
+                      "type": "integer"
+                    },
+                    "FARM_HUNT": {
+                      "type": "integer"
+                    },
+                    "HALLOWEEN_SIMULATOR": {
+                      "type": "integer"
+                    },
+                    "HIDE_AND_SEEK_PARTY_POOPER": {
+                      "type": "integer"
+                    },
+                    "HIDE_AND_SEEK_PROP_HUNT": {
+                      "type": "integer"
+                    },
+                    "HOLE_IN_THE_WALL": {
+                      "type": "integer"
+                    },
+                    "MINI_WALLS": {
+                      "type": "integer"
+                    },
+                    "ONEINTHEQUIVER": {
+                      "type": "integer"
+                    },
+                    "PARTY": {
+                      "type": "integer"
+                    },
+                    "PIXEL_PARTY": {
+                      "type": "integer"
+                    },
+                    "PVP_CTW": {
+                      "type": "integer"
+                    },
+                    "SIMON_SAYS": {
+                      "type": "integer"
+                    },
+                    "SOCCER": {
+                      "type": "integer"
+                    },
+                    "STARWARS": {
+                      "type": "integer"
+                    },
+                    "THROW_OUT": {
+                      "type": "integer"
+                    },
+                    "ZOMBIES_ALIEN_ARCADIUM": {
+                      "type": "integer"
+                    },
+                    "ZOMBIES_BAD_BLOOD": {
+                      "type": "integer"
+                    },
+                    "ZOMBIES_DEAD_END": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "BATTLEGROUND": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "ctf_mini": {
+                      "type": "integer"
+                    },
+                    "domination": {
+                      "type": "integer"
+                    },
+                    "team_deathmatch": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "BEDWARS": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "BEDWARS_EIGHT_ONE": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_TWO": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_TWO_ARMED": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_TWO_LUCKY": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_TWO_RUSH": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_TWO_ULTIMATE": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_TWO_UNDERWORLD": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_LUCKY": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_RUSH": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_ULTIMATE": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_VOIDLESS": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_THREE": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_PRACTICE": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_TWO_FOUR": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "BUILD_BATTLE": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "BUILD_BATTLE_GUESS_THE_BUILD": {
+                      "type": "integer"
+                    },
+                    "BUILD_BATTLE_HALLOWEEN": {
+                      "type": "integer"
+                    },
+                    "BUILD_BATTLE_SOLO_NORMAL": {
+                      "type": "integer"
+                    },
+                    "BUILD_BATTLE_SOLO_NORMAL_LATEST": {
+                      "type": "integer"
+                    },
+                    "BUILD_BATTLE_SOLO_PRO": {
+                      "type": "integer"
+                    },
+                    "BUILD_BATTLE_TEAMS_NORMAL": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "DUELS": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "DUELS_BLITZ_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_BOWSPLEEF_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_BOW_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_BOXING_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_BRIDGE_2V2V2V2": {
+                      "type": "integer"
+                    },
+                    "DUELS_BRIDGE_3V3V3V3": {
+                      "type": "integer"
+                    },
+                    "DUELS_BRIDGE_DOUBLES": {
+                      "type": "integer"
+                    },
+                    "DUELS_BRIDGE_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_BRIDGE_FOUR": {
+                      "type": "integer"
+                    },
+                    "DUELS_BRIDGE_THREES": {
+                      "type": "integer"
+                    },
+                    "DUELS_CLASSIC_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_COMBO_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_MW_DOUBLES": {
+                      "type": "integer"
+                    },
+                    "DUELS_MW_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_OP_DOUBLES": {
+                      "type": "integer"
+                    },
+                    "DUELS_OP_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_PARKOUR_EIGHT": {
+                      "type": "integer"
+                    },
+                    "DUELS_POTION_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_SUMO_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_SW_DOUBLES": {
+                      "type": "integer"
+                    },
+                    "DUELS_SW_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_UHC_DOUBLES": {
+                      "type": "integer"
+                    },
+                    "DUELS_UHC_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_UHC_FOUR": {
+                      "type": "integer"
+                    },
+                    "DUELS_UHC_MEETUP": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "HOUSING": {
+              "properties": {
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "IDLE": {
+              "properties": {
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "LEGACY": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "ARENA": {
+                      "type": "integer"
+                    },
+                    "GINGERBREAD": {
+                      "type": "integer"
+                    },
+                    "PAINTBALL": {
+                      "type": "integer"
+                    },
+                    "QUAKECRAFT": {
+                      "type": "integer"
+                    },
+                    "VAMPIREZ": {
+                      "type": "integer"
+                    },
+                    "WALLS": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "LIMBO": {
+              "properties": {
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "MAIN_LOBBY": {
+              "properties": {
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "MCGO": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "deathmatch": {
+                      "type": "integer"
+                    },
+                    "gungame": {
+                      "type": "integer"
+                    },
+                    "normal": {
+                      "type": "integer"
+                    },
+                    "normal_party": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "MURDER_MYSTERY": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "MURDER_ASSASSINS": {
+                      "type": "integer"
+                    },
+                    "MURDER_CLASSIC": {
+                      "type": "integer"
+                    },
+                    "MURDER_DOUBLE_UP": {
+                      "type": "integer"
+                    },
+                    "MURDER_INFECTION": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "PIT": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "PIT": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "PROTOTYPE": {
+              "properties": {
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "QUEUE": {
+              "properties": {
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "REPLAY": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "BASE": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "SKYBLOCK": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "combat_1": {
+                      "type": "integer"
+                    },
+                    "combat_3": {
+                      "type": "integer"
+                    },
+                    "crimson_isle": {
+                      "type": "integer"
+                    },
+                    "crystal_hollows": {
+                      "type": "integer"
+                    },
+                    "dark_auction": {
+                      "type": "integer"
+                    },
+                    "dungeon": {
+                      "type": "integer"
+                    },
+                    "dungeon_hub": {
+                      "type": "integer"
+                    },
+                    "dynamic": {
+                      "type": "integer"
+                    },
+                    "farming_1": {
+                      "type": "integer"
+                    },
+                    "foraging_1": {
+                      "type": "integer"
+                    },
+                    "garden": {
+                      "type": "integer"
+                    },
+                    "hub": {
+                      "type": "integer"
+                    },
+                    "kuudra": {
+                      "type": "integer"
+                    },
+                    "mining_1": {
+                      "type": "integer"
+                    },
+                    "mining_2": {
+                      "type": "integer"
+                    },
+                    "mining_3": {
+                      "type": "integer"
+                    },
+                    "rift": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "SKYWARS": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "solo_insane": {
+                      "type": "integer"
+                    },
+                    "solo_insane_lucky": {
+                      "type": "integer"
+                    },
+                    "solo_insane_slime": {
+                      "type": "integer"
+                    },
+                    "solo_insane_tnt_madness": {
+                      "type": "integer"
+                    },
+                    "solo_normal": {
+                      "type": "integer"
+                    },
+                    "teams_insane": {
+                      "type": "integer"
+                    },
+                    "teams_insane_lucky": {
+                      "type": "integer"
+                    },
+                    "teams_normal": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "SMP": {
+              "properties": {
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "SPEED_UHC": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "solo_normal": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "SUPER_SMASH": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "1v1_normal": {
+                      "type": "integer"
+                    },
+                    "2v2_normal": {
+                      "type": "integer"
+                    },
+                    "friends_normal": {
+                      "type": "integer"
+                    },
+                    "solo_normal": {
+                      "type": "integer"
+                    },
+                    "teams_normal": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "SURVIVAL_GAMES": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "solo_normal": {
+                      "type": "integer"
+                    },
+                    "teams_normal": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "TNTGAMES": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "BOWSPLEEF": {
+                      "type": "integer"
+                    },
+                    "CAPTURE": {
+                      "type": "integer"
+                    },
+                    "PVPRUN": {
+                      "type": "integer"
+                    },
+                    "TNTAG": {
+                      "type": "integer"
+                    },
+                    "TNTRUN": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "TOURNAMENT_LOBBY": {
+              "properties": {
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "UHC": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "SOLO": {
+                      "type": "integer"
+                    },
+                    "TEAMS": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "WALLS3": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "standard": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "WOOL_GAMES": {
+              "properties": {
+                "modes": {
+                  "properties": {
+                    "wool_wars_two_four": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "players": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "playerCount": {
+          "type": "integer"
+        },
+        "success": {
+          "const": true
+        }
+      },
+      "required": [
+        "games",
+        "playerCount",
+        "success"
+      ],
+      "type": "object"
+    }
+  }
+}

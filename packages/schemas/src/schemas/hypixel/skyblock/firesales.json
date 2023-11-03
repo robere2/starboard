@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/firesales.json",
+  "title": "HypixelSkyBlockFireSalesResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/skyblock/firesales",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "sales": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HypixelSkyBlockFireSale"
+          }
+        }
+      },
+      "required": [
+        "success",
+        "sales"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelSkyBlockFireSale": {
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "end": {
+          "type": "integer"
+        },
+        "item_id": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        },
+        "start": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/auctions.json",
+  "title": "HypixelSkyBlockAuctionsResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/skyblock/auctions",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/HypixelSkyBlockAuctions"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelSkyBlockAuctions": {
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "page": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        },
+        "totalAuctions": {
+          "type": "integer"
+        },
+        "lastUpdated": {
+          "type": "integer"
+        },
+        "auctions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HypixelSkyBlockAuction"
+          }
+        }
+      },
+      "required": [
+        "success"
+      ],
+      "type": "object"
+    },
+    "HypixelSkyBlockAuction": {
+      "properties": {
+        "auctioneer": {
+          "type": "string"
+        },
+        "bids": {
+          "items": {
+            "properties": {
+              "amount": {
+                "type": "number"
+              },
+              "auction_id": {
+                "type": "string"
+              },
+              "bidder": {
+                "type": "string"
+              },
+              "profile_id": {
+                "type": "string"
+              },
+              "timestamp": {
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "bin": {
+          "type": "boolean"
+        },
+        "category": {
+          "type": "string"
+        },
+        "claimed": {
+          "type": "boolean"
+        },
+        "claimed_bidders": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "coop": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "end": {
+          "type": "integer"
+        },
+        "extra": {
+          "type": "string"
+        },
+        "highest_bid_amount": {
+          "type": "integer"
+        },
+        "item_bytes": {
+          "type": "string"
+        },
+        "item_lore": {
+          "type": "string"
+        },
+        "item_name": {
+          "type": "string"
+        },
+        "item_uuid": {
+          "type": "string"
+        },
+        "last_updated": {
+          "type": "integer"
+        },
+        "profile_id": {
+          "type": "string"
+        },
+        "start": {
+          "type": "integer"
+        },
+        "starting_bid": {
+          "type": "integer"
+        },
+        "tier": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  }
+}

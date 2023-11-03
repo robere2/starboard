@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/recentgames.json",
+  "title": "HypixelRecentGamesResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/recentgames",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "games": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HypixelRecentGame"
+          }
+        }
+      },
+      "required": [
+        "success",
+        "games"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelRecentGame": {
+      "properties": {
+        "date": {
+          "type": "integer"
+        },
+        "ended": {
+          "type": "integer"
+        },
+        "gameType": {
+          "type": "string"
+        },
+        "map": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}
