@@ -157,6 +157,9 @@
                     "BEDWARS_EIGHT_TWO_RUSH": {
                       "type": "integer"
                     },
+                    "BEDWARS_EIGHT_TWO_SWAP": {
+                      "type": "integer"
+                    },
                     "BEDWARS_EIGHT_TWO_ULTIMATE": {
                       "type": "integer"
                     },
@@ -164,6 +167,9 @@
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_ARMED": {
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR_LUCKY": {

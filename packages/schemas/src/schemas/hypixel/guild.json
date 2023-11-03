@@ -214,6 +214,9 @@
           },
           "type": "object"
         },
+        "hideGmTag": {
+          "type": "boolean"
+        },
         "joinable": {
           "type": "boolean"
         },

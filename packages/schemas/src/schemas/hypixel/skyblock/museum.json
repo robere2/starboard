@@ -56,6 +56,9 @@
           "properties": {
             "ADAPTIVE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -128,6 +131,34 @@
             },
             "ANGLER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "ANNIHILATION_CLOAK": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -200,6 +231,9 @@
             },
             "ARMOR_OF_MAGMA": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -219,6 +253,9 @@
             },
             "ARMOR_OF_THE_PACK": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -238,6 +275,9 @@
             },
             "ARMOR_OF_YOG": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -485,6 +525,9 @@
             },
             "BALLOON_SNAKE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -557,6 +600,9 @@
             },
             "BERSERKER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -599,8 +645,58 @@
               },
               "type": "object"
             },
+            "BLAZE": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "BLAZETEKK_HAM_RADIO": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "BONE_BOOMERANG": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -622,6 +718,31 @@
               "type": "object"
             },
             "BONE_NECKLACE": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "BONE_REAVER": {
               "properties": {
                 "borrowing": {
                   "type": "boolean"
@@ -720,8 +841,14 @@
             },
             "BOUQUET_OF_LIES": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -808,6 +935,9 @@
             },
             "CACTUS": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -880,6 +1010,9 @@
             },
             "CLEAVER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -977,6 +1110,9 @@
             },
             "CRIMSON_HUNTER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1096,6 +1232,9 @@
             },
             "CRYSTAL": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1193,6 +1332,9 @@
             },
             "DEATH_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1215,6 +1357,9 @@
             },
             "DECENT_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1245,6 +1390,50 @@
                 },
                 "featured_slot": {
                   "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "DEMONLORD_GAUNTLET": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "DIAMOND_HUNTER": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
                 },
                 "items": {
                   "properties": {
@@ -1292,6 +1481,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -1406,8 +1598,14 @@
             },
             "ELEGANT_TUXEDO": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -1431,6 +1629,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -1447,8 +1648,14 @@
             },
             "EMERALD_ARMOR": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -1541,6 +1748,9 @@
             },
             "ENDER_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1563,6 +1773,9 @@
             },
             "END_STONE_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1585,6 +1798,9 @@
             },
             "END_STONE_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1682,6 +1898,31 @@
             },
             "FANCY_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "FANCY_TUXEDO": {
+              "properties": {
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1754,6 +1995,9 @@
             },
             "FARM_SUIT": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1776,6 +2020,9 @@
             },
             "FELTHORN_REAPER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1795,6 +2042,9 @@
             },
             "FEL_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -1842,8 +2092,14 @@
             },
             "FERVOR": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -1892,6 +2148,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -1914,6 +2173,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -1930,8 +2192,14 @@
             },
             "FIRE_FURY_STAFF": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -1974,8 +2242,14 @@
             },
             "FLAME_BREAKER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -2015,6 +2289,9 @@
             },
             "FLAMING_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2093,6 +2370,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -2140,6 +2420,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -2161,6 +2444,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -2325,6 +2611,9 @@
             },
             "GIANT_CLEAVER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2397,6 +2686,9 @@
             },
             "GOBLIN": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2425,6 +2717,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -2441,6 +2736,9 @@
             },
             "GOLEM_ARMOR": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2463,6 +2761,9 @@
             },
             "GOLEM_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2485,6 +2786,9 @@
             },
             "GROWTH": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2532,6 +2836,9 @@
             },
             "HARDENED_DIAMOND": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2554,6 +2861,9 @@
             },
             "HEARTFIRE_DAGGER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2576,6 +2886,9 @@
             },
             "HEARTMAW_DAGGER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2667,6 +2980,9 @@
             },
             "HOLLOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2689,6 +3005,9 @@
             },
             "HOLLOW_WAND": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2736,6 +3055,9 @@
             },
             "HUNTER_KNIFE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -2883,8 +3205,14 @@
             },
             "INK_WAND": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -2902,8 +3230,14 @@
             },
             "ITEM_SPIRIT_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -3021,6 +3355,9 @@
             },
             "LAPIS_ARMOR": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3049,6 +3386,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -3065,8 +3405,14 @@
             },
             "LAVA_SEA_CREATURE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -3084,6 +3430,9 @@
             },
             "LAVA_SHELL_NECKLACE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3103,6 +3452,9 @@
             },
             "LEAFLET": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3130,6 +3482,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -3353,6 +3708,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -3399,6 +3757,34 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "MELON_DICER_2": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -3466,6 +3852,9 @@
             },
             "MERCENARY": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3488,6 +3877,9 @@
             },
             "MERCENARY_AXE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3508,10 +3900,38 @@
               },
               "type": "object"
             },
-            "MIDAS_SWORD": {
+            "MIDAS_STAFF": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "MIDAS_SWORD": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -3554,6 +3974,9 @@
             },
             "MINER_OUTFIT": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3623,6 +4046,9 @@
             },
             "MITHRIL_DRILL_2": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3712,8 +4138,36 @@
               },
               "type": "object"
             },
+            "MOSQUITO_BOW": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "MUSHROOM": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3736,6 +4190,9 @@
             },
             "NECROMANCER_LORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3805,6 +4262,9 @@
             },
             "OBSIDIAN_CHESTPLATE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3902,6 +4362,31 @@
             },
             "PERFECT_TIER_12": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "PERFECT_TIER_13": {
+              "properties": {
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3921,6 +4406,9 @@
             },
             "PHANTOM_ROD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3948,6 +4436,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -3990,6 +4481,9 @@
             },
             "POOCH_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4043,6 +4537,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -4059,6 +4556,9 @@
             },
             "PRISMARINE_BLADE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4081,6 +4581,9 @@
             },
             "PRISMARINE_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4128,6 +4631,9 @@
             },
             "PUMPKIN": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4149,6 +4655,31 @@
               "type": "object"
             },
             "PUMPKIN_DICER": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "PUMPKIN_DICER_2": {
               "properties": {
                 "borrowing": {
                   "type": "boolean"
@@ -4206,6 +4737,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -4252,6 +4786,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -4444,6 +4981,9 @@
             },
             "RECLUSE_FANG": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4488,8 +5028,14 @@
             },
             "REVENANT": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -4513,6 +5059,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -4529,6 +5078,9 @@
             },
             "REVIVED_HEART": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4701,6 +5253,9 @@
             },
             "SAVANA_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4723,8 +5278,14 @@
             },
             "SCORPION_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -4767,6 +5328,9 @@
             },
             "SCOURGE_CLOAK": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4814,6 +5378,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -4830,6 +5397,9 @@
             },
             "SEYMOUR": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4899,6 +5469,9 @@
             },
             "SHAMAN_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4921,6 +5494,9 @@
             },
             "SHARK_SCALE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4943,6 +5519,9 @@
             },
             "SHIMMERING_LIGHT": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4987,8 +5566,14 @@
             },
             "SILK_EDGE_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -5006,6 +5591,9 @@
             },
             "SILVER_FANG": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5053,6 +5641,9 @@
             },
             "SINSEEKER_SCYTHE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5105,6 +5696,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -5197,6 +5791,9 @@
             },
             "SLIME_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5292,8 +5889,36 @@
               },
               "type": "object"
             },
+            "SOS_FLARE": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "SOULS_REBOUND": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5321,6 +5946,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -5363,6 +5991,9 @@
             },
             "SPEEDSTER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5410,6 +6041,9 @@
             },
             "SPIDER_QUEENS_STINGER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5482,6 +6116,59 @@
             },
             "SPIRIT_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "SPONGE": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "SPOOKY": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5579,6 +6266,9 @@
             },
             "STARLIGHT": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5601,6 +6291,9 @@
             },
             "STARLIGHT_WAND": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5648,8 +6341,14 @@
             },
             "STEEL_CHESTPLATE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -5667,6 +6366,9 @@
             },
             "STONE_BLADE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5739,6 +6441,9 @@
             },
             "SULPHUR_BOW": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5783,6 +6488,9 @@
             },
             "SUPERIOR_DRAGON": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -5880,8 +6588,14 @@
             },
             "SWORD_OF_REVELATIONS": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -5899,11 +6613,36 @@
             },
             "SYNTHESIZER_V3": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
                 "featured_slot": {
                   "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "TACTICAL_INSERTION": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
                 },
                 "items": {
                   "properties": {
@@ -5946,6 +6685,9 @@
             },
             "TANK_MINER": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -6116,6 +6858,28 @@
               },
               "type": "object"
             },
+            "THEORETICAL_HOE_CARROT_1": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "THEORETICAL_HOE_CARROT_2": {
               "properties": {
                 "borrowing": {
@@ -6151,6 +6915,28 @@
                 },
                 "featured_slot": {
                   "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "THEORETICAL_HOE_POTATO_1": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
                 },
                 "items": {
                   "properties": {
@@ -6460,6 +7246,53 @@
               },
               "type": "object"
             },
+            "TITANIUM_DRILL_2": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "TITANIUM_DRILL_3": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "TITANIUM_DRILL_4": {
               "properties": {
                 "borrowing": {
@@ -6585,8 +7418,36 @@
               },
               "type": "object"
             },
+            "VAMPIRE_MASK": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "VAMPIRE_WITCH_MASK": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -6634,6 +7495,9 @@
             },
             "VENOMS_TOUCH": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -6756,6 +7620,9 @@
             },
             "VOODOO_DOLL_WILTED": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -6825,6 +7692,9 @@
             },
             "WAND_OF_HEALING": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -6897,6 +7767,9 @@
             },
             "WAND_OF_STRENGTH": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -7072,6 +7945,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -7087,6 +7963,31 @@
               "type": "object"
             },
             "WITCH_MASK": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "WITHER": {
               "properties": {
                 "borrowing": {
                   "type": "boolean"
@@ -7211,6 +8112,31 @@
               },
               "type": "object"
             },
+            "YETI_SWORD": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "YOUNG_DRAGON": {
               "properties": {
                 "borrowing": {
@@ -7307,6 +8233,9 @@
             },
             "ZOMBIE_HEART": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -7456,6 +8385,9 @@
               "properties": {
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {

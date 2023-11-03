@@ -217,8 +217,17 @@ export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchem
         if(!finalSchema.properties) {
             finalSchema.properties = {};
         }
+        newSchemaPropsLoop:
         for(const prop in newSchema.properties) {
             if(!finalSchema.properties[prop]) {
+                // Before adding property, first check if it's recognized as a pattern property on the finalSchema.
+                // If it is a pattern, combine with the pattern property schema instead. Otherwise we can
+                for(const pattern in finalSchema.patternProperties ?? {}) {
+                    if(new RegExp(pattern).test(prop)) {
+                        finalSchema.patternProperties![pattern] = combineSchemas(finalSchema.patternProperties![pattern], newSchema.properties[prop]);
+                        continue newSchemaPropsLoop; // We don't want to break as that'd write to "properties"
+                    }
+                }
                 finalSchema.properties[prop] = structuredClone(newSchema.properties[prop]);
             } else {
                 finalSchema.properties[prop] = combineSchemas(finalSchema.properties[prop], newSchema.properties[prop]);
