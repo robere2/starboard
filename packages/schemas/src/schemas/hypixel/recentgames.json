@@ -59,19 +59,10 @@
         "gameType": {
           "type": "string"
         },
-        "games": {
-          "type": "array"
-        },
         "map": {
           "type": "string"
         },
         "mode": {
-          "type": "string"
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "uuid": {
           "type": "string"
         }
       },

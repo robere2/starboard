@@ -1,0 +1,937 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/games.json",
+  "title": "HypixelGamesResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/resources/games",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "lastUpdated": {
+          "type": "integer"
+        },
+        "games": {
+          "$ref": "#/definitions/HypixelGames"
+        }
+      },
+      "required": [
+        "success",
+        "games"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelGames": {
+      "properties": {
+        "ARCADE": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "DAYONE": {
+                  "type": "string"
+                },
+                "DRAGONWARS2": {
+                  "type": "string"
+                },
+                "DRAW_THEIR_THING": {
+                  "type": "string"
+                },
+                "ENDER": {
+                  "type": "string"
+                },
+                "GRINCH_SIMULATOR_V2": {
+                  "type": "string"
+                },
+                "ONEINTHEQUIVER": {
+                  "type": "string"
+                },
+                "PARTY": {
+                  "type": "string"
+                },
+                "PVP_CTW": {
+                  "type": "string"
+                },
+                "SIMON_SAYS": {
+                  "type": "string"
+                },
+                "SOCCER": {
+                  "type": "string"
+                },
+                "STARWARS": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "ARENA": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "legacy": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "BATTLEGROUND": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "BEDWARS": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "BEDWARS_CASTLE": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_ONE": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_ONE_RUSH": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_ONE_ULTIMATE": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO_ARMED": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO_LUCKY": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO_RUSH": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO_SWAP": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO_TOURNEY": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO_ULTIMATE": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO_UNDERWORLD": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_TWO_VOIDLESS": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR_ARMED": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR_LUCKY": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR_RUSH": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR_SWAP": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR_ULTIMATE": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR_UNDERWORLD": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR_VOIDLESS": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_THREE": {
+                  "type": "string"
+                },
+                "BEDWARS_TWO_FOUR": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "BUILD_BATTLE": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "BUILD_BATTLE_CHRISTMAS": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_CHRISTMAS_NEW_SOLO": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_CHRISTMAS_NEW_TEAMS": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_GUESS_THE_BUILD": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_HALLOWEEN": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_SOLO_NORMAL": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_SOLO_NORMAL_LATEST": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_SOLO_PRO": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_TEAMS_NORMAL": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "DUELS": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "DUELS_BLITZ_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_BOWSPLEEF_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_BOW_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_BOXING_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_BRIDGE_2V2V2V2": {
+                  "type": "string"
+                },
+                "DUELS_BRIDGE_3V3V3V3": {
+                  "type": "string"
+                },
+                "DUELS_BRIDGE_DOUBLES": {
+                  "type": "string"
+                },
+                "DUELS_BRIDGE_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_BRIDGE_FOUR": {
+                  "type": "string"
+                },
+                "DUELS_BRIDGE_THREES": {
+                  "type": "string"
+                },
+                "DUELS_BRIDGE_TOURNAMENT": {
+                  "type": "string"
+                },
+                "DUELS_CAPTURE_THREES": {
+                  "type": "string"
+                },
+                "DUELS_CLASSIC_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_COMBO_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_DUEL_ARENA": {
+                  "type": "string"
+                },
+                "DUELS_MW_DOUBLES": {
+                  "type": "string"
+                },
+                "DUELS_MW_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_MW_FOUR": {
+                  "type": "string"
+                },
+                "DUELS_OP_DOUBLES": {
+                  "type": "string"
+                },
+                "DUELS_OP_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_PARKOUR_EIGHT": {
+                  "type": "string"
+                },
+                "DUELS_POTION_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_SUMO_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_SUMO_TOURNAMENT": {
+                  "type": "string"
+                },
+                "DUELS_SW_DOUBLES": {
+                  "type": "string"
+                },
+                "DUELS_SW_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_SW_FOUR": {
+                  "type": "string"
+                },
+                "DUELS_SW_TOURNAMENT": {
+                  "type": "string"
+                },
+                "DUELS_UHC_DOUBLES": {
+                  "type": "string"
+                },
+                "DUELS_UHC_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_UHC_FOUR": {
+                  "type": "string"
+                },
+                "DUELS_UHC_MEETUP": {
+                  "type": "string"
+                },
+                "DUELS_UHC_TOURNAMENT": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "GINGERBREAD": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "HOUSING": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "LEGACY": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "MCGO": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "MURDER_MYSTERY": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "MURDER_ASSASSINS": {
+                  "type": "string"
+                },
+                "MURDER_CLASSIC": {
+                  "type": "string"
+                },
+                "MURDER_DOUBLE_UP": {
+                  "type": "string"
+                },
+                "MURDER_INFECTION": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "PAINTBALL": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "legacy": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "PIT": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "PROTOTYPE": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "INVADERS": {
+                  "type": "string"
+                },
+                "PIXEL_PARTY": {
+                  "type": "string"
+                },
+                "TOWERWARS_SOLO": {
+                  "type": "string"
+                },
+                "TOWERWARS_TEAM_OF_TWO": {
+                  "type": "string"
+                },
+                "WOOL_WARS": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "QUAKECRAFT": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "legacy": {
+              "type": "boolean"
+            },
+            "modeNames": {
+              "properties": {
+                "solo": {
+                  "type": "string"
+                },
+                "solo_tourney": {
+                  "type": "string"
+                },
+                "teams": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "REPLAY": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "SKYBLOCK": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "combat_1": {
+                  "type": "string"
+                },
+                "combat_2": {
+                  "type": "string"
+                },
+                "combat_3": {
+                  "type": "string"
+                },
+                "crismon_isle": {
+                  "type": "string"
+                },
+                "crystal_hollows": {
+                  "type": "string"
+                },
+                "dark_auction": {
+                  "type": "string"
+                },
+                "dungeon": {
+                  "type": "string"
+                },
+                "dynamic": {
+                  "type": "string"
+                },
+                "farming_1": {
+                  "type": "string"
+                },
+                "foraging_1": {
+                  "type": "string"
+                },
+                "garden": {
+                  "type": "string"
+                },
+                "hub": {
+                  "type": "string"
+                },
+                "instanced": {
+                  "type": "string"
+                },
+                "mining_1": {
+                  "type": "string"
+                },
+                "mining_2": {
+                  "type": "string"
+                },
+                "mining_3": {
+                  "type": "string"
+                },
+                "winter": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "SKYCLASH": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "retired": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "SKYWARS": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "mega_doubles": {
+                  "type": "string"
+                },
+                "mega_normal": {
+                  "type": "string"
+                },
+                "ranked_normal": {
+                  "type": "string"
+                },
+                "solo_insane": {
+                  "type": "string"
+                },
+                "solo_insane_hunters_vs_beasts": {
+                  "type": "string"
+                },
+                "solo_insane_lucky": {
+                  "type": "string"
+                },
+                "solo_insane_rush": {
+                  "type": "string"
+                },
+                "solo_insane_slime": {
+                  "type": "string"
+                },
+                "solo_insane_tnt_madness": {
+                  "type": "string"
+                },
+                "solo_normal": {
+                  "type": "string"
+                },
+                "teams_insane": {
+                  "type": "string"
+                },
+                "teams_insane_lucky": {
+                  "type": "string"
+                },
+                "teams_insane_rush": {
+                  "type": "string"
+                },
+                "teams_insane_slime": {
+                  "type": "string"
+                },
+                "teams_insane_tnt_madness": {
+                  "type": "string"
+                },
+                "teams_normal": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "SMP": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "SPEED_UHC": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "SUPER_SMASH": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "SURVIVAL_GAMES": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "TNTGAMES": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "BOWSPLEEF": {
+                  "type": "string"
+                },
+                "CAPTURE": {
+                  "type": "string"
+                },
+                "PVPRUN": {
+                  "type": "string"
+                },
+                "TEAMS_NORMAL": {
+                  "type": "string"
+                },
+                "TNTAG": {
+                  "type": "string"
+                },
+                "TNTRUN": {
+                  "type": "string"
+                },
+                "TNTRUN_TOURNEY": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "TRUE_COMBAT": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "retired": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "UHC": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "VAMPIREZ": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "legacy": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "WALLS": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "legacy": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "WALLS3": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "WOOL_GAMES": {
+          "properties": {
+            "databaseName": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "wool_wars_two_four_tourney": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

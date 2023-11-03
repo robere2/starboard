@@ -53,10 +53,16 @@
                     "DROPPER": {
                       "type": "integer"
                     },
+                    "ENDER": {
+                      "type": "integer"
+                    },
                     "FARM_HUNT": {
                       "type": "integer"
                     },
                     "HALLOWEEN_SIMULATOR": {
+                      "type": "integer"
+                    },
+                    "HIDE_AND_SEEK_PARTY_POOPER": {
                       "type": "integer"
                     },
                     "HIDE_AND_SEEK_PROP_HUNT": {
@@ -66,6 +72,9 @@
                       "type": "integer"
                     },
                     "MINI_WALLS": {
+                      "type": "integer"
+                    },
+                    "ONEINTHEQUIVER": {
                       "type": "integer"
                     },
                     "PARTY": {
@@ -108,6 +117,9 @@
                     "ctf_mini": {
                       "type": "integer"
                     },
+                    "domination": {
+                      "type": "integer"
+                    },
                     "team_deathmatch": {
                       "type": "integer"
                     }
@@ -137,6 +149,9 @@
                       "type": "integer"
                     },
                     "BEDWARS_EIGHT_TWO_RUSH": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_TWO_UNDERWORLD": {
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR": {
@@ -219,10 +234,16 @@
                     "DUELS_BRIDGE_2V2V2V2": {
                       "type": "integer"
                     },
+                    "DUELS_BRIDGE_3V3V3V3": {
+                      "type": "integer"
+                    },
                     "DUELS_BRIDGE_DOUBLES": {
                       "type": "integer"
                     },
                     "DUELS_BRIDGE_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_BRIDGE_FOUR": {
                       "type": "integer"
                     },
                     "DUELS_BRIDGE_THREES": {
@@ -268,6 +289,9 @@
                       "type": "integer"
                     },
                     "DUELS_UHC_FOUR": {
+                      "type": "integer"
+                    },
+                    "DUELS_UHC_MEETUP": {
                       "type": "integer"
                     }
                   },
@@ -350,6 +374,9 @@
                       "type": "integer"
                     },
                     "normal": {
+                      "type": "integer"
+                    },
+                    "normal_party": {
                       "type": "integer"
                     }
                   },
@@ -511,6 +538,9 @@
                     "solo_insane_slime": {
                       "type": "integer"
                     },
+                    "solo_insane_tnt_madness": {
+                      "type": "integer"
+                    },
                     "solo_normal": {
                       "type": "integer"
                     },
@@ -542,6 +572,14 @@
             },
             "SPEED_UHC": {
               "properties": {
+                "modes": {
+                  "properties": {
+                    "solo_normal": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "players": {
                   "type": "integer"
                 }
@@ -553,6 +591,9 @@
                 "modes": {
                   "properties": {
                     "1v1_normal": {
+                      "type": "integer"
+                    },
+                    "2v2_normal": {
                       "type": "integer"
                     },
                     "friends_normal": {
@@ -633,6 +674,9 @@
                 "modes": {
                   "properties": {
                     "SOLO": {
+                      "type": "integer"
+                    },
+                    "TEAMS": {
                       "type": "integer"
                     }
                   },

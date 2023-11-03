@@ -22,6 +22,77 @@ const playersToScan: string[] = [
 const inDir = join(__dirname, 'schemas', 'hypixel');
 const outDir = join(__dirname, '..', 'dist', 'types');
 
+const HypixelAchievements: SchemaData = {
+    defName: "HypixelAchievements",
+    schemaPath: join(inDir, 'resources', 'achievements.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/achievements"],
+    dataPreprocess: (input) => input.achievements,
+}
+
+const HypixelChallenges: SchemaData = {
+    defName: "HypixelChallenges",
+    schemaPath: join(inDir, 'resources', 'challenges.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/challenges"],
+    dataPreprocess: (input) => input.challenges
+}
+
+const HypixelGames: SchemaData = {
+    defName: "HypixelGames",
+    schemaPath: join(inDir, 'resources', 'games.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/games"],
+    dataPreprocess: (input) => input.games
+}
+
+const HypixelGuildAchievements: SchemaData = {
+    defName: "HypixelGuildAchievements",
+    schemaPath: join(inDir, 'resources', 'guilds', 'achievements.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/guilds/achievements"]
+}
+
+const HypixelPet: SchemaData = {
+    defName: "HypixelPet",
+    schemaPath: join(inDir, 'resources', 'vanity', 'pets.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/vanity/pets"],
+    dataPreprocess: (input) => input.types
+}
+
+const HypixelPetRarity: SchemaData = {
+    defName: "HypixelPetRarity",
+    schemaPath: join(inDir, 'resources', 'vanity', 'pets.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/vanity/pets"],
+    dataPreprocess: (input) => input.rarities
+}
+
+const HypixelCompanion: SchemaData = {
+    defName: "HypixelCompanion",
+    schemaPath: join(inDir, 'resources', 'vanity', 'companions.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/vanity/companions"],
+    dataPreprocess: (input) => input.types
+}
+
+const HypixelCompanionRarity: SchemaData = {
+    defName: "HypixelCompanionRarity",
+    schemaPath: join(inDir, 'resources', 'vanity', 'companions.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/vanity/companions"],
+    dataPreprocess: (input) => input.rarities
+}
+
+const HypixelQuests: SchemaData = {
+    defName: "HypixelQuests",
+    schemaPath: join(inDir, 'resources', 'quests.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/quests"],
+    dataPreprocess: (input) => input.quests
+}
+
 const HypixelPlayerCounts: SchemaData = {
     defName: "HypixelPlayerCounts",
     schemaPath: join(inDir, 'counts.json'),
@@ -40,14 +111,16 @@ const HypixelStatus: SchemaData = {
     defName: "HypixelStatus",
     schemaPath: join(inDir, 'status.json'),
     dtsOutDir: outDir,
-    testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/status?uuid=${uuid}`)
+    testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/status?uuid=${uuid}`),
+    dataPreprocess: (input) => input.session,
 }
 
 const HypixelRecentGames: SchemaData = {
     defName: "HypixelRecentGame",
     schemaPath: join(inDir, 'recentgames.json'),
     dtsOutDir: outDir,
-    testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/recentgames?uuid=${uuid}`)
+    testUrls: () => playersToScan.map(uuid => `https://api.hypixel.net/recentgames?uuid=${uuid}`),
+    dataPreprocess: (input) => input.games,
 }
 
 const HypixelBooster: SchemaData = {
@@ -123,6 +196,15 @@ const HypixelGuild: SchemaData = {
 }
 
 export default {
+    HypixelAchievements,
+    HypixelChallenges,
+    HypixelGames,
+    HypixelGuildAchievements,
+    HypixelPet,
+    HypixelPetRarity,
+    HypixelCompanion,
+    HypixelCompanionRarity,
+    HypixelQuests,
     HypixelPlayerCounts,
     HypixelPunishmentStatistics,
     HypixelStatus,
