@@ -19,7 +19,9 @@ const playersToScan: string[] = [
     "869c2a8943b041a8865667a2cc8c7923", // X
 ];
 
-const skyblockProfilesToScan: string[] = [];
+const skyblockProfilesToScan: string[] = [
+    "d3df3ccc-ffd3-473f-bbba-311d5329bd25"
+];
 
 const inDir = join(__dirname, 'schemas', 'hypixel');
 const outDir = join(__dirname, '..', 'dist', 'types');
