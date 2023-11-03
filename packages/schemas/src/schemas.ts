@@ -239,6 +239,22 @@ const HypixelGuild: SchemaData = {
     dataPreprocess: (input) => input.guild
 }
 
+const HypixelSkyBlockAuction: SchemaData = {
+    defName: "HypixelSkyBlockAuction",
+    schemaPath: join(inDir, 'skyblock', 'auctions.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/skyblock/auctions"],
+    dataPreprocess: (input) => input.auctions
+}
+
+const HypixelSkyBlockEndedAuction: SchemaData = {
+    defName: "HypixelSkyBlockEndedAuction",
+    schemaPath: join(inDir, 'skyblock', 'auctions_ended.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/skyblock/auctions_ended"],
+    dataPreprocess: (input) => input.auctions
+}
+
 export default {
     HypixelSkyBlockBingoGoal,
     HypixelSkyBlockCollections,
@@ -263,4 +279,6 @@ export default {
     HypixelLeaderboard,
     HypixelPlayer,
     HypixelGuild,
+    HypixelSkyBlockAuction,
+    HypixelSkyBlockEndedAuction
 }

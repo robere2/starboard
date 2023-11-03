@@ -19,6 +19,8 @@ if(!process.env.HYPIXEL_GEN_API_KEY) {
 
 // The order of these function calls matters. The API response of different endpoints feeds into the
 // list of other URLs to test.
+await processHypixelSchemaChanges(Schemas.HypixelSkyBlockAuction)
+await processHypixelSchemaChanges(Schemas.HypixelSkyBlockEndedAuction)
 await processHypixelSchemaChanges(Schemas.HypixelSkyBlockBingoGoal)
 await processHypixelSchemaChanges(Schemas.HypixelSkyBlockCollections)
 await processHypixelSchemaChanges(Schemas.HypixelSkyBlockMayor)
