@@ -34,6 +34,8 @@ jobs:
 
       - name: Build Docs
         working-directory: apps/docs
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: |
           lerna run build --scope docs
           touch .vitepress/dist/.nojekyll

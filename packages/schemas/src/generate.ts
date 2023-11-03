@@ -1,4 +1,4 @@
-import {getTotalRequests, processHypixelSchemaChanges} from "./tools.js";
+import {getTotalRequests, printBox, processHypixelSchemaChanges} from "./tools.js";
 import dotenv from "dotenv";
 import Schemas from "./schemas.js";
 dotenv.config();
@@ -62,7 +62,7 @@ await processHypixelSchemaChanges(Schemas.HypixelSkyBlockProfile)
 const endTime = Date.now();
 const timeTaken = endTime - startTime;
 
-console.log('----------------------------------------------------')
-console.log(`|         Generation complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000)}s         |`)
-console.log(`| Sent a total of ${getTotalRequests()} requests to the Hypixel API. |`)
-console.log('----------------------------------------------------')
+printBox([
+    `Generation complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000) % 60}s`,
+    `Sent a total of ${getTotalRequests()} requests to the Hypixel API.`
+])

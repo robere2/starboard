@@ -380,3 +380,38 @@ export async function createIndexFiles() {
     }
     await fs.promises.writeFile(join(__dirname, "..", "dist", "index.d.ts"), indexContents);
 }
+
+/**
+ * Print lines of text to the console, encapsulated in a box. The box is automatically sized to fit the longest line,
+ * and the text is centered on all shorter lines.
+ *
+ * @example
+ * printBox(["You won!", "Congratulations, you did it!"])
+ * // --------------------------------
+ * // |           You won!           |
+ * // | Congratulations, you did it! |
+ * // --------------------------------
+ * @param lines Lines to print within the box
+ */
+export function printBox(lines: string[]) {
+    const boxSideMargins = 1;
+    let boxWidth = boxSideMargins * 2;
+    for(const line of lines) {
+        const lineWidth = line.length + boxSideMargins * 2;
+        if(lineWidth > boxWidth) {
+            boxWidth = lineWidth;
+        }
+    }
+
+    let output = '';
+    output += '-'.repeat(boxWidth + 2) + '\n'
+
+    for(const line of lines) {
+        const spacesToCenter = (boxWidth - line.length) / 2;
+        output += '|' + ' '.repeat(Math.floor(spacesToCenter)) + line + ' '.repeat(Math.ceil(spacesToCenter)) + '|\n'
+    }
+
+    output += '-'.repeat(boxWidth + 2)
+
+    console.log(output);
+}
