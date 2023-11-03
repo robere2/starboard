@@ -1,0 +1,2399 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/skyblock/collections.json",
+  "title": "HypixelSkyBlockCollectionsResponse",
+  "description": "Schema for data returned from https://api.hypixel.net/resources/skyblock/collections",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": true
+        },
+        "lastUpdated": {
+          "type": "integer"
+        },
+        "version": {
+          "type": "string"
+        },
+        "collections": {
+          "$ref": "#/definitions/HypixelSkyBlockCollections"
+        }
+      },
+      "required": [
+        "success",
+        "collections"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "success": {
+          "const": false
+        },
+        "cause": {
+          "type": "string"
+        },
+        "throttle": {
+          "type": "boolean"
+        },
+        "global": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "success",
+        "cause"
+      ]
+    }
+  ],
+  "definitions": {
+    "HypixelSkyBlockCollections": {
+      "properties": {
+        "COMBAT": {
+          "properties": {
+            "items": {
+              "properties": {
+                "BLAZE_ROD": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "BONE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CHILI_PEPPER": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ENDER_PEARL": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "GHAST_TEAR": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MAGMA_CREAM": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ROTTEN_FLESH": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLIME_BALL": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SPIDER_EYE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "STRING": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SULPHUR": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "FARMING": {
+          "properties": {
+            "items": {
+              "properties": {
+                "CACTUS": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CARROT_ITEM": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FEATHER": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "INK_SACK:3": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LEATHER": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MELON": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MUSHROOM_COLLECTION": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MUTTON": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "NETHER_STALK": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PORK": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "POTATO_ITEM": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PUMPKIN": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RABBIT": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RAW_CHICKEN": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SEEDS": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SUGAR_CANE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WHEAT": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "FISHING": {
+          "properties": {
+            "items": {
+              "properties": {
+                "CLAY_BALL": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "INK_SACK": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MAGMA_FISH": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PRISMARINE_CRYSTALS": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PRISMARINE_SHARD": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RAW_FISH": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RAW_FISH:1": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RAW_FISH:2": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RAW_FISH:3": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SPONGE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WATER_LILY": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "FORAGING": {
+          "properties": {
+            "items": {
+              "properties": {
+                "LOG": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LOG:1": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LOG:2": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LOG:3": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LOG_2": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LOG_2:1": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "MINING": {
+          "properties": {
+            "items": {
+              "properties": {
+                "COAL": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "COBBLESTONE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DIAMOND": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "EMERALD": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ENDER_STONE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "GEMSTONE_COLLECTION": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "GLOWSTONE_DUST": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "GOLD_INGOT": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "GRAVEL": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HARD_STONE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ICE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "INK_SACK:4": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "IRON_INGOT": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MITHRIL_ORE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MYCEL": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "NETHERRACK": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "OBSIDIAN": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "QUARTZ": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "REDSTONE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SAND": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SAND:1": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SULPHUR_ORE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "RIFT": {
+          "properties": {
+            "items": {
+              "properties": {
+                "AGARICUS_CAP": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CADUCOUS_STEM": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HALF_EATEN_CARROT": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HEMOVIBE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "METAL_HEART": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WILTED_BERBERIS": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [],
+      "type": "object"
+    }
+  }
+}

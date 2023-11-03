@@ -22,6 +22,52 @@ const playersToScan: string[] = [
 const inDir = join(__dirname, 'schemas', 'hypixel');
 const outDir = join(__dirname, '..', 'dist', 'types');
 
+const HypixelSkyBlockBingoGoal: SchemaData = {
+    defName: "HypixelSkyBlockBingoGoal",
+    schemaPath: join(inDir, 'resources', 'skyblock', 'bingo.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/skyblock/bingo"],
+    dataPreprocess: (input) => input.goals,
+}
+
+const HypixelSkyBlockCollections: SchemaData = {
+    defName: "HypixelSkyBlockCollections",
+    schemaPath: join(inDir, 'resources', 'skyblock', 'collections.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/skyblock/collections"],
+    dataPreprocess: (input) => input.collections,
+}
+
+const HypixelSkyBlockMayor: SchemaData = {
+    defName: "HypixelSkyBlockMayor",
+    schemaPath: join(inDir, 'resources', 'skyblock', 'election.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/skyblock/election"],
+    dataPreprocess: (input) => input.mayor,
+}
+
+const HypixelSkyBlockElection: SchemaData = {
+    defName: "HypixelSkyBlockElection",
+    schemaPath: join(inDir, 'resources', 'skyblock', 'election.json'),
+    testUrls: ["https://api.hypixel.net/resources/skyblock/election"],
+    dataPreprocess: (input) => input.current,
+}
+
+const HypixelSkyBlockItem: SchemaData = {
+    defName: "HypixelSkyBlockItem",
+    schemaPath: join(inDir, 'resources', 'skyblock', 'items.json'),
+    testUrls: ["https://api.hypixel.net/resources/skyblock/items"],
+    dataPreprocess: (input) => input.items,
+}
+
+const HypixelSkyBlockSkills: SchemaData = {
+    defName: "HypixelSkyBlockSkills",
+    schemaPath: join(inDir, 'resources', 'skyblock', 'skills.json'),
+    dtsOutDir: outDir,
+    testUrls: ["https://api.hypixel.net/resources/skyblock/skills"],
+    dataPreprocess: (input) => input.collections,
+}
+
 const HypixelAchievements: SchemaData = {
     defName: "HypixelAchievements",
     schemaPath: join(inDir, 'resources', 'achievements.json'),
@@ -194,6 +240,12 @@ const HypixelGuild: SchemaData = {
 }
 
 export default {
+    HypixelSkyBlockBingoGoal,
+    HypixelSkyBlockCollections,
+    HypixelSkyBlockMayor,
+    HypixelSkyBlockElection,
+    HypixelSkyBlockItem,
+    HypixelSkyBlockSkills,
     HypixelAchievements,
     HypixelChallenges,
     HypixelGames,
