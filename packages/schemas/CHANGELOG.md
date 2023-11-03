@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.17](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.16...@mcsb/schemas@1.0.0-pre.17) (2023-11-03)
+
+### Bug Fixes
+
+- Logs formatting errors ([5ca36cf](https://github.com/robere2/starboard/commit/5ca36cf1b233e50d8545f6ba7bf4c054c32eb86d))
+
 # [1.0.0-pre.16](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.15...@mcsb/schemas@1.0.0-pre.16) (2023-11-03)
 
 ### Features
