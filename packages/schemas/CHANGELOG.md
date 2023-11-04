@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.25](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.24...@mcsb/schemas@1.0.0-pre.25) (2023-11-04)
+
+### Bug Fixes
+
+- Remove unused runtime dependencies used by schema generator ([#37](https://github.com/robere2/starboard/issues/37)) ([967e3e8](https://github.com/robere2/starboard/commit/967e3e89c6bc8e63aec134d66281ad787de163b0))
+
 # [1.0.0-pre.24](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.23...@mcsb/schemas@1.0.0-pre.24) (2023-11-04)
 
 ### Features
