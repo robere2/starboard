@@ -299,6 +299,7 @@ export function findSchemaChanges(schema: JSONSchema4, input: Record<string, any
     }
     if(!validate) {
         validate = new Ajv(ajvOptions).compile(schema);
+        console.log("New validate function compiled - Function size:", validate.toString().length)
         ajvCache[schemaHash] = validate;
     }
     if(!validateAndRemove) {

@@ -38,7 +38,7 @@ jobs:
       run: lerna run generate --scope @mcsb/schemas
       env:
         HYPIXEL_GEN_API_KEY: ${{ secrets.HYPIXEL_GEN_API_KEY }}
-        NODE_OPTIONS: "--max_old_space_size=4096"
+        NODE_OPTIONS: "--max_old_space_size=8192"
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
