@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "tsc && eslint .",
     "typedoc": "npm run build && typedoc --tsconfig tsconfig.typedoc.json",
-    "generate": "node --stack-size=2500 --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/generate.ts",
+    "generate": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/generate.ts",
     "prebuild": "rimraf dist",
     "build": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/build.ts",
     "prepublishOnly": "lerna run build --scope @mcsb/schemas"
