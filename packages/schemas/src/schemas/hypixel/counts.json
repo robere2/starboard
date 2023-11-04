@@ -267,6 +267,9 @@
                     "DUELS_BRIDGE_THREES": {
                       "type": "integer"
                     },
+                    "DUELS_CAPTURE_THREES": {
+                      "type": "integer"
+                    },
                     "DUELS_CLASSIC_DUEL": {
                       "type": "integer"
                     },
@@ -553,6 +556,9 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "mega_normal": {
+                      "type": "integer"
+                    },
                     "solo_insane": {
                       "type": "integer"
                     },
@@ -716,6 +722,9 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "face_off": {
+                      "type": "integer"
+                    },
                     "standard": {
                       "type": "integer"
                     }
