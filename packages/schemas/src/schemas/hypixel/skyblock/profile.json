@@ -956,10 +956,16 @@
                         "graveyard_zombie_1": {
                           "type": "integer"
                         },
+                        "great_white_shark_180": {
+                          "type": "integer"
+                        },
                         "grim_reaper_190": {
                           "type": "integer"
                         },
                         "guardian_defender_45": {
+                          "type": "integer"
+                        },
+                        "guardian_emperor_150": {
                           "type": "integer"
                         },
                         "hellwisp_100": {
@@ -984,6 +990,9 @@
                           "type": "integer"
                         },
                         "invisible_creeper_3": {
+                          "type": "integer"
+                        },
+                        "jockey_shot_silverfish_3": {
                           "type": "integer"
                         },
                         "kada_chicken_100": {
@@ -1268,6 +1277,9 @@
                         "mage_skull_100": {
                           "type": "integer"
                         },
+                        "mage_skull_50": {
+                          "type": "integer"
+                        },
                         "mages_guard_200": {
                           "type": "integer"
                         },
@@ -1397,6 +1409,9 @@
                         "master_crypt_undead_donpireso_25": {
                           "type": "integer"
                         },
+                        "master_crypt_undead_hypixel_25": {
+                          "type": "integer"
+                        },
                         "master_crypt_undead_hypixel_35": {
                           "type": "integer"
                         },
@@ -1476,6 +1491,12 @@
                           "type": "integer"
                         },
                         "master_goldor_1": {
+                          "type": "integer"
+                        },
+                        "master_king_midas_130": {
+                          "type": "integer"
+                        },
+                        "master_king_midas_140": {
                           "type": "integer"
                         },
                         "master_king_midas_150": {
@@ -1994,6 +2015,9 @@
                         "nightmare_24": {
                           "type": "integer"
                         },
+                        "nurse_shark_6": {
+                          "type": "integer"
+                        },
                         "nutcracker_50": {
                           "type": "integer"
                         },
@@ -2075,10 +2099,16 @@
                         "pyroclastic_worm_240": {
                           "type": "integer"
                         },
+                        "random_slime_20": {
+                          "type": "integer"
+                        },
                         "random_slime_8": {
                           "type": "integer"
                         },
                         "redstone_pigman_10": {
+                          "type": "integer"
+                        },
+                        "reindrake_100": {
                           "type": "integer"
                         },
                         "respawning_skeleton_2": {
@@ -2174,10 +2204,19 @@
                         "siamese_lynx_25": {
                           "type": "integer"
                         },
+                        "siamese_lynx_85": {
+                          "type": "integer"
+                        },
                         "silvo_5": {
                           "type": "integer"
                         },
                         "skeleton_1": {
+                          "type": "integer"
+                        },
+                        "skeleton_10": {
+                          "type": "integer"
+                        },
+                        "skeleton_13": {
                           "type": "integer"
                         },
                         "skeleton_2": {
@@ -2334,6 +2373,12 @@
                           "type": "integer"
                         },
                         "spider_1": {
+                          "type": "integer"
+                        },
+                        "spider_11": {
+                          "type": "integer"
+                        },
+                        "spider_13": {
                           "type": "integer"
                         },
                         "spider_15": {
@@ -2621,6 +2666,9 @@
                         "watcher_scarf_7": {
                           "type": "integer"
                         },
+                        "watcher_spirit_bear_5": {
+                          "type": "integer"
+                        },
                         "watcher_spirit_bear_7": {
                           "type": "integer"
                         },
@@ -2730,6 +2778,12 @@
                           "type": "integer"
                         },
                         "zombie_11": {
+                          "type": "integer"
+                        },
+                        "zombie_13": {
+                          "type": "integer"
+                        },
+                        "zombie_15": {
                           "type": "integer"
                         },
                         "zombie_2": {
@@ -3095,6 +3149,9 @@
                     "deaths_enderman_2": {
                       "type": "integer"
                     },
+                    "deaths_enderman_4": {
+                      "type": "integer"
+                    },
                     "deaths_enderman_42": {
                       "type": "integer"
                     },
@@ -3422,6 +3479,9 @@
                     "deaths_invisible_creeper_3": {
                       "type": "integer"
                     },
+                    "deaths_jockey_shot_silverfish_3": {
+                      "type": "integer"
+                    },
                     "deaths_kalhuiki_tribe_man_100": {
                       "type": "integer"
                     },
@@ -3435,6 +3495,12 @@
                       "type": "integer"
                     },
                     "deaths_king_midas_170": {
+                      "type": "integer"
+                    },
+                    "deaths_krondor_necromancer_80": {
+                      "type": "integer"
+                    },
+                    "deaths_kuudra_berserker_100": {
                       "type": "integer"
                     },
                     "deaths_kuudra_follower_100": {
@@ -3482,6 +3548,9 @@
                     "deaths_lord_jawbus_600": {
                       "type": "integer"
                     },
+                    "deaths_lost_adventurer_100": {
+                      "type": "integer"
+                    },
                     "deaths_lost_adventurer_101": {
                       "type": "integer"
                     },
@@ -3504,6 +3573,9 @@
                       "type": "integer"
                     },
                     "deaths_lost_adventurer_122": {
+                      "type": "integer"
+                    },
+                    "deaths_lost_adventurer_130": {
                       "type": "integer"
                     },
                     "deaths_lost_adventurer_132": {
@@ -3860,6 +3932,9 @@
                     "deaths_scarf_1": {
                       "type": "integer"
                     },
+                    "deaths_scarf_archer_1": {
+                      "type": "integer"
+                    },
                     "deaths_scarf_mage_1": {
                       "type": "integer"
                     },
@@ -3909,6 +3984,9 @@
                       "type": "integer"
                     },
                     "deaths_skeleton_3": {
+                      "type": "integer"
+                    },
+                    "deaths_skeleton_5": {
                       "type": "integer"
                     },
                     "deaths_skeleton_7": {
@@ -4034,6 +4112,9 @@
                     "deaths_spider_1": {
                       "type": "integer"
                     },
+                    "deaths_spider_15": {
+                      "type": "integer"
+                    },
                     "deaths_spider_2": {
                       "type": "integer"
                     },
@@ -4041,6 +4122,9 @@
                       "type": "integer"
                     },
                     "deaths_spider_4": {
+                      "type": "integer"
+                    },
+                    "deaths_spider_5": {
                       "type": "integer"
                     },
                     "deaths_spider_6": {
@@ -4298,6 +4382,9 @@
                     "deaths_young_dragon_100": {
                       "type": "integer"
                     },
+                    "deaths_zealot_bruiser_100": {
+                      "type": "integer"
+                    },
                     "deaths_zealot_enderman_55": {
                       "type": "integer"
                     },
@@ -4307,7 +4394,16 @@
                     "deaths_zombie_2": {
                       "type": "integer"
                     },
+                    "deaths_zombie_4": {
+                      "type": "integer"
+                    },
+                    "deaths_zombie_5": {
+                      "type": "integer"
+                    },
                     "deaths_zombie_8": {
+                      "type": "integer"
+                    },
+                    "deaths_zombie_9": {
                       "type": "integer"
                     },
                     "deaths_zombie_commander_110": {
@@ -5735,6 +5831,9 @@
                           "type": "integer"
                         },
                         "master_crypt_undead_friedrich_40": {
+                          "type": "integer"
+                        },
+                        "master_crypt_undead_hypixel_25": {
                           "type": "integer"
                         },
                         "master_crypt_undead_jayavarmen_25": {
@@ -7501,6 +7600,9 @@
                     "kills_barbarian_duke_x_200": {
                       "type": "integer"
                     },
+                    "kills_barking_wolf_2": {
+                      "type": "integer"
+                    },
                     "kills_bat_pinata_25": {
                       "type": "integer"
                     },
@@ -7747,6 +7849,9 @@
                     "kills_dasher_spider_50": {
                       "type": "integer"
                     },
+                    "kills_deadgehog_2": {
+                      "type": "integer"
+                    },
                     "kills_deep_sea_protector_60": {
                       "type": "integer"
                     },
@@ -7901,6 +8006,9 @@
                       "type": "integer"
                     },
                     "kills_enderman_8": {
+                      "type": "integer"
+                    },
+                    "kills_enderman_9": {
                       "type": "integer"
                     },
                     "kills_endermite_37": {
@@ -8369,6 +8477,9 @@
                       "type": "integer"
                     },
                     "kills_kuudra_1500": {
+                      "type": "integer"
+                    },
+                    "kills_lagoon_leech_2": {
                       "type": "integer"
                     },
                     "kills_lapis_zombie_7": {
@@ -8947,6 +9058,9 @@
                     "kills_rabbit_1": {
                       "type": "integer"
                     },
+                    "kills_random_slime_20": {
+                      "type": "integer"
+                    },
                     "kills_random_slime_8": {
                       "type": "integer"
                     },
@@ -9044,6 +9158,9 @@
                       "type": "integer"
                     },
                     "kills_shadow_assassin_171": {
+                      "type": "integer"
+                    },
+                    "kills_shame_1": {
                       "type": "integer"
                     },
                     "kills_sheep_1": {
@@ -9565,6 +9682,9 @@
                     "kills_witch_8": {
                       "type": "integer"
                     },
+                    "kills_witch_9": {
+                      "type": "integer"
+                    },
                     "kills_wither_defender_guard_200": {
                       "type": "integer"
                     },
@@ -9895,6 +10015,9 @@
                     "ENCHANTED_HAY_BLOCK": {
                       "type": "integer"
                     },
+                    "ENCHANTED_HUGE_MUSHROOM_1": {
+                      "type": "integer"
+                    },
                     "ENCHANTED_ICE": {
                       "type": "integer"
                     },
@@ -10177,6 +10300,9 @@
                     "POISONOUS_POTATO": {
                       "type": "integer"
                     },
+                    "POLISHED_PUMPKIN": {
+                      "type": "integer"
+                    },
                     "PORK": {
                       "type": "integer"
                     },
@@ -10379,6 +10505,9 @@
                     },
                     "dungeon_journal": {
                       "properties": {
+                        "has_read_the_eye": {
+                          "type": "boolean"
+                        },
                         "journal_entries": {
                           "properties": {
                             "expedition_volume_1": {
@@ -12821,6 +12950,9 @@
                         "powder_buff": {
                           "type": "integer"
                         },
+                        "precision_mining": {
+                          "type": "integer"
+                        },
                         "professional": {
                           "type": "integer"
                         },
@@ -12840,6 +12972,9 @@
                           "type": "boolean"
                         },
                         "toggle_efficient_miner": {
+                          "type": "boolean"
+                        },
+                        "toggle_fallen_star_bonus": {
                           "type": "boolean"
                         },
                         "toggle_forge_time": {
@@ -13537,6 +13672,12 @@
                                 "completed_quest": {
                                   "type": "boolean"
                                 },
+                                "incoming_calls_count": {
+                                  "type": "integer"
+                                },
+                                "last_call_incoming": {
+                                  "type": "integer"
+                                },
                                 "talked_to": {
                                   "type": "boolean"
                                 }
@@ -13712,6 +13853,9 @@
                               "type": "string"
                             },
                             "search": {
+                              "type": "string"
+                            },
+                            "sort": {
                               "type": "string"
                             },
                             "tier": {
@@ -26607,6 +26751,9 @@
                     "deaths_guardian_defender": {
                       "type": "integer"
                     },
+                    "deaths_guardian_emperor": {
+                      "type": "integer"
+                    },
                     "deaths_hellwisp": {
                       "type": "integer"
                     },
@@ -27012,6 +27159,9 @@
                     "deaths_nightmare": {
                       "type": "integer"
                     },
+                    "deaths_nurse_shark": {
+                      "type": "integer"
+                    },
                     "deaths_nutcracker": {
                       "type": "integer"
                     },
@@ -27088,6 +27238,9 @@
                       "type": "integer"
                     },
                     "deaths_redstone_pigman": {
+                      "type": "integer"
+                    },
+                    "deaths_reindrake": {
                       "type": "integer"
                     },
                     "deaths_respawning_skeleton": {
@@ -27199,6 +27352,9 @@
                       "type": "integer"
                     },
                     "deaths_sniper_skeleton": {
+                      "type": "integer"
+                    },
+                    "deaths_snowman": {
                       "type": "integer"
                     },
                     "deaths_soul_of_the_alpha": {
@@ -29130,6 +29286,9 @@
                     "kills_master_crypt_undead_friedrich": {
                       "type": "integer"
                     },
+                    "kills_master_crypt_undead_hypixel": {
+                      "type": "integer"
+                    },
                     "kills_master_crypt_undead_jamiethegeek": {
                       "type": "integer"
                     },
@@ -30060,6 +30219,12 @@
                     "kills_skeleton_1": {
                       "type": "integer"
                     },
+                    "kills_skeleton_13": {
+                      "type": "integer"
+                    },
+                    "kills_skeleton_15": {
+                      "type": "integer"
+                    },
                     "kills_skeleton_6": {
                       "type": "integer"
                     },
@@ -30067,6 +30232,9 @@
                       "type": "integer"
                     },
                     "kills_skeleton_8": {
+                      "type": "integer"
+                    },
+                    "kills_skeleton_9": {
                       "type": "integer"
                     },
                     "kills_skeleton_emperor": {
@@ -30237,10 +30405,16 @@
                     "kills_spider_13": {
                       "type": "integer"
                     },
+                    "kills_spider_15": {
+                      "type": "integer"
+                    },
                     "kills_spider_4": {
                       "type": "integer"
                     },
                     "kills_spider_7": {
+                      "type": "integer"
+                    },
+                    "kills_spider_9": {
                       "type": "integer"
                     },
                     "kills_spider_jockey": {
