@@ -2964,6 +2964,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -5402,6 +5405,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
