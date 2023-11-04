@@ -112,7 +112,8 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     const responses: Record<string, any> = {};
 
     const validateFullSchema = new Ajv({
-        allErrors: true
+        allErrors: true,
+        inlineRefs: false
     }).compile(fullSchema)
 
     for (const url of urls) {
@@ -289,7 +290,8 @@ export function findSchemaChanges(schema: JSONSchema4, input: Record<string, any
     const definedValues = structuredClone(input)
 
     const ajvOptions: Options = {
-        allErrors: true
+        allErrors: true,
+        inlineRefs: false
     }
 
     // Compiling an AJV validator is expensive. We want to cache the compiled validator for use in subsequent checks.
