@@ -102,6 +102,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
         throw new Error(`Schema definition ${input.defName} could not be found in the given schema!\nPath: ${input.schemaPath}`);
     }
 
+    // testUrls can be a function that returns an array, or an array.
     let urls: string[];
     if (Array.isArray(input.testUrls)) {
         urls = input.testUrls;
@@ -113,92 +114,15 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     let newSchemaDef = schemaDef;
     const responses: Record<string, any> = {};
 
-    const validateFullSchema = new Ajv({
-        allErrors: true,
-        inlineRefs: false
-    }).compile(fullSchema)
-
     for (const url of urls) {
-        logger([
-            chalk.cyanBright("Processing schema changes for type", input.defName),
-            chalk.dim("Sending request to", url),
-        ]);
-        const res = await fetch(url, {
-            headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
-        });
-        totalRequests++;
-
-        responses[url] = await res.json() as any; // Type checking is done below
-        // Assert that a valid Hypixel API response was received
-        if (typeof responses[url] !== "object" || Array.isArray(responses[url]) || responses[url] == null) {
-            throw new Error('HTTP response did not include a JSON object.');
-        }
-        if (!responses[url].success) {
-            // Unlike the rest of the API, a player without a SkyBlock bingo card will mark the request as failed
-            // instead of just setting the requested value to null.
-            if(responses[url].cause === "No bingo data could be found") {
-                continue;
-            }
-            throw new Error('Hypixel API Error: ' + responses[url].cause);
-        }
-
-        let data = responses[url];
-
-        // Perform full schema validation before preprocessing down to the schema definition
-        validateFullSchema(data)
-
-        if(validateFullSchema.errors) {
-            logger([
-                "Validation error(s) for full schema:",
-                JSON.stringify(validateFullSchema.errors) + "\n"
-            ], true);
-        }
-
-        // Currently all type definitions cannot be arrays. Thus, we can use arrays as a way to iterate multiple values
-        // in the same response (e.g. all boosters from `/boosters`)
-        if(input.dataPreprocess) {
-            logger(chalk.dim("Calling preprocessor\n"), true);
-            data = input.dataPreprocess(responses[url])
-        }
-        if(!Array.isArray(data)) {
-            data = [data];
-        }
-
-        for(const datum of data) {
-            // changesDiff is an object with all values that are already in the schema removed, even if the value
-            // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
-            const changesDiff = findSchemaChanges(newSchemaDef, datum);
-            if(!changesDiff) {
-                logger(chalk.dim("No schema changes detected\n"), true)
-                continue;
-            }
-            logger(chalk.dim("Schema changes detected" + "\n"), true);
-            // The changesDiff converted into a schema, to be combined with original schema.
-            const changesSchema: JSONSchema4 = toJsonSchema(changesDiff, {
-                strings: {
-                    detectFormat: false
-                },
-                objects: {
-                    preProcessFnc: (obj, defaultFunc) => {
-                        return defaultFunc(Object.fromEntries(Object
-                            .entries(obj)
-                            .map(([key, value]) => {
-                                if (key.endsWith("__added")) {
-                                    key = key.slice(0, -7)
-                                    logger(chalk.dim("New key: " + key + "\n"), true)
-                                }
-                                return [key, value]
-                            })
-                        ));
-                    }
-                }
-            }) as JSONSchema4;
-
-            newSchemaDef = combineSchemas(newSchemaDef, changesSchema);
-        }
+       const urlOut = await processHypixelSchemaChangesFromUrl(input, newSchemaDef, url);
+       newSchemaDef = urlOut.schema;
+       responses[url] = urlOut.response;
     }
 
+    // we would've thrown an error earlier if this was nullish
     fullSchema.definitions![input.defName] = sortObject(newSchemaDef);
+
     await fs.promises.writeFile(input.schemaPath, JSON.stringify(fullSchema, null, 2))
 
     const output = {
@@ -211,6 +135,83 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
         input.dataPostprocess(output);
     }
 
+    return output;
+}
+
+async function processHypixelSchemaChangesFromUrl(input: SchemaData, schema: JSONSchema4, url: string): Promise<{response: any | null, schema: JSONSchema4}> {
+    const output: {response: any | null, schema: JSONSchema4} = {
+        response: null,
+        schema: structuredClone(schema)
+    };
+
+    logger([
+        chalk.cyanBright("Processing schema changes for type", input.defName),
+        chalk.dim("Sending request to", url),
+    ]);
+
+    const res = await fetch(url, {
+        headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
+    });
+    totalRequests++;
+    output.response = await res.json() as any; // Type checking is done below
+
+    // Assert that a valid Hypixel API response was received
+    if (typeof output.response !== "object" || Array.isArray(output.response) || output.response == null) {
+        throw new Error('HTTP response did not include a JSON object.');
+    }
+    if (!output.response.success) {
+        // Unlike the rest of the API, a player without a SkyBlock bingo card will mark the request as failed
+        // instead of just setting the requested value to null.
+        if(output.response.cause === "No bingo data could be found") {
+            return output;
+        }
+        throw new Error('Hypixel API Error: ' + output.response.cause);
+    }
+
+    let data = output.response;
+
+    // Currently all type definitions cannot be arrays. Thus, we can use arrays as a way to iterate multiple values
+    // in the same response (e.g. all boosters from `/boosters`)
+    if(input.dataPreprocess) {
+        logger(chalk.dim("Calling preprocessor\n"), true);
+        data = input.dataPreprocess(output.response)
+    }
+    if(!Array.isArray(data)) {
+        data = [data];
+    }
+
+    for(const datum of data) {
+        // changesDiff is an object with all values that are already in the schema removed, even if the value
+        // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
+        const changesDiff = findSchemaChanges(output.schema, datum);
+        if(!changesDiff) {
+            logger(chalk.dim("No schema changes detected\n"), true)
+            continue;
+        }
+        logger(chalk.dim("Schema changes detected" + "\n"), true);
+        // The changesDiff converted into a schema, to be combined with original schema.
+        const changesSchema: JSONSchema4 = toJsonSchema(changesDiff, {
+            strings: {
+                detectFormat: false
+            },
+            objects: {
+                preProcessFnc: (obj, defaultFunc) => {
+                    return defaultFunc(Object.fromEntries(Object
+                        .entries(obj)
+                        .map(([key, value]) => {
+                            if (key.endsWith("__added")) {
+                                key = key.slice(0, -7)
+                                logger(chalk.dim("New key: " + key + "\n"), true)
+                            }
+                            return [key, value]
+                        })
+                    ));
+                }
+            }
+        }) as JSONSchema4;
+
+        output.schema = combineSchemas(output.schema, changesSchema);
+    }
     return output;
 }
 
