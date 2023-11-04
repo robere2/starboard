@@ -1,6 +1,7 @@
-import {getTotalRequests, printBox, processHypixelSchemaChanges} from "./tools.js";
+import {getTotalRequests, textBox, processHypixelSchemaChanges, log} from "./tools.js";
 import dotenv from "dotenv";
 import Schemas from "./schemas.js";
+import chalk from "chalk";
 dotenv.config();
 
 declare global {
@@ -62,7 +63,11 @@ await processHypixelSchemaChanges(Schemas.HypixelSkyBlockProfile)
 const endTime = Date.now();
 const timeTaken = endTime - startTime;
 
-printBox([
-    `Generation complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000) % 60}s`,
-    `Sent a total of ${getTotalRequests()} requests to the Hypixel API.`
-])
+log([
+    '\n\n',
+        ...textBox([
+        `Generation complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000) % 60}s`,
+        `Sent a total of ${getTotalRequests()} requests to the Hypixel API.`
+    ], chalk.green, chalk.green),
+    '\n'
+]);

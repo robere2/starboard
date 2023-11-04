@@ -240,7 +240,6 @@ const HypixelPlayer: SchemaData = {
         const responseArray = Object.values(input);
         const startingProfileCount = skyblockProfilesToScan.length;
         const maxProfilesToAdd = 15;
-        console.log(skyblockProfilesToScan)
         for(const response of responseArray) {
             const playerProfiles = Object.values(response.player?.stats?.SkyBlock?.profiles ?? {});
             const randomProfile = pickRandom(playerProfiles, 1);
@@ -252,7 +251,6 @@ const HypixelPlayer: SchemaData = {
                 break;
             }
         }
-        console.log(skyblockProfilesToScan)
     }
 }
 
