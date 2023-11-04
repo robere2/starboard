@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.20](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.19...@mcsb/schemas@1.0.0-pre.20) (2023-11-04)
+
+### Features
+
+- Significantly improve memory usage ([e68665a](https://github.com/robere2/starboard/commit/e68665a6d0f8e79946711600221e53f3039695ff))
+
 # [1.0.0-pre.19](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.18...@mcsb/schemas@1.0.0-pre.19) (2023-11-04)
 
 **Note:** Version bump only for package @mcsb/schemas
