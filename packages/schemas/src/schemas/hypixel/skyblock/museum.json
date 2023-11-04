@@ -237,6 +237,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -653,6 +656,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -897,6 +903,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -918,6 +927,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -1507,6 +1519,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -2026,6 +2041,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -2272,6 +2290,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -2911,6 +2932,9 @@
             },
             "HEAT": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -4033,6 +4057,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -4395,6 +4422,9 @@
               "properties": {
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -5342,6 +5372,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -6820,6 +6853,28 @@
               },
               "type": "object"
             },
+            "THEORETICAL_HOE_CANE_1": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "THEORETICAL_HOE_CANE_2": {
               "properties": {
                 "borrowing": {
@@ -6877,6 +6932,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -6950,6 +7008,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -7021,6 +7082,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -7293,6 +7357,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -7641,6 +7708,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -7862,6 +7932,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -8398,6 +8471,9 @@
             },
             "ZOMBIE_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
