@@ -897,6 +897,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -918,6 +921,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -1506,6 +1512,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -8383,6 +8392,9 @@
             },
             "ZOMBIE_SWORD": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
