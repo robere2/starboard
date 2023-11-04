@@ -536,6 +536,9 @@
                     },
                     "rift": {
                       "type": "integer"
+                    },
+                    "winter": {
+                      "type": "integer"
                     }
                   },
                   "type": "object"
