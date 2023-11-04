@@ -27,6 +27,7 @@ const startTime = Date.now();
 await processHypixelSchemaChanges(Schemas.HypixelBooster)
 await processHypixelSchemaChanges(Schemas.HypixelLeaderboards)
 await processHypixelSchemaChanges(Schemas.HypixelSkyBlockEndedAuction)
+await processHypixelSchemaChanges(Schemas.HypixelSkyBlockProfile)
 
 await processHypixelSchemaChanges(Schemas.HypixelSkyBlockNews)
 await processHypixelSchemaChanges(Schemas.HypixelSkyBlockAuction)
@@ -57,7 +58,6 @@ await processHypixelSchemaChanges(Schemas.HypixelStatus)
 await processHypixelSchemaChanges(Schemas.HypixelRecentGames)
 await processHypixelSchemaChanges(Schemas.HypixelPlayer)
 await processHypixelSchemaChanges(Schemas.HypixelGuild)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockProfile)
 
 const endTime = Date.now();
 const timeTaken = endTime - startTime;
