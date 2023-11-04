@@ -8,6 +8,8 @@ import {diff} from "json-diff";
 import {compile} from "json-schema-to-typescript";
 import {dirname, join} from "path";
 import {fileURLToPath} from "url";
+import chalk, {ChalkInstance} from "chalk";
+import * as readline from 'readline'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -53,6 +55,7 @@ export function pickRandom<T>(arr: T[], amount: number): T[] {
     for(let i = 0; i < amount; i++) {
         const randomIndex = Math.floor(Math.random() * arrCopy.length);
         output.push(arrCopy.splice(randomIndex, 1)[0])
+        logger(chalk.dim("Picked random value: " + output[output.length - 1] + "\n"), true);
     }
     return output;
 }
@@ -92,7 +95,6 @@ export function getTotalRequests(): number {
  * - `Error` if the schema is very deep (this method currently features recursion)
  */
 export async function processHypixelSchemaChanges(input: SchemaData): Promise<{responses: Record<string, any>, schema: Record<string, any> | undefined}> {
-    console.log("Processing schema changes for type", input.defName);
     const fullSchema: JSONSchema4 = JSON.parse((await fs.promises.readFile(input.schemaPath)).toString())
     const schemaDef: JSONSchema4 | undefined = fullSchema.definitions?.[input.defName] ?? undefined;
 
@@ -117,7 +119,10 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     }).compile(fullSchema)
 
     for (const url of urls) {
-        console.log("Sending request to", url)
+        logger([
+            chalk.cyanBright("Processing schema changes for type", input.defName),
+            chalk.dim("Sending request to", url),
+        ]);
         const res = await fetch(url, {
             headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
         });
@@ -141,13 +146,18 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
 
         // Perform full schema validation before preprocessing down to the schema definition
         validateFullSchema(data)
+
         if(validateFullSchema.errors) {
-            console.log(validateFullSchema.errors);
+            logger([
+                "Validation error(s) for full schema:",
+                JSON.stringify(validateFullSchema.errors) + "\n"
+            ], true);
         }
 
         // Currently all type definitions cannot be arrays. Thus, we can use arrays as a way to iterate multiple values
         // in the same response (e.g. all boosters from `/boosters`)
         if(input.dataPreprocess) {
+            logger(chalk.dim("Calling preprocessor\n"), true);
             data = input.dataPreprocess(responses[url])
         }
         if(!Array.isArray(data)) {
@@ -159,8 +169,10 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
             // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
             const changesDiff = findSchemaChanges(newSchemaDef, datum);
             if(!changesDiff) {
+                logger(chalk.dim("No schema changes detected\n"), true)
                 continue;
             }
+            logger(chalk.dim("Schema changes detected" + "\n"), true);
             // The changesDiff converted into a schema, to be combined with original schema.
             const changesSchema: JSONSchema4 = toJsonSchema(changesDiff, {
                 strings: {
@@ -173,6 +185,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
                             .map(([key, value]) => {
                                 if (key.endsWith("__added")) {
                                     key = key.slice(0, -7)
+                                    logger(chalk.dim("New key: " + key + "\n"), true)
                                 }
                                 return [key, value]
                             })
@@ -194,6 +207,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     };
 
     if(input.dataPostprocess) {
+        logger(chalk.dim("Calling postprocessor\n"), true);
         input.dataPostprocess(output);
     }
 
@@ -225,12 +239,15 @@ export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchem
                 // If it is a pattern, combine with the pattern property schema instead. Otherwise we can
                 for(const pattern in finalSchema.patternProperties ?? {}) {
                     if(new RegExp(pattern).test(prop)) {
+                        logger(chalk.dim(`Property ${prop} matches existing pattern property ${pattern}\n`), true)
                         finalSchema.patternProperties![pattern] = combineSchemas(finalSchema.patternProperties![pattern], newSchema.properties[prop]);
                         continue newSchemaPropsLoop; // We don't want to break as that'd write to "properties"
                     }
                 }
+                logger(chalk.dim(`Property ${prop} added as a new property\n`), true)
                 finalSchema.properties[prop] = structuredClone(newSchema.properties[prop]);
             } else {
+                logger(chalk.dim(`Property ${prop} extended on original schema\n`), true)
                 finalSchema.properties[prop] = combineSchemas(finalSchema.properties[prop], newSchema.properties[prop]);
             }
         }
@@ -246,8 +263,10 @@ export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchem
             finalSchema.items = {}
         }
         if(!finalSchema.items.properties) {
+            logger(chalk.dim(`Added array items\n`), true)
             finalSchema.items.properties = structuredClone(newSchema.items.properties);
         } else {
+            logger(chalk.dim(`Updated array items\n`), true)
             finalSchema.items.properties = combineSchemas(finalSchema.items.properties, newSchema.items.properties);
         }
     }
@@ -315,7 +334,7 @@ export function findSchemaChanges(schema: JSONSchema4, input: Record<string, any
     validateAndRemove(definedValues);
 
     if(validate.errors) {
-        console.log(validate.errors);
+        logger('\n' + JSON.stringify(validate.errors) + '\n');
     }
 
     return diff(definedValues, allValues, {
@@ -355,7 +374,7 @@ export async function writeSchemaTypedefs(schema: Record<string, any>, name: str
 export async function copyExtraFiles() {
     // Tiny wrapper around fs.cp for logging the file we're copying
     async function copy(from: string, to: string) {
-        console.log("Copying", from, "to", to);
+        logger(chalk.cyan("Copying", from, "to", to));
         await fs.promises.cp(from, to, {
             recursive: true
         });
@@ -376,6 +395,7 @@ export async function createIndexFiles() {
 
     // Create a default index.d.ts file that contains all types concatenated
     const typeFiles = await fs.promises.readdir(join(__dirname, "..", "dist", "types"));
+    logger(chalk.dim("Found type definition files: " + typeFiles.join(", ") + "\n"), true);
     let indexContents = "";
     for(const type of typeFiles) {
         indexContents += `export * from "./types/${type}"\n`
@@ -384,18 +404,22 @@ export async function createIndexFiles() {
 }
 
 /**
- * Print lines of text to the console, encapsulated in a box. The box is automatically sized to fit the longest line,
- * and the text is centered on all shorter lines.
+ * Create a string of the passed lines encapsulated in a box. The box is automatically sized to fit the longest line,
+ * and the text is centered on all shorter lines. Each line is its own string within the returned array.
  *
  * @example
- * printBox(["You won!", "Congratulations, you did it!"])
+ * console.log(textBox(["You won!", "Congratulations, you did it!"]).join('\n'))
  * // --------------------------------
  * // |           You won!           |
  * // | Congratulations, you did it! |
  * // --------------------------------
  * @param lines Lines to print within the box
+ * @param boxColor A Chalk instance that is used to color the box outline
+ * @param textColor A Chalk instance that is used to color the text within the box
+ * @returns An array of strings containing the text box, where each string is one line of the box. No new lines or
+ * characters before the first `-`, or after the last `-`.
  */
-export function printBox(lines: string[]) {
+export function textBox(lines: string[], boxColor?: ChalkInstance, textColor?: ChalkInstance): string[] {
     const boxSideMargins = 1;
     let boxWidth = boxSideMargins * 2;
     for(const line of lines) {
@@ -405,15 +429,58 @@ export function printBox(lines: string[]) {
         }
     }
 
-    let output = '';
-    output += '-'.repeat(boxWidth + 2) + '\n'
 
+    let topLines = '-'.repeat(boxWidth + 2)
+    let sideLines = '|';
+    if(boxColor) {
+        topLines = boxColor(topLines);
+        sideLines = boxColor(sideLines);
+    }
+    const output: string[] = [];
+    output.push(topLines)
     for(const line of lines) {
         const spacesToCenter = (boxWidth - line.length) / 2;
-        output += '|' + ' '.repeat(Math.floor(spacesToCenter)) + line + ' '.repeat(Math.ceil(spacesToCenter)) + '|\n'
+        const coloredLine = textColor ? textColor(line) : line;
+        output.push(sideLines + ' '.repeat(Math.floor(spacesToCenter)) + coloredLine + ' '.repeat(Math.ceil(spacesToCenter)) + sideLines);
     }
+    output.push(topLines)
 
-    output += '-'.repeat(boxWidth + 2)
+    return output;
+}
 
-    console.log(output);
+let previousLog: string[] = [];
+/**
+ * Write text to stdout, overwriting the current line(s). Multiple lines can be printed by passing an array, and they
+ * will all be overwritten by the next call to `log`, unless you append a `\n` to the last string.
+ * the string.
+ * @param text Text to print to stdout.
+ * @param debug Whether to only print this text if debug mode is enabled.
+ */
+export function logger(text: string | string[], debug = false) {
+    if(!debug || process.env.MCSB_DEBUG === "true") {
+        if(!Array.isArray(text)) {
+            text = [text];
+        }
+        if(!previousLog[previousLog.length - 1]?.endsWith('\n')) {
+            clearLines(previousLog?.length)
+            readline.moveCursor(process.stdout, 0, -text.length);
+        }
+        for(let i = 0; i < text.length; i++) {
+            readline.moveCursor(process.stdout, 0, 1);
+            process.stdout.write(text[i]);
+            if(i < text.length - 1) {
+                process.stdout.write('\n')
+            }
+        }
+        previousLog = text;
+    }
+}
+
+export function clearLines(count: number): void {
+    readline.moveCursor(process.stdout, 0, -count);
+    for(let i = 0; i < count; i++) {
+        readline.moveCursor(process.stdout, 0, 1);
+        readline.clearLine(process.stdout, 0);
+    }
+    readline.cursorTo(process.stdout, 0);
 }
