@@ -55,6 +55,7 @@ export function pickRandom<T>(arr: T[], amount: number): T[] {
     for(let i = 0; i < amount; i++) {
         const randomIndex = Math.floor(Math.random() * arrCopy.length);
         output.push(arrCopy.splice(randomIndex, 1)[0])
+        logger(chalk.dim("Picked random value: " + output[output.length - 1] + "\n"), true);
     }
     return output;
 }
@@ -118,7 +119,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     }).compile(fullSchema)
 
     for (const url of urls) {
-        log([
+        logger([
             chalk.cyanBright("Processing schema changes for type", input.defName),
             chalk.dim("Sending request to", url),
         ]);
@@ -146,9 +147,17 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
         // Perform full schema validation before preprocessing down to the schema definition
         validateFullSchema(data)
 
+        if(validateFullSchema.errors) {
+            logger([
+                "Validation error(s) for full schema:",
+                JSON.stringify(validateFullSchema.errors) + "\n"
+            ], true);
+        }
+
         // Currently all type definitions cannot be arrays. Thus, we can use arrays as a way to iterate multiple values
         // in the same response (e.g. all boosters from `/boosters`)
         if(input.dataPreprocess) {
+            logger(chalk.dim("Calling preprocessor\n"), true);
             data = input.dataPreprocess(responses[url])
         }
         if(!Array.isArray(data)) {
@@ -160,8 +169,10 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
             // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
             const changesDiff = findSchemaChanges(newSchemaDef, datum);
             if(!changesDiff) {
+                logger(chalk.dim("No schema changes detected\n"), true)
                 continue;
             }
+            logger(chalk.dim("Schema changes detected" + "\n"), true);
             // The changesDiff converted into a schema, to be combined with original schema.
             const changesSchema: JSONSchema4 = toJsonSchema(changesDiff, {
                 strings: {
@@ -174,6 +185,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
                             .map(([key, value]) => {
                                 if (key.endsWith("__added")) {
                                     key = key.slice(0, -7)
+                                    logger(chalk.dim("New key: " + key + "\n"), true)
                                 }
                                 return [key, value]
                             })
@@ -195,6 +207,7 @@ export async function processHypixelSchemaChanges(input: SchemaData): Promise<{r
     };
 
     if(input.dataPostprocess) {
+        logger(chalk.dim("Calling postprocessor\n"), true);
         input.dataPostprocess(output);
     }
 
@@ -226,12 +239,15 @@ export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchem
                 // If it is a pattern, combine with the pattern property schema instead. Otherwise we can
                 for(const pattern in finalSchema.patternProperties ?? {}) {
                     if(new RegExp(pattern).test(prop)) {
+                        logger(chalk.dim(`Property ${prop} matches existing pattern property ${pattern}\n`), true)
                         finalSchema.patternProperties![pattern] = combineSchemas(finalSchema.patternProperties![pattern], newSchema.properties[prop]);
                         continue newSchemaPropsLoop; // We don't want to break as that'd write to "properties"
                     }
                 }
+                logger(chalk.dim(`Property ${prop} added as a new property\n`), true)
                 finalSchema.properties[prop] = structuredClone(newSchema.properties[prop]);
             } else {
+                logger(chalk.dim(`Property ${prop} extended on original schema\n`), true)
                 finalSchema.properties[prop] = combineSchemas(finalSchema.properties[prop], newSchema.properties[prop]);
             }
         }
@@ -247,8 +263,10 @@ export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchem
             finalSchema.items = {}
         }
         if(!finalSchema.items.properties) {
+            logger(chalk.dim(`Added array items\n`), true)
             finalSchema.items.properties = structuredClone(newSchema.items.properties);
         } else {
+            logger(chalk.dim(`Updated array items\n`), true)
             finalSchema.items.properties = combineSchemas(finalSchema.items.properties, newSchema.items.properties);
         }
     }
@@ -316,7 +334,7 @@ export function findSchemaChanges(schema: JSONSchema4, input: Record<string, any
     validateAndRemove(definedValues);
 
     if(validate.errors) {
-        log('\n' + validate.errors + '\n');
+        logger('\n' + JSON.stringify(validate.errors) + '\n');
     }
 
     return diff(definedValues, allValues, {
@@ -356,7 +374,7 @@ export async function writeSchemaTypedefs(schema: Record<string, any>, name: str
 export async function copyExtraFiles() {
     // Tiny wrapper around fs.cp for logging the file we're copying
     async function copy(from: string, to: string) {
-        log(chalk.cyan("Copying", from, "to", to));
+        logger(chalk.cyan("Copying", from, "to", to));
         await fs.promises.cp(from, to, {
             recursive: true
         });
@@ -377,6 +395,7 @@ export async function createIndexFiles() {
 
     // Create a default index.d.ts file that contains all types concatenated
     const typeFiles = await fs.promises.readdir(join(__dirname, "..", "dist", "types"));
+    logger(chalk.dim("Found type definition files: " + typeFiles.join(", ") + "\n"), true);
     let indexContents = "";
     for(const type of typeFiles) {
         indexContents += `export * from "./types/${type}"\n`
@@ -437,7 +456,7 @@ let previousLog: string[] = [];
  * @param text Text to print to stdout.
  * @param debug Whether to only print this text if debug mode is enabled.
  */
-export function log(text: string | string[], debug = false) {
+export function logger(text: string | string[], debug = false) {
     if(!debug || process.env.MCSB_DEBUG === "true") {
         if(!Array.isArray(text)) {
             text = [text];
