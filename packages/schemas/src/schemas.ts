@@ -188,6 +188,7 @@ const HypixelBooster: SchemaData = {
         ]
 
         pickRandom(allUniqueBoosterPurchasers, 10).forEach(uuid => {
+            if(!uuid) return;
             playersToScan.push(uuid)
         });
     }
@@ -216,10 +217,12 @@ const HypixelLeaderboards: SchemaData = {
         ]
 
         pickRandom(allUniqueLeaderboardPlayers, 20).forEach(uuid => {
+            if(!uuid) return;
             playersToScan.push(uuid)
         });
 
         pickRandom(allUniqueLeaderboardPlayers, 5).forEach(uuid => {
+            if(!uuid) return;
             guildUrlsToScan.push(`https://api.hypixel.net/guild?player=${uuid}`)
         });
     }
@@ -237,7 +240,6 @@ const HypixelPlayer: SchemaData = {
         const responseArray = Object.values(input);
         const startingProfileCount = skyblockProfilesToScan.length;
         const maxProfilesToAdd = 15;
-        console.log(skyblockProfilesToScan)
         for(const response of responseArray) {
             const playerProfiles = Object.values(response.player?.stats?.SkyBlock?.profiles ?? {});
             const randomProfile = pickRandom(playerProfiles, 1);
@@ -249,7 +251,6 @@ const HypixelPlayer: SchemaData = {
                 break;
             }
         }
-        console.log(skyblockProfilesToScan)
     }
 }
 
@@ -293,9 +294,11 @@ const HypixelSkyBlockEndedAuction: SchemaData = {
         ]
 
         pickRandom(allUniqueProfiles, 25).forEach(uuid => {
+            if(!uuid) return;
             skyblockProfilesToScan.push(uuid)
         });
         pickRandom(allUniquePlayers, 15).forEach(uuid => {
+            if(!uuid) return;
             playersToScan.push(uuid)
         });
     }
