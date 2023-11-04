@@ -254,7 +254,9 @@ export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchem
     return finalSchema
 }
 
-const ajvCache: Record<string, ValidateFunction> = {}
+let lastUsedSchemaHash: string;
+let lastUsedValidationFunction: ValidateFunction;
+let lastUsedValidationRemovalFunction: ValidateFunction;
 /**
  * Find divergences in an input object's keys from a given JSON schema. Changes in value or type will not be reported.
  * @param schema A valid JSON schema to check the difference of `input` against.
@@ -286,28 +288,25 @@ export function findSchemaChanges(schema: JSONSchema4, input: Record<string, any
     const allValues = structuredClone(input)
     const definedValues = structuredClone(input)
 
-    // Compiling an AJV validator is expensive. We want to cache the compiled validator for use in future checks.
-    // To do this we just hash the schema and store it in an object. For the validateAndRemove function, we just hash
-    // the hash to get a new unique value.
-    const schemaHash = md5(JSON.stringify(schema));
-    const schemaDoubleHash = md5(schemaHash);
-
-    let validate = ajvCache[schemaHash];
-    let validateAndRemove = ajvCache[schemaDoubleHash];
     const ajvOptions: Options = {
         allErrors: true
     }
-    if(!validate) {
-        validate = new Ajv(ajvOptions).compile(schema);
-        console.log("New validate function compiled - Function size:", validate.toString().length)
-        ajvCache[schemaHash] = validate;
-    }
-    if(!validateAndRemove) {
-        validateAndRemove = new Ajv({
+
+    // Compiling an AJV validator is expensive. We want to cache the compiled validator for use in subsequent checks.
+    // To do this, we hash the schema, and only use the cached functions if they match the previous schema's hash.
+    const schemaHash = md5(JSON.stringify(schema));
+    let validate;
+    let validateAndRemove;
+    if(schemaHash === lastUsedSchemaHash) {
+        validate = lastUsedValidationFunction;
+        validateAndRemove = lastUsedValidationRemovalFunction;
+    } else {
+        lastUsedSchemaHash = schemaHash;
+        lastUsedValidationFunction = validate = new Ajv(ajvOptions).compile(schema);
+        lastUsedValidationRemovalFunction = validateAndRemove = new Ajv({
             ...ajvOptions,
             removeAdditional: "all"
         }).compile(schema);
-        ajvCache[schemaDoubleHash] = validateAndRemove;
     }
 
     validate(allValues);
