@@ -10,6 +10,7 @@ import {dirname, join} from "path";
 import {fileURLToPath} from "url";
 import chalk, {ChalkInstance} from "chalk";
 import * as readline from 'readline'
+import {orderedSchemas} from "./schemas";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -78,6 +79,59 @@ export function getTotalRequests(): number {
     return totalRequests;
 }
 
+export type LoadedSchemaData = { schema: JSONSchema4, definition: JSONSchema4, urls: string[] };
+
+async function loadSchema(input: SchemaData): Promise<LoadedSchemaData> {
+    const schema: JSONSchema4 = JSON.parse((await fs.promises.readFile(input.schemaPath)).toString())
+    const definition: JSONSchema4 | undefined = schema.definitions?.[input.defName] ?? undefined;
+
+    if (!definition) {
+        throw new Error(`Schema definition ${input.defName} could not be found in the given schema!\nPath: ${input.schemaPath}`);
+    }
+
+    // testUrls can be a function that returns an array, or an array.
+    let urls: string[];
+    if (Array.isArray(input.testUrls)) {
+        urls = input.testUrls;
+    } else {
+        urls = await input.testUrls();
+    }
+
+    return { schema, definition, urls }
+}
+
+type ApiDataCallback = ((url: string, response: any) => void) | ((url: null) => void)
+
+/**
+ * Get data from all Hypixel API endpoints used by the generator. This method is responsible for constructing and
+ * scheduling of requests to the API, scheduling meaning both the order and the delay required to comply with rate
+ * limits.
+ * @param callback A function that is called for every API response, once it is received. Once all responses have been
+ * passed to `callback`, `null` is passed as the final call.
+ * @returns A `Promise` that resolves after the initial list of requests has been determined. Later requests may be
+ * added depending on the
+ */
+async function getHypixelApiData(callback: ApiDataCallback): Promise<void> {
+    // This is used to calculate how quickly we can send requests before getting a 429.
+    const apiInterval = parseInt(process.env.HYPIXEL_API_RATELIMIT_RESET ?? "") || 300_000;
+    let apiCap = parseInt(process.env.HYPIXEL_API_RATELIMIT_LIMIT ?? "") || 300;
+    // Subtract 5 as a buffer
+    apiCap -= 5;
+    const requestDelay = apiInterval / apiCap;
+
+    // Keep an array of all requests we've sent so we a) know how long to delay the next one and b) know when all
+    // requests are done
+    const requestArray: Promise<any>[] = [];
+    for(const schema of orderedSchemas) {
+        let urls: string[];
+        if(Array.isArray(schema.testUrls)) {
+            urls = schema.testUrls;
+        } else {
+            urls = await schema.testUrls()
+        }
+    }
+}
+
 /**
  * Read a Hypixel API schema from the file system and test it against various URLs to search for new changes. Any
  * changes that are found will be written back to the schema, and new type definitions will be generated.
@@ -94,40 +148,29 @@ export function getTotalRequests(): number {
  * - `Error` if file writing for the new schema or type definitions file fails
  * - `Error` if the schema is very deep (this method currently features recursion)
  */
-export async function processHypixelSchemaChanges(input: SchemaData): Promise<{responses: Record<string, any>, schema: Record<string, any> | undefined}> {
-    const fullSchema: JSONSchema4 = JSON.parse((await fs.promises.readFile(input.schemaPath)).toString())
-    const schemaDef: JSONSchema4 | undefined = fullSchema.definitions?.[input.defName] ?? undefined;
+export async function processHypixelSchemaChanges(): Promise<{responses: Record<string, any>}> {
 
-    if (!schemaDef) {
-        throw new Error(`Schema definition ${input.defName} could not be found in the given schema!\nPath: ${input.schemaPath}`);
-    }
-
-    // testUrls can be a function that returns an array, or an array.
-    let urls: string[];
-    if (Array.isArray(input.testUrls)) {
-        urls = input.testUrls;
-    } else {
-        urls = await input.testUrls();
-    }
+    const loadedSchema = await loadSchema(input);
 
     // newSchemaDef is modified after each URL and written back to disk after all URLs are done.
-    let newSchemaDef = schemaDef;
+    let definitionSchema = loadedSchema.definition;
     const responses: Record<string, any> = {};
 
-    for (const url of urls) {
-       const urlOut = await processHypixelSchemaChangesFromUrl(input, newSchemaDef, url);
-       newSchemaDef = urlOut.schema;
-       responses[url] = urlOut.response;
+    // The actual meat of the fn happens in here. Apply each updated schema definition on top of the previous one
+    for (const url of loadedSchema.urls) {
+        // TODO: input + definition schema args can be combined to just the loadedSchema, perhaps
+        const urlOut = await processHypixelSchemaChangesFromUrl(input, definitionSchema, url);
+        definitionSchema = urlOut.schema;
+        responses[url] = urlOut.response;
     }
 
-    // we would've thrown an error earlier if this was nullish
-    fullSchema.definitions![input.defName] = sortObject(newSchemaDef);
-
-    await fs.promises.writeFile(input.schemaPath, JSON.stringify(fullSchema, null, 2))
+    // Sort the schema definition alphanumerically and then save it back to disk
+    loadedSchema.schema.definitions![input.defName] = sortObject(definitionSchema);
+    await fs.promises.writeFile(input.schemaPath, JSON.stringify(loadedSchema.schema, null, 2))
 
     const output = {
         responses,
-        schema: fullSchema
+        ...loadedSchema
     };
 
     if(input.dataPostprocess) {
