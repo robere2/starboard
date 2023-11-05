@@ -1,7 +1,7 @@
 import {dirname, join} from "path";
 import {SchemaData} from "./SchemaData.js";
 import {fileURLToPath} from "url";
-import {pickRandom} from "./tools.js";
+import {pickRandom, processHypixelSchemaChanges} from "./tools.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -26,7 +26,7 @@ const skyblockProfilesToScan: string[] = [
 const inDir = join(__dirname, 'schemas', 'hypixel');
 const outDir = join(__dirname, '..', 'dist', 'types');
 
-const HypixelSkyBlockBingoGoal: SchemaData = {
+export const HypixelSkyBlockBingoGoal: SchemaData = {
     defName: "HypixelSkyBlockBingoGoal",
     schemaPath: join(inDir, 'resources', 'skyblock', 'bingo.json'),
     dtsOutDir: outDir,
@@ -34,7 +34,7 @@ const HypixelSkyBlockBingoGoal: SchemaData = {
     dataPreprocess: (input) => input.goals,
 }
 
-const HypixelSkyBlockCollections: SchemaData = {
+export const HypixelSkyBlockCollections: SchemaData = {
     defName: "HypixelSkyBlockCollections",
     schemaPath: join(inDir, 'resources', 'skyblock', 'collections.json'),
     dtsOutDir: outDir,
@@ -42,7 +42,7 @@ const HypixelSkyBlockCollections: SchemaData = {
     dataPreprocess: (input) => input.collections,
 }
 
-const HypixelSkyBlockMayor: SchemaData = {
+export const HypixelSkyBlockMayor: SchemaData = {
     defName: "HypixelSkyBlockMayor",
     schemaPath: join(inDir, 'resources', 'skyblock', 'election.json'),
     dtsOutDir: outDir,
@@ -50,21 +50,21 @@ const HypixelSkyBlockMayor: SchemaData = {
     dataPreprocess: (input) => input.mayor,
 }
 
-const HypixelSkyBlockElection: SchemaData = {
+export const HypixelSkyBlockElection: SchemaData = {
     defName: "HypixelSkyBlockElection",
     schemaPath: join(inDir, 'resources', 'skyblock', 'election.json'),
     testUrls: ["https://api.hypixel.net/resources/skyblock/election"],
     dataPreprocess: (input) => input.current,
 }
 
-const HypixelSkyBlockItem: SchemaData = {
+export const HypixelSkyBlockItem: SchemaData = {
     defName: "HypixelSkyBlockItem",
     schemaPath: join(inDir, 'resources', 'skyblock', 'items.json'),
     testUrls: ["https://api.hypixel.net/resources/skyblock/items"],
     dataPreprocess: (input) => input.items,
 }
 
-const HypixelSkyBlockSkills: SchemaData = {
+export const HypixelSkyBlockSkills: SchemaData = {
     defName: "HypixelSkyBlockSkills",
     schemaPath: join(inDir, 'resources', 'skyblock', 'skills.json'),
     dtsOutDir: outDir,
@@ -72,7 +72,7 @@ const HypixelSkyBlockSkills: SchemaData = {
     dataPreprocess: (input) => input.collections,
 }
 
-const HypixelAchievements: SchemaData = {
+export const HypixelAchievements: SchemaData = {
     defName: "HypixelAchievements",
     schemaPath: join(inDir, 'resources', 'achievements.json'),
     dtsOutDir: outDir,
@@ -80,7 +80,7 @@ const HypixelAchievements: SchemaData = {
     dataPreprocess: (input) => input.achievements,
 }
 
-const HypixelChallenges: SchemaData = {
+export const HypixelChallenges: SchemaData = {
     defName: "HypixelChallenges",
     schemaPath: join(inDir, 'resources', 'challenges.json'),
     dtsOutDir: outDir,
@@ -88,7 +88,7 @@ const HypixelChallenges: SchemaData = {
     dataPreprocess: (input) => input.challenges
 }
 
-const HypixelGames: SchemaData = {
+export const HypixelGames: SchemaData = {
     defName: "HypixelGames",
     schemaPath: join(inDir, 'resources', 'games.json'),
     dtsOutDir: outDir,
@@ -96,14 +96,14 @@ const HypixelGames: SchemaData = {
     dataPreprocess: (input) => input.games
 }
 
-const HypixelGuildAchievements: SchemaData = {
+export const HypixelGuildAchievements: SchemaData = {
     defName: "HypixelGuildAchievements",
     schemaPath: join(inDir, 'resources', 'guilds', 'achievements.json'),
     dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/resources/guilds/achievements"]
 }
 
-const HypixelPet: SchemaData = {
+export const HypixelPet: SchemaData = {
     defName: "HypixelPet",
     schemaPath: join(inDir, 'resources', 'vanity', 'pets.json'),
     dtsOutDir: outDir,
@@ -111,14 +111,14 @@ const HypixelPet: SchemaData = {
     dataPreprocess: (input) => input.types
 }
 
-const HypixelPetRarity: SchemaData = {
+export const HypixelPetRarity: SchemaData = {
     defName: "HypixelPetRarity",
     schemaPath: join(inDir, 'resources', 'vanity', 'pets.json'),
     testUrls: ["https://api.hypixel.net/resources/vanity/pets"],
     dataPreprocess: (input) => input.rarities
 }
 
-const HypixelCompanion: SchemaData = {
+export const HypixelCompanion: SchemaData = {
     defName: "HypixelCompanion",
     schemaPath: join(inDir, 'resources', 'vanity', 'companions.json'),
     dtsOutDir: outDir,
@@ -126,14 +126,14 @@ const HypixelCompanion: SchemaData = {
     dataPreprocess: (input) => input.types
 }
 
-const HypixelCompanionRarity: SchemaData = {
+export const HypixelCompanionRarity: SchemaData = {
     defName: "HypixelCompanionRarity",
     schemaPath: join(inDir, 'resources', 'vanity', 'companions.json'),
     testUrls: ["https://api.hypixel.net/resources/vanity/companions"],
     dataPreprocess: (input) => input.rarities
 }
 
-const HypixelQuests: SchemaData = {
+export const HypixelQuests: SchemaData = {
     defName: "HypixelQuests",
     schemaPath: join(inDir, 'resources', 'quests.json'),
     dtsOutDir: outDir,
@@ -141,21 +141,21 @@ const HypixelQuests: SchemaData = {
     dataPreprocess: (input) => input.quests
 }
 
-const HypixelPlayerCounts: SchemaData = {
+export const HypixelPlayerCounts: SchemaData = {
     defName: "HypixelPlayerCounts",
     schemaPath: join(inDir, 'counts.json'),
     dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/counts"]
 }
 
-const HypixelPunishmentStatistics: SchemaData = {
+export const HypixelPunishmentStatistics: SchemaData = {
     defName: "HypixelPunishmentStatistics",
     schemaPath: join(inDir, 'punishmentstats.json'),
     dtsOutDir: outDir,
     testUrls: ["https://api.hypixel.net/punishmentstats"]
 }
 
-const HypixelStatus: SchemaData = {
+export const HypixelStatus: SchemaData = {
     defName: "HypixelStatus",
     schemaPath: join(inDir, 'status.json'),
     dtsOutDir: outDir,
@@ -163,7 +163,7 @@ const HypixelStatus: SchemaData = {
     dataPreprocess: (input) => input.session,
 }
 
-const HypixelRecentGames: SchemaData = {
+export const HypixelRecentGames: SchemaData = {
     defName: "HypixelRecentGame",
     schemaPath: join(inDir, 'recentgames.json'),
     dtsOutDir: outDir,
@@ -171,7 +171,7 @@ const HypixelRecentGames: SchemaData = {
     dataPreprocess: (input) => input.games,
 }
 
-const HypixelBooster: SchemaData = {
+export const HypixelBooster: SchemaData = {
     defName: "HypixelBooster",
     schemaPath: join(inDir, 'boosters.json'),
     dtsOutDir: outDir,
@@ -194,7 +194,7 @@ const HypixelBooster: SchemaData = {
     }
 }
 
-const HypixelLeaderboards: SchemaData = {
+export const HypixelLeaderboards: SchemaData = {
     defName: "HypixelLeaderboards",
     schemaPath: join(inDir, 'leaderboards.json'),
     dtsOutDir: outDir,
@@ -228,7 +228,7 @@ const HypixelLeaderboards: SchemaData = {
     }
 }
 
-const HypixelPlayer: SchemaData = {
+export const HypixelPlayer: SchemaData = {
     defName: "HypixelPlayer",
     schemaPath: join(inDir, 'player.json'),
     dtsOutDir: outDir,
@@ -237,7 +237,7 @@ const HypixelPlayer: SchemaData = {
     dataPostprocess: (input) => {
         // Go through our list of players and add a random one of their SkyBlock profiles to be scanned.
         // Adds a maximum of 15 profiles
-        const responseArray = Object.values(input);
+        const responseArray = Object.values(input.responses);
         const startingProfileCount = skyblockProfilesToScan.length;
         const maxProfilesToAdd = 15;
         for(const response of responseArray) {
@@ -254,7 +254,7 @@ const HypixelPlayer: SchemaData = {
     }
 }
 
-const HypixelGuild: SchemaData = {
+export const HypixelGuild: SchemaData = {
     defName: "HypixelGuild",
     schemaPath: join(inDir, 'guild.json'),
     dtsOutDir: outDir,
@@ -262,7 +262,7 @@ const HypixelGuild: SchemaData = {
     dataPreprocess: (input) => input.guild
 }
 
-const HypixelSkyBlockAuction: SchemaData = {
+export const HypixelSkyBlockAuction: SchemaData = {
     defName: "HypixelSkyBlockAuction",
     schemaPath: join(inDir, 'skyblock', 'auctions.json'),
     dtsOutDir: outDir,
@@ -270,7 +270,7 @@ const HypixelSkyBlockAuction: SchemaData = {
     dataPreprocess: (input) => input.auctions
 }
 
-const HypixelSkyBlockEndedAuction: SchemaData = {
+export const HypixelSkyBlockEndedAuction: SchemaData = {
     defName: "HypixelSkyBlockEndedAuction",
     schemaPath: join(inDir, 'skyblock', 'auctions_ended.json'),
     dtsOutDir: outDir,
@@ -304,7 +304,7 @@ const HypixelSkyBlockEndedAuction: SchemaData = {
     }
 }
 
-const HypixelSkyBlockBazaarProducts: SchemaData = {
+export const HypixelSkyBlockBazaarProducts: SchemaData = {
     defName: "HypixelSkyBlockBazaarProducts",
     schemaPath: join(inDir, 'skyblock', 'bazaar.json'),
     dtsOutDir: outDir,
@@ -312,7 +312,7 @@ const HypixelSkyBlockBazaarProducts: SchemaData = {
     dataPreprocess: (input) => input.products
 }
 
-const HypixelSkyBlockBingoProfile: SchemaData = {
+export const HypixelSkyBlockBingoProfile: SchemaData = {
     defName: "HypixelSkyBlockBingoProfile",
     schemaPath: join(inDir, 'skyblock', 'bingo.json'),
     dtsOutDir: outDir,
@@ -320,7 +320,7 @@ const HypixelSkyBlockBingoProfile: SchemaData = {
     dataPreprocess: (input) => input.events
 }
 
-const HypixelSkyBlockFireSale: SchemaData = {
+export const HypixelSkyBlockFireSale: SchemaData = {
     defName: "HypixelSkyBlockFireSale",
     schemaPath: join(inDir, 'skyblock', 'firesales.json'),
     dtsOutDir: outDir,
@@ -328,7 +328,7 @@ const HypixelSkyBlockFireSale: SchemaData = {
     dataPreprocess: (input) => input.sales
 }
 
-const HypixelSkyBlockMuseum: SchemaData = {
+export const HypixelSkyBlockMuseum: SchemaData = {
     defName: "HypixelSkyBlockMuseum",
     schemaPath: join(inDir, 'skyblock', 'museum.json'),
     dtsOutDir: outDir,
@@ -336,7 +336,7 @@ const HypixelSkyBlockMuseum: SchemaData = {
     dataPreprocess: (input) => Object.values(input.members)
 }
 
-const HypixelSkyBlockNews: SchemaData = {
+export const HypixelSkyBlockNews: SchemaData = {
     defName: "HypixelSkyBlockNews",
     schemaPath: join(inDir, 'skyblock', 'news.json'),
     dtsOutDir: outDir,
@@ -344,7 +344,7 @@ const HypixelSkyBlockNews: SchemaData = {
     dataPreprocess: (input) => input.items
 }
 
-const HypixelSkyBlockProfile: SchemaData = {
+export const HypixelSkyBlockProfile: SchemaData = {
     defName: "HypixelSkyBlockProfile",
     schemaPath: join(inDir, 'skyblock', 'profile.json'),
     dtsOutDir: outDir,
@@ -352,7 +352,13 @@ const HypixelSkyBlockProfile: SchemaData = {
     dataPreprocess: (input) => input.profile
 }
 
-export default {
+export const orderedSchemas = [
+    HypixelBooster,
+    HypixelLeaderboards,
+    HypixelSkyBlockEndedAuction,
+    HypixelSkyBlockNews,
+    HypixelSkyBlockAuction,
+    HypixelSkyBlockFireSale,
     HypixelSkyBlockBingoGoal,
     HypixelSkyBlockCollections,
     HypixelSkyBlockMayor,
@@ -368,20 +374,14 @@ export default {
     HypixelCompanion,
     HypixelCompanionRarity,
     HypixelQuests,
-    HypixelPlayerCounts,
     HypixelPunishmentStatistics,
-    HypixelStatus,
-    HypixelRecentGames,
-    HypixelBooster,
-    HypixelLeaderboards,
-    HypixelPlayer,
-    HypixelGuild,
-    HypixelSkyBlockAuction,
-    HypixelSkyBlockEndedAuction,
+    HypixelPlayerCounts,
+    HypixelSkyBlockMuseum,
     HypixelSkyBlockBazaarProducts,
     HypixelSkyBlockBingoProfile,
-    HypixelSkyBlockFireSale,
-    HypixelSkyBlockMuseum,
-    HypixelSkyBlockNews,
-    HypixelSkyBlockProfile
-}
+    HypixelStatus,
+    HypixelRecentGames,
+    HypixelPlayer,
+    HypixelGuild,
+    HypixelSkyBlockProfile,
+]

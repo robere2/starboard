@@ -1,4 +1,4 @@
-import {JSONSchema4} from "json-schema";
+import {LoadedSchemaData} from "./tools";
 
 export interface SchemaData {
     dtsOutDir?: string,
@@ -6,5 +6,5 @@ export interface SchemaData {
     defName: string,
     testUrls: string[] | (() => string[]) | (() => Promise<string[]>),
     dataPreprocess?: (input: any) => any,
-    dataPostprocess?: (input: {responses: Record<string, any>, schema: JSONSchema4}) => void
+    dataPostprocess?: (input: {responses: Record<string, any>} & LoadedSchemaData) => void
 }

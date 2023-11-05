@@ -1,6 +1,6 @@
 import {getTotalRequests, textBox, processHypixelSchemaChanges, logger} from "./tools.js";
 import dotenv from "dotenv";
-import Schemas from "./schemas.js";
+import Schemas, {orderedSchemas} from "./schemas.js";
 import chalk from "chalk";
 dotenv.config();
 
@@ -22,43 +22,7 @@ if(!process.env.HYPIXEL_GEN_API_KEY) {
 // logs later.
 const startTime = Date.now();
 
-// The order of these function calls matters. The API response of different endpoints feeds into the
-// list of other URLs to test.
-
-await processHypixelSchemaChanges(Schemas.HypixelBooster)
-await processHypixelSchemaChanges(Schemas.HypixelLeaderboards)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockEndedAuction)
-
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockNews)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockAuction)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockFireSale)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockBingoGoal)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockCollections)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockMayor)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockElection)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockItem)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockSkills)
-await processHypixelSchemaChanges(Schemas.HypixelAchievements)
-await processHypixelSchemaChanges(Schemas.HypixelChallenges)
-await processHypixelSchemaChanges(Schemas.HypixelGames)
-await processHypixelSchemaChanges(Schemas.HypixelGuildAchievements)
-await processHypixelSchemaChanges(Schemas.HypixelPet)
-await processHypixelSchemaChanges(Schemas.HypixelPetRarity)
-await processHypixelSchemaChanges(Schemas.HypixelCompanion)
-await processHypixelSchemaChanges(Schemas.HypixelCompanionRarity)
-await processHypixelSchemaChanges(Schemas.HypixelQuests)
-await processHypixelSchemaChanges(Schemas.HypixelPunishmentStatistics)
-await processHypixelSchemaChanges(Schemas.HypixelPlayerCounts)
-
-// These are the schemas that are expected to take a while due to their size/input count
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockMuseum)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockBazaarProducts)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockBingoProfile)
-await processHypixelSchemaChanges(Schemas.HypixelStatus)
-await processHypixelSchemaChanges(Schemas.HypixelRecentGames)
-await processHypixelSchemaChanges(Schemas.HypixelPlayer)
-await processHypixelSchemaChanges(Schemas.HypixelGuild)
-await processHypixelSchemaChanges(Schemas.HypixelSkyBlockProfile)
+processHypixelSchemaChanges();
 
 const endTime = Date.now();
 const timeTaken = endTime - startTime;
