@@ -1,6 +1,7 @@
-import {getTotalRequests, textBox, processHypixelSchemaChanges, logger} from "./tools.js";
+import {textBox, logger} from "./common.js";
 import dotenv from "dotenv";
 import chalk from "chalk";
+import {HypixelGenerator} from "./HypixelGenerator";
 dotenv.config();
 
 declare global {
@@ -21,7 +22,7 @@ if(!process.env.HYPIXEL_GEN_API_KEY) {
 // logs later.
 const startTime = Date.now();
 
-await processHypixelSchemaChanges();
+const generator = await new HypixelGenerator().run()
 
 const endTime = Date.now();
 const timeTaken = endTime - startTime;
@@ -30,6 +31,6 @@ logger([
     '\n',
         ...textBox([
         `Generation complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000) % 60}s`,
-        `Sent a total of ${getTotalRequests()} requests to the Hypixel API.`
+        `Sent a total of ${generator.getCompletedRequests()} requests to the Hypixel API.`
     ], chalk.green, chalk.green)
 ]);

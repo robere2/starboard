@@ -1,7 +1,7 @@
 import {dirname, join} from "path";
 import {SchemaData} from "./SchemaData.js";
 import {fileURLToPath} from "url";
-import {pickRandom} from "./tools.js";
+import {pickRandom} from "./common.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
