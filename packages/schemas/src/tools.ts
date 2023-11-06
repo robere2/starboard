@@ -59,6 +59,7 @@ export function pickRandom<T>(arr: T[], amount: number): T[] {
     return output;
 }
 
+let percentCompleted = 0;
 let totalUrlsCompleted = 0;
 /**
  * Get the total number of Hypixel API HTTP requests sent by the generator via {@link processHypixelSchemaChanges}.
@@ -66,6 +67,11 @@ let totalUrlsCompleted = 0;
  */
 export function getTotalRequests(): number {
     return totalUrlsCompleted;
+}
+
+function getPercentPrefix(): string {
+    const percentStr = `${Math.floor(percentCompleted * 100)}%`.padEnd(3, ' ')
+    return percentStr + " > ";
 }
 
 const schemaData: Record<string, LoadedSchemaData> = {}
@@ -133,6 +139,7 @@ async function getAllHypixelApiData(callback: ApiDataCallback): Promise<void> {
             // instead of just setting the requested value to null.
             if(json.cause === "No bingo data could be found") {
                 totalUrlsCompleted++;
+                percentCompleted = totalUrlsCompleted / requestArray.length;
                 return json;
             }
             throw new Error('Hypixel API Error: ' + json.cause);
@@ -148,6 +155,7 @@ async function getAllHypixelApiData(callback: ApiDataCallback): Promise<void> {
         }
         await callback(url, schemaData, output);
         totalUrlsCompleted++;
+        percentCompleted = totalUrlsCompleted / requestArray.length;
         return json
     }
 
@@ -198,7 +206,7 @@ export async function processHypixelSchemaChanges(): Promise<void> {
         let data = dataOrUndef!;
 
         logger([
-            chalk.dim("Received response from", url),
+            getPercentPrefix() + chalk.dim("Received response from", url),
         ]);
 
         const loadedSchema = await getSchema(schema);
@@ -210,7 +218,7 @@ export async function processHypixelSchemaChanges(): Promise<void> {
 
         // Offload schema updating to a worker thread. This includes compiling the schema.
         const newDefinitionSchema: JSONSchema4 = await pool.exec("updateSchema", [definitionSchema, data as Record<string, any>[]])
-        logger(chalk.dim("Completed", url))
+        logger(getPercentPrefix() + chalk.dim("Completed", url))
 
         // Sort the schema definition alphanumerically. The schema was served from cache and any updates
         // will be saved to disk by saveSchemas()
