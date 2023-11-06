@@ -1,18 +1,16 @@
-import crypto from "crypto";
-import {SchemaData} from "./SchemaData";
+import {LoadedSchemaData, SchemaData} from "./SchemaData";
 import {JSONSchema4} from "json-schema";
 import fs from "fs";
-import Ajv, {Options, ValidateFunction} from "ajv";
-import toJsonSchema from "gen-json-schema";
-import {diff} from "json-diff";
 import {compile} from "json-schema-to-typescript";
 import {dirname, join} from "path";
 import {fileURLToPath} from "url";
 import chalk, {ChalkInstance} from "chalk";
 import * as readline from 'readline'
-import {orderedSchemas} from "./schemas";
+import {initialGenerationUrlList} from "./schemas";
+import workerpool from "workerpool";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
+const pool = workerpool.pool(join(__dirname, 'generator-worker.ts'));
 
 /**
  * While JSON schemas do not need to obey any specific order, when we write them to the file system, we want to make
@@ -61,81 +59,119 @@ export function pickRandom<T>(arr: T[], amount: number): T[] {
     return output;
 }
 
-/**
- * Hash a string into it's md5 hexadecimal output.
- * @param str String to hash
- * @returns An MD5 hash encoded in a hexadecimal string
- */
-function md5(str: string): string {
-    return crypto.createHash("md5").update(str).digest().toString("hex");
-}
-
-let totalRequests = 0;
+let totalUrlsCompleted = 0;
 /**
  * Get the total number of Hypixel API HTTP requests sent by the generator via {@link processHypixelSchemaChanges}.
  * @returns The total number of requests sent, including unsuccessful ones.
  */
 export function getTotalRequests(): number {
-    return totalRequests;
+    return totalUrlsCompleted;
 }
 
-export type LoadedSchemaData = { schema: JSONSchema4, definition: JSONSchema4, urls: string[] };
-
-async function loadSchema(input: SchemaData): Promise<LoadedSchemaData> {
-    const schema: JSONSchema4 = JSON.parse((await fs.promises.readFile(input.schemaPath)).toString())
+const schemaData: Record<string, LoadedSchemaData> = {}
+async function getSchema(input: SchemaData): Promise<LoadedSchemaData> {
+    if(schemaData[input.schemaPath]) {
+        return schemaData[input.schemaPath]
+    }
+    logger(chalk.dim("Reading file " + input.schemaPath), true)
+    const fileContents = (await fs.promises.readFile(input.schemaPath)).toString()
+    const schema: JSONSchema4 = JSON.parse(fileContents)
     const definition: JSONSchema4 | undefined = schema.definitions?.[input.defName] ?? undefined;
 
     if (!definition) {
         throw new Error(`Schema definition ${input.defName} could not be found in the given schema!\nPath: ${input.schemaPath}`);
     }
 
-    // testUrls can be a function that returns an array, or an array.
-    let urls: string[];
-    if (Array.isArray(input.testUrls)) {
-        urls = input.testUrls;
-    } else {
-        urls = await input.testUrls();
-    }
-
-    return { schema, definition, urls }
+    return schemaData[input.schemaPath] = { schema, definition, ...input };
 }
 
-type ApiDataCallback = ((url: string, response: any) => void) | ((url: null) => void)
+type ApiDataCallback = (url: string | null, schema: SchemaData | undefined, data: Record<string, any> | Record<string, any>[] | undefined) => Promise<void> | void
 
 /**
  * Get data from all Hypixel API endpoints used by the generator. This method is responsible for constructing and
  * scheduling of requests to the API, scheduling meaning both the order and the delay required to comply with rate
  * limits.
+ *
  * @param callback A function that is called for every API response, once it is received. Once all responses have been
  * passed to `callback`, `null` is passed as the final call.
  * @returns A `Promise` that resolves after the initial list of requests has been determined. Later requests may be
  * added depending on the
  */
-async function getHypixelApiData(callback: ApiDataCallback): Promise<void> {
-    // This is used to calculate how quickly we can send requests before getting a 429.
-    const apiInterval = parseInt(process.env.HYPIXEL_API_RATELIMIT_RESET ?? "") || 300_000;
-    let apiCap = parseInt(process.env.HYPIXEL_API_RATELIMIT_LIMIT ?? "") || 300;
-    // Subtract 5 as a buffer
-    apiCap -= 5;
-    const requestDelay = apiInterval / apiCap;
+async function getAllHypixelApiData(callback: ApiDataCallback): Promise<void> {
+    // Delay each request by 250ms. This is multipurpose:
+    //  a) The API has a limit on how many requests you can send per minute
+    //  b) this gives operators the chance to cancel an operation before 100+ API requests are sent out
+    const requestDelay = 250;
 
     // Keep an array of all requests we've sent so we a) know how long to delay the next one and b) know when all
     // requests are done
     const requestArray: Promise<any>[] = [];
-    for(const schema of orderedSchemas) {
-        let urls: string[];
-        if(Array.isArray(schema.testUrls)) {
-            urls = schema.testUrls;
-        } else {
-            urls = await schema.testUrls()
+
+    /**
+     * Send an API request to the Hypixel API, process it through the preprocessor if present, and then call the
+     * callback with the url, schema, and response body.
+     *
+     * Defined internally to allow us to access requestArray and callback directly. Each schema post processor receives
+     * a function they can call to send additional requests.
+     * @param url URL to send the request to.
+     * @param schemaData Data about the schema we're expecting the response to follow
+     */
+    async function queueHypixelRequest(url: string, schemaData: SchemaData): Promise<Record<string, any>> {
+        await new Promise(resolve => setTimeout(resolve, requestDelay * requestArray.length))
+
+        const res = await fetch(url, {
+            headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
+        });
+        // API response is required to be a JSON object
+        const json = await res.json() as Record<string, any>;
+        if(typeof json !== "object" || Array.isArray(json) || json === null) {
+            throw new Error("Malformed response received from Hypixel API: " + json)
         }
+
+        if (!json.success) {
+            // Unlike the rest of the API, a player without a SkyBlock bingo card will mark the request as failed
+            // instead of just setting the requested value to null.
+            if(json.cause === "No bingo data could be found") {
+                totalUrlsCompleted++;
+                return json;
+            }
+            throw new Error('Hypixel API Error: ' + json.cause);
+        }
+
+        // Post processors can perform mutations on the response, and they can add URLs based on the response
+        let output: Record<string, any> | Record<string, any>[] = json;
+        if(schemaData.postProcess) {
+            output = schemaData.postProcess(json, ([newUrl, newSchema]) => {
+
+                requestArray.push(queueHypixelRequest(newUrl, newSchema))
+            })
+        }
+        await callback(url, schemaData, output);
+        totalUrlsCompleted++;
+        return json
     }
+
+    // Jumpstart the generation process by sending requests to all of the initial URLs. Additional URLs may have
+    // requests sent to them by each schema's post-processor.
+    for(const [url, schemaData] of initialGenerationUrlList) {
+        requestArray.push(queueHypixelRequest(url, schemaData))
+    }
+
+    // Wait for all requests to all URLs to complete, then call callback with null. Since some requests may add
+    // additional URLs after completing, we need to repeatedly check until we detect that no additional requests
+    // have been added.
+    (async () => {
+        while(requestArray.length > getTotalRequests()) {
+            await Promise.all(requestArray);
+        }
+    })().then(() => {
+        callback(null, undefined, undefined);
+    })
 }
 
 /**
  * Read a Hypixel API schema from the file system and test it against various URLs to search for new changes. Any
  * changes that are found will be written back to the schema, and new type definitions will be generated.
- * @param input Required information about the schema, such as its file location.
  * @see {@link SchemaData} for more information on the input.
  * @returns A `Promise` that resolves to an object containing a `responses` property and a `schema` property. The
  * `responses` property is a record mapping each of the input URLs to the response body, JSON-parsed. The `schema`
@@ -148,242 +184,55 @@ async function getHypixelApiData(callback: ApiDataCallback): Promise<void> {
  * - `Error` if file writing for the new schema or type definitions file fails
  * - `Error` if the schema is very deep (this method currently features recursion)
  */
-export async function processHypixelSchemaChanges(): Promise<{responses: Record<string, any>}> {
+export async function processHypixelSchemaChanges(): Promise<void> {
 
-    const loadedSchema = await loadSchema(input);
+    let done: () => void;
 
-    // newSchemaDef is modified after each URL and written back to disk after all URLs are done.
-    let definitionSchema = loadedSchema.definition;
-    const responses: Record<string, any> = {};
-
-    // The actual meat of the fn happens in here. Apply each updated schema definition on top of the previous one
-    for (const url of loadedSchema.urls) {
-        // TODO: input + definition schema args can be combined to just the loadedSchema, perhaps
-        const urlOut = await processHypixelSchemaChangesFromUrl(input, definitionSchema, url);
-        definitionSchema = urlOut.schema;
-        responses[url] = urlOut.response;
-    }
-
-    // Sort the schema definition alphanumerically and then save it back to disk
-    loadedSchema.schema.definitions![input.defName] = sortObject(definitionSchema);
-    await fs.promises.writeFile(input.schemaPath, JSON.stringify(loadedSchema.schema, null, 2))
-
-    const output = {
-        responses,
-        ...loadedSchema
-    };
-
-    if(input.dataPostprocess) {
-        logger(chalk.dim("Calling postprocessor\n"), true);
-        input.dataPostprocess(output);
-    }
-
-    return output;
-}
-
-async function processHypixelSchemaChangesFromUrl(input: SchemaData, schema: JSONSchema4, url: string): Promise<{response: any | null, schema: JSONSchema4}> {
-    const output: {response: any | null, schema: JSONSchema4} = {
-        response: null,
-        schema: structuredClone(schema)
-    };
-
-    logger([
-        chalk.cyanBright("Processing schema changes for type", input.defName),
-        chalk.dim("Sending request to", url),
-    ]);
-
-    const res = await fetch(url, {
-        headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
-    });
-    totalRequests++;
-    output.response = await res.json() as any; // Type checking is done below
-
-    // Assert that a valid Hypixel API response was received
-    if (typeof output.response !== "object" || Array.isArray(output.response) || output.response == null) {
-        throw new Error('HTTP response did not include a JSON object.');
-    }
-    if (!output.response.success) {
-        // Unlike the rest of the API, a player without a SkyBlock bingo card will mark the request as failed
-        // instead of just setting the requested value to null.
-        if(output.response.cause === "No bingo data could be found") {
-            return output;
+    await getAllHypixelApiData(async (url, schemaOrUndef, dataOrUndef) => {
+        // schema and response are only undefined when URL is null.
+        if(url === null) {
+            done();
+            return;
         }
-        throw new Error('Hypixel API Error: ' + output.response.cause);
-    }
+        const schema = schemaOrUndef!;
+        let data = dataOrUndef!;
 
-    let data = output.response;
+        logger([
+            chalk.dim("Received response from", url),
+        ]);
 
-    // Currently all type definitions cannot be arrays. Thus, we can use arrays as a way to iterate multiple values
-    // in the same response (e.g. all boosters from `/boosters`)
-    if(input.dataPreprocess) {
-        logger(chalk.dim("Calling preprocessor\n"), true);
-        data = input.dataPreprocess(output.response)
-    }
-    if(!Array.isArray(data)) {
-        data = [data];
-    }
+        const loadedSchema = await getSchema(schema);
+        const definitionSchema = loadedSchema.definition;
 
-    for(const datum of data) {
-        // changesDiff is an object with all values that are already in the schema removed, even if the value
-        // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
-        const changesDiff = findSchemaChanges(output.schema, datum);
-        if(!changesDiff) {
-            logger(chalk.dim("No schema changes detected\n"), true)
-            continue;
+        if(!Array.isArray(data)) {
+            data = [data];
         }
-        logger(chalk.dim("Schema changes detected" + "\n"), true);
-        // The changesDiff converted into a schema, to be combined with original schema.
-        const changesSchema: JSONSchema4 = toJsonSchema(changesDiff, {
-            strings: {
-                detectFormat: false
-            },
-            objects: {
-                preProcessFnc: (obj, defaultFunc) => {
-                    return defaultFunc(Object.fromEntries(Object
-                        .entries(obj)
-                        .map(([key, value]) => {
-                            if (key.endsWith("__added")) {
-                                key = key.slice(0, -7)
-                                logger(chalk.dim("New key: " + key + "\n"), true)
-                            }
-                            return [key, value]
-                        })
-                    ));
-                }
-            }
-        }) as JSONSchema4;
 
-        output.schema = combineSchemas(output.schema, changesSchema);
-    }
-    return output;
-}
+        // Offload schema updating to a worker thread. This includes compiling the schema.
+        const newDefinitionSchema: JSONSchema4 = await pool.exec("updateSchema", [definitionSchema, data as Record<string, any>[]])
+        logger(chalk.dim("Completed", url))
 
-/**
- * Iterate over a `newSchema` and add to `originalSchema` any properties that it didn't already have.
- * @param originalSchema The schema that new properties should be added to. This value is not modified.
- * @param newSchema The schema to find properties in and add to `originalSchema`. This value is not modified.
- * @returns An object like `originalSchema` but with all new properties from `newSchema` added on.
- * @throws
- * - `Error` if either provided schema is not a valid JSON schema
- * - `Error` for some schema conflicts that can't be handled without losing data
- * - `Error` if `newSchema` contains an `items` array at any point. Only singular item types are currently supported.
- * - Stack overflow for very deep schemas (this method is recursive)
- */
-export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchema4): JSONSchema4 {
-    const finalSchema = structuredClone(originalSchema);
-
-    if(newSchema.properties) {
-        if(!finalSchema.properties) {
-            finalSchema.properties = {};
-        }
-        newSchemaPropsLoop:
-        for(const prop in newSchema.properties) {
-            if(!finalSchema.properties[prop]) {
-                // Before adding property, first check if it's recognized as a pattern property on the finalSchema.
-                // If it is a pattern, combine with the pattern property schema instead. Otherwise we can
-                for(const pattern in finalSchema.patternProperties ?? {}) {
-                    if(new RegExp(pattern).test(prop)) {
-                        logger(chalk.dim(`Property ${prop} matches existing pattern property ${pattern}\n`), true)
-                        finalSchema.patternProperties![pattern] = combineSchemas(finalSchema.patternProperties![pattern], newSchema.properties[prop]);
-                        continue newSchemaPropsLoop; // We don't want to break as that'd write to "properties"
-                    }
-                }
-                logger(chalk.dim(`Property ${prop} added as a new property\n`), true)
-                finalSchema.properties[prop] = structuredClone(newSchema.properties[prop]);
-            } else {
-                logger(chalk.dim(`Property ${prop} extended on original schema\n`), true)
-                finalSchema.properties[prop] = combineSchemas(finalSchema.properties[prop], newSchema.properties[prop]);
-            }
-        }
-    }
-
-    if(Array.isArray(newSchema.items)) {
-        throw new Error('Arrays for `items` properties is currently not supported.');
-    } else if(newSchema.items?.properties) {
-        if(Array.isArray(finalSchema.items)) {
-            throw new Error('Type conflict - Should never happen if a value directly from `toJsonSchema` is given as the `newSchema` input')
-        }
-        if(!finalSchema.items) {
-            finalSchema.items = {}
-        }
-        if(!finalSchema.items.properties) {
-            logger(chalk.dim(`Added array items\n`), true)
-            finalSchema.items.properties = structuredClone(newSchema.items.properties);
-        } else {
-            logger(chalk.dim(`Updated array items\n`), true)
-            finalSchema.items.properties = combineSchemas(finalSchema.items.properties, newSchema.items.properties);
-        }
-    }
-
-    return finalSchema
-}
-
-let lastUsedSchemaHash: string;
-let lastUsedValidationFunction: ValidateFunction;
-let lastUsedValidationRemovalFunction: ValidateFunction;
-/**
- * Find divergences in an input object's keys from a given JSON schema. Changes in value or type will not be reported.
- * @param schema A valid JSON schema to check the difference of `input` against.
- * @param input Any object that you want to check for new/removed keys compared to the given `schema`.
- * @returns An object containing differences in object keys. New keys will have `__added` appended, and removed keys
- * will have `__deleted` appended. If a deleted property is an object or an array, its children properties will not
- * have `__added` or `__deleted` appended.
- *
- * @throws
- * - `Error` if the given schema is not a valid JSON schema
- * @example
- * const schema = {
- *     type: "object",
- *     properties: {
- *         prop_one: {
- *             type: "string"
- *         }
- *     }
- * }
- *
- * const output = findSchemaChanges(schema, {
- *     prop_one: "Hello, world!",
- *     prop_two: false
- * })
- * console.log(output)
- * // Output: { prop_two__added: false }
- */
-export function findSchemaChanges(schema: JSONSchema4, input: Record<string, any>): Record<string, any> {
-    const allValues = structuredClone(input)
-    const definedValues = structuredClone(input)
-
-    const ajvOptions: Options = {
-        allErrors: true,
-        inlineRefs: false
-    }
-
-    // Compiling an AJV validator is expensive. We want to cache the compiled validator for use in subsequent checks.
-    // To do this, we hash the schema, and only use the cached functions if they match the previous schema's hash.
-    const schemaHash = md5(JSON.stringify(schema));
-    let validate;
-    let validateAndRemove;
-    if(schemaHash === lastUsedSchemaHash) {
-        validate = lastUsedValidationFunction;
-        validateAndRemove = lastUsedValidationRemovalFunction;
-    } else {
-        lastUsedSchemaHash = schemaHash;
-        lastUsedValidationFunction = validate = new Ajv(ajvOptions).compile(schema);
-        lastUsedValidationRemovalFunction = validateAndRemove = new Ajv({
-            ...ajvOptions,
-            removeAdditional: "all"
-        }).compile(schema);
-    }
-
-    validate(allValues);
-    validateAndRemove(definedValues);
-
-    if(validate.errors) {
-        logger('\n' + JSON.stringify(validate.errors) + '\n');
-    }
-
-    return diff(definedValues, allValues, {
-        keysOnly: true
+        // Sort the schema definition alphanumerically. The schema was served from cache and any updates
+        // will be saved to disk by saveSchemas()
+        loadedSchema.schema.definitions![schema.defName] = sortObject(newDefinitionSchema);
     })
+
+    // This promise's resolver will be called after all API requests have been received and their callbacks
+    // have resolved (i.e., the updating process is complete)
+    await new Promise<void>((resolve) => {
+        done = resolve;
+    })
+
+    await saveSchemas();
+    await pool.terminate()
+}
+
+async function saveSchemas(): Promise<void> {
+    for(const path in schemaData) {
+        const loadedSchema = schemaData[path];
+        await fs.promises.writeFile(path, JSON.stringify(loadedSchema.schema, null, 2))
+        delete schemaData[path];
+    }
 }
 
 
@@ -510,11 +359,11 @@ export function logger(text: string | string[], debug = false) {
             readline.moveCursor(process.stdout, 0, -text.length);
         }
         for(let i = 0; i < text.length; i++) {
-            readline.moveCursor(process.stdout, 0, 1);
+            // readline.moveCursor(process.stdout, 0, 1);
             process.stdout.write(text[i]);
-            if(i < text.length - 1) {
+            // if(i < text.length - 1) {
                 process.stdout.write('\n')
-            }
+            // }
         }
         previousLog = text;
     }

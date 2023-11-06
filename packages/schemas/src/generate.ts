@@ -1,6 +1,5 @@
 import {getTotalRequests, textBox, processHypixelSchemaChanges, logger} from "./tools.js";
 import dotenv from "dotenv";
-import Schemas, {orderedSchemas} from "./schemas.js";
 import chalk from "chalk";
 dotenv.config();
 
@@ -22,7 +21,7 @@ if(!process.env.HYPIXEL_GEN_API_KEY) {
 // logs later.
 const startTime = Date.now();
 
-processHypixelSchemaChanges();
+await processHypixelSchemaChanges();
 
 const endTime = Date.now();
 const timeTaken = endTime - startTime;
