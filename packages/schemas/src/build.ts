@@ -22,10 +22,9 @@ const endTime = Date.now();
 const timeTaken = endTime - startTime;
 
 logger([
-    '\n\n',
+    '\n',
     ...textBox([
         `Build complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000) % 60}s`,
         `Built a total of ${fileCount} type definition files`
-    ], chalk.green, chalk.green),
-    '\n'
+    ], chalk.green, chalk.green)
 ]);
