@@ -17,7 +17,12 @@ export default defineConfig({
     lastUpdated: true,
     logo: '/assets/logo/png/logo128.png',
     search: {
-      provider: 'local'
+      provider: 'algolia',
+      options: {
+        appId: "OMEFR8TPO8",
+        apiKey: "b708d7a9e8d08bc502393e652651af2c",
+        indexName: "starboard"
+      }
     },
     nav: [
       { text: 'Home', link: '/' },
