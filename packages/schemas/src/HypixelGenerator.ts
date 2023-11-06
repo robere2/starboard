@@ -12,11 +12,12 @@ import {HypixelApiError} from "./HypixelApiError";
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 /**
- * Type of the callback that clients can provide to {@link getAllHypixelApiData} to process API responses. This is used
- * by {@link getAllHypixelApiData}.
- * @see {@link getAllHypixelApiData}
+ * Type of the callback that clients can provide to {@link processAllHypixelData} to process API responses. This is used
+ * by {@link processAllHypixelData}.
+ * @see {@link processAllHypixelData}
+ * @see {@link hypixelRequest}
  */
-type ApiDataCallback = (url: string | null, schema: SchemaData | undefined, data: Record<string, any> | Record<string, any>[] | undefined) => Promise<void> | void
+type ApiDataCallback = (url: string, schema: SchemaData, data: Record<string, any> | Record<string, any>[]) => Promise<void> | void
 
 /**
  * The `HypixelGenerator` is responsible for fetching data from the Hypixel API and generating updated JSON schemas
@@ -119,11 +120,11 @@ export class HypixelGenerator {
 
     /**
      * Send an API request to the Hypixel API, process it through the preprocessor if present, and then return the
-     * output.
+     * output. The request is also added to {@link allRequests}.
      * @param url URL to send the request to.
      * @param schemaData Data about the schema we're expecting the response to follow. This is not used to actually
      * parse the data through the schema, but just to feed it through the request postprocessor. The schema parsing is
-     * handled by {@link getAllHypixelApiData}.
+     * handled by {@link processAllHypixelData}.
      * @param callback Optional callback to await after the API response has been received and post-processed.
      * @returns A `Promise` that resolves with the full JSON-parsed API response, as it was before post-processing.
      * @throws
@@ -176,16 +177,13 @@ export class HypixelGenerator {
     }
 
     /**
-     * Get data from all Hypixel API endpoints used by the generator. This method is responsible for constructing and
-     * scheduling of requests to the API, scheduling meaning both the order and the delay required to comply with rate
-     * limits.
-     *
-     * @param callback A function that is called for every API response, once it is received. Once all responses have been
-     * passed to `callback`, `null` is passed as the final call.
-     * @returns A `Promise` that resolves after the initial list of requests has been determined. Later requests may be
-     * added depending on the
+     * Get data from all Hypixel API endpoints used by the generator. This method is responsible for sending the
+     * requests to all initial URLs, and then waiting until all URLs have been processed, before finally resolving.
+     * @param callback A function that is called for every API response, once it is received.
+     * @returns A `Promise` that resolves after all requests have been completed, i.e. {@link allRequests} has a length
+     * equal to the {@link getCompletedRequests} return value.
      */
-    private async getAllHypixelApiData(callback: ApiDataCallback): Promise<void> {
+    private async processAllHypixelData(callback: ApiDataCallback): Promise<void> {
         // Jumpstart the generation process by sending requests to all of the initial URLs. Additional URLs may have
         // requests sent to them by each schema's post-processor.
         for(const [url, schemaData] of initialGenerationUrlList) {
@@ -195,42 +193,30 @@ export class HypixelGenerator {
         // Wait for all requests to all URLs to complete, then call callback with null. Since some requests may add
         // additional URLs after completing, we need to repeatedly check until we detect that no additional requests
         // have been added.
-        (async () => {
+        await (async () => {
             while(this.allRequests.length > this.getCompletedRequests()) {
                 await Promise.all(this.allRequests);
             }
-        })().then(() => {
-            callback(null, undefined, undefined);
-        })
+        })()
     }
 
     /**
-     * Read a Hypixel API schema from the file system and test it against various URLs to search for new changes. Any
-     * changes that are found will be written back to the schema, and new type definitions will be generated.
-     * @see {@link SchemaData} for more information on the input.
+     * Run the generator, testing all of our schemas against the Hypixel API responses and looking for changes. Any
+     * changes that are found will be written back to the schema.
      * @throws
      * - `Error` if the schema file does not exist
-     * - `Error` if the given schema file is not a valid JSON schema
-     * - `Error` if the schema definition does not exist in the given schema file
-     * - `Error` if the HTTP request(s) fail
-     * - `Error` if file writing for the new schema or type definitions file fails
-     * - `Error` if the schema is very deep (this method currently features recursion)
-     * @returns A `Promise` that resolves to this.
+     * - `Error` if any schema file is not a valid JSON schema
+     * - `Error` if any schema definition does not exist in the associated schema file in the SchemaData
+     * - `Error` if any HTTP request fails
+     * - `Error` if file writing for the updated schema fails
+     * - Stack overflow if the schema is very deep (this method currently features recursion)
+     * @returns A `Promise` that resolves to this once all schemas have been tested and updated, if necessary.
      */
     public async run(): Promise<this> {
-        // A promise resolver is later stored here
-        let done: () => void;
-
-        // Callback is called for every Hypixel API URL we query, and then finally with `null` when all done
-        await this.getAllHypixelApiData(async (url, schemaOrUndef, dataOrUndef) => {
-            if(url === null) {
-                done();
-                return;
-            }
-            // schema and response are only undefined when URL is null.
-            const schema = schemaOrUndef!;
+        // Callback is called for every Hypixel API URL we query
+        await this.processAllHypixelData(async (url, schema, data) => {
             // For singular data entries into a length-one array
-            const data = Array.isArray(dataOrUndef) ? dataOrUndef : [dataOrUndef!];
+            data = Array.isArray(data) ? data : [data];
 
             const loadedSchema = await this.getSchema(schema);
             const definitionSchema = loadedSchema.definition;
@@ -243,12 +229,6 @@ export class HypixelGenerator {
             // Sort the schema definition alphanumerically. The schema was served from cache and any updates
             // will be saved to disk by saveSchemas()
             loadedSchema.schema.definitions![schema.defName] = sortObject(newDefinitionSchema);
-        })
-
-        // This promise's resolver will be called after all API requests have been received and their callbacks
-        // have resolved (i.e., the updating process is complete)
-        await new Promise<void>((resolve) => {
-            done = resolve;
         })
 
         await this.saveSchemas();
