@@ -3,10 +3,38 @@ import {JSONSchema4} from "json-schema";
 import chalk from "chalk";
 import toJsonSchema from "gen-json-schema";
 import {logger} from "./util";
-import Ajv, {Options, ValidateFunction} from "ajv";
+import Ajv, {Options} from "ajv";
 import {diff} from "json-diff";
-import crypto from "crypto";
 
+/**
+ * Access a deep property on an object via the string notation used by JSON schemas
+ * @param path Path to access. This should be a string with each key separated by a `/`, and each key is URI encoded.
+ * Optionally, the path may start with a '#', indicating the root of the schema. For the purposes of this function,
+ * this has no effect on the returned value. Similarly, a leading slash `/` will be ignored.
+ * @param obj Object to get the value on.
+ * @param strict Whether the function should throw an error when you try to access an inaccessible property, i.e. a
+ * property on a nullish value. If this is false, then `undefined` is simply returned instead.
+ * @throws
+ * - `TypeError` if the path is not accessible and `strict` is set to true
+ * @returns Whatever value is stored at the given path.
+ */
+function accessProperty(path: string, obj: unknown, strict = true): unknown {
+    const splitPath = path.split('/');
+    const nextIndex = splitPath.shift();
+    let next: unknown;
+    if(nextIndex === "#" || nextIndex === '') {
+        next = obj
+    } else if((obj === null || obj === undefined) && !strict) {
+        return undefined;
+    } else {
+        next = obj[decodeURIComponent(nextIndex)]
+    }
+    if(splitPath.length === 0) {
+        return next;
+    } else {
+        return accessProperty(splitPath.join('/'), next);
+    }
+}
 
 /**
  * Iterate over a `newSchema` and add to `originalSchema` any properties that it didn't already have.
@@ -19,7 +47,7 @@ import crypto from "crypto";
  * - `Error` if `newSchema` contains an `items` array at any point. Only singular item types are currently supported.
  * - Stack overflow for very deep schemas (this method is recursive)
  */
-export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchema4): JSONSchema4 {
+function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchema4): JSONSchema4 {
     const finalSchema = structuredClone(originalSchema);
 
     if(newSchema.properties) {
@@ -69,92 +97,49 @@ export function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchem
 }
 
 /**
- * Hash a string into it's md5 hexadecimal output.
- * @param str String to hash
- * @returns An MD5 hash encoded in a hexadecimal string
- */
-function md5(str: string): string {
-    return crypto.createHash("md5").update(str).digest().toString("hex");
-}
-
-let lastUsedSchemaHash: string;
-let lastUsedValidationFunction: ValidateFunction;
-let lastUsedValidationRemovalFunction: ValidateFunction;
-/**
- * Find divergences in an input object's keys from a given JSON schema. Changes in value or type will not be reported.
- * @param schema A valid JSON schema to check the difference of `input` against.
- * @param input Any object that you want to check for new/removed keys compared to the given `schema`.
- * @returns An object containing differences in object keys. New keys will have `__added` appended, and removed keys
- * will have `__deleted` appended. If a deleted property is an object or an array, its children properties will not
- * have `__added` or `__deleted` appended.
  *
- * @throws
- * - `Error` if the given schema is not a valid JSON schema
- * @example
- * const schema = {
- *     type: "object",
- *     properties: {
- *         prop_one: {
- *             type: "string"
- *         }
- *     }
- * }
- *
- * const output = findSchemaChanges(schema, {
- *     prop_one: "Hello, world!",
- *     prop_two: false
- * })
- * console.log(output)
- * // Output: { prop_two__added: false }
+ * @param schema
+ * @param data
  */
-export function findSchemaChanges(schema: JSONSchema4, input: Record<string, any>): Record<string, any> {
-    const allValues = structuredClone(input)
-    const definedValues = structuredClone(input)
+function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSchema4 {
+    let newSchema = schema;
 
     const ajvOptions: Options = {
         allErrors: true,
         inlineRefs: false
     }
 
-    // Compiling an AJV validator is expensive. We want to cache the compiled validator for use in subsequent checks.
-    // To do this, we hash the schema, and only use the cached functions if they match the previous schema's hash.
-    const schemaHash = md5(JSON.stringify(schema));
-    let validate;
-    let validateAndRemove;
-    if(schemaHash === lastUsedSchemaHash) {
-        validate = lastUsedValidationFunction;
-        validateAndRemove = lastUsedValidationRemovalFunction;
-    } else {
-        lastUsedSchemaHash = schemaHash;
-        lastUsedValidationFunction = validate = new Ajv(ajvOptions).compile(schema);
-        lastUsedValidationRemovalFunction = validateAndRemove = new Ajv({
+    for(const datum of data) {
+        // Compile the schema into two validators: One which keeps unknown properties and one which removes them.
+        const validate = new Ajv(ajvOptions).compile(schema);
+        const strictValidate = new Ajv({
             ...ajvOptions,
             removeAdditional: "all"
         }).compile(schema);
-    }
+        // Pass the input through the two validators. They modify the data in place. We can then compare their results.
+        const strictDatum = structuredClone(datum);
+        validate(datum);
+        strictValidate(strictDatum);
 
-    validate(allValues);
-    validateAndRemove(definedValues);
+        // Before comparing results, check the validator errors for type mismatches or missing required properties
+        for(const error of validate.errors ?? []) {
+            console.log(error);
+            console.log(accessProperty(error.schemaPath, schema))
+            console.log(accessProperty(error.instancePath, datum))
+            if(error.keyword === "type") {
+                /* ... */
+            }
+        }
 
-    if(validate.errors) {
-        logger(chalk.dim('WORKER > ' + JSON.stringify(validate.errors)));
-    }
-
-    return diff(definedValues, allValues, {
-        keysOnly: true
-    })
-}
-
-function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSchema4 {
-    let newSchema = schema;
-    for(const datum of data) {
 
         // changesDiff is an object with all values that are already in the schema removed, even if the value
         // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
-        const changesDiff = findSchemaChanges(schema, datum);
+        const changesDiff = diff(strictDatum, datum, {
+            keysOnly: true
+        })
         if(!changesDiff) {
             logger(chalk.dim("WORKER > No schema changes detected"), true)
-            return schema;
+            continue;
         }
 
         logger(chalk.dim("WORKER > Schema changes detected"), true);
