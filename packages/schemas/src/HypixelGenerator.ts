@@ -163,6 +163,16 @@ export class HypixelGenerator {
                 output = schemaData.postProcess(json, ([newUrl, newSchema]) => {
                     this.hypixelRequest(newUrl, newSchema, callback)
                 })
+                // Some things, like current elections or requests for invalid players, aren't always defined. I have
+                // not thought of a great solution other than to skip the value and assume that our schema properly has
+                // that value marked as optional.
+                if(!output) {
+                    logger(
+                        this.getPercentPrefix() +
+                        chalk.yellow(`Received "${String(output)}" from post-processor for ${schemaData.defName}. Skipping.`)
+                    )
+                    return json;
+                }
             }
             if(callback) {
                 await callback(url, schemaData, output);
