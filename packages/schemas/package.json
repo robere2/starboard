@@ -8,9 +8,9 @@
   "scripts": {
     "lint": "tsc && eslint .",
     "typedoc": "npm run build && typedoc --tsconfig tsconfig.typedoc.json",
-    "generate": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/generate.ts",
+    "generate": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts -- generate",
     "prebuild": "rimraf dist",
-    "build": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/build.ts",
+    "build": "node --enable-source-maps --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts -- build",
     "prepublishOnly": "lerna run build --scope @mcsb/schemas"
   },
   "keywords": [],

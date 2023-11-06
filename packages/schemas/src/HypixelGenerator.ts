@@ -6,7 +6,7 @@ import {LoadedSchemaData, SchemaData} from "./SchemaData";
 import fs from "fs";
 import {JSONSchema4} from "json-schema";
 import {initialGenerationUrlList} from "./schemas";
-import {logger, sortObject} from "./common";
+import {logger, sortObject} from "./util";
 import {HypixelApiError} from "./HypixelApiError";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
