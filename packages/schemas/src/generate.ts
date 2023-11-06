@@ -27,10 +27,9 @@ const endTime = Date.now();
 const timeTaken = endTime - startTime;
 
 logger([
-    '\n\n',
+    '\n',
         ...textBox([
         `Generation complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000) % 60}s`,
         `Sent a total of ${getTotalRequests()} requests to the Hypixel API.`
-    ], chalk.green, chalk.green),
-    '\n'
+    ], chalk.green, chalk.green)
 ]);

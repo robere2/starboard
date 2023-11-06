@@ -5,11 +5,13 @@ import {compile} from "json-schema-to-typescript";
 import {dirname, join} from "path";
 import {fileURLToPath} from "url";
 import chalk, {ChalkInstance} from "chalk";
-import * as readline from 'readline'
 import {initialGenerationUrlList} from "./schemas";
 import workerpool from "workerpool";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
+/**
+ * Worker pool is used to offload the CPU-heavy tasks of compiling, validating, and updating the schema.
+ */
 const pool = workerpool.pool(join(__dirname, 'generator-worker.ts'));
 
 /**
@@ -54,13 +56,21 @@ export function pickRandom<T>(arr: T[], amount: number): T[] {
     for(let i = 0; i < amount; i++) {
         const randomIndex = Math.floor(Math.random() * arrCopy.length);
         output.push(arrCopy.splice(randomIndex, 1)[0])
-        logger(chalk.dim("Picked random value: " + output[output.length - 1] + "\n"), true);
+        logger(chalk.dim("Picked random value: " + output[output.length - 1]), true);
     }
     return output;
 }
 
-let percentCompleted = 0;
+/**
+ * Total number of URLs that have been processed & their schemas updated.
+ */
 let totalUrlsCompleted = 0;
+/**
+ * Percentage of how many API responses have been processed & their schemas updated. Value between 0 and 1.
+ * @see totalUrlsCompleted
+ */
+let percentCompleted = 0;
+
 /**
  * Get the total number of Hypixel API HTTP requests sent by the generator via {@link processHypixelSchemaChanges}.
  * @returns The total number of requests sent, including unsuccessful ones.
@@ -69,17 +79,30 @@ export function getTotalRequests(): number {
     return totalUrlsCompleted;
 }
 
+/**
+ * Get {@link percentCompleted} in a human-readable string that can be prefixed to logs.
+ * @returns The percentage, followed by a greater than sign. Padded with an extra space on the right side when the
+ * percent is a single digit.
+ * @example
+ * const pct = getPercentPrefix();
+ * console.log(pct + "Hello, world!");
+ * // 7%  > Hello, world!
+ */
 function getPercentPrefix(): string {
     const percentStr = `${Math.floor(percentCompleted * 100)}%`.padEnd(3, ' ')
     return percentStr + " > ";
 }
 
+/**
+ * Cache of schemas loaded from the file system, mapping their file path + definition to their {@link LoadedSchemaData}
+ * object.
+ */
 const schemaData: Record<string, LoadedSchemaData> = {}
 async function getSchema(input: SchemaData): Promise<LoadedSchemaData> {
     if(schemaData[input.schemaPath]) {
         return schemaData[input.schemaPath]
     }
-    logger(chalk.dim("Reading file " + input.schemaPath), true)
+    logger(getPercentPrefix() + chalk.dim("Reading file " + input.schemaPath), true)
     const fileContents = (await fs.promises.readFile(input.schemaPath)).toString()
     const schema: JSONSchema4 = JSON.parse(fileContents)
     const definition: JSONSchema4 | undefined = schema.definitions?.[input.defName] ?? undefined;
@@ -362,17 +385,7 @@ export function logger(text: string | string[], debug = false) {
             text = [text];
         }
         for(let i = 0; i < text.length; i++) {
-            process.stdout.write(text[i]);
-            process.stdout.write('\n')
+            console.log(text[i]);
         }
     }
-}
-
-export function clearLines(count: number): void {
-    readline.moveCursor(process.stdout, 0, -count);
-    for(let i = 0; i < count; i++) {
-        readline.moveCursor(process.stdout, 0, 1);
-        readline.clearLine(process.stdout, 0);
-    }
-    readline.cursorTo(process.stdout, 0);
 }
