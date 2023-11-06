@@ -208,9 +208,6 @@ export class HypixelGenerator {
      * Read a Hypixel API schema from the file system and test it against various URLs to search for new changes. Any
      * changes that are found will be written back to the schema, and new type definitions will be generated.
      * @see {@link SchemaData} for more information on the input.
-     * @returns A `Promise` that resolves to an object containing a `responses` property and a `schema` property. The
-     * `responses` property is a record mapping each of the input URLs to the response body, JSON-parsed. The `schema`
-     * property contains the new schema that was just written to the file system.
      * @throws
      * - `Error` if the schema file does not exist
      * - `Error` if the given schema file is not a valid JSON schema
