@@ -349,7 +349,6 @@ export function textBox(lines: string[], boxColor?: ChalkInstance, textColor?: C
     return output;
 }
 
-let previousLog: string[] = [];
 /**
  * Write text to stdout, overwriting the current line(s). Multiple lines can be printed by passing an array, and they
  * will all be overwritten by the next call to `log`, unless you append a `\n` to the last string.
@@ -362,18 +361,10 @@ export function logger(text: string | string[], debug = false) {
         if(!Array.isArray(text)) {
             text = [text];
         }
-        if(!previousLog[previousLog.length - 1]?.endsWith('\n')) {
-            clearLines(previousLog?.length)
-            readline.moveCursor(process.stdout, 0, -text.length);
-        }
         for(let i = 0; i < text.length; i++) {
-            // readline.moveCursor(process.stdout, 0, 1);
             process.stdout.write(text[i]);
-            // if(i < text.length - 1) {
-                process.stdout.write('\n')
-            // }
+            process.stdout.write('\n')
         }
-        previousLog = text;
     }
 }
 
