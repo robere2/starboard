@@ -160,7 +160,6 @@ export const HypixelBooster: SchemaData = {
             ...new Set<string>(input.boosters?.map((b: any) => b.purchaserUuid) ?? [])
         ].filter(uuid => !!uuid)
 
-        console.log("There are", allUniqueBoosterPurchasers.length, "unique Booster buyers")
         pickRandom(allUniqueBoosterPurchasers, 10).forEach(uuid => {
             getUrlsForPlayer(uuid).forEach(url => addUrl(url))
         });
@@ -187,7 +186,6 @@ export const HypixelLeaderboards: SchemaData = {
             )
         ].filter(uuid => !!uuid)
 
-        console.log("There are", allUniqueLeaderboardPlayers.length, "unique Leaderboard players")
         pickRandom(allUniqueLeaderboardPlayers, 20).forEach(uuid => {
             getUrlsForPlayer(uuid).forEach(url => addUrl(url))
         });
@@ -216,7 +214,6 @@ export const HypixelPlayer: SchemaData = {
                     addUrl(url);
                 })
             }
-            console.log("Total of", sbProfilesAdded, "added SkyBlock profiles")
         }
 
         return input.player
@@ -254,8 +251,6 @@ export const HypixelSkyBlockEndedAuction: SchemaData = {
                 input.auctions?.map((auction: any) => [auction.seller, auction.buyer]).flat()
             )
         ].filter(uuid => !!uuid)
-        console.log("There are", allUniquePlayers.length, "unique Auction players")
-        console.log("There are", allUniqueProfiles.length, "unique Auction profiles")
 
         pickRandom(allUniqueProfiles, 25).forEach(id => {
             getUrlsForSkyBlockProfile(id).forEach(url => addUrl(url))
@@ -311,6 +306,11 @@ export const HypixelSkyBlockProfile: SchemaData = {
 }
 
 export const initialGenerationUrlList: [string, SchemaData][] = [
+    // Since these add additional URLs, prioritizing these 3 first will give us a more accurate percentage complete
+    ["https://api.hypixel.net/boosters", HypixelBooster],
+    ["https://api.hypixel.net/leaderboards", HypixelLeaderboards],
+    ["https://api.hypixel.net/skyblock/auctions_ended", HypixelSkyBlockEndedAuction],
+
     ["https://api.hypixel.net/resources/skyblock/bingo", HypixelSkyBlockBingoGoal],
     ["https://api.hypixel.net/resources/skyblock/collections", HypixelSkyBlockCollections],
     ["https://api.hypixel.net/resources/skyblock/election", HypixelSkyBlockMayor],
@@ -328,10 +328,7 @@ export const initialGenerationUrlList: [string, SchemaData][] = [
     ["https://api.hypixel.net/resources/quests", HypixelQuests],
     ["https://api.hypixel.net/counts", HypixelPlayerCounts],
     ["https://api.hypixel.net/punishmentstats", HypixelPunishmentStatistics],
-    ["https://api.hypixel.net/boosters", HypixelBooster],
-    ["https://api.hypixel.net/leaderboards", HypixelLeaderboards],
     ["https://api.hypixel.net/skyblock/auctions", HypixelSkyBlockAuction],
-    ["https://api.hypixel.net/skyblock/auctions_ended", HypixelSkyBlockEndedAuction],
     ["https://api.hypixel.net/skyblock/bazaar", HypixelSkyBlockBazaarProducts],
     ["https://api.hypixel.net/skyblock/firesales", HypixelSkyBlockFireSale],
     ["https://api.hypixel.net/skyblock/news", HypixelSkyBlockNews],
