@@ -2,7 +2,7 @@ import workerpool from "workerpool";
 import {JSONSchema4} from "json-schema";
 import chalk from "chalk";
 import toJsonSchema from "gen-json-schema";
-import {logger} from "./common";
+import {logger} from "./util";
 import Ajv, {Options, ValidateFunction} from "ajv";
 import {diff} from "json-diff";
 import crypto from "crypto";
