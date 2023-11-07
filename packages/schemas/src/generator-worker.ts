@@ -21,13 +21,16 @@ import {diff} from "json-diff";
 function accessProperty(path: string, obj: unknown, strict = true): unknown {
     const splitPath = path.split('/');
     const nextIndex = splitPath.shift();
+    if(nextIndex === undefined) {
+        throw new Error("The given index is undefined");
+    }
     let next: unknown;
     if(nextIndex === "#" || nextIndex === '') {
         next = obj
     } else if((obj === null || obj === undefined) && !strict) {
         return undefined;
     } else {
-        next = obj[decodeURIComponent(nextIndex)]
+        next = (obj as any)[decodeURIComponent(nextIndex)]
     }
     if(splitPath.length === 0) {
         return next;
@@ -111,7 +114,8 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
 
     for(const datum of data) {
         // Compile the schema into two validators: One which keeps unknown properties and one which removes them.
-        const validate = new Ajv(ajvOptions).compile(schema);
+        const ajv = new Ajv(ajvOptions);
+        const validate = ajv.compile(schema);
         const strictValidate = new Ajv({
             ...ajvOptions,
             removeAdditional: "all"
@@ -123,11 +127,47 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
 
         // Before comparing results, check the validator errors for type mismatches or missing required properties
         for(const error of validate.errors ?? []) {
-            console.log(error);
-            console.log(accessProperty(error.schemaPath, schema))
-            console.log(accessProperty(error.instancePath, datum))
+            const splitPath = error.schemaPath.split("/");
+
+            const newType = toJsonSchema(accessProperty(error.instancePath, datum), {
+                strings: {
+                    detectFormat: false
+                }
+            })
             if(error.keyword === "type") {
-                /* ... */
+                const oneOfArray: JSONSchema4[] = [
+                    newType as JSONSchema4
+                ]
+
+                // If this property is already in a oneOf array, we want to add to that array. Otherwise we want to
+                // construct a new oneOf array
+                if(splitPath.length >= 3 && splitPath[splitPath.length - 3] === "oneOf") {
+
+                    const oldOneOfArray = accessProperty(splitPath.slice(0, -2).join('/'), schema);
+                    if(!Array.isArray(oldOneOfArray)) {
+                        throw new Error("Malformed JSON schema - Expected oneOf property to be an array.")
+                    }
+                    oneOfArray.push(...oldOneOfArray);
+                    const oneOfParent = accessProperty(splitPath.slice(0, -3).join('/'), schema);
+                    (oneOfParent as any).oneOf = oneOfArray
+                } else {
+                    const parentName = splitPath[splitPath.length - 2];
+                    const parent = accessProperty(splitPath.slice(0, -1).join('/'), schema);
+
+                    if(splitPath.length < 2) {
+                        schema = {
+                            oneOf: oneOfArray
+                        }
+                    } else {
+                        const grandparent = accessProperty(splitPath.slice(0, -2).join('/'), schema);
+                        oneOfArray.push(parent as JSONSchema4);
+                        (grandparent as any)[parentName] = {
+                            oneOf: oneOfArray
+                        }
+                    }
+                }
+            } else {
+                logger(chalk.yellow(`WORKER > Unresolved schema conflict: ${ajv.errorsText(validate.errors)}`))
             }
         }
 
