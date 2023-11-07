@@ -5,6 +5,7 @@ import toJsonSchema from "gen-json-schema";
 import {logger} from "./util";
 import Ajv, {Options} from "ajv";
 import {diff} from "json-diff";
+import fs from "fs";
 
 /**
  * Access a deep property on an object via the string notation used by JSON schemas
@@ -125,6 +126,12 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
         validate(datum);
         strictValidate(strictDatum);
 
+        // Storing total errors + # of errors resolved allows us to later double check our work and make sure
+        // no new errors have popped up
+        const totalErrors = validate.errors?.length ?? 0;
+        const errorsText = ajv.errorsText(validate.errors);
+        let resolvedErrors = 0;
+
         // Before comparing results, check the validator errors for type mismatches or missing required properties
         for(const error of validate.errors ?? []) {
             const splitPath = error.schemaPath.split("/");
@@ -135,6 +142,7 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
                 }
             })
             if(error.keyword === "type") {
+                resolvedErrors++;
                 const oneOfArray: JSONSchema4[] = [
                     newType as JSONSchema4
                 ]
@@ -142,7 +150,7 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
                 // If this property is already in a oneOf array, we want to add to that array. Otherwise we want to
                 // construct a new oneOf array
                 if(splitPath.length >= 3 && splitPath[splitPath.length - 3] === "oneOf") {
-
+                    // FIXME in oneOf errors, the error will appear three times. Only need to handle once.
                     const oldOneOfArray = accessProperty(splitPath.slice(0, -2).join('/'), schema);
                     if(!Array.isArray(oldOneOfArray)) {
                         throw new Error("Malformed JSON schema - Expected oneOf property to be an array.")
@@ -205,6 +213,18 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
         }) as JSONSchema4;
 
         newSchema = combineSchemas(schema, changesSchema);
+
+        const newValidate = ajv.compile(newSchema);
+        newValidate(newSchema);
+        if((newValidate.errors?.length ?? 0) > totalErrors - resolvedErrors) {
+            const schemaDumpFile = "schema-" + Date.now() + ".dmp";
+            fs.writeFileSync(schemaDumpFile, JSON.stringify(newSchema))
+            throw new Error(
+                `Schema validation failed during post-update checks. Dumped schema to ${schemaDumpFile}.\n` +
+                `Errors before: ${errorsText}\n` +
+                `Errors after: ${ajv.errorsText(newValidate.errors)}`
+            )
+        }
     }
     return newSchema;
 }
