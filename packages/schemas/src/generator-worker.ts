@@ -3,7 +3,7 @@ import {JSONSchema4} from "json-schema";
 import chalk from "chalk";
 import toJsonSchema from "gen-json-schema";
 import {logger} from "./util";
-import Ajv, {Options} from "ajv";
+import Ajv, {ErrorObject, Options, ValidateFunction} from "ajv";
 import {diff} from "json-diff";
 import fs from "fs";
 
@@ -100,6 +100,116 @@ function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchema4): JS
     return finalSchema
 }
 
+function addMissingSchemaProperties(schema: JSONSchema4, ajvOptions: Options, data: Record<string, any>): JSONSchema4 {
+    // Create a new Ajv compiler that removes additional properties, which allows us to compare the difference of
+    // missing props
+    const strictValidate = new Ajv({
+        ...ajvOptions,
+        removeAdditional: "all"
+    }).compile(schema);
+    const strictData = structuredClone(data);
+    strictValidate(strictData);
+
+    // changesDiff is an object with all values that are already in the schema removed, even if the value
+    // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
+    const changesDiff = diff(strictData, data, {
+        keysOnly: true
+    })
+    if(!changesDiff) {
+        logger(chalk.dim("WORKER > No schema changes detected"), true)
+        return schema;
+    }
+
+    logger(chalk.dim("WORKER > Schema changes detected"), true);
+    // The changesDiff converted into a schema, to be combined with original schema.
+    const changesSchema: JSONSchema4 = toJsonSchema(changesDiff, {
+        strings: {
+            detectFormat: false
+        },
+        objects: {
+            preProcessFnc: (obj, defaultFunc) => {
+                return defaultFunc(Object.fromEntries(Object
+                    .entries(obj)
+                    .map(([key, value]) => {
+                        if (key.endsWith("__added")) {
+                            key = key.slice(0, -7)
+                            logger(chalk.dim("WORKER > New key: " + key), true)
+                        }
+                        return [key, value]
+                    })
+                ));
+            }
+        }
+    }) as JSONSchema4;
+
+    return combineSchemas(schema, changesSchema);
+}
+
+function resolveSchemaErrors(schema: JSONSchema4, validate: ValidateFunction, data: Record<string, any>): {newSchema: JSONSchema4, resolvedErrors: number} {
+    let newSchema = structuredClone(schema);
+    let resolvedErrors = 0;
+    // Before comparing results, check the validator errors for type mismatches or missing required properties
+    for(const error of validate.errors ?? []) {
+        if(error.keyword === "type") {
+            newSchema = resolveTypeError(newSchema, error, data);
+        } else if(error.keyword === "oneOf") {
+            // Ignored -- These errors are always caused by another error, e.g. "type"
+        } else {
+            logger(chalk.yellow(`WORKER > Unresolved schema conflict: ${new Ajv().errorsText(validate.errors)}`))
+            continue;
+        }
+        resolvedErrors++;
+    }
+    return {
+        newSchema,
+        resolvedErrors
+    }
+}
+
+function resolveTypeError(schema: JSONSchema4, error: ErrorObject, data: Record<string, any>): JSONSchema4 {
+    let newSchema = structuredClone(schema);
+    const splitPath = error.schemaPath.split("/");
+
+    const newType = toJsonSchema(accessProperty(error.instancePath, data), {
+        strings: {
+            detectFormat: false
+        }
+    })
+
+    const oneOfArray: JSONSchema4[] = [
+        newType as JSONSchema4
+    ]
+
+    // If this property is already in a oneOf array, we want to add to that array. Otherwise we want to
+    // construct a new oneOf array
+    if(splitPath.length >= 3 && splitPath[splitPath.length - 3] === "oneOf") {
+        // FIXME in oneOf errors, the error will appear three times. Only need to handle once.
+        const oldOneOfArray = accessProperty(splitPath.slice(0, -2).join('/'), newSchema);
+        if(!Array.isArray(oldOneOfArray)) {
+            throw new Error("Malformed JSON schema - Expected oneOf property to be an array.")
+        }
+        oneOfArray.push(...oldOneOfArray);
+        const oneOfParent = accessProperty(splitPath.slice(0, -3).join('/'), newSchema);
+        (oneOfParent as any).oneOf = oneOfArray
+    } else {
+        const parentName = splitPath[splitPath.length - 2];
+        const parent = accessProperty(splitPath.slice(0, -1).join('/'), newSchema);
+
+        if(splitPath.length < 2) {
+            newSchema = {
+                oneOf: oneOfArray
+            }
+        } else {
+            const grandparent = accessProperty(splitPath.slice(0, -2).join('/'), newSchema);
+            oneOfArray.push(parent as JSONSchema4);
+            (grandparent as any)[parentName] = {
+                oneOf: oneOfArray
+            }
+        }
+    }
+
+    return newSchema;
+}
 /**
  *
  * @param schema
@@ -117,111 +227,28 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
         // Compile the schema into two validators: One which keeps unknown properties and one which removes them.
         const ajv = new Ajv(ajvOptions);
         const validate = ajv.compile(schema);
-        const strictValidate = new Ajv({
-            ...ajvOptions,
-            removeAdditional: "all"
-        }).compile(schema);
-        // Pass the input through the two validators. They modify the data in place. We can then compare their results.
-        const strictDatum = structuredClone(datum);
         validate(datum);
-        strictValidate(strictDatum);
+        const originalErrorCount = validate.errors?.length ?? 0;
+        const originalErrorList = ajv.errorsText(validate.errors);
 
-        // Storing total errors + # of errors resolved allows us to later double check our work and make sure
-        // no new errors have popped up
-        const totalErrors = validate.errors?.length ?? 0;
-        const errorsText = ajv.errorsText(validate.errors);
-        let resolvedErrors = 0;
-
-        // Before comparing results, check the validator errors for type mismatches or missing required properties
-        for(const error of validate.errors ?? []) {
-            const splitPath = error.schemaPath.split("/");
-
-            const newType = toJsonSchema(accessProperty(error.instancePath, datum), {
-                strings: {
-                    detectFormat: false
-                }
-            })
-            if(error.keyword === "type") {
-                resolvedErrors++;
-                const oneOfArray: JSONSchema4[] = [
-                    newType as JSONSchema4
-                ]
-
-                // If this property is already in a oneOf array, we want to add to that array. Otherwise we want to
-                // construct a new oneOf array
-                if(splitPath.length >= 3 && splitPath[splitPath.length - 3] === "oneOf") {
-                    // FIXME in oneOf errors, the error will appear three times. Only need to handle once.
-                    const oldOneOfArray = accessProperty(splitPath.slice(0, -2).join('/'), schema);
-                    if(!Array.isArray(oldOneOfArray)) {
-                        throw new Error("Malformed JSON schema - Expected oneOf property to be an array.")
-                    }
-                    oneOfArray.push(...oldOneOfArray);
-                    const oneOfParent = accessProperty(splitPath.slice(0, -3).join('/'), schema);
-                    (oneOfParent as any).oneOf = oneOfArray
-                } else {
-                    const parentName = splitPath[splitPath.length - 2];
-                    const parent = accessProperty(splitPath.slice(0, -1).join('/'), schema);
-
-                    if(splitPath.length < 2) {
-                        schema = {
-                            oneOf: oneOfArray
-                        }
-                    } else {
-                        const grandparent = accessProperty(splitPath.slice(0, -2).join('/'), schema);
-                        oneOfArray.push(parent as JSONSchema4);
-                        (grandparent as any)[parentName] = {
-                            oneOf: oneOfArray
-                        }
-                    }
-                }
-            } else {
-                logger(chalk.yellow(`WORKER > Unresolved schema conflict: ${ajv.errorsText(validate.errors)}`))
-            }
-        }
-
-
-        // changesDiff is an object with all values that are already in the schema removed, even if the value
-        // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
-        const changesDiff = diff(strictDatum, datum, {
-            keysOnly: true
-        })
-        if(!changesDiff) {
-            logger(chalk.dim("WORKER > No schema changes detected"), true)
-            continue;
-        }
-
-        logger(chalk.dim("WORKER > Schema changes detected"), true);
-        // The changesDiff converted into a schema, to be combined with original schema.
-        const changesSchema: JSONSchema4 = toJsonSchema(changesDiff, {
-            strings: {
-                detectFormat: false
-            },
-            objects: {
-                preProcessFnc: (obj, defaultFunc) => {
-                    return defaultFunc(Object.fromEntries(Object
-                        .entries(obj)
-                        .map(([key, value]) => {
-                            if (key.endsWith("__added")) {
-                                key = key.slice(0, -7)
-                                logger(chalk.dim("WORKER > New key: " + key), true)
-                            }
-                            return [key, value]
-                        })
-                    ));
-                }
-            }
-        }) as JSONSchema4;
-
-        newSchema = combineSchemas(schema, changesSchema);
+        const resolveErrorsOut = resolveSchemaErrors(schema, validate, datum);
+        newSchema = resolveErrorsOut.newSchema;
+        newSchema = addMissingSchemaProperties(newSchema, ajvOptions, datum);
 
         const newValidate = ajv.compile(newSchema);
-        newValidate(newSchema);
-        if((newValidate.errors?.length ?? 0) > totalErrors - resolvedErrors) {
+        newValidate(datum);
+        const expectedErrorCount = originalErrorCount - resolveErrorsOut.resolvedErrors
+        if(newValidate.errors?.length ?? 0 > expectedErrorCount) {
             const schemaDumpFile = "schema-" + Date.now() + ".dmp";
-            fs.writeFileSync(schemaDumpFile, JSON.stringify(newSchema))
+            fs.writeFileSync(schemaDumpFile, JSON.stringify({
+                schema: newSchema,
+                data: datum
+            }))
             throw new Error(
-                `Schema validation failed during post-update checks. Dumped schema to ${schemaDumpFile}.\n` +
-                `Errors before: ${errorsText}\n` +
+                `Schema validation failed during post-update checks. Expected error count to be ` +
+                `<= ${expectedErrorCount} but was actually ${newValidate.errors?.length}. Dumped schema to ` +
+                `${schemaDumpFile}.\n` +
+                `Errors before: ${originalErrorList}\n` +
                 `Errors after: ${ajv.errorsText(newValidate.errors)}`
             )
         }
