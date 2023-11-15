@@ -138,7 +138,7 @@ export class HypixelGenerator {
             await new Promise(resolve => setTimeout(resolve, this.requestDelay * this.allRequests.length))
 
             const res = await fetch(url, {
-                headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY}
+                headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY!}
             });
             logger(this.getPercentPrefix() + chalk.dim("Received response from", url));
             // API response is required to be a JSON object
@@ -171,6 +171,7 @@ export class HypixelGenerator {
                         this.getPercentPrefix() +
                         chalk.yellow(`Received "${String(output)}" from post-processor for ${schemaData.defName}. Skipping.`)
                     )
+                    this.totalUrlsCompleted++;
                     return json;
                 }
             }
@@ -194,6 +195,9 @@ export class HypixelGenerator {
      * equal to the {@link getCompletedRequests} return value.
      */
     private async processAllHypixelData(callback: ApiDataCallback): Promise<void> {
+        const loggerInterval = setInterval(() => {
+            logger(this.getPercentPrefix() + chalk.dim(`${this.allRequests.length - this.getCompletedRequests()} outstanding requests to be received and/or processed.`))
+        }, 5000)
         // Jumpstart the generation process by sending requests to all of the initial URLs. Additional URLs may have
         // requests sent to them by each schema's post-processor.
         for(const [url, schemaData] of initialGenerationUrlList) {
@@ -208,6 +212,7 @@ export class HypixelGenerator {
                 await Promise.all(this.allRequests);
             }
         })()
+        clearInterval(loggerInterval)
     }
 
     /**
@@ -223,22 +228,28 @@ export class HypixelGenerator {
      * @returns A `Promise` that resolves to this once all schemas have been tested and updated, if necessary.
      */
     public async run(): Promise<this> {
+        let i = 1;
         // Callback is called for every Hypixel API URL we query
         await this.processAllHypixelData(async (url, schema, data) => {
+            const reqId = i++;
+            logger(this.getPercentPrefix() + chalk.dim(`Received response for request ${reqId}`), true)
             // For singular data entries into a length-one array
             data = Array.isArray(data) ? data : [data];
 
             const loadedSchema = await this.getSchema(schema);
             const definitionSchema = loadedSchema.definition;
+            logger(this.getPercentPrefix() + chalk.dim(`Loaded schema for request ${reqId}`), true)
 
             // Offload schema updating to a worker thread. This includes compiling the schema. Likely a long delay
             //  between when exec() is called here and when the worker is actually started, as all workers before it run
             //  first.
             const newDefinitionSchema: JSONSchema4 = await this.pool.exec("updateSchema", [definitionSchema, data as Record<string, any>[]])
+            logger(this.getPercentPrefix() + chalk.dim(`Updated schema for request ${reqId}`), true)
 
             // Sort the schema definition alphanumerically. The schema was served from cache and any updates
             // will be saved to disk by saveSchemas()
             loadedSchema.schema.definitions![schema.defName] = sortObject(newDefinitionSchema);
+            logger(this.getPercentPrefix() + chalk.dim(`Sorted schema for request ${reqId}`), true)
         })
 
         await this.saveSchemas();
