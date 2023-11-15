@@ -234,14 +234,13 @@ function resolveTypeError(schema: JSONSchema4, error: ErrorObject, data: Record<
     } else {
         const parentName = splitPath[splitPath.length - 2];
         const parent = accessProperty(splitPath.slice(0, -1).join('/'), newSchema);
-
+        anyOfArray.push(parent as JSONSchema4);
         if(splitPath.length < 2) {
             newSchema = {
                 anyOf: anyOfArray
             }
         } else {
             const grandparent = accessProperty(splitPath.slice(0, -2).join('/'), newSchema);
-            anyOfArray.push(parent as JSONSchema4);
             (grandparent as any)[parentName] = {
                 anyOf: anyOfArray
             }
