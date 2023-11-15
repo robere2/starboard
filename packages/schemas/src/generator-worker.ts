@@ -206,6 +206,27 @@ function resolveSchemaError(schema: JSONSchema4, error: ErrorObject | null, data
     }
 }
 
+/**
+ * Some "anyOf" schema arrays can be simplified to a terser schema. Specifically, this currently simplifies
+ * arrays that just match any "number" or "integer" to simply match any "number".
+ * @param arr Array to simplify. This array is not modified in place.
+ * @returns A new JSONSchema that should be used instead of an "anyOf" array.
+ * @example
+ * const schema = {
+ *     anyOf: [{ type: "number" }, { type: "integer" }]
+ * }
+ * simplifyAnyOfArray(schema.anyOf) // { type: "number" }
+ */
+function simplifyAnyOfArray(arr: JSONSchema4[]): JSONSchema4 {
+    const stringifiedArr = JSON.stringify(arr)
+    if(stringifiedArr === '[{"type":"number"},{"type":"integer"}]' || stringifiedArr === '[{"type":"integer"},{"type":"number"}]') {
+        return {type: "number"}
+    }
+    return {
+        anyOf: [...arr]
+    }
+}
+
 function resolveTypeError(schema: JSONSchema4, error: ErrorObject, data: Record<string, any>): JSONSchema4 {
     let newSchema = structuredClone(schema);
     const splitPath = error.schemaPath.split("/");
@@ -229,21 +250,19 @@ function resolveTypeError(schema: JSONSchema4, error: ErrorObject, data: Record<
             throw new Error("Malformed JSON schema - Expected anyOf property to be an array.")
         }
         anyOfArray.push(...oldAnyOfArray);
+        const newValue = simplifyAnyOfArray(anyOfArray)
         const anyOfParent = accessProperty(splitPath.slice(0, -3).join('/'), newSchema);
-        (anyOfParent as any).anyOf = anyOfArray
+        (anyOfParent as any).anyOf = newValue
     } else {
         const parentName = splitPath[splitPath.length - 2];
         const parent = accessProperty(splitPath.slice(0, -1).join('/'), newSchema);
         anyOfArray.push(parent as JSONSchema4);
+        const newValue = simplifyAnyOfArray(anyOfArray)
         if(splitPath.length < 2) {
-            newSchema = {
-                anyOf: anyOfArray
-            }
+            newSchema = newValue
         } else {
             const grandparent = accessProperty(splitPath.slice(0, -2).join('/'), newSchema);
-            (grandparent as any)[parentName] = {
-                anyOf: anyOfArray
-            }
+            (grandparent as any)[parentName] = newValue
         }
     }
 
