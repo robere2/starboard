@@ -88,8 +88,9 @@ export class HypixelGenerator {
      */
     private async getSchema(input: SchemaData): Promise<LoadedSchemaData> {
         // FIXME this breaks when multiple schema definitions use the same schema file (e.g. pets.json)
-        if(this.loadedSchemas[input.schemaPath]) {
-            return this.loadedSchemas[input.schemaPath]
+        const schemaKey = `${input.schemaPath}#${input.defName}`;
+        if(this.loadedSchemas[schemaKey]) {
+            return this.loadedSchemas[schemaKey]
         }
         logger(this.getPercentPrefix() + chalk.dim("Reading file " + input.schemaPath), true)
         const fileContents = (await fs.promises.readFile(input.schemaPath)).toString()
@@ -100,7 +101,7 @@ export class HypixelGenerator {
             throw new Error(`Schema definition ${input.defName} could not be found in the given schema!\nPath: ${input.schemaPath}`);
         }
 
-        return this.loadedSchemas[input.schemaPath] = { schema, definition, ...input };
+        return this.loadedSchemas[schemaKey] = { schema, definition, ...input };
     }
 
     /**
@@ -111,7 +112,8 @@ export class HypixelGenerator {
      * @see {@link getSchema}
      */
     private async saveSchemas(): Promise<void> {
-        for(const path in this.loadedSchemas) {
+        for(const schemaKey in this.loadedSchemas) {
+            const path = schemaKey.split('#')[0]
             const loadedSchema = this.loadedSchemas[path];
             await fs.promises.writeFile(path, JSON.stringify(loadedSchema.schema, null, 2))
             delete this.loadedSchemas[path];
