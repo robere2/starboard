@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/challenges.json",
   "title": "HypixelChallengesResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/challenges",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

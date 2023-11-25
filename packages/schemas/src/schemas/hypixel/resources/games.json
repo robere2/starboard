@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/games.json",
   "title": "HypixelGamesResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/games",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

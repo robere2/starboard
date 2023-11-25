@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/status.json",
   "title": "HypixelStatusResponse",
   "description": "Schema for data returned from https://api.hypixel.net/status",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

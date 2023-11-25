@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/auctions_ended.json",
   "title": "HypixelSkyBlockAuctionsEndedResponse",
   "description": "Schema for data returned from https://api.hypixel.net/skyblock/auctions_ended",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

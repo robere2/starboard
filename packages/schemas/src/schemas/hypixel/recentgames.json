@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/recentgames.json",
   "title": "HypixelRecentGamesResponse",
   "description": "Schema for data returned from https://api.hypixel.net/recentgames",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

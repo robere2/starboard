@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/profiles.json",
   "title": "HypixelSkyBlockProfilesResponse",
   "description": "Schema for data returned from https://api.hypixel.net/skyblock/profiles",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

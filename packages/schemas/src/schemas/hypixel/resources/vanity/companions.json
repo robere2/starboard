@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/vanity/companions.json",
   "title": "HypixelCompanionsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/vanity/companions",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {
@@ -67,7 +67,7 @@
           "type": "string"
         },
         "rarity": {
-          "oneOf": [
+          "anyOf": [
             {
               "type": "string"
             },

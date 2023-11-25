@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/punishmentstats.json",
   "title": "HypixelPunishmentStatisticsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/punishmentstats",
-  "oneOf": [
+  "anyOf": [
     {
       "$ref": "#/definitions/HypixelPunishmentStatistics"
     },

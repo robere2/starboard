@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/auctions.json",
   "title": "HypixelSkyBlockAuctionsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/skyblock/auctions",
-  "oneOf": [
+  "anyOf": [
     {
       "$ref": "#/definitions/HypixelSkyBlockAuctions"
     },

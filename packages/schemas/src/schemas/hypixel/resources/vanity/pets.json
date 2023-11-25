@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/vanity/pets.json",
   "title": "HypixelPetsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/vanity/pets",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {
@@ -67,7 +67,7 @@
           "type": "string"
         },
         "rarity": {
-          "oneOf": [
+          "anyOf": [
             {
               "type": "string"
             },

@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/skyblock/election.json",
   "title": "HypixelSkyBlockElectionResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/skyblock/election",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

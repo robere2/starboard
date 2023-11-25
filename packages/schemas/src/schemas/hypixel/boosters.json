@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/boosters.json",
   "title": "HypixelBoostersResponse",
   "description": "Schema for data returned from https://api.hypixel.net/boosters",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {
@@ -80,7 +80,7 @@
           "type": "string"
         },
         "stacked": {
-          "oneOf": [
+          "anyOf": [
             {
               "type": "boolean"
             },

@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/skyblock/bingo.json",
   "title": "HypixelSkyBlockBingoResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/skyblock/bingo",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {
