@@ -165,88 +165,93 @@ function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema4 {
     }
 
     // Create the implicit anyOf array with a single value, if anyOf array is missing.
-    let anyOf = base.anyOf ?? [base];
+    let baseAnyOf = base.anyOf ?? [base];
+    const sourceAnyOf = source.anyOf ?? [source];
 
-    // If the source schema is compatible with any schema in our anyOf, we can combine with that schema(s).
-    // Otherwise we need to add it to the anyOf array.
-    let shouldPushToAnyOf = true;
-    for(const schema of anyOf) {
-        if(areObjectsCompatible(schema, source)) {
-            shouldPushToAnyOf = false;
-            break;
+    for(const sourceSchema of sourceAnyOf) {
+
+        // If the source schema is compatible with any schema in our anyOf, we can combine with that schema(s).
+        // Otherwise we need to add it to the anyOf array.
+        let shouldPushToAnyOf = true;
+        for(const baseSchema of baseAnyOf) {
+            if(areObjectsCompatible(baseSchema, sourceSchema)) {
+                shouldPushToAnyOf = false;
+                break;
+            }
         }
-    }
 
-    if(shouldPushToAnyOf) {
-        anyOf.push(source);
-    } else {
-        // Merge source schema into all schemas which it is compatible with
-        for(const schema of anyOf) {
-            if(areObjectsCompatible(schema, source)) {
-                for(const prop in source) {
-                    if(Array.isArray(source[prop])) {
-                        // areObjectsCompatible has already asserted that if source[prop] is an
-                        // array, then schema[prop] is either an array or undefined. Here, we're just
-                        // merging the two arrays, and removing duplicates.
-                        schema[prop] = Array.from(
-                            new Set([...(schema[prop] ?? []), ...source[prop]])
-                        )
-                    } else if(["properties", "definitions", "patternProperties"].includes(prop)) {
-                        if(!schema[prop]) {
-                           schema[prop] = {}
-                        }
-                        for(const item in source[prop]) {
-                            const propertyPattern: string | null =
-                                matchingPatternProperty(item, schema) ||
-                                matchingPatternProperty(item, source);
-                            if(prop === "properties" && propertyPattern) {
-                                if(!schema.patternProperties) {
-                                    schema.patternProperties = {}
-                                }
-                                if(schema.patternProperties[propertyPattern]) {
-                                    schema.patternProperties[propertyPattern] = mergeSchemas(
-                                        schema.patternProperties[propertyPattern],
-                                        source[prop]![item]
-                                    )
-                                } else {
-                                    schema.patternProperties[propertyPattern] = source[prop]![item]
-                                }
-                            } else if(schema[prop][item]) {
-                                schema[prop][item] = mergeSchemas(schema[prop][item], source[prop][item])
-                            } else {
-                                schema[prop][item] = source[prop][item]
+        if(shouldPushToAnyOf) {
+            baseAnyOf.push(sourceSchema);
+        } else {
+            // Merge sourceSchema into all schemas which it is compatible with
+            for(const schema of baseAnyOf) {
+                if(areObjectsCompatible(schema, sourceSchema)) {
+                    for(const prop in sourceSchema) {
+                        if(Array.isArray(sourceSchema[prop])) {
+                            // areObjectsCompatible has already asserted that if sourceSchema[prop] is an
+                            // array, then schema[prop] is either an array or undefined. Here, we're just
+                            // merging the two arrays, and removing duplicates.
+                            schema[prop] = Array.from(
+                                new Set([...(schema[prop] ?? []), ...sourceSchema[prop]])
+                            )
+                        } else if(["properties", "definitions", "patternProperties"].includes(prop)) {
+                            if(!schema[prop]) {
+                                schema[prop] = {}
                             }
-                        }
-                    } else if(["items", "contains"].includes(prop)) {
-                        if(schema[prop]) {
-                            schema[prop] = mergeSchemas(schema[prop], source[prop]);
+                            for(const item in sourceSchema[prop]) {
+                                const propertyPattern: string | null =
+                                    matchingPatternProperty(item, schema) ||
+                                    matchingPatternProperty(item, sourceSchema);
+                                if(prop === "properties" && propertyPattern) {
+                                    if(!schema.patternProperties) {
+                                        schema.patternProperties = {}
+                                    }
+                                    if(schema.patternProperties[propertyPattern]) {
+                                        schema.patternProperties[propertyPattern] = mergeSchemas(
+                                            schema.patternProperties[propertyPattern],
+                                            sourceSchema[prop]![item]
+                                        )
+                                    } else {
+                                        schema.patternProperties[propertyPattern] = sourceSchema[prop]![item]
+                                    }
+                                } else if(schema[prop][item]) {
+                                    schema[prop][item] = mergeSchemas(schema[prop][item], sourceSchema[prop][item])
+                                } else {
+                                    schema[prop][item] = sourceSchema[prop][item]
+                                }
+                            }
+                        } else if(["items", "contains"].includes(prop)) {
+                            if(schema[prop]) {
+                                schema[prop] = mergeSchemas(schema[prop], sourceSchema[prop]);
+                            } else {
+                                schema[prop] = sourceSchema[prop]
+                            }
                         } else {
-                            schema[prop] = source[prop]
+                            // We could be overwriting values here, but areSchemasCompatible should have already
+                            // asserted that any values we're overwriting are equal anyway.
+                            schema[prop] = sourceSchema[prop]
                         }
-                    } else {
-                        // We could be overwriting values here, but areSchemasCompatible should have already
-                        // asserted that any values we're overwriting are equal anyway.
-                        schema[prop] = source[prop]
                     }
                 }
             }
         }
     }
 
+
     // We can simplify any schema which matches any number or integer to simply match any number.
-    const anyOfJson = JSON.stringify(anyOf)
+    const anyOfJson = JSON.stringify(baseAnyOf)
     if(anyOfJson === '[{"type":"number"},{"type":"integer"}]' || anyOfJson === '[{"type":"integer"},{"type":"number"}]') {
-        anyOf = [{type: "number"}]
+        baseAnyOf = [{type: "number"}]
     }
 
     // We can simplify anyOf arrays with 1 value to just be the value
-    if(anyOf.length === 1) {
-        return anyOf[0]
+    if(baseAnyOf.length === 1) {
+        return baseAnyOf[0]
     } else if(base.anyOf) {
-        base.anyOf = anyOf
+        base.anyOf = baseAnyOf
     } else {
         base = {
-            anyOf
+            anyOf: baseAnyOf
         }
     }
 
@@ -273,6 +278,7 @@ function visit(value: any, callback: (key: string | number, parent: any) => any)
  * @param data
  */
 function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSchema4 {
+
     const container = new SchemaContainer({
         allErrors: true,
         inlineRefs: false
