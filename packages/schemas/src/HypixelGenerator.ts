@@ -114,7 +114,7 @@ export class HypixelGenerator {
     private async saveSchemas(): Promise<void> {
         for(const schemaKey in this.loadedSchemas) {
             const path = schemaKey.split('#')[0]
-            const loadedSchema = this.loadedSchemas[path];
+            const loadedSchema = this.loadedSchemas[schemaKey];
             await fs.promises.writeFile(path, JSON.stringify(loadedSchema.schema, null, 2))
             delete this.loadedSchemas[path];
         }

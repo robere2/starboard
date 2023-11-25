@@ -3,9 +3,18 @@ import {JSONSchema4} from "json-schema";
 import chalk from "chalk";
 import toJsonSchema from "gen-json-schema";
 import {logger} from "./util";
-import Ajv, {ErrorObject, Options, ValidateFunction} from "ajv";
-import {diff} from "json-diff";
+import Ajv, {Options, ValidateFunction} from "ajv";
 import fs from "fs";
+
+const jsonSchemaAnnotations = [
+    "title",
+    "description",
+    "default",
+    "examples",
+    "readOnly",
+    "writeOnly",
+    "deprecated"
+]
 
 /**
  * Compiling Ajv schemas into validation functions is expensive. This class helps to avoid unnecessary schema
@@ -14,19 +23,13 @@ import fs from "fs";
 class SchemaContainer<T = unknown> {
 
     public ajv: Ajv;
-    public ajvStrict: Ajv;
 
     private _schema: JSONSchema4;
 
     private cachedValidate?: ValidateFunction<T>;
-    private cachedValidateStrict?: ValidateFunction<T>;
 
     constructor(options: Options, schema: JSONSchema4) {
         this.ajv = new Ajv(options);
-        this.ajvStrict = new Ajv({
-            ...options,
-            removeAdditional: true
-        })
         this._schema = schema;
     }
 
@@ -35,7 +38,6 @@ class SchemaContainer<T = unknown> {
         // this should be a non-issue.
         if(JSON.stringify(this._schema) !== JSON.stringify(val)) {
             this.cachedValidate = undefined;
-            this.cachedValidateStrict = undefined;
         }
         this._schema = val;
     }
@@ -50,232 +52,219 @@ class SchemaContainer<T = unknown> {
         }
         return this.cachedValidate;
     }
-
-    public get validateStrict(): ValidateFunction<T> {
-        if(!this.cachedValidateStrict) {
-            this.cachedValidateStrict = this.ajvStrict.compile<T>(this._schema)
-        }
-        return this.cachedValidateStrict;
-    }
 }
 
 /**
- * Access a deep property on an object via the string notation used by JSON schemas
- * @param path Path to access. This should be a string with each key separated by a `/`, and each key is URI encoded.
- * Optionally, the path may start with a '#', indicating the root of the schema. For the purposes of this function,
- * this has no effect on the returned value. Similarly, a leading slash `/` will be ignored.
- * @param obj Object to get the value on.
- * @param strict Whether the function should throw an error when you try to access an inaccessible property, i.e. a
- * property on a nullish value. If this is false, then `undefined` is simply returned instead.
- * @throws
- * - `TypeError` if the path is not accessible and `strict` is set to true
- * @returns Whatever value is stored at the given path.
+ * TODO
+ * @param schema
  */
-function accessProperty(path: string, obj: unknown, strict = true): unknown {
-    const splitPath = path.split('/');
-    const nextIndex = splitPath.shift();
-    if(nextIndex === undefined) {
-        throw new Error("The given index is undefined");
-    }
-    let next: unknown;
-    if(nextIndex === "#" || nextIndex === '') {
-        next = obj
-    } else if((obj === null || obj === undefined) && !strict) {
-        return undefined;
-    } else {
-        next = (obj as any)[decodeURIComponent(nextIndex)]
-    }
-    if(splitPath.length === 0) {
-        return next;
-    } else {
-        return accessProperty(splitPath.join('/'), next);
-    }
+function followReference(schema: JSONSchema4): JSONSchema4 {
+    return schema
 }
 
 /**
- * Iterate over a `newSchema` and add to `originalSchema` any properties that it didn't already have.
- * @param originalSchema The schema that new properties should be added to. This value is not modified.
- * @param newSchema The schema to find properties in and add to `originalSchema`. This value is not modified.
- * @returns An object like `originalSchema` but with all new properties from `newSchema` added on.
- * @throws
- * - `Error` if either provided schema is not a valid JSON schema
- * - `Error` for some schema conflicts that can't be handled without losing data
- * - `Error` if `newSchema` contains an `items` array at any point. Only singular item types are currently supported.
- * - Stack overflow for very deep schemas (this method is recursive)
+ * Check if two objects have conflicting values. If we attempted to merge the two objects, would we have to
+ * either change the data structure or remove some data.
+ * @param a
+ * @param b
  */
-function combineSchemas(originalSchema: JSONSchema4, newSchema: JSONSchema4): JSONSchema4 {
-    const finalSchema = structuredClone(originalSchema);
-
-    if(newSchema.properties) {
-        if(!finalSchema.properties) {
-            finalSchema.properties = {};
-        }
-        newSchemaPropsLoop:
-            for(const prop in newSchema.properties) {
-                if(!finalSchema.properties[prop]) {
-                    // Before adding property, first check if it's recognized as a pattern property on the finalSchema.
-                    // If it is a pattern, combine with the pattern property schema instead. Otherwise we can
-                    for(const pattern in finalSchema.patternProperties ?? {}) {
-                        if(new RegExp(pattern).test(prop)) {
-                            logger(chalk.dim(`WORKER > Property ${prop} matches existing pattern property ${pattern}`), true)
-                            finalSchema.patternProperties![pattern] = combineSchemas(finalSchema.patternProperties![pattern], newSchema.properties[prop]);
-                            continue newSchemaPropsLoop; // We don't want to break as that'd write to "properties"
-                        }
-                    }
-                    logger(chalk.dim(`WORKER > Property ${prop} added as a new property`), true)
-                    finalSchema.properties[prop] = structuredClone(newSchema.properties[prop]);
-                } else {
-                    logger(chalk.dim(`WORKER > Property ${prop} extended on original schema`), true)
-                    finalSchema.properties[prop] = combineSchemas(finalSchema.properties[prop], newSchema.properties[prop]);
-                }
-            }
-    }
-
-    if(Array.isArray(newSchema.items)) {
-        throw new Error('Arrays for `items` properties is currently not supported.');
-    } else if(newSchema.items?.properties) {
-        if(Array.isArray(finalSchema.items)) {
-            throw new Error('Type conflict - Should never happen if a value directly from `toJsonSchema` is given as the `newSchema` input')
-        }
-        if(!finalSchema.items) {
-            finalSchema.items = {}
-        }
-        if(!finalSchema.items.properties) {
-            logger(chalk.dim(`WORKER > Added array items`), true)
-            finalSchema.items.properties = structuredClone(newSchema.items.properties);
-        } else {
-            logger(chalk.dim(`WORKER > Updated array items`), true)
-            finalSchema.items.properties = combineSchemas(finalSchema.items.properties, newSchema.items.properties);
-        }
-    }
-
-    return finalSchema
-}
-
-function addMissingSchemaProperties(container: SchemaContainer, data: Record<string, any>): JSONSchema4 {
-    // Pass data through strict validator to remove unknown properties
-    const strictData = structuredClone(data);
-    container.validateStrict(strictData);
-
-    // changesDiff is an object with all values that are already in the schema removed, even if the value
-    // doesn't match the schema (e.g. an "object" is where there's supposed to be a "number")
-    const changesDiff = diff(strictData, data, {
-        keysOnly: true
-    })
-    if(!changesDiff) {
-        logger(chalk.dim("WORKER > No schema changes detected"), true)
-        return container.schema;
-    }
-
-    logger(chalk.dim("WORKER > Schema changes detected"), true);
-    // The changesDiff converted into a schema, to be combined with original schema.
-    const changesSchema: JSONSchema4 = toJsonSchema(changesDiff, {
-        strings: {
-            detectFormat: false
-        },
-        objects: {
-            preProcessFnc: (obj, defaultFunc) => {
-                return defaultFunc(Object.fromEntries(Object
-                    .entries(obj)
-                    .map(([key, value]) => {
-                        if (key.endsWith("__added")) {
-                            key = key.slice(0, -7)
-                            logger(chalk.dim("WORKER > New key: " + key), true)
-                        }
-                        return [key, value]
-                    })
-                ));
+function areObjectsCompatible(a: Record<string, any>, b: Record<string, any>): boolean {
+    const values: Record<string, { aValue: unknown, bValue: unknown }> = {};
+    for(const prop in a) {
+        if(values[prop] === undefined) {
+            values[prop] = {
+                aValue: undefined,
+                bValue: undefined
             }
         }
-    }) as JSONSchema4;
-
-    return combineSchemas(container.schema, changesSchema);
-}
-
-function resolveSchemaError(schema: JSONSchema4, error: ErrorObject | null, data: Record<string, any>): JSONSchema4 {
-    const newSchema = structuredClone(schema);
-    if(error == null) {
-        return newSchema;
+        values[prop].aValue = a[prop];
     }
-    if(error.keyword === "type") {
-        return resolveTypeError(newSchema, error, data);
-    } else {
-        // If the error was retrieved from getNextSolvableError, this should never happen.
-        logger(chalk.yellow(`WORKER > Unresolvable schema error: ${new Ajv().errorsText([error])}`))
-        return newSchema;
+    for(const prop in b) {
+        if(values[prop] === undefined) {
+            values[prop] = {
+                aValue: undefined,
+                bValue: undefined
+            }
+        }
+        values[prop].bValue = b[prop];
     }
+
+    for(const [key, value] of Object.entries(values)) {
+        if(["properties", "items", "contains", "patternProperties", "definitions"].includes(key)) {
+            continue;
+        }
+        if(value.aValue === undefined || value.bValue === undefined) {
+            continue;
+        }
+
+        if(Array.isArray(value.aValue) !== Array.isArray(value.bValue)) {
+            return false;
+        } else if(Array.isArray(value.aValue)) {
+            // bValue must also be an array. We don't compare array contents.
+            continue;
+        }
+
+        // If the two values are not equal and they are not objects, or if they are objects but those objects
+        // themselves are not compatible with each other, then these two objects are not compatible with each other.
+        if(
+            value.aValue !== value.bValue && (
+                typeof value.aValue !== "object" || typeof value.bValue !== "object" ||
+                value.aValue === null || value.bValue === null ||
+                !areObjectsCompatible(value.aValue, value.bValue)
+            )
+        ) {
+            return false;
+        }
+    }
+    return true;
 }
 
 /**
- * Some "anyOf" schema arrays can be simplified to a terser schema. Specifically, this currently simplifies
- * arrays that just match any "number" or "integer" to simply match any "number".
- * @param arr Array to simplify. This array is not modified in place.
- * @returns A new JSONSchema that should be used instead of an "anyOf" array.
- * @example
- * const schema = {
- *     anyOf: [{ type: "number" }, { type: "integer" }]
- * }
- * simplifyAnyOfArray(schema.anyOf) // { type: "number" }
+ * Get the `patternProperties` value on a JSON schema that the given property name matches, or null if the
+ * property name does not match any pattern property schema.
+ * @param propName
+ * @param schema
  */
-function simplifyAnyOfArray(arr: JSONSchema4[]): JSONSchema4 {
-    const stringifiedArr = JSON.stringify(arr)
-    if(stringifiedArr === '[{"type":"number"},{"type":"integer"}]' || stringifiedArr === '[{"type":"integer"},{"type":"number"}]') {
-        return {type: "number"}
-    }
-    return {
-        anyOf: [...arr]
-    }
-}
-
-function resolveTypeError(schema: JSONSchema4, error: ErrorObject, data: Record<string, any>): JSONSchema4 {
-    let newSchema = structuredClone(schema);
-    const splitPath = error.schemaPath.split("/");
-
-    const newType = toJsonSchema(accessProperty(error.instancePath, data), {
-        strings: {
-            detectFormat: false
-        }
-    })
-
-    const anyOfArray: JSONSchema4[] = [
-        newType as JSONSchema4
-    ]
-
-    // If this property is already in a anyOf array, we want to add to that array. Otherwise we want to
-    // construct a new anyOf array
-    if(splitPath.length >= 3 && splitPath[splitPath.length - 3] === "anyOf") {
-        // FIXME in anyOf errors, the error will appear three times. Only need to handle once.
-        const oldAnyOfArray = accessProperty(splitPath.slice(0, -2).join('/'), newSchema);
-        if(!Array.isArray(oldAnyOfArray)) {
-            throw new Error("Malformed JSON schema - Expected anyOf property to be an array.")
-        }
-        anyOfArray.push(...oldAnyOfArray);
-        const newValue = simplifyAnyOfArray(anyOfArray)
-        const anyOfParent = accessProperty(splitPath.slice(0, -3).join('/'), newSchema);
-        (anyOfParent as any).anyOf = newValue
-    } else {
-        const parentName = splitPath[splitPath.length - 2];
-        const parent = accessProperty(splitPath.slice(0, -1).join('/'), newSchema);
-        anyOfArray.push(parent as JSONSchema4);
-        const newValue = simplifyAnyOfArray(anyOfArray)
-        if(splitPath.length < 2) {
-            newSchema = newValue
-        } else {
-            const grandparent = accessProperty(splitPath.slice(0, -2).join('/'), newSchema);
-            (grandparent as any)[parentName] = newValue
-        }
-    }
-
-    return newSchema;
-}
-
-function getNextSolvableError(errors: ErrorObject[]): ErrorObject | null {
-    for(const err of errors) {
-        if(err.keyword === "type") {
-            return err;
+function matchingPatternProperty(propName: string, schema: JSONSchema4): string | null {
+    for(const pattern in schema.patternProperties ?? []) {
+        if(new RegExp(pattern).test(propName)) {
+            return pattern
         }
     }
     return null;
+}
+
+/**
+ *
+ * @param base
+ * @param source
+ */
+function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema4 {
+    // Clone so we can return a fresh copy of the new schema without risking in-place modification
+    base = structuredClone(base);
+    source = structuredClone(source);
+
+    // We do things a little differently if the schema we're merging in adds an anyOf. For data-related schema
+    // properties, we try to merge them into the anyOf array. For annotation schema properties, we keep them on the base
+    if(source.anyOf && !base.anyOf) {
+        const annotationProperties: JSONSchema4 = {};
+        const dataProperties: JSONSchema4 = {};
+        for(const prop in base) {
+            if(jsonSchemaAnnotations.includes(prop)) {
+                annotationProperties[prop] = base[prop];
+            } else {
+                dataProperties[prop] = base[prop];
+            }
+        }
+
+        base = {
+            ...mergeSchemas(source, dataProperties),
+            ...annotationProperties
+        }
+        return base;
+    }
+
+    // Create the implicit anyOf array with a single value, if anyOf array is missing.
+    let anyOf = base.anyOf ?? [base];
+
+    // If the source schema is compatible with any schema in our anyOf, we can combine with that schema(s).
+    // Otherwise we need to add it to the anyOf array.
+    let shouldPushToAnyOf = true;
+    for(const schema of anyOf) {
+        if(areObjectsCompatible(schema, source)) {
+            shouldPushToAnyOf = false;
+            break;
+        }
+    }
+
+    if(shouldPushToAnyOf) {
+        anyOf.push(source);
+    } else {
+        // Merge source schema into all schemas which it is compatible with
+        for(const schema of anyOf) {
+            if(areObjectsCompatible(schema, source)) {
+                for(const prop in source) {
+                    if(Array.isArray(source[prop])) {
+                        // areObjectsCompatible has already asserted that if source[prop] is an
+                        // array, then schema[prop] is either an array or undefined. Here, we're just
+                        // merging the two arrays, and removing duplicates.
+                        schema[prop] = Array.from(
+                            new Set([...(schema[prop] ?? []), ...source[prop]])
+                        )
+                    } else if(["properties", "definitions", "patternProperties"].includes(prop)) {
+                        if(!schema[prop]) {
+                           schema[prop] = {}
+                        }
+                        for(const item in source[prop]) {
+                            const propertyPattern: string | null =
+                                matchingPatternProperty(item, schema) ||
+                                matchingPatternProperty(item, source);
+                            if(prop === "properties" && propertyPattern) {
+                                if(!schema.patternProperties) {
+                                    schema.patternProperties = {}
+                                }
+                                if(schema.patternProperties[propertyPattern]) {
+                                    schema.patternProperties[propertyPattern] = mergeSchemas(
+                                        schema.patternProperties[propertyPattern],
+                                        source[prop]![item]
+                                    )
+                                } else {
+                                    schema.patternProperties[propertyPattern] = source[prop]![item]
+                                }
+                            } else if(schema[prop][item]) {
+                                schema[prop][item] = mergeSchemas(schema[prop][item], source[prop][item])
+                            } else {
+                                schema[prop][item] = source[prop][item]
+                            }
+                        }
+                    } else if(["items", "contains"].includes(prop)) {
+                        if(schema[prop]) {
+                            schema[prop] = mergeSchemas(schema[prop], source[prop]);
+                        } else {
+                            schema[prop] = source[prop]
+                        }
+                    } else {
+                        // We could be overwriting values here, but areSchemasCompatible should have already
+                        // asserted that any values we're overwriting are equal anyway.
+                        schema[prop] = source[prop]
+                    }
+                }
+            }
+        }
+    }
+
+    // We can simplify any schema which matches any number or integer to simply match any number.
+    const anyOfJson = JSON.stringify(anyOf)
+    if(anyOfJson === '[{"type":"number"},{"type":"integer"}]' || anyOfJson === '[{"type":"integer"},{"type":"number"}]') {
+        anyOf = [{type: "number"}]
+    }
+
+    // We can simplify anyOf arrays with 1 value to just be the value
+    if(anyOf.length === 1) {
+        return anyOf[0]
+    } else if(base.anyOf) {
+        base.anyOf = anyOf
+    } else {
+        base = {
+            anyOf
+        }
+    }
+
+    return base;
+}
+
+function visit(value: any, callback: (key: string | number, parent: any) => any) {
+    if(Array.isArray(value)) {
+        for(let i = 0; i < value.length; i++) {
+            value[i] = callback(i, value);
+            visit(value[i], callback)
+        }
+    } else if(typeof value === "object" && value !== null) {
+        for(const prop in value) {
+            value[prop] = callback(prop, value)
+            visit(value[prop], callback);
+        }
+    }
 }
 
 /**
@@ -290,36 +279,38 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
     }, schema);
 
     for(const datum of data) {
-        // Resolve all schema errors that we're able to, until there's no more to fix. We recompile the
-        // validation function between each resolution because multiple errors could be caused by the same
-        // problem, and we don't want to repeat them. This is inefficient and could likely be improved.
-
-        let nextErrorToResolve: ErrorObject | null;
-        do {
-            container.validate(datum);
-            nextErrorToResolve = getNextSolvableError(container.validate.errors ?? [])
-            if(nextErrorToResolve) {
-                logger(chalk.dim(`WORKER > Attempting to resolve error ${container.ajv.errorsText([nextErrorToResolve])}`))
+        // Create a JSON schema based on our data.
+        const dataSchema = toJsonSchema(datum, {
+            strings: {
+                detectFormat: false
+            },
+            // Tuple is currently the only way to get types for all array entries. Immediately after this,
+            // we traverse the schema and merge all items in each tuple
+            arrays: {
+                mode: 'tuple'
             }
-            container.schema = resolveSchemaError(container.schema, nextErrorToResolve, datum)
-        } while(nextErrorToResolve !== null)
+        }) as JSONSchema4;
 
-        // These are errors that we don't know how to solve, and they should be reported for a human to solve.
-        const remainingErrors = container.validate.errors ?? [];
+        // Merge all items tuples into a single item schema
+        visit(dataSchema, (key, parent) => {
+            if(key === "items" && parent.type === "array") {
+                const itemsArray: JSONSchema4[] = parent[key];
+                let mergedItems: JSONSchema4 = {};
+                for(const item of itemsArray) {
+                    mergedItems = mergeSchemas(mergedItems, item);
+                }
+                return mergedItems;
+            }
+            return parent[key]
+        })
 
-        if(remainingErrors.length > 0) {
-            logger(chalk.yellow(`WORKER > Unresolvable schema errors: ${container.ajv.errorsText(remainingErrors)}`))
-        }
-
-        // Add all missing properties
-        container.schema = addMissingSchemaProperties(container, datum);
+        // Merge the schema containing changed values with the schema we're updating
+        container.schema = mergeSchemas(container.schema, dataSchema);
 
         logger(chalk.dim("WORKER > Re-validating final schema to check for unexpected errors"), true)
         container.validate(datum);
         logger(chalk.dim("WORKER > Final validation complete"), true)
-        const newErrors = container.ajv.errorsText(container.validate.errors)
-        const oldErrors = container.ajv.errorsText(remainingErrors);
-        if(newErrors !== oldErrors) {
+        if(container.validate.errors?.length ?? 0 >= 1) {
             logger(chalk.dim("WORKER > Unexpected errors within final validation"), true)
             const schemaDumpFile = "schema-" + Date.now() + ".dmp";
             fs.writeFileSync(schemaDumpFile, JSON.stringify({
@@ -328,8 +319,7 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
             }))
             throw new Error("Unexpected errors were introduced after the addition of new schema properties. " +
                 `Schema and data has been dumped to ${schemaDumpFile}.\n` +
-                `Old errors: ${oldErrors}\n` +
-                `New errors: ${newErrors}`)
+                `Errors: ${container.ajv.errorsText(container.validate.errors)}`)
         }
     }
     return container.schema;
