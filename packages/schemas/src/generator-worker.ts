@@ -55,20 +55,17 @@ class SchemaContainer<T = unknown> {
 }
 
 /**
- * TODO
- * @param schema
+ * Determines whether two JSON schemas are compatible. 'Compatible' in this context means that merging both schemas into
+ * one doesn't cause any inconsistencies with the schemas' content. Essentially, when both schemas have a value for a
+ * keyword/property, the values must match (unless it's value is another schema or map of schemas, e.g. on
+ * `properties`, which are processed recursively). The function will return false should there be conflicting
+ * data for the same property in the two schemas.
+ *
+ * @param a The first schema to compare.
+ * @param b The second schema to compare.
+ * @returns `true` if the schemas are compatible, `false` otherwise.
  */
-function followReference(schema: JSONSchema4): JSONSchema4 {
-    return schema
-}
-
-/**
- * Check if two objects have conflicting values. If we attempted to merge the two objects, would we have to
- * either change the data structure or remove some data.
- * @param a
- * @param b
- */
-function areObjectsCompatible(a: Record<string, any>, b: Record<string, any>): boolean {
+function areSchemasCompatible(a: JSONSchema4, b: JSONSchema4): boolean {
     const values: Record<string, { aValue: unknown, bValue: unknown }> = {};
     for(const prop in a) {
         if(values[prop] === undefined) {
@@ -110,7 +107,7 @@ function areObjectsCompatible(a: Record<string, any>, b: Record<string, any>): b
             value.aValue !== value.bValue && (
                 typeof value.aValue !== "object" || typeof value.bValue !== "object" ||
                 value.aValue === null || value.bValue === null ||
-                !areObjectsCompatible(value.aValue, value.bValue)
+                !areSchemasCompatible(value.aValue, value.bValue)
             )
         ) {
             return false;
@@ -120,10 +117,13 @@ function areObjectsCompatible(a: Record<string, any>, b: Record<string, any>): b
 }
 
 /**
- * Get the `patternProperties` value on a JSON schema that the given property name matches, or null if the
- * property name does not match any pattern property schema.
- * @param propName
- * @param schema
+ * Get the `patternProperties` value on a JSON schema that the given property name matches, or null if the property name
+ * does not match any pattern property schema.
+ *
+ * @param propName The name of the property to be matched against the pattern properties.
+ * @param schema The JSON schema containing the pattern properties to be matched against.
+ *
+ * @returns The pattern property name that matches the given property name, or null if no match is found.
  */
 function matchingPatternProperty(propName: string, schema: JSONSchema4): string | null {
     for(const pattern in schema.patternProperties ?? []) {
@@ -133,11 +133,95 @@ function matchingPatternProperty(propName: string, schema: JSONSchema4): string 
     }
     return null;
 }
-
 /**
+ * Modifies an existing JSON schema to also be compatible with a new schema, preserving the validity of previously
+ * conforming data. It achieves this by adding new descriptive properties when compatible, or an 'anyOf' clause as deep
+ * as the schema allows when not.
  *
- * @param base
- * @param source
+ * This method takes in `base` and `source` parameters, however for all intents and purposes, you generally should not
+ * treat these any different from one another. Swapping them around should always generate the same output.
+ *
+ * The function merges the new data into the schema without conflicting with existing property definitions. It creates
+ * a new 'anyOf' clause only when necessary to avoid property conflicts.
+ *
+ * The function also handles `items`, `contains`, `properties`, `patternProperties`, and `definitions` recursively. All
+ * other JSON schema keywords are checked for equality to determine compatibility (whether the two schemas can be
+ * merged, or the new one needs to be appended to the `anyOf` array).
+ *
+ * @remarks Schema T is equivalent to `{anyOf: [T]}`. The `mergeSchemas` function attempts to add the new data to an
+ * existing 'anyOf' array, creating a new 'anyOf' if necessary. It merges the new data as deep into the schema as it can
+ * go without causing property conflicts, at which point `anyOf` is forced to be used.
+ *
+ * @param base The existing JSON schema that the new schema should be integrated into. This is not modified in place.
+ * @param source The new schema to incorporate into the base schema.
+ *
+ * @returns A new schema that complies with both the `base` and `source` schemas.
+ *
+ * @example
+ * const schemaOne = {
+ *   "anyOf": [
+ *     {
+ *       "type": "null"
+ *     },
+ *     {
+ *       "type": "object",
+ *       "properties": {
+ *         "propertyOne": {
+ *           "type": "number"
+ *         }
+ *       }
+ *     }
+ *   ]
+ * }
+ * const schemaTwo = {
+ *       "type": "object",
+ *       "properties": {
+ *         "propertyOne": {
+ *           "type": "string"
+ *         },
+ *         "propertyTwo": {
+ *             "type": "object",
+ *             "properties": {
+ *                 "child": {
+ *                    "type": "boolean"
+ *                 }
+ *             }
+ *         }
+ *       }
+ *     }
+ *
+ * console.log(JSON.stringify(mergeSchemas(schemaOne, schemaTwo), null, 2));
+ * // {
+ * //   "anyOf": [
+ * //     {
+ * //       "type": "null"
+ * //     },
+ * //     {
+ * //       "type": "object",
+ * //       "properties": {
+ * //         "propertyOne": {
+ * //            "anyOf": [
+ * //               {
+ * //                 "type": "number"
+ * //               },
+ * //               {
+ * //                 "type": "string"
+ * //               }
+ * //            ]
+ * //          },
+ * //         "propertyTwo": {
+ * //           "type": "object",
+ * //           "properties": {
+ * //             "child": {
+ * //               "type": "boolean"
+ * //             }
+ * //           }
+ * //         }
+ * //       }
+ * //     }
+ * //   ]
+ * // }
+ * ```
  */
 function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema4 {
     // Clone so we can return a fresh copy of the new schema without risking in-place modification
@@ -174,7 +258,7 @@ function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema4 {
         // Otherwise we need to add it to the anyOf array.
         let shouldPushToAnyOf = true;
         for(const baseSchema of baseAnyOf) {
-            if(areObjectsCompatible(baseSchema, sourceSchema)) {
+            if(areSchemasCompatible(baseSchema, sourceSchema)) {
                 shouldPushToAnyOf = false;
                 break;
             }
@@ -185,10 +269,10 @@ function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema4 {
         } else {
             // Merge sourceSchema into all schemas which it is compatible with
             for(const schema of baseAnyOf) {
-                if(areObjectsCompatible(schema, sourceSchema)) {
+                if(areSchemasCompatible(schema, sourceSchema)) {
                     for(const prop in sourceSchema) {
                         if(Array.isArray(sourceSchema[prop])) {
-                            // areObjectsCompatible has already asserted that if sourceSchema[prop] is an
+                            // areSchemasCompatible has already asserted that if sourceSchema[prop] is an
                             // array, then schema[prop] is either an array or undefined. Here, we're just
                             // merging the two arrays, and removing duplicates.
                             schema[prop] = Array.from(
@@ -258,6 +342,41 @@ function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema4 {
     return base;
 }
 
+/**
+ * Visits each property/element in a given value and invokes a callback function on it. This is done recursively.
+ * The callback will not be called at all for non-objects/arrays.
+ *
+ * @param {any} value - The value to visit.
+ * @param {function} callback - The callback function to invoke on each element. It takes two parameters:
+ *  - key {string | number}: The key or index of the current element being visited.
+ *  - parent {any}: The parent object or array being visited.
+ * The return value of the callback will replace the current element in the value.
+ * @example
+ * // This example appends '_processed' to each string value
+ * const obj = {
+ *  name: "John",
+ *  age: 30,
+ *  city: "New York",
+ *  hobbies: ["Football", "Reading"]
+ * };
+ *
+ * visit(obj, (key, parent) => {
+ *  const value = parent[key];
+ *  if (typeof value === "string") {
+ *    return value + "_processed";
+ *  }
+ *  return value;
+ * });
+ *
+ * console.log(obj)
+ *
+ * // {
+ * //  name: 'John_processed',
+ * //  age: 30,
+ * //  city: 'New York_processed',
+ * //  hobbies: [ 'Football_processed', 'Reading_processed' ]
+ * // }
+ */
 function visit(value: any, callback: (key: string | number, parent: any) => any) {
     if(Array.isArray(value)) {
         for(let i = 0; i < value.length; i++) {
@@ -273,9 +392,18 @@ function visit(value: any, callback: (key: string | number, parent: any) => any)
 }
 
 /**
+ * Updates the given JSON schema to match the given data.
  *
- * @param schema
- * @param data
+ * This is intended for merging API responses from a loosely defined API/database, where an absent value is equivalent
+ * to its default value. The consequence of this is that we might not know all the possible key/value pairs. This
+ * method will merge schemas matching each data entry into the base given schema. Missing fields will not be removed
+ * or touched. If there is a conflict, they will be merged into an `anyOf` array at the highest-possible specificity.
+ *
+ * @param {JSONSchema4} schema - The original JSON schema to be updated.
+ * @param {Record<string, any>[]} data - An array of data used to generate a new JSON schema.
+ * @return {JSONSchema4} - The updated JSON schema.
+ * @throws Error if there are any JSON schema errors that the algorithm was not able to resolve, or that were
+ * inadvertently introduced by the algorithm.
  */
 function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSchema4 {
 
