@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/museum.json",
   "title": "HypixelSkyBlockMuseumResponse",
   "description": "Schema for data returned from https://api.hypixel.net/skyblock/museum",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

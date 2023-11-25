@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/skyblock/collections.json",
   "title": "HypixelSkyBlockCollectionsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/skyblock/collections",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/achievements.json",
   "title": "HypixelAchievementsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/achievements",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

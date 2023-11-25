@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/firesales.json",
   "title": "HypixelSkyBlockFireSalesResponse",
   "description": "Schema for data returned from https://api.hypixel.net/skyblock/firesales",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

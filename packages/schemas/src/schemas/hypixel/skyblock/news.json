@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/news.json",
   "title": "HypixelSkyBlockNewsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/skyblock/news",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

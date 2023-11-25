@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/skyblock/skills.json",
   "title": "HypixelSkyBlockSkillsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/skyblock/skills",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

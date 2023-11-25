@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/guilds/achievements.json",
   "title": "HypixelGuildAchievementsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/guilds/achievements",
-  "oneOf": [
+  "anyOf": [
     {
       "$ref": "#/definitions/HypixelGuildAchievements"
     },

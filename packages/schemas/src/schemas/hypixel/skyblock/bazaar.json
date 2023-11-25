@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/bazaar.json",
   "title": "HypixelSkyBlockBazaarResponse",
   "description": "Schema for data returned from https://api.hypixel.net/skyblock/bazaar",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {

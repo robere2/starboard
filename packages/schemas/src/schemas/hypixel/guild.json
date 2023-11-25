@@ -3,7 +3,7 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/guild.json",
   "title": "HypixelGuildResponse",
   "description": "Schema for data returned from https://api.hypixel.net/guild",
-  "oneOf": [
+  "anyOf": [
     {
       "type": "object",
       "properties": {
@@ -11,7 +11,7 @@
           "const": true
         },
         "guild": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/HypixelGuild"
             },
@@ -72,7 +72,7 @@
         "banner": {
           "properties": {
             "Base": {
-              "oneOf": [
+              "anyOf": [
                 {
                   "pattern": "\\d+",
                   "type": "string"
@@ -86,7 +86,7 @@
               "items": {
                 "properties": {
                   "Color": {
-                    "oneOf": [
+                    "anyOf": [
                       {
                         "pattern": "\\d+",
                         "type": "string"
@@ -288,7 +288,7 @@
                 "type": "integer"
               },
               "tag": {
-                "oneOf": [
+                "anyOf": [
                   {
                     "type": "string"
                   },
