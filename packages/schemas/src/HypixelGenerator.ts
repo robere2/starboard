@@ -6,7 +6,7 @@ import {LoadedSchemaData, SchemaData} from "./SchemaData";
 import fs from "fs";
 import {JSONSchema4} from "json-schema";
 import {initialGenerationUrlList} from "./schemas";
-import {logger, sortObject} from "./util";
+import {logger, mergeSchemas, sortObject} from "./util";
 import {HypixelApiError} from "./HypixelApiError";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -47,14 +47,13 @@ export class HypixelGenerator {
      *  a) The API has a limit on how many requests you can send per minute
      *  b) this gives operators the chance to cancel an operation before 100+ API requests are sent out
      */
-    private readonly requestDelay = 150;
+    private readonly requestDelay = 250;
     /**
-     * Array of Promises that will resolve with the body of an HTTP request sent out by this generator via
-     * {@link hypixelRequest}. We use this to keep track of how many requests are still pending by comparing the
-     * length of this array to the value stored in {@link totalUrlsCompleted}. In the same notion, this array's length
-     * is used to update
+     * Map of URLs to Promises that will resolve with the body of an HTTP request sent out by this generator via
+     * {@link hypixelRequest} to the matching URL. We use this to keep track of how many requests are still pending by
+     * comparing the number of keys to the value stored in {@link totalUrlsCompleted}.
      */
-    private allRequests: Promise<any>[] = [];
+    private allRequests: Map<string, Promise<any>> = new Map();
 
     /**
      * Get the total number of Hypixel API HTTP requests sent by the generator via {@link run}.
@@ -62,6 +61,10 @@ export class HypixelGenerator {
      */
     public getCompletedRequests(): number {
         return this.totalUrlsCompleted;
+    }
+
+    public getTotalRequests(): number {
+        return this.allRequests.size;
     }
 
     /**
@@ -74,7 +77,7 @@ export class HypixelGenerator {
      * // 7%  > Hello, world!
      */
     private getPercentPrefix(): string {
-        const percentCompleted = this.totalUrlsCompleted / this.allRequests.length;
+        const percentCompleted = this.totalUrlsCompleted / this.getTotalRequests();
         const percentStr = `${Math.floor(percentCompleted * 100)}%`.padEnd(3, ' ')
         return percentStr + " > ";
     }
@@ -112,11 +115,25 @@ export class HypixelGenerator {
      * @see {@link getSchema}
      */
     private async saveSchemas(): Promise<void> {
+        // Merge all schemas that share a common .json file. We do this because the current implementation has a
+        // separate LoadedSchemaData instance for each definition modified by the generator, and we don't want one to
+        // overwrite the other(s). Changing this would require being able to traverse $refs.
+        const mergedSchemas: Record<string, JSONSchema4> = {};
         for(const schemaKey in this.loadedSchemas) {
             const path = schemaKey.split('#')[0]
             const loadedSchema = this.loadedSchemas[schemaKey];
-            await fs.promises.writeFile(path, JSON.stringify(loadedSchema.schema, null, 2))
-            delete this.loadedSchemas[path];
+            mergedSchemas[path] = mergeSchemas(mergedSchemas[path] ?? {}, loadedSchema.schema)
+            delete this.loadedSchemas[schemaKey];
+        }
+
+        for(const path in mergedSchemas) {
+            await fs.promises.writeFile(path, JSON.stringify(mergedSchemas[path], null, 2))
+        }
+
+        // We have to do this loop after we've written all files to disk, as we don't want any other async methods
+        // attempting to re-access the schema before it's been written to disk.
+        for(const schemaKey in this.loadedSchemas) {
+            delete this.loadedSchemas[schemaKey];
         }
     }
 
@@ -133,60 +150,55 @@ export class HypixelGenerator {
      * - `Error` if the HTTP request fails
      * - `Error` if the Hypixel API response has `success` equal to `false`
      */
-    private hypixelRequest(url: string, schemaData: SchemaData, callback?: ApiDataCallback): Promise<Record<string, any>> {
-        // Store promise in ownPromise here so we can later automatically add it to {@link allRequests}
-        const ownPromise = (async () => {
-            logger(this.getPercentPrefix() + chalk.dim("Queueing request to ", url))
-            await new Promise(resolve => setTimeout(resolve, this.requestDelay * this.allRequests.length))
+    private async hypixelRequest(url: string, schemaData: SchemaData, callback?: ApiDataCallback): Promise<Record<string, any>> {
+        logger(this.getPercentPrefix() + chalk.dim("Queueing request to ", url))
+        await new Promise(resolve => setTimeout(resolve, this.requestDelay *  this.getTotalRequests()))
 
-            const res = await fetch(url, {
-                headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY!}
-            });
-            logger(this.getPercentPrefix() + chalk.dim("Received response from", url));
-            // API response is required to be a JSON object
-            const json = await res.json() as Record<string, any>;
-            if(typeof json !== "object" || Array.isArray(json) || json === null) {
-                throw new Error("Malformed response received from Hypixel API: " + json)
-            }
+        const res = await fetch(url, {
+            headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY!}
+        });
 
-            if (!json.success) {
-                // Unlike the rest of the API, a player without a SkyBlock bingo card will mark the request as failed
-                // instead of just setting the requested value to null.
-                if(json.cause === "No bingo data could be found") {
-                    this.totalUrlsCompleted++;
-                    return json;
-                }
-                throw new HypixelApiError(json.cause, url)
-            }
+        logger(this.getPercentPrefix() + chalk.dim("Received response from", url));
+        // API response is required to be a JSON object
+        const json = await res.json() as Record<string, any>;
+        if(typeof json !== "object" || Array.isArray(json) || json === null) {
+            throw new Error("Malformed response received from Hypixel API: " + json)
+        }
 
-            // Post processors can perform mutations on the response, and they can add URLs based on the response
-            let output: Record<string, any> | Record<string, any>[] = json;
-            if(schemaData.postProcess) {
-                output = schemaData.postProcess(json, ([newUrl, newSchema]) => {
-                    this.hypixelRequest(newUrl, newSchema, callback)
-                })
-                // Some things, like current elections or requests for invalid players, aren't always defined. I have
-                // not thought of a great solution other than to skip the value and assume that our schema properly has
-                // that value marked as optional.
-                if(!output) {
-                    logger(
-                        this.getPercentPrefix() +
-                        chalk.yellow(`Received "${String(output)}" from post-processor for ${schemaData.defName}. Skipping.`)
-                    )
-                    this.totalUrlsCompleted++;
-                    return json;
-                }
+        if (!json.success) {
+            // Unlike the rest of the API, a player without a SkyBlock bingo card will mark the request as failed
+            // instead of just setting the requested value to null.
+            if(json.cause === "No bingo data could be found") {
+                this.totalUrlsCompleted++;
+                return json;
             }
-            if(callback) {
-                await callback(url, schemaData, output);
-            }
-            this.totalUrlsCompleted++;
-            logger(this.getPercentPrefix() + chalk.dim("Completed", url))
-            return json
-        })()
-        this.allRequests.push(ownPromise);
+            throw new HypixelApiError(json.cause, url)
+        }
 
-        return ownPromise;
+        // Post processors can perform mutations on the response, and they can add URLs based on the response
+        let output: Record<string, any> | Record<string, any>[] = json;
+        if(schemaData.postProcess) {
+            output = schemaData.postProcess(json, ([newUrl, newSchema]) => {
+                this.allRequests.set(newUrl, this.hypixelRequest(newUrl, newSchema, callback))
+            })
+            // Some things, like current elections or requests for invalid players, aren't always defined. I have
+            // not thought of a great solution other than to skip the value and assume that our schema properly has
+            // that value marked as optional.
+            if(!output) {
+                logger(
+                    this.getPercentPrefix() +
+                    chalk.yellow(`Received "${String(output)}" from post-processor for ${schemaData.defName}. Skipping.`)
+                )
+                this.totalUrlsCompleted++;
+                return json;
+            }
+        }
+        if(callback) {
+            await callback(url, schemaData, output);
+        }
+        this.totalUrlsCompleted++;
+        logger(this.getPercentPrefix() + chalk.dim("Completed", url))
+        return json
     }
 
     /**
@@ -198,22 +210,30 @@ export class HypixelGenerator {
      */
     private async processAllHypixelData(callback: ApiDataCallback): Promise<void> {
         const loggerInterval = setInterval(() => {
-            logger(this.getPercentPrefix() + chalk.dim(`${this.allRequests.length - this.getCompletedRequests()} outstanding requests to be received and/or processed.`))
+            logger(this.getPercentPrefix() + chalk.dim(`${this.getTotalRequests() - this.getCompletedRequests()} outstanding requests to be received and/or processed.`))
         }, 5000)
         // Jumpstart the generation process by sending requests to all of the initial URLs. Additional URLs may have
         // requests sent to them by each schema's post-processor.
         for(const [url, schemaData] of initialGenerationUrlList) {
-            this.hypixelRequest(url, schemaData, callback)
+            this.allRequests.set(url, this.hypixelRequest(url, schemaData, callback))
         }
 
-        // Wait for all requests to all URLs to complete, then call callback with null. Since some requests may add
-        // additional URLs after completing, we need to repeatedly check until we detect that no additional requests
-        // have been added.
-        await (async () => {
-            while(this.allRequests.length > this.getCompletedRequests()) {
-                await Promise.all(this.allRequests);
-            }
-        })()
+        // Wait for all requests to all URLs to complete. Maps iterate by insertion order, so any requests added later
+        // won't be missed.
+        for(const [url, request] of this.allRequests.entries()) {
+            await request.catch((e) => {
+                if(e instanceof Error) {
+                    console.error(chalk.red(
+                        `An error occurred while processing ${url}\n` +
+                        `${e.name}: ${e.message}\n` +
+                        `${e.stack}`
+                    ))
+                } else {
+                    console.error(chalk.red(`An error occurred while processing ${url}\n${e}`))
+                }
+                process.exit(1);
+            })
+        }
         clearInterval(loggerInterval)
     }
 
@@ -249,8 +269,12 @@ export class HypixelGenerator {
             logger(this.getPercentPrefix() + chalk.dim(`Updated schema for request ${reqId}`), true)
 
             // Sort the schema definition alphanumerically. The schema was served from cache and any updates
-            // will be saved to disk by saveSchemas()
-            loadedSchema.schema.definitions![schema.defName] = sortObject(newDefinitionSchema);
+            // will be saved to disk by saveSchemas(). We also merge the new schema with the loaded schema, since
+            // this schema could have also been modified by other calls to this callback, and we don't want to overwrite
+            // those.
+            loadedSchema.schema.definitions![schema.defName] = sortObject(
+                mergeSchemas(newDefinitionSchema, loadedSchema.schema.definitions![schema.defName])
+            );
             logger(this.getPercentPrefix() + chalk.dim(`Sorted schema for request ${reqId}`), true)
         })
 
