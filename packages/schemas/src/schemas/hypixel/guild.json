@@ -232,6 +232,7 @@
                     "type": "integer"
                   }
                 },
+                "properties": {},
                 "type": "object"
               },
               "joined": {

@@ -1080,6 +1080,80 @@
           },
           "type": "object"
         },
+        "BEADY_EYES": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "BEATING_HEART": {
           "properties": {
             "buy_summary": {
@@ -2117,6 +2191,80 @@
           "type": "object"
         },
         "BONZO_FRAGMENT": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "BOOKWORM_BOOK": {
           "properties": {
             "buy_summary": {
               "items": {
@@ -3671,6 +3819,80 @@
           "type": "object"
         },
         "CLAY_BALL": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "CLIPPED_WINGS": {
           "properties": {
             "buy_summary": {
               "items": {
@@ -6113,6 +6335,80 @@
           "type": "object"
         },
         "DRILL_ENGINE": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "DUNG": {
           "properties": {
             "buy_summary": {
               "items": {
@@ -40744,6 +41040,376 @@
           },
           "type": "object"
         },
+        "ENCHANTMENT_PESTERMINATOR_1": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_PESTERMINATOR_2": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "integer"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_PESTERMINATOR_3": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_PESTERMINATOR_4": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_PESTERMINATOR_5": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "integer"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "ENCHANTMENT_PIERCING_1": {
           "properties": {
             "buy_summary": {
@@ -50069,6 +50735,80 @@
           "type": "object"
         },
         "ENCHANTMENT_SUNDER_5": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_SUNDER_6": {
           "properties": {
             "buy_summary": {
               "items": {
@@ -60946,6 +61686,376 @@
           },
           "type": "object"
         },
+        "ENCHANTMENT_ULTIMATE_REFRIGERATE_1": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_ULTIMATE_REFRIGERATE_2": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "integer"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_ULTIMATE_REFRIGERATE_3": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "integer"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_ULTIMATE_REFRIGERATE_4": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "integer"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "integer"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ENCHANTMENT_ULTIMATE_REFRIGERATE_5": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "ENCHANTMENT_ULTIMATE_REITERATE_1": {
           "properties": {
             "buy_summary": {
@@ -68568,6 +69678,80 @@
           },
           "type": "object"
         },
+        "FROZEN_BAIT": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "FROZEN_BAUBLE": {
           "properties": {
             "buy_summary": {
@@ -72269,6 +73453,80 @@
           "type": "object"
         },
         "HOLY_FRAGMENT": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "HONEY_JAR": {
           "properties": {
             "buy_summary": {
               "items": {
@@ -76117,6 +77375,80 @@
           "type": "object"
         },
         "MAGIC_MUSHROOM_SOUP": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "MAGIC_TOP_HAT": {
           "properties": {
             "buy_summary": {
               "items": {
@@ -80926,6 +82258,80 @@
           },
           "type": "object"
         },
+        "PLANT_MATTER": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "PLASMA": {
           "properties": {
             "buy_summary": {
@@ -83961,6 +85367,80 @@
           "type": "object"
         },
         "REFINED_AMBER": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "REFINED_BOTTLE_OF_JYRRE": {
           "properties": {
             "buy_summary": {
               "items": {
@@ -91878,6 +93358,80 @@
           },
           "type": "object"
         },
+        "VOLCANIC_ROCK": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "VOLTA": {
           "properties": {
             "buy_summary": {
@@ -93211,6 +94765,80 @@
           "type": "object"
         },
         "WORM_MEMBRANE": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "WRIGGLING_LARVA": {
           "properties": {
             "buy_summary": {
               "items": {

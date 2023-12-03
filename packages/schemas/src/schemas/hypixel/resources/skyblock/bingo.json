@@ -28,6 +28,12 @@
   "definitions": {
     "HypixelSkyBlockBingoGoal": {
       "properties": {
+        "fullLore": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "id": {
           "type": "string"
         },

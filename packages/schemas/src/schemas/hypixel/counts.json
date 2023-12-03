@@ -59,6 +59,9 @@
                     "FARM_HUNT": {
                       "type": "integer"
                     },
+                    "GRINCH_SIMULATOR_V2": {
+                      "type": "integer"
+                    },
                     "HALLOWEEN_SIMULATOR": {
                       "type": "integer"
                     },
@@ -206,6 +209,12 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "BUILD_BATTLE_CHRISTMAS_NEW_SOLO": {
+                      "type": "integer"
+                    },
+                    "BUILD_BATTLE_CHRISTMAS_NEW_TEAMS": {
+                      "type": "integer"
+                    },
                     "BUILD_BATTLE_GUESS_THE_BUILD": {
                       "type": "integer"
                     },
@@ -760,7 +769,8 @@
           "type": "integer"
         },
         "success": {
-          "const": true
+          "const": true,
+          "type": "boolean"
         }
       },
       "required": [

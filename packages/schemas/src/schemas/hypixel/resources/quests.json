@@ -154,6 +154,17 @@
               },
               "objectives": {
                 "items": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "integer": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
                   "type": "object"
                 },
                 "type": "array"
@@ -292,6 +303,9 @@
                   "properties": {
                     "amount": {
                       "type": "integer"
+                    },
+                    "package": {
+                      "type": "string"
                     },
                     "type": {
                       "type": "string"
@@ -438,6 +452,17 @@
               },
               "objectives": {
                 "items": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "integer": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
                   "type": "object"
                 },
                 "type": "array"
@@ -576,6 +601,9 @@
                   "properties": {
                     "amount": {
                       "type": "integer"
+                    },
+                    "package": {
+                      "type": "string"
                     },
                     "type": {
                       "type": "string"
@@ -868,6 +896,14 @@
               },
               "rewards": {
                 "items": {
+                  "properties": {
+                    "amount": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
                   "type": "object"
                 },
                 "type": "array"
@@ -982,6 +1018,9 @@
                     "amount": {
                       "type": "integer"
                     },
+                    "package": {
+                      "type": "string"
+                    },
                     "type": {
                       "type": "string"
                     }
@@ -1068,6 +1107,17 @@
               },
               "objectives": {
                 "items": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "integer": {
+                      "type": "integer"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
                   "type": "object"
                 },
                 "type": "array"
