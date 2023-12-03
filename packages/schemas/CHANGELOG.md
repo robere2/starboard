@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.29](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.28...@mcsb/schemas@1.0.0-pre.29) (2023-12-03)
+
+### Bug Fixes
+
+- Fix inconsistencies with the `logger` function and its usage ([4b98f6b](https://github.com/robere2/starboard/commit/4b98f6b62833647fb449509a2cf15e2dbffe9dc2))
+- switch all uses of `oneOf` to `anyOf` ([a8a9f81](https://github.com/robere2/starboard/commit/a8a9f8151c2e72e8d4f407a72bf0a1f218c8170b))
+
+### Features
+
+- Add percentage completion to generator logs ([07190c4](https://github.com/robere2/starboard/commit/07190c409fb61c1c626006c2800d7edeafc70ec3))
+- Add post-generation testing to make sure no new errors have been introduced ([2d81946](https://github.com/robere2/starboard/commit/2d8194608db6205127922fe4faf0cc6825d10cfd))
+- Detect schema type divergence and automatically update the type with `oneOf` ([7e96495](https://github.com/robere2/starboard/commit/7e9649582ccce62284bb70374e4fc816e017ede4))
+- Disable line overwriting by the logger, reverting back to something more similar to how it was in previous versions ([616d7e4](https://github.com/robere2/starboard/commit/616d7e42f793d1dda46f2874887dac6c734b5464))
+- Merge overlapping schema types in "anyOf" arrays into a single type ([df7aa7c](https://github.com/robere2/starboard/commit/df7aa7c4f103e7724ea0f12a2ee83d0aa2a3a812))
+- Schema generator refactoring, now employing worker threads for CPU-heavy tasks ([c007a4c](https://github.com/robere2/starboard/commit/c007a4c9f45d14cf155f7c394366fb30271916aa))
+- Schema updates ([20daa98](https://github.com/robere2/starboard/commit/20daa982b1f276f37959b0766f7ea651482dead6))
+
 # [1.0.0-pre.28](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.24...@mcsb/schemas@1.0.0-pre.28) (2023-11-04)
 
 ### Features
