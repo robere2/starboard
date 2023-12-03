@@ -30,6 +30,7 @@
     "json-schema-to-typescript": "^13.1.1",
     "rollup": "^4.1.4",
     "tsconfig": "*",
+    "undici": "^5.28.2",
     "workerpool": "^8.0.0"
   },
   "nx": {
