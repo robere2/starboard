@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.31](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.30...@mcsb/schemas@1.0.0-pre.31) (2023-12-03)
+
+### Features
+
+- JSON schema updates ([#60](https://github.com/robere2/starboard/issues/60)) ([0683ffd](https://github.com/robere2/starboard/commit/0683ffdf1fde2994da7c90904e03845e0dbc7c6f))
+
 # [1.0.0-pre.30](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.29...@mcsb/schemas@1.0.0-pre.30) (2023-12-03)
 
 ### Bug Fixes
