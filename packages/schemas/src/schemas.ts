@@ -60,7 +60,7 @@ export const HypixelSkyBlockSkills: SchemaData = {
     defName: "HypixelSkyBlockSkills",
     schemaPath: join(inDir, 'resources', 'skyblock', 'skills.json'),
     dtsOutDir: outDir,
-    postProcess: (input) => input.collections,
+    postProcess: (input) => input.skills,
 }
 
 export const HypixelAchievements: SchemaData = {
