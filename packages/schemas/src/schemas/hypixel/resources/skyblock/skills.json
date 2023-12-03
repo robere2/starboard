@@ -14,13 +14,13 @@
     "version": {
       "type": "string"
     },
-    "collections": {
+    "skills": {
       "$ref": "#/definitions/HypixelSkyBlockSkills"
     }
   },
   "required": [
     "success",
-    "collections"
+    "skills"
   ],
   "definitions": {
     "HypixelSkyBlockSkills": {
