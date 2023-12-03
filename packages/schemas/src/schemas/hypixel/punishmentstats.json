@@ -39,7 +39,8 @@
           "type": "integer"
         },
         "success": {
-          "const": true
+          "const": true,
+          "type": "boolean"
         },
         "watchdog_lastMinute": {
           "type": "integer"

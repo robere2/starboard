@@ -154,6 +154,26 @@
         "gemstone_slots": {
           "items": {
             "properties": {
+              "costs": {
+                "items": {
+                  "properties": {
+                    "amount": {
+                      "type": "integer"
+                    },
+                    "coins": {
+                      "type": "integer"
+                    },
+                    "item_id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
               "slot_type": {
                 "type": "string"
               }
@@ -292,6 +312,9 @@
             "max_players": {
               "type": "number"
             },
+            "memorable_event_key": {
+              "type": "string"
+            },
             "motes_on_join_per_eat": {
               "type": "number"
             },
@@ -372,10 +395,60 @@
                 "tiers": {
                   "items": {
                     "properties": {
+                      "item_tier": {
+                        "type": "string"
+                      },
                       "numeric": {
                         "type": "integer"
                       },
                       "stats": {
+                        "properties": {
+                          "RIFT_TIME": {
+                            "type": "integer"
+                          },
+                          "combat_wisdom": {
+                            "type": "integer"
+                          },
+                          "defense": {
+                            "type": "integer"
+                          },
+                          "enchanting_wisdom": {
+                            "type": "integer"
+                          },
+                          "farming_wisdom": {
+                            "type": "integer"
+                          },
+                          "health": {
+                            "type": "integer"
+                          },
+                          "intelligence": {
+                            "type": "integer"
+                          },
+                          "magic_find": {
+                            "type": "integer"
+                          },
+                          "rift_damage": {
+                            "type": "integer"
+                          },
+                          "rift_health": {
+                            "type": "integer"
+                          },
+                          "rift_intelligence": {
+                            "type": "integer"
+                          },
+                          "rift_mana_regen": {
+                            "type": "integer"
+                          },
+                          "rift_walk_speed": {
+                            "type": "integer"
+                          },
+                          "strength": {
+                            "type": "integer"
+                          },
+                          "true_defense": {
+                            "type": "integer"
+                          }
+                        },
                         "type": "object"
                       }
                     },
@@ -457,6 +530,20 @@
           "properties": {
             "costs": {
               "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "essence_type": {
+                    "type": "string"
+                  },
+                  "item_id": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                },
                 "type": "object"
               },
               "type": "array"
@@ -476,11 +563,41 @@
         "requirements": {
           "items": {
             "properties": {
+              "collection": {
+                "type": "string"
+              },
+              "dungeon_type": {
+                "type": "string"
+              },
+              "faction": {
+                "type": "string"
+              },
               "level": {
                 "type": "number"
               },
+              "minimum_age": {
+                "type": "integer"
+              },
+              "minimum_age_unit": {
+                "type": "string"
+              },
+              "mode": {
+                "type": "string"
+              },
+              "reputation": {
+                "type": "integer"
+              },
+              "reward": {
+                "type": "string"
+              },
               "skill": {
                 "type": "string"
+              },
+              "slayer_boss_type": {
+                "type": "string"
+              },
+              "tier": {
+                "type": "integer"
               },
               "type": {
                 "type": "string"
@@ -514,6 +631,9 @@
                 "type": "number"
               },
               "essence_type": {
+                "type": "string"
+              },
+              "item_id": {
                 "type": "string"
               },
               "type": {
@@ -604,6 +724,15 @@
             "WEAPON_ABILITY_DAMAGE": {
               "type": "number"
             },
+            "bonus_pest_chance": {
+              "type": "integer"
+            },
+            "carrot_fortune": {
+              "type": "integer"
+            },
+            "cocoa_beans_fortune": {
+              "type": "integer"
+            },
             "combat_wisdom": {
               "type": "number"
             },
@@ -615,6 +744,9 @@
             },
             "defense": {
               "type": "number"
+            },
+            "farming_fortune": {
+              "type": "integer"
             },
             "farming_wisdom": {
               "type": "number"
@@ -643,8 +775,17 @@
             "magic_find": {
               "type": "number"
             },
+            "melon_fortune": {
+              "type": "integer"
+            },
             "mending": {
               "type": "number"
+            },
+            "potato_fortune": {
+              "type": "integer"
+            },
+            "pumpkin_fortune": {
+              "type": "integer"
             },
             "rift_Time": {
               "type": "number"
@@ -678,6 +819,9 @@
             },
             "walk_speed": {
               "type": "number"
+            },
+            "wheat_fortune": {
+              "type": "integer"
             }
           },
           "type": "object"
@@ -764,6 +908,9 @@
                   "type": "number"
                 },
                 "essence_type": {
+                  "type": "string"
+                },
+                "item_id": {
                   "type": "string"
                 },
                 "type": {

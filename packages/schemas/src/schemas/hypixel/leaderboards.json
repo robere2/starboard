@@ -373,6 +373,9 @@
                 "type": "integer"
               },
               "leaders": {
+                "items": {
+                  "type": "string"
+                },
                 "type": "array"
               },
               "location": {
@@ -544,6 +547,9 @@
                 "type": "integer"
               },
               "leaders": {
+                "items": {
+                  "type": "string"
+                },
                 "type": "array"
               },
               "location": {
