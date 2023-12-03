@@ -7,16 +7,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 function getUrlsForSkyBlockProfile(id: string): [string, SchemaData][] {
     return [
-        [`https://api.hypixel.net/skyblock/museum?profile=${id}`, HypixelSkyBlockMuseum],
-        [`https://api.hypixel.net/skyblock/profile?profile=${id}`, HypixelSkyBlockProfile]
+        [`https://api.hypixel.net/v2/skyblock/museum?profile=${id}`, HypixelSkyBlockMuseum],
+        [`https://api.hypixel.net/v2/skyblock/profile?profile=${id}`, HypixelSkyBlockProfile]
     ]
 }
 function getUrlsForPlayer(uuid: string): [string, SchemaData][] {
     return [
-        [`https://api.hypixel.net/status?uuid=${uuid}`, HypixelStatus],
-        [`https://api.hypixel.net/recentgames?uuid=${uuid}`, HypixelRecentGames],
-        [`https://api.hypixel.net/player?uuid=${uuid}`, HypixelPlayer],
-        [`https://api.hypixel.net/skyblock/bingo?uuid=${uuid}`, HypixelSkyBlockBingoProfile]
+        [`https://api.hypixel.net/v2/status?uuid=${uuid}`, HypixelStatus],
+        [`https://api.hypixel.net/v2/recentgames?uuid=${uuid}`, HypixelRecentGames],
+        [`https://api.hypixel.net/v2/player?uuid=${uuid}`, HypixelPlayer],
+        [`https://api.hypixel.net/v2/skyblock/bingo?uuid=${uuid}`, HypixelSkyBlockBingoProfile]
     ]
 }
 
@@ -191,7 +191,7 @@ export const HypixelLeaderboards: SchemaData = {
         });
 
         pickRandom(allUniqueLeaderboardPlayers, 5).forEach(uuid => {
-            addUrl([`https://api.hypixel.net/guild?player=${uuid}`, HypixelGuild])
+            addUrl([`https://api.hypixel.net/v2/guild?player=${uuid}`, HypixelGuild])
         });
 
         return input.leaderboards
@@ -307,35 +307,35 @@ export const HypixelSkyBlockProfile: SchemaData = {
 
 export const initialGenerationUrlList: [string, SchemaData][] = [
     // Since these add additional URLs, prioritizing these 3 first will give us a more accurate percentage complete
-    ["https://api.hypixel.net/boosters", HypixelBooster],
-    ["https://api.hypixel.net/leaderboards", HypixelLeaderboards],
-    ["https://api.hypixel.net/skyblock/auctions_ended", HypixelSkyBlockEndedAuction],
+    ["https://api.hypixel.net/v2/boosters", HypixelBooster],
+    ["https://api.hypixel.net/v2/leaderboards", HypixelLeaderboards],
+    ["https://api.hypixel.net/v2/skyblock/auctions_ended", HypixelSkyBlockEndedAuction],
 
-    ["https://api.hypixel.net/resources/skyblock/bingo", HypixelSkyBlockBingoGoal],
-    ["https://api.hypixel.net/resources/skyblock/collections", HypixelSkyBlockCollections],
-    ["https://api.hypixel.net/resources/skyblock/election", HypixelSkyBlockMayor],
-    ["https://api.hypixel.net/resources/skyblock/election", HypixelSkyBlockElection],
-    ["https://api.hypixel.net/resources/skyblock/items", HypixelSkyBlockItem],
-    ["https://api.hypixel.net/resources/skyblock/skills", HypixelSkyBlockSkills],
-    ["https://api.hypixel.net/resources/achievements", HypixelAchievements],
-    ["https://api.hypixel.net/resources/challenges", HypixelChallenges],
-    ["https://api.hypixel.net/resources/games", HypixelGames],
-    ["https://api.hypixel.net/resources/guilds/achievements", HypixelGuildAchievements],
-    ["https://api.hypixel.net/resources/vanity/pets", HypixelPet],
-    ["https://api.hypixel.net/resources/vanity/pets", HypixelPetRarity],
-    ["https://api.hypixel.net/resources/vanity/companions", HypixelCompanion],
-    ["https://api.hypixel.net/resources/vanity/companions", HypixelCompanionRarity],
-    ["https://api.hypixel.net/resources/quests", HypixelQuests],
-    ["https://api.hypixel.net/counts", HypixelPlayerCounts],
-    ["https://api.hypixel.net/punishmentstats", HypixelPunishmentStatistics],
-    ["https://api.hypixel.net/skyblock/auctions", HypixelSkyBlockAuction],
-    ["https://api.hypixel.net/skyblock/bazaar", HypixelSkyBlockBazaarProducts],
-    ["https://api.hypixel.net/skyblock/firesales", HypixelSkyBlockFireSale],
-    ["https://api.hypixel.net/skyblock/news", HypixelSkyBlockNews],
+    ["https://api.hypixel.net/v2/resources/skyblock/bingo", HypixelSkyBlockBingoGoal],
+    ["https://api.hypixel.net/v2/resources/skyblock/collections", HypixelSkyBlockCollections],
+    ["https://api.hypixel.net/v2/resources/skyblock/election", HypixelSkyBlockMayor],
+    ["https://api.hypixel.net/v2/resources/skyblock/election", HypixelSkyBlockElection],
+    ["https://api.hypixel.net/v2/resources/skyblock/items", HypixelSkyBlockItem],
+    ["https://api.hypixel.net/v2/resources/skyblock/skills", HypixelSkyBlockSkills],
+    ["https://api.hypixel.net/v2/resources/achievements", HypixelAchievements],
+    ["https://api.hypixel.net/v2/resources/challenges", HypixelChallenges],
+    ["https://api.hypixel.net/v2/resources/games", HypixelGames],
+    ["https://api.hypixel.net/v2/resources/guilds/achievements", HypixelGuildAchievements],
+    ["https://api.hypixel.net/v2/resources/vanity/pets", HypixelPet],
+    ["https://api.hypixel.net/v2/resources/vanity/pets", HypixelPetRarity],
+    ["https://api.hypixel.net/v2/resources/vanity/companions", HypixelCompanion],
+    ["https://api.hypixel.net/v2/resources/vanity/companions", HypixelCompanionRarity],
+    ["https://api.hypixel.net/v2/resources/quests", HypixelQuests],
+    ["https://api.hypixel.net/v2/counts", HypixelPlayerCounts],
+    ["https://api.hypixel.net/v2/punishmentstats", HypixelPunishmentStatistics],
+    ["https://api.hypixel.net/v2/skyblock/auctions", HypixelSkyBlockAuction],
+    ["https://api.hypixel.net/v2/skyblock/bazaar", HypixelSkyBlockBazaarProducts],
+    ["https://api.hypixel.net/v2/skyblock/firesales", HypixelSkyBlockFireSale],
+    ["https://api.hypixel.net/v2/skyblock/news", HypixelSkyBlockNews],
     // Top 3 guilds
-    ["https://api.hypixel.net/guild?id=5363aa4eed50df539dca00ad", HypixelGuild],
-    ["https://api.hypixel.net/guild?id=53bd67d7ed503e868873eceb", HypixelGuild],
-    ["https://api.hypixel.net/guild?id=56ece7c40cf2e4f9ffcc284e", HypixelGuild],
+    ["https://api.hypixel.net/v2/guild?id=5363aa4eed50df539dca00ad", HypixelGuild],
+    ["https://api.hypixel.net/v2/guild?id=53bd67d7ed503e868873eceb", HypixelGuild],
+    ["https://api.hypixel.net/v2/guild?id=56ece7c40cf2e4f9ffcc284e", HypixelGuild],
 
     ...getUrlsForPlayer("f7c77d999f154a66a87dc4a51ef30d19"),
     ...getUrlsForPlayer("b876ec32e396476ba1158438d83c67d4"),
