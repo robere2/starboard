@@ -8,8 +8,15 @@ import {JSONSchema4} from "json-schema";
 import {initialGenerationUrlList} from "./schemas";
 import {logger, mergeSchemas, sortObject} from "./util";
 import {HypixelApiError} from "./HypixelApiError";
+import {Agent} from "undici";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
+
+const agent = new Agent({
+    connectTimeout: 600_000 // API requests were throwing connection timeout errors. Increasing the delay between
+                            // requests fixed it, but that's not ideal. My guess is the other workers are holding up the
+                            // main worker. Setting a high timeout may allow time for the main worker to be handled.
+});
 
 /**
  * Type of the callback that clients can provide to {@link processAllHypixelData} to process API responses. This is used
@@ -43,12 +50,6 @@ export class HypixelGenerator {
      */
     private loadedSchemas: Record<string, LoadedSchemaData> = {}
     /**
-     * Constant of how much to delay each Hypixel API request by in milliseconds. This is multipurpose:
-     *  a) The API has a limit on how many requests you can send per minute
-     *  b) this gives operators the chance to cancel an operation before 100+ API requests are sent out
-     */
-    private readonly requestDelay = 250;
-    /**
      * Map of URLs to Promises that will resolve with the body of an HTTP request sent out by this generator via
      * {@link hypixelRequest} to the matching URL. We use this to keep track of how many requests are still pending by
      * comparing the number of keys to the value stored in {@link totalUrlsCompleted}.
@@ -65,6 +66,10 @@ export class HypixelGenerator {
 
     public getTotalRequests(): number {
         return this.allRequests.size;
+    }
+
+    public async nextDelay(): Promise<void> {
+        await new Promise(resolve => setTimeout(resolve, 250 * this.getTotalRequests()))
     }
 
     /**
@@ -152,10 +157,14 @@ export class HypixelGenerator {
      */
     private async hypixelRequest(url: string, schemaData: SchemaData, callback?: ApiDataCallback): Promise<Record<string, any>> {
         logger(this.getPercentPrefix() + chalk.dim("Queueing request to ", url))
-        await new Promise(resolve => setTimeout(resolve, this.requestDelay *  this.getTotalRequests()))
+        await this.nextDelay();
 
         const res = await fetch(url, {
-            headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY!}
+            headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY!},
+            dispatcher: agent
+        }).catch((e) => {
+            logger(this.getPercentPrefix() + chalk.yellow(`Fetch error for URL ${url}: ${e}`))
+            throw e;
         });
 
         logger(this.getPercentPrefix() + chalk.dim("Received response from", url));
