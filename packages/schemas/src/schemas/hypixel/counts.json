@@ -59,6 +59,9 @@
                     "FARM_HUNT": {
                       "type": "integer"
                     },
+                    "GRINCH_SIMULATOR_V2": {
+                      "type": "integer"
+                    },
                     "HALLOWEEN_SIMULATOR": {
                       "type": "integer"
                     },
@@ -164,6 +167,9 @@
                       "type": "integer"
                     },
                     "BEDWARS_EIGHT_TWO_UNDERWORLD": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_TWO_VOIDLESS": {
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR": {

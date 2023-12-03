@@ -317,6 +317,9 @@
             "max_players": {
               "type": "number"
             },
+            "memorable_event_key": {
+              "type": "string"
+            },
             "motes_on_join_per_eat": {
               "type": "number"
             },

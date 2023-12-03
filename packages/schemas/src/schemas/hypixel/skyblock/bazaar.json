@@ -91878,6 +91878,80 @@
           },
           "type": "object"
         },
+        "VOLCANIC_ROCK": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "VOLTA": {
           "properties": {
             "buy_summary": {

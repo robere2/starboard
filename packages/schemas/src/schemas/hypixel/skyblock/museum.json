@@ -3230,6 +3230,50 @@
               },
               "type": "object"
             },
+            "INFINI_VACUUM": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "INFINI_VACUUM_HOOVERIUS": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "INK_WAND": {
               "properties": {
                 "borrowing": {
@@ -5834,6 +5878,50 @@
               },
               "type": "object"
             },
+            "SKYMART_HYPER_VACUUM": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "SKYMART_VACUUM": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "SLIME_BOW": {
               "properties": {
                 "borrowing": {
@@ -6491,6 +6579,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -8252,6 +8343,9 @@
             },
             "ZOMBIE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },

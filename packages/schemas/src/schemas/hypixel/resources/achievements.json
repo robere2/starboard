@@ -8706,6 +8706,37 @@
                     "description": {
                       "type": "string"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ADVENT_2023": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "name": {
                       "type": "string"
                     },
