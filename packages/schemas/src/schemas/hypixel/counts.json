@@ -574,6 +574,9 @@
                     "solo_insane_lucky": {
                       "type": "integer"
                     },
+                    "solo_insane_rush": {
+                      "type": "integer"
+                    },
                     "solo_insane_slime": {
                       "type": "integer"
                     },

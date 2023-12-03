@@ -341,6 +341,9 @@
                         "ashfang_red_blaze_150": {
                           "type": "integer"
                         },
+                        "ashfang_vehicle_1": {
+                          "type": "integer"
+                        },
                         "automaton_100": {
                           "type": "integer"
                         },
@@ -368,6 +371,9 @@
                         "bladesoul_200": {
                           "type": "integer"
                         },
+                        "blaze_1": {
+                          "type": "integer"
+                        },
                         "blaze_12": {
                           "type": "integer"
                         },
@@ -384,6 +390,9 @@
                           "type": "integer"
                         },
                         "blazing_golem_300": {
+                          "type": "integer"
+                        },
+                        "blazing_golem_400": {
                           "type": "integer"
                         },
                         "blazing_golem_500": {
@@ -408,6 +417,9 @@
                           "type": "integer"
                         },
                         "bonzo_summon_undead_1": {
+                          "type": "integer"
+                        },
+                        "brood_mother_cave_spider_6": {
                           "type": "integer"
                         },
                         "brood_mother_spider_12": {
@@ -581,6 +593,9 @@
                         "crypt_undead_minikloon_25": {
                           "type": "integer"
                         },
+                        "crypt_undead_nicholas_40": {
+                          "type": "integer"
+                        },
                         "crypt_undead_pieter_40": {
                           "type": "integer"
                         },
@@ -615,6 +630,9 @@
                           "type": "integer"
                         },
                         "dasher_spider_50": {
+                          "type": "integer"
+                        },
+                        "deadline_100": {
                           "type": "integer"
                         },
                         "deathmite_3000": {
@@ -668,6 +686,9 @@
                         "dive_ghast_90": {
                           "type": "integer"
                         },
+                        "duelist_rollim_7": {
+                          "type": "integer"
+                        },
                         "dungeon_respawning_skeleton_100": {
                           "type": "integer"
                         },
@@ -705,6 +726,15 @@
                           "type": "integer"
                         },
                         "enderman_1": {
+                          "type": "integer"
+                        },
+                        "enderman_15": {
+                          "type": "integer"
+                        },
+                        "enderman_2": {
+                          "type": "integer"
+                        },
+                        "enderman_4": {
                           "type": "integer"
                         },
                         "enderman_42": {
@@ -749,6 +779,9 @@
                         "fire_mage_75": {
                           "type": "integer"
                         },
+                        "fireball_magma_cube_20": {
+                          "type": "integer"
+                        },
                         "fireball_magma_cube_75": {
                           "type": "integer"
                         },
@@ -788,6 +821,9 @@
                         "goblin_creeper_20": {
                           "type": "integer"
                         },
+                        "goblin_golem_150": {
+                          "type": "integer"
+                        },
                         "goblin_knife_thrower_25": {
                           "type": "integer"
                         },
@@ -818,7 +854,16 @@
                         "graveyard_zombie_1": {
                           "type": "integer"
                         },
+                        "great_white_shark_180": {
+                          "type": "integer"
+                        },
+                        "grim_reaper_190": {
+                          "type": "integer"
+                        },
                         "guardian_defender_45": {
+                          "type": "integer"
+                        },
+                        "guardian_emperor_150": {
                           "type": "integer"
                         },
                         "hellwisp_100": {
@@ -833,10 +878,28 @@
                         "inferno_blaze_100": {
                           "type": "integer"
                         },
+                        "inferno_magma_cube_100": {
+                          "type": "integer"
+                        },
+                        "inferno_magma_cube_200": {
+                          "type": "integer"
+                        },
+                        "inferno_magma_cube_300": {
+                          "type": "integer"
+                        },
+                        "inferno_magma_cube_400": {
+                          "type": "integer"
+                        },
+                        "inferno_magma_cube_500": {
+                          "type": "integer"
+                        },
                         "invisible_creeper_3": {
                           "type": "integer"
                         },
                         "jockey_shot_silverfish_3": {
+                          "type": "integer"
+                        },
+                        "jockey_shot_silverfish_42": {
                           "type": "integer"
                         },
                         "kada_knight_90": {
@@ -849,6 +912,9 @@
                           "type": "integer"
                         },
                         "kalhuiki_tribe_woman_100": {
+                          "type": "integer"
+                        },
+                        "key_guardian_100": {
                           "type": "integer"
                         },
                         "king_midas_130": {
@@ -876,6 +942,9 @@
                           "type": "integer"
                         },
                         "kuudra_berserker_200": {
+                          "type": "integer"
+                        },
+                        "kuudra_berserker_300": {
                           "type": "integer"
                         },
                         "kuudra_berserker_400": {
@@ -929,6 +998,9 @@
                         "kuudra_landmine_500": {
                           "type": "integer"
                         },
+                        "kuudra_slasher_100": {
+                          "type": "integer"
+                        },
                         "lapis_zombie_7": {
                           "type": "integer"
                         },
@@ -951,6 +1023,9 @@
                           "type": "integer"
                         },
                         "lonely_spider_115": {
+                          "type": "integer"
+                        },
+                        "lonely_spider_35": {
                           "type": "integer"
                         },
                         "lonely_spider_55": {
@@ -1016,6 +1091,9 @@
                         "lost_adventurer_132": {
                           "type": "integer"
                         },
+                        "lost_adventurer_133": {
+                          "type": "integer"
+                        },
                         "lost_adventurer_134": {
                           "type": "integer"
                         },
@@ -1029,6 +1107,9 @@
                           "type": "integer"
                         },
                         "lost_adventurer_142": {
+                          "type": "integer"
+                        },
+                        "lost_adventurer_143": {
                           "type": "integer"
                         },
                         "lost_adventurer_144": {
@@ -1097,6 +1178,9 @@
                         "mage_outlaw_200": {
                           "type": "integer"
                         },
+                        "mage_skull_50": {
+                          "type": "integer"
+                        },
                         "mages_guard_200": {
                           "type": "integer"
                         },
@@ -1110,6 +1194,9 @@
                           "type": "integer"
                         },
                         "magma_boss_500": {
+                          "type": "integer"
+                        },
+                        "magma_cube_1": {
                           "type": "integer"
                         },
                         "magma_cube_3": {
@@ -1202,13 +1289,22 @@
                         "master_crypt_souleater_85": {
                           "type": "integer"
                         },
+                        "master_crypt_souleater_95": {
+                          "type": "integer"
+                        },
                         "master_crypt_tank_zombie_60": {
+                          "type": "integer"
+                        },
+                        "master_crypt_tank_zombie_70": {
                           "type": "integer"
                         },
                         "master_crypt_tank_zombie_80": {
                           "type": "integer"
                         },
                         "master_crypt_tank_zombie_90": {
+                          "type": "integer"
+                        },
+                        "master_crypt_undead_25": {
                           "type": "integer"
                         },
                         "master_crypt_undead_35": {
@@ -1218,6 +1314,9 @@
                           "type": "integer"
                         },
                         "master_crypt_undead_50": {
+                          "type": "integer"
+                        },
+                        "master_crypt_undead_codename_b_25": {
                           "type": "integer"
                         },
                         "master_crypt_undead_donpireso_35": {
@@ -1232,13 +1331,25 @@
                         "master_crypt_undead_jayavarmen_25": {
                           "type": "integer"
                         },
+                        "master_crypt_undead_jayavarmen_40": {
+                          "type": "integer"
+                        },
+                        "master_crypt_undead_ladybleu_25": {
+                          "type": "integer"
+                        },
                         "master_crypt_undead_likaos_45": {
                           "type": "integer"
                         },
                         "master_crypt_undead_nitroholic__50": {
                           "type": "integer"
                         },
+                        "master_crypt_undead_sfarnham_25": {
+                          "type": "integer"
+                        },
                         "master_crypt_undead_sfarnham_35": {
+                          "type": "integer"
+                        },
+                        "master_crypt_undead_vinny8ball666_25": {
                           "type": "integer"
                         },
                         "master_crypt_witherskeleton_100": {
@@ -1307,6 +1418,9 @@
                         "master_goldor_1": {
                           "type": "integer"
                         },
+                        "master_king_midas_130": {
+                          "type": "integer"
+                        },
                         "master_king_midas_150": {
                           "type": "integer"
                         },
@@ -1320,6 +1434,9 @@
                           "type": "integer"
                         },
                         "master_lonely_spider_105": {
+                          "type": "integer"
+                        },
+                        "master_lonely_spider_75": {
                           "type": "integer"
                         },
                         "master_lonely_spider_95": {
@@ -1412,6 +1529,9 @@
                         "master_lost_adventurer_162": {
                           "type": "integer"
                         },
+                        "master_lost_adventurer_164": {
+                          "type": "integer"
+                        },
                         "master_lost_adventurer_85": {
                           "type": "integer"
                         },
@@ -1478,6 +1598,9 @@
                         "master_scared_skeleton_62": {
                           "type": "integer"
                         },
+                        "master_scared_skeleton_72": {
+                          "type": "integer"
+                        },
                         "master_scarf_1": {
                           "type": "integer"
                         },
@@ -1524,6 +1647,9 @@
                           "type": "integer"
                         },
                         "master_skeleton_master_128": {
+                          "type": "integer"
+                        },
+                        "master_skeleton_master_78": {
                           "type": "integer"
                         },
                         "master_skeleton_master_88": {
@@ -1652,6 +1778,12 @@
                         "master_watcher_bonzo_6": {
                           "type": "integer"
                         },
+                        "master_watcher_bonzo_7": {
+                          "type": "integer"
+                        },
+                        "master_watcher_giant_diamond_7": {
+                          "type": "integer"
+                        },
                         "master_watcher_guardian_1": {
                           "type": "integer"
                         },
@@ -1697,6 +1829,9 @@
                         "master_wither_guard_100": {
                           "type": "integer"
                         },
+                        "master_wither_husk_100": {
+                          "type": "integer"
+                        },
                         "master_wither_king_1": {
                           "type": "integer"
                         },
@@ -1722,6 +1857,9 @@
                           "type": "integer"
                         },
                         "master_zombie_knight_116": {
+                          "type": "integer"
+                        },
+                        "master_zombie_knight_126": {
                           "type": "integer"
                         },
                         "master_zombie_knight_86": {
@@ -1757,6 +1895,12 @@
                         "minos_champion_310": {
                           "type": "integer"
                         },
+                        "minos_hunter_125": {
+                          "type": "integer"
+                        },
+                        "minos_hunter_15": {
+                          "type": "integer"
+                        },
                         "minos_inquisitor_750": {
                           "type": "integer"
                         },
@@ -1779,6 +1923,9 @@
                           "type": "integer"
                         },
                         "nest_endermite_50": {
+                          "type": "integer"
+                        },
+                        "nightmare_24": {
                           "type": "integer"
                         },
                         "nutcracker_50": {
@@ -1818,6 +1965,9 @@
                           "type": "integer"
                         },
                         "parasite_30": {
+                          "type": "integer"
+                        },
+                        "phantom_fisherman_160": {
                           "type": "integer"
                         },
                         "phantom_spirit_35": {
@@ -1952,6 +2102,9 @@
                         "siamese_lynx_25": {
                           "type": "integer"
                         },
+                        "silvo_5": {
+                          "type": "integer"
+                        },
                         "skeleton_1": {
                           "type": "integer"
                         },
@@ -1962,6 +2115,9 @@
                           "type": "integer"
                         },
                         "skeleton_4": {
+                          "type": "integer"
+                        },
+                        "skeleton_6": {
                           "type": "integer"
                         },
                         "skeleton_7": {
@@ -2057,6 +2213,9 @@
                         "slime_1": {
                           "type": "integer"
                         },
+                        "sludge_10": {
+                          "type": "integer"
+                        },
                         "sludge_100": {
                           "type": "integer"
                         },
@@ -2096,6 +2255,9 @@
                         "spider_1": {
                           "type": "integer"
                         },
+                        "spider_2": {
+                          "type": "integer"
+                        },
                         "spider_3": {
                           "type": "integer"
                         },
@@ -2103,6 +2265,9 @@
                           "type": "integer"
                         },
                         "spider_5": {
+                          "type": "integer"
+                        },
+                        "spider_6": {
                           "type": "integer"
                         },
                         "spider_7": {
@@ -2157,6 +2322,15 @@
                           "type": "integer"
                         },
                         "splitter_spider_silverfish_2": {
+                          "type": "integer"
+                        },
+                        "splitter_spider_silverfish_42": {
+                          "type": "integer"
+                        },
+                        "splitter_spider_silverfish_45": {
+                          "type": "integer"
+                        },
+                        "splitter_spider_silverfish_50": {
                           "type": "integer"
                         },
                         "storm_1": {
@@ -2223,6 +2397,12 @@
                           "type": "integer"
                         },
                         "thunder_400": {
+                          "type": "integer"
+                        },
+                        "thyst_20": {
+                          "type": "integer"
+                        },
+                        "tiger_shark_50": {
                           "type": "integer"
                         },
                         "treasure_hoarder_70": {
@@ -2399,6 +2579,9 @@
                         "wise_dragon_100": {
                           "type": "integer"
                         },
+                        "witch_1": {
+                          "type": "integer"
+                        },
                         "witch_bat_30": {
                           "type": "integer"
                         },
@@ -2441,6 +2624,9 @@
                         "wraith_50": {
                           "type": "integer"
                         },
+                        "yeti_175": {
+                          "type": "integer"
+                        },
                         "yog_100": {
                           "type": "integer"
                         },
@@ -2462,10 +2648,16 @@
                         "zombie_2": {
                           "type": "integer"
                         },
+                        "zombie_3": {
+                          "type": "integer"
+                        },
                         "zombie_4": {
                           "type": "integer"
                         },
                         "zombie_5": {
+                          "type": "integer"
+                        },
+                        "zombie_6": {
                           "type": "integer"
                         },
                         "zombie_7": {
@@ -2636,6 +2828,12 @@
                           "type": "integer"
                         },
                         "blaze_higher_or_lower_15": {
+                          "type": "integer"
+                        },
+                        "blazing_golem_100": {
+                          "type": "integer"
+                        },
+                        "blazing_golem_200": {
                           "type": "integer"
                         },
                         "blazing_golem_300": {
@@ -2836,13 +3034,34 @@
                         "crypt_undead_25": {
                           "type": "integer"
                         },
+                        "crypt_undead__onah_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_agentk_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_alexander_40": {
                           "type": "integer"
                         },
                         "crypt_undead_apunch_25": {
                           "type": "integer"
                         },
+                        "crypt_undead_bembo_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_bernhard_40": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_blockskey_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_bloozing_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_cecer_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_chilynn_25": {
                           "type": "integer"
                         },
                         "crypt_undead_christian_40": {
@@ -2857,10 +3076,22 @@
                         "crypt_undead_dctr_25": {
                           "type": "integer"
                         },
+                        "crypt_undead_districtgecko_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_donpireso_25": {
                           "type": "integer"
                         },
+                        "crypt_undead_dueces_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_externalizable_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_falloutowns_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_flameboy101_25": {
                           "type": "integer"
                         },
                         "crypt_undead_friedrich_40": {
@@ -2869,16 +3100,31 @@
                         "crypt_undead_hypixel_25": {
                           "type": "integer"
                         },
+                        "crypt_undead_jamiethegeek_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_jayavarmen_25": {
                           "type": "integer"
                         },
+                        "crypt_undead_judg3_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_ladybleu_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_likaos_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_magicboys_25": {
                           "type": "integer"
                         },
                         "crypt_undead_marius_40": {
                           "type": "integer"
                         },
                         "crypt_undead_minikloon_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_mistresseldrid_25": {
                           "type": "integer"
                         },
                         "crypt_undead_nicholas_40": {
@@ -2893,19 +3139,40 @@
                         "crypt_undead_pieter_40": {
                           "type": "integer"
                         },
+                        "crypt_undead_plancke_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_plummel_25": {
                           "type": "integer"
                         },
                         "crypt_undead_relenter_25": {
                           "type": "integer"
                         },
+                        "crypt_undead_revengeee_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_rezzus_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_sfarnham_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_skyerzz_25": {
                           "type": "integer"
                         },
                         "crypt_undead_sylent_25": {
                           "type": "integer"
                         },
+                        "crypt_undead_themgrf_25": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_thorlon_25": {
+                          "type": "integer"
+                        },
                         "crypt_undead_valentin_40": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_williamtiger_25": {
                           "type": "integer"
                         },
                         "crypt_witherskeleton_100": {
@@ -3856,6 +4123,9 @@
                         "master_crypt_undead_cecer_25": {
                           "type": "integer"
                         },
+                        "master_crypt_undead_chilynn_25": {
+                          "type": "integer"
+                        },
                         "master_crypt_undead_christian_40": {
                           "type": "integer"
                         },
@@ -3875,6 +4145,9 @@
                           "type": "integer"
                         },
                         "master_crypt_undead_externalizable_25": {
+                          "type": "integer"
+                        },
+                        "master_crypt_undead_flameboy101_25": {
                           "type": "integer"
                         },
                         "master_crypt_undead_friedrich_40": {
@@ -4846,6 +5119,9 @@
                         "shrine_charged_creeper_50": {
                           "type": "integer"
                         },
+                        "shrine_skeleton_horseman_100": {
+                          "type": "integer"
+                        },
                         "siamese_lynx_155": {
                           "type": "integer"
                         },
@@ -5702,6 +5978,9 @@
                     "BONE": {
                       "type": "integer"
                     },
+                    "BOX_OF_SEEDS": {
+                      "type": "integer"
+                    },
                     "CACTUS": {
                       "type": "integer"
                     },
@@ -5762,6 +6041,18 @@
                     "EMERALD_BLOCK": {
                       "type": "integer"
                     },
+                    "ENCHANTED_BIRCH_LOG": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_BLAZE_POWDER": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_BREAD": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_BROWN_MUSHROOM": {
+                      "type": "integer"
+                    },
                     "ENCHANTED_CARROT": {
                       "type": "integer"
                     },
@@ -5780,10 +6071,16 @@
                     "ENCHANTED_COOKED_MUTTON": {
                       "type": "integer"
                     },
+                    "ENCHANTED_DARK_OAK_LOG": {
+                      "type": "integer"
+                    },
                     "ENCHANTED_DIAMOND": {
                       "type": "integer"
                     },
                     "ENCHANTED_DIAMOND_BLOCK": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_EGG": {
                       "type": "integer"
                     },
                     "ENCHANTED_EMERALD": {
@@ -5801,19 +6098,34 @@
                     "ENCHANTED_FEATHER": {
                       "type": "integer"
                     },
+                    "ENCHANTED_FLINT": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_GHAST_TEAR": {
+                      "type": "integer"
+                    },
                     "ENCHANTED_GLOWSTONE_DUST": {
                       "type": "integer"
                     },
                     "ENCHANTED_GOLD": {
                       "type": "integer"
                     },
+                    "ENCHANTED_GUNPOWDER": {
+                      "type": "integer"
+                    },
                     "ENCHANTED_HARD_STONE": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_HAY_BLOCK": {
                       "type": "integer"
                     },
                     "ENCHANTED_ICE": {
                       "type": "integer"
                     },
                     "ENCHANTED_IRON": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_JUNGLE_LOG": {
                       "type": "integer"
                     },
                     "ENCHANTED_LAPIS_LAZULI": {
@@ -5849,6 +6161,9 @@
                     "ENCHANTED_OBSIDIAN": {
                       "type": "integer"
                     },
+                    "ENCHANTED_PACKED_ICE": {
+                      "type": "integer"
+                    },
                     "ENCHANTED_POISONOUS_POTATO": {
                       "type": "integer"
                     },
@@ -5867,7 +6182,19 @@
                     "ENCHANTED_PUFFERFISH": {
                       "type": "integer"
                     },
+                    "ENCHANTED_PUMPKIN": {
+                      "type": "integer"
+                    },
                     "ENCHANTED_QUARTZ": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_QUARTZ_BLOCK": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_RABBIT": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_RABBIT_FOOT": {
                       "type": "integer"
                     },
                     "ENCHANTED_RAW_BEEF": {
@@ -5891,7 +6218,13 @@
                     "ENCHANTED_RED_MUSHROOM": {
                       "type": "integer"
                     },
+                    "ENCHANTED_RED_SAND": {
+                      "type": "integer"
+                    },
                     "ENCHANTED_ROTTEN_FLESH": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_SAND": {
                       "type": "integer"
                     },
                     "ENCHANTED_SEEDS": {
@@ -5916,6 +6249,12 @@
                       "type": "integer"
                     },
                     "ENCHANTED_STRING": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_SULPHUR": {
+                      "type": "integer"
+                    },
+                    "ENCHANTED_SULPHUR_CUBE": {
                       "type": "integer"
                     },
                     "ENCHANTED_WOOL": {
@@ -6323,6 +6662,12 @@
                         },
                         "journal_entries": {
                           "properties": {
+                            "aftermath": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
                             "expedition_volume_1": {
                               "items": {
                                 "type": "integer"
@@ -6359,10 +6704,58 @@
                               },
                               "type": "array"
                             },
+                            "murderer": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
                             "necrons_magic_scroll": {
                               "type": "array"
                             },
+                            "the_apprentice": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
+                            "the_apprentice_2": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
+                            "the_apprentice_3": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
+                            "the_eye": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
+                            "the_follower": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
+                            "the_follower_2": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
                             "the_study": {
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
+                            "the_walls": {
                               "items": {
                                 "type": "integer"
                               },
@@ -8614,6 +9007,7 @@
                           "type": "object"
                         }
                       },
+                      "properties": {},
                       "type": "object"
                     },
                     "backpack_icons": {
@@ -8630,6 +9024,7 @@
                           "type": "object"
                         }
                       },
+                      "properties": {},
                       "type": "object"
                     },
                     "bag_contents": {
@@ -8888,6 +9283,9 @@
                         "EMERALD": {
                           "type": "integer"
                         },
+                        "ENCHANTED_ACACIA_LOG": {
+                          "type": "integer"
+                        },
                         "ENCHANTED_BAKED_POTATO": {
                           "type": "integer"
                         },
@@ -8898,6 +9296,9 @@
                           "type": "integer"
                         },
                         "ENCHANTED_BONE": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_BONE_BLOCK": {
                           "type": "integer"
                         },
                         "ENCHANTED_BREAD": {
@@ -8954,6 +9355,9 @@
                         "ENCHANTED_DIAMOND_BLOCK": {
                           "type": "integer"
                         },
+                        "ENCHANTED_EGG": {
+                          "type": "integer"
+                        },
                         "ENCHANTED_EMERALD": {
                           "type": "integer"
                         },
@@ -9008,16 +9412,25 @@
                         "ENCHANTED_ICE": {
                           "type": "integer"
                         },
+                        "ENCHANTED_INK_SACK": {
+                          "type": "integer"
+                        },
                         "ENCHANTED_IRON": {
                           "type": "integer"
                         },
                         "ENCHANTED_IRON_BLOCK": {
                           "type": "integer"
                         },
+                        "ENCHANTED_JUNGLE_LOG": {
+                          "type": "integer"
+                        },
                         "ENCHANTED_LAPIS_LAZULI": {
                           "type": "integer"
                         },
                         "ENCHANTED_LAPIS_LAZULI_BLOCK": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_LEATHER": {
                           "type": "integer"
                         },
                         "ENCHANTED_MAGMA_CREAM": {
@@ -9032,6 +9445,9 @@
                         "ENCHANTED_MITHRIL": {
                           "type": "integer"
                         },
+                        "ENCHANTED_MUTTON": {
+                          "type": "integer"
+                        },
                         "ENCHANTED_MYCELIUM": {
                           "type": "integer"
                         },
@@ -9042,6 +9458,9 @@
                           "type": "integer"
                         },
                         "ENCHANTED_NETHER_STALK": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_OAK_LOG": {
                           "type": "integer"
                         },
                         "ENCHANTED_OBSIDIAN": {
@@ -9077,6 +9496,21 @@
                         "ENCHANTED_QUARTZ_BLOCK": {
                           "type": "integer"
                         },
+                        "ENCHANTED_RABBIT": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_RABBIT_FOOT": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_RABBIT_HIDE": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_RAW_BEEF": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_RAW_CHICKEN": {
+                          "type": "integer"
+                        },
                         "ENCHANTED_RAW_FISH": {
                           "type": "integer"
                         },
@@ -9090,6 +9524,9 @@
                           "type": "integer"
                         },
                         "ENCHANTED_RED_MUSHROOM": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_RED_SAND": {
                           "type": "integer"
                         },
                         "ENCHANTED_ROTTEN_FLESH": {
@@ -9114,6 +9551,9 @@
                           "type": "integer"
                         },
                         "ENCHANTED_SPONGE": {
+                          "type": "integer"
+                        },
+                        "ENCHANTED_SPRUCE_LOG": {
                           "type": "integer"
                         },
                         "ENCHANTED_STRING": {
@@ -9473,6 +9913,9 @@
                         "MOOGMA_PELT": {
                           "type": "integer"
                         },
+                        "MUSHROOM_COLLECTION": {
+                          "type": "integer"
+                        },
                         "MUTANT_NETHER_STALK": {
                           "type": "integer"
                         },
@@ -9732,6 +10175,9 @@
                           "type": "integer"
                         },
                         "RUNE_CLOUDS_2": {
+                          "type": "integer"
+                        },
+                        "RUNE_CLOUDS_3": {
                           "type": "integer"
                         },
                         "RUNE_COUTURE_1": {
@@ -10246,6 +10692,7 @@
                           "type": "object"
                         }
                       },
+                      "properties": {},
                       "type": "object"
                     },
                     "medals_inv": {
@@ -10426,7 +10873,14 @@
                       "type": "string"
                     },
                     "task_sort": {
-                      "type": "string"
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
                     }
                   },
                   "type": "object"
@@ -10680,6 +11134,9 @@
                         "powder_buff": {
                           "type": "integer"
                         },
+                        "precision_mining": {
+                          "type": "integer"
+                        },
                         "professional": {
                           "type": "integer"
                         },
@@ -10698,10 +11155,19 @@
                         "toggle_efficient_miner": {
                           "type": "boolean"
                         },
+                        "toggle_fortunate": {
+                          "type": "boolean"
+                        },
                         "toggle_great_explorer": {
                           "type": "boolean"
                         },
+                        "toggle_lonesome_miner": {
+                          "type": "boolean"
+                        },
                         "toggle_mining_experience": {
+                          "type": "boolean"
+                        },
+                        "toggle_mining_fortune_2": {
                           "type": "boolean"
                         },
                         "toggle_mining_speed": {
@@ -10711,6 +11177,12 @@
                           "type": "boolean"
                         },
                         "toggle_mole": {
+                          "type": "boolean"
+                        },
+                        "toggle_professional": {
+                          "type": "boolean"
+                        },
+                        "toggle_titanium_insanium": {
                           "type": "boolean"
                         }
                       },
@@ -10839,6 +11311,12 @@
                               "properties": {
                                 "completed_quest": {
                                   "type": "boolean"
+                                },
+                                "incoming_calls_count": {
+                                  "type": "integer"
+                                },
+                                "last_call_incoming": {
+                                  "type": "integer"
                                 },
                                 "talked_to": {
                                   "type": "boolean"
@@ -11088,6 +11566,12 @@
                                 "completed_quest": {
                                   "type": "boolean"
                                 },
+                                "incoming_calls_count": {
+                                  "type": "integer"
+                                },
+                                "last_call_incoming": {
+                                  "type": "integer"
+                                },
                                 "talked_to": {
                                   "type": "boolean"
                                 }
@@ -11115,6 +11599,12 @@
                               "properties": {
                                 "completed_quest": {
                                   "type": "boolean"
+                                },
+                                "incoming_calls_count": {
+                                  "type": "integer"
+                                },
+                                "last_call_incoming": {
+                                  "type": "integer"
                                 },
                                 "talked_to": {
                                   "type": "boolean"
@@ -11359,6 +11849,12 @@
                                 "completed_quest": {
                                   "type": "boolean"
                                 },
+                                "incoming_calls_count": {
+                                  "type": "integer"
+                                },
+                                "last_call_incoming": {
+                                  "type": "integer"
+                                },
                                 "talked_to": {
                                   "type": "boolean"
                                 }
@@ -11377,6 +11873,14 @@
                               "type": "object"
                             },
                             "trinity": {
+                              "properties": {
+                                "completed_quest": {
+                                  "type": "boolean"
+                                },
+                                "talked_to": {
+                                  "type": "boolean"
+                                }
+                              },
                               "type": "object"
                             },
                             "walter": {
@@ -11556,6 +12060,12 @@
                         "search_settings": {
                           "properties": {
                             "combat_level": {
+                              "type": "string"
+                            },
+                            "search": {
+                              "type": "string"
+                            },
+                            "sort": {
                               "type": "string"
                             },
                             "tier": {
@@ -12072,6 +12582,9 @@
                         "strongarm_kuudra": {
                           "type": "integer"
                         },
+                        "toxophilite": {
+                          "type": "integer"
+                        },
                         "treasures_of_the_earth": {
                           "type": "integer"
                         },
@@ -12338,6 +12851,20 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_104": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_105": {
                           "properties": {
                             "green_candy": {
@@ -12413,6 +12940,23 @@
                             "green_candy": {
                               "type": "integer"
                             },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_114": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -12422,6 +12966,23 @@
                         "spooky_festival_116": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_117": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -12472,6 +13033,48 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_120": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_121": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_122": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_123": {
                           "properties": {
                             "green_candy": {
@@ -12501,6 +13104,20 @@
                           "type": "object"
                         },
                         "spooky_festival_125": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_126": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -12598,9 +13215,26 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_133": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_134": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -12670,6 +13304,9 @@
                             "green_candy": {
                               "type": "integer"
                             },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -12737,6 +13374,9 @@
                             "green_candy": {
                               "type": "integer"
                             },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -12746,6 +13386,9 @@
                         "spooky_festival_145": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -12771,6 +13414,9 @@
                         "spooky_festival_147": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -12877,9 +13523,26 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_155": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_157": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -12944,6 +13607,20 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_161": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_162": {
                           "properties": {
                             "green_candy": {
@@ -12977,6 +13654,9 @@
                             "green_candy": {
                               "type": "integer"
                             },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -12994,9 +13674,26 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_167": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_168": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -13313,6 +14010,17 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_189": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_19": {
                           "properties": {
                             "green_candy": {
@@ -13458,6 +14166,9 @@
                             "green_candy": {
                               "type": "integer"
                             },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -13478,7 +14189,46 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_200": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_201": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_203": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_204": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -13534,6 +14284,20 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_208": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_209": {
                           "properties": {
                             "green_candy": {
@@ -13549,6 +14313,20 @@
                           "type": "object"
                         },
                         "spooky_festival_210": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_211": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -13934,7 +14712,32 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_240": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_241": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_242": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -14035,6 +14838,9 @@
                         "spooky_festival_249": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -14146,6 +14952,20 @@
                             "green_candy": {
                               "type": "integer"
                             },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_257": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -14177,9 +14997,40 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_260": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_261": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_262": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -14286,9 +15137,26 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_27": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_270": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -14325,9 +15193,26 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_273": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_274": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -14364,6 +15249,20 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_277": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_278": {
                           "properties": {
                             "green_candy": {
@@ -14377,6 +15276,9 @@
                         },
                         "spooky_festival_279": {
                           "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
                             "purple_candy": {
                               "type": "integer"
                             },
@@ -14433,6 +15335,9 @@
                             "green_candy": {
                               "type": "integer"
                             },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -14442,6 +15347,9 @@
                         "spooky_festival_283": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -14461,7 +15369,35 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_285": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_286": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_287": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -14504,6 +15440,31 @@
                           "type": "object"
                         },
                         "spooky_festival_29": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_290": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_291": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -14839,6 +15800,20 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_33": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_34": {
                           "properties": {
                             "green_candy": {
@@ -15105,6 +16080,20 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_51": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_52": {
                           "properties": {
                             "green_candy": {
@@ -15175,7 +16164,35 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_57": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_58": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_59": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -15204,6 +16221,34 @@
                           "type": "object"
                         },
                         "spooky_festival_60": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_61": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_62": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -15273,6 +16318,31 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_67": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_68": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_69": {
                           "properties": {
                             "green_candy": {
@@ -15301,6 +16371,9 @@
                         "spooky_festival_70": {
                           "properties": {
                             "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
                               "type": "integer"
                             },
                             "total": {
@@ -15365,6 +16438,20 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_76": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_77": {
                           "properties": {
                             "green_candy": {
@@ -15407,6 +16494,31 @@
                           },
                           "type": "object"
                         },
+                        "spooky_festival_8": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_80": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
                         "spooky_festival_81": {
                           "properties": {
                             "green_candy": {
@@ -15436,6 +16548,31 @@
                           "type": "object"
                         },
                         "spooky_festival_83": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_84": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_85": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -15496,6 +16633,37 @@
                             "green_candy": {
                               "type": "integer"
                             },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_90": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_91": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -15531,6 +16699,34 @@
                           "type": "object"
                         },
                         "spooky_festival_95": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_96": {
+                          "properties": {
+                            "green_candy": {
+                              "type": "integer"
+                            },
+                            "purple_candy": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "spooky_festival_97": {
                           "properties": {
                             "green_candy": {
                               "type": "integer"
@@ -15660,6 +16856,9 @@
                         "ashfang_red_blaze": {
                           "type": "integer"
                         },
+                        "ashfang_vehicle": {
+                          "type": "integer"
+                        },
                         "automaton": {
                           "type": "integer"
                         },
@@ -15699,7 +16898,13 @@
                         "bonzo_summon_undead": {
                           "type": "integer"
                         },
+                        "brood_mother_cave_spider": {
+                          "type": "integer"
+                        },
                         "brood_mother_spider": {
+                          "type": "integer"
+                        },
+                        "cactus": {
                           "type": "integer"
                         },
                         "carrot_king": {
@@ -15753,6 +16958,9 @@
                         "crypt_undead": {
                           "type": "integer"
                         },
+                        "crypt_undead_christian": {
+                          "type": "integer"
+                        },
                         "crypt_undead_friedrich": {
                           "type": "integer"
                         },
@@ -15783,6 +16991,9 @@
                         "dasher_spider": {
                           "type": "integer"
                         },
+                        "deadline": {
+                          "type": "integer"
+                        },
                         "deathmite": {
                           "type": "integer"
                         },
@@ -15802,6 +17013,9 @@
                           "type": "integer"
                         },
                         "drowning": {
+                          "type": "integer"
+                        },
+                        "duelist_rollim": {
                           "type": "integer"
                         },
                         "dungeon_respawning_skeleton": {
@@ -15849,6 +17063,9 @@
                         "gaia_construct": {
                           "type": "integer"
                         },
+                        "generator_ghast": {
+                          "type": "integer"
+                        },
                         "generator_magma_cube": {
                           "type": "integer"
                         },
@@ -15865,6 +17082,9 @@
                           "type": "integer"
                         },
                         "goblin_creeper": {
+                          "type": "integer"
+                        },
+                        "goblin_golem": {
                           "type": "integer"
                         },
                         "goblin_knife_thrower": {
@@ -15888,7 +17108,16 @@
                         "graveyard_zombie": {
                           "type": "integer"
                         },
+                        "great_white_shark": {
+                          "type": "integer"
+                        },
+                        "grim_reaper": {
+                          "type": "integer"
+                        },
                         "guardian_defender": {
+                          "type": "integer"
+                        },
+                        "guardian_emperor": {
                           "type": "integer"
                         },
                         "headless_horseman": {
@@ -15912,7 +17141,13 @@
                         "inferno_blaze": {
                           "type": "integer"
                         },
+                        "inferno_magma_cube": {
+                          "type": "integer"
+                        },
                         "invisible_creeper": {
+                          "type": "integer"
+                        },
+                        "iron_golem": {
                           "type": "integer"
                         },
                         "jockey_shot_silverfish": {
@@ -15931,6 +17166,9 @@
                           "type": "integer"
                         },
                         "kalhuiki_tribe_woman": {
+                          "type": "integer"
+                        },
+                        "key_guardian": {
                           "type": "integer"
                         },
                         "kill_projectile": {
@@ -15955,6 +17193,9 @@
                           "type": "integer"
                         },
                         "kuudra_landmine": {
+                          "type": "integer"
+                        },
+                        "kuudra_slasher": {
                           "type": "integer"
                         },
                         "lapis_zombie": {
@@ -15985,6 +17226,9 @@
                           "type": "integer"
                         },
                         "mage_outlaw": {
+                          "type": "integer"
+                        },
+                        "mage_skull": {
                           "type": "integer"
                         },
                         "mages_guard": {
@@ -16035,6 +17279,9 @@
                         "master_crypt_undead": {
                           "type": "integer"
                         },
+                        "master_crypt_undead_codename_b": {
+                          "type": "integer"
+                        },
                         "master_crypt_undead_donpireso": {
                           "type": "integer"
                         },
@@ -16044,6 +17291,9 @@
                         "master_crypt_undead_jayavarmen": {
                           "type": "integer"
                         },
+                        "master_crypt_undead_ladybleu": {
+                          "type": "integer"
+                        },
                         "master_crypt_undead_likaos": {
                           "type": "integer"
                         },
@@ -16051,6 +17301,9 @@
                           "type": "integer"
                         },
                         "master_crypt_undead_sfarnham": {
+                          "type": "integer"
+                        },
+                        "master_crypt_undead_vinny8ball666": {
                           "type": "integer"
                         },
                         "master_crypt_witherskeleton": {
@@ -16146,6 +17399,9 @@
                         "master_skeleton_grunt": {
                           "type": "integer"
                         },
+                        "master_skeleton_lord": {
+                          "type": "integer"
+                        },
                         "master_skeleton_master": {
                           "type": "integer"
                         },
@@ -16194,6 +17450,9 @@
                         "master_watcher_bonzo": {
                           "type": "integer"
                         },
+                        "master_watcher_giant_diamond": {
+                          "type": "integer"
+                        },
                         "master_watcher_guardian": {
                           "type": "integer"
                         },
@@ -16207,6 +17466,9 @@
                           "type": "integer"
                         },
                         "master_wither_guard": {
+                          "type": "integer"
+                        },
+                        "master_wither_husk": {
                           "type": "integer"
                         },
                         "master_wither_king": {
@@ -16245,6 +17507,9 @@
                         "minos_champion": {
                           "type": "integer"
                         },
+                        "minos_hunter": {
+                          "type": "integer"
+                        },
                         "minos_inquisitor": {
                           "type": "integer"
                         },
@@ -16264,6 +17529,12 @@
                           "type": "integer"
                         },
                         "nest_endermite": {
+                          "type": "integer"
+                        },
+                        "night_respawning_skeleton": {
+                          "type": "integer"
+                        },
+                        "nightmare": {
                           "type": "integer"
                         },
                         "nutcracker": {
@@ -16291,6 +17562,9 @@
                           "type": "integer"
                         },
                         "parasite": {
+                          "type": "integer"
+                        },
+                        "phantom_fisherman": {
                           "type": "integer"
                         },
                         "phantom_spirit": {
@@ -16398,10 +17672,16 @@
                         "shadow_assassin": {
                           "type": "integer"
                         },
+                        "sheep": {
+                          "type": "integer"
+                        },
                         "siamese_lynx": {
                           "type": "integer"
                         },
                         "silverfish": {
+                          "type": "integer"
+                        },
+                        "silvo": {
                           "type": "integer"
                         },
                         "skeleton": {
@@ -16527,6 +17807,12 @@
                         "thunder": {
                           "type": "integer"
                         },
+                        "thyst": {
+                          "type": "integer"
+                        },
+                        "tiger_shark": {
+                          "type": "integer"
+                        },
                         "total": {
                           "type": "integer"
                         },
@@ -16623,6 +17909,9 @@
                         "wise_dragon": {
                           "type": "integer"
                         },
+                        "witch": {
+                          "type": "integer"
+                        },
                         "witch_bat": {
                           "type": "integer"
                         },
@@ -16654,6 +17943,9 @@
                           "type": "integer"
                         },
                         "wraith": {
+                          "type": "integer"
+                        },
+                        "yeti": {
                           "type": "integer"
                         },
                         "yog": {
@@ -17009,7 +18301,16 @@
                         "blaze_higher_or_lower": {
                           "type": "integer"
                         },
+                        "blazing_golem_100": {
+                          "type": "integer"
+                        },
+                        "blazing_golem_200": {
+                          "type": "integer"
+                        },
                         "blazing_golem_300": {
+                          "type": "integer"
+                        },
+                        "blazing_golem_400": {
                           "type": "integer"
                         },
                         "blazing_golem_500": {
@@ -17091,6 +18392,9 @@
                           "type": "integer"
                         },
                         "cellar_spider_115": {
+                          "type": "integer"
+                        },
+                        "cellar_spider_125": {
                           "type": "integer"
                         },
                         "cellar_spider_45": {
@@ -17255,6 +18559,9 @@
                         "crypt_undead_bernhard": {
                           "type": "integer"
                         },
+                        "crypt_undead_blockskey": {
+                          "type": "integer"
+                        },
                         "crypt_undead_bloozing": {
                           "type": "integer"
                         },
@@ -17276,6 +18583,9 @@
                         "crypt_undead_dctr": {
                           "type": "integer"
                         },
+                        "crypt_undead_districtgecko": {
+                          "type": "integer"
+                        },
                         "crypt_undead_donpireso": {
                           "type": "integer"
                         },
@@ -17286,6 +18596,9 @@
                           "type": "integer"
                         },
                         "crypt_undead_externalizable": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_falloutowns": {
                           "type": "integer"
                         },
                         "crypt_undead_flameboy101": {
@@ -17322,6 +18635,9 @@
                           "type": "integer"
                         },
                         "crypt_undead_minikloon": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_mistresseldrid": {
                           "type": "integer"
                         },
                         "crypt_undead_nicholas": {
@@ -17658,6 +18974,12 @@
                           "type": "integer"
                         },
                         "gaia_construct": {
+                          "type": "integer"
+                        },
+                        "gaia_construct_140": {
+                          "type": "integer"
+                        },
+                        "gaia_construct_260": {
                           "type": "integer"
                         },
                         "generator_ghast": {
@@ -18047,6 +19369,9 @@
                         "magma_bacteria_400": {
                           "type": "integer"
                         },
+                        "magma_bacteria_500": {
+                          "type": "integer"
+                        },
                         "magma_boss": {
                           "type": "integer"
                         },
@@ -18089,7 +19414,13 @@
                         "master_cellar_spider": {
                           "type": "integer"
                         },
+                        "master_cellar_spider_105": {
+                          "type": "integer"
+                        },
                         "master_cellar_spider_115": {
+                          "type": "integer"
+                        },
+                        "master_cellar_spider_125": {
                           "type": "integer"
                         },
                         "master_cellar_spider_85": {
@@ -18155,6 +19486,9 @@
                         "master_crypt_souleater_125": {
                           "type": "integer"
                         },
+                        "master_crypt_souleater_65": {
+                          "type": "integer"
+                        },
                         "master_crypt_souleater_75": {
                           "type": "integer"
                         },
@@ -18203,6 +19537,9 @@
                         "master_crypt_undead_cecer": {
                           "type": "integer"
                         },
+                        "master_crypt_undead_chilynn": {
+                          "type": "integer"
+                        },
                         "master_crypt_undead_christian": {
                           "type": "integer"
                         },
@@ -18222,6 +19559,9 @@
                           "type": "integer"
                         },
                         "master_crypt_undead_externalizable": {
+                          "type": "integer"
+                        },
+                        "master_crypt_undead_flameboy101": {
                           "type": "integer"
                         },
                         "master_crypt_undead_friedrich": {
@@ -18356,7 +19696,16 @@
                         "master_lonely_spider": {
                           "type": "integer"
                         },
+                        "master_lonely_spider_105": {
+                          "type": "integer"
+                        },
+                        "master_lonely_spider_115": {
+                          "type": "integer"
+                        },
                         "master_lonely_spider_75": {
+                          "type": "integer"
+                        },
+                        "master_lonely_spider_95": {
                           "type": "integer"
                         },
                         "master_lost_adventurer": {
@@ -18524,10 +19873,19 @@
                         "master_sniper_skeleton_103": {
                           "type": "integer"
                         },
+                        "master_sniper_skeleton_113": {
+                          "type": "integer"
+                        },
+                        "master_sniper_skeleton_123": {
+                          "type": "integer"
+                        },
                         "master_sniper_skeleton_73": {
                           "type": "integer"
                         },
                         "master_sniper_skeleton_83": {
+                          "type": "integer"
+                        },
+                        "master_sniper_skeleton_93": {
                           "type": "integer"
                         },
                         "master_spirit_bat": {
@@ -18689,6 +20047,9 @@
                         "master_zombie_knight_86": {
                           "type": "integer"
                         },
+                        "master_zombie_knight_96": {
+                          "type": "integer"
+                        },
                         "master_zombie_lord": {
                           "type": "integer"
                         },
@@ -18752,7 +20113,13 @@
                         "minos_champion": {
                           "type": "integer"
                         },
+                        "minos_champion_310": {
+                          "type": "integer"
+                        },
                         "minos_hunter": {
+                          "type": "integer"
+                        },
+                        "minos_hunter_125": {
                           "type": "integer"
                         },
                         "minos_hunter_15": {
@@ -18765,6 +20132,12 @@
                           "type": "integer"
                         },
                         "minotaur": {
+                          "type": "integer"
+                        },
+                        "minotaur_120": {
+                          "type": "integer"
+                        },
+                        "minotaur_210": {
                           "type": "integer"
                         },
                         "minotaur_45": {
@@ -18825,6 +20198,9 @@
                           "type": "integer"
                         },
                         "oasis_rabbit": {
+                          "type": "integer"
+                        },
+                        "oasis_rabbit_10": {
                           "type": "integer"
                         },
                         "oasis_sheep": {
@@ -19139,10 +20515,19 @@
                         "shrine_charged_creeper": {
                           "type": "integer"
                         },
+                        "shrine_skeleton_horseman": {
+                          "type": "integer"
+                        },
                         "siamese_lynx": {
                           "type": "integer"
                         },
+                        "siamese_lynx_155": {
+                          "type": "integer"
+                        },
                         "siamese_lynx_25": {
+                          "type": "integer"
+                        },
+                        "siamese_lynx_85": {
                           "type": "integer"
                         },
                         "silvo": {
@@ -19694,6 +21079,9 @@
                         "witch": {
                           "type": "integer"
                         },
+                        "witch_bat": {
+                          "type": "integer"
+                        },
                         "wither_defender_guard": {
                           "type": "integer"
                         },
@@ -19716,6 +21104,9 @@
                           "type": "integer"
                         },
                         "wither_sentry_300": {
+                          "type": "integer"
+                        },
+                        "wither_sentry_400": {
                           "type": "integer"
                         },
                         "wither_sentry_500": {
@@ -19770,6 +21161,12 @@
                           "type": "integer"
                         },
                         "zombie": {
+                          "type": "integer"
+                        },
+                        "zombie_3": {
+                          "type": "integer"
+                        },
+                        "zombie_5": {
                           "type": "integer"
                         },
                         "zombie_7": {
@@ -20255,6 +21652,9 @@
                             "34": {
                               "type": "integer"
                             },
+                            "35": {
+                              "type": "integer"
+                            },
                             "36": {
                               "type": "integer"
                             },
@@ -20295,6 +21695,9 @@
                               "type": "integer"
                             },
                             "54": {
+                              "type": "integer"
+                            },
+                            "55": {
                               "type": "integer"
                             },
                             "56": {
@@ -20348,6 +21751,9 @@
                             "72": {
                               "type": "integer"
                             },
+                            "73": {
+                              "type": "integer"
+                            },
                             "75": {
                               "type": "integer"
                             },
@@ -20366,7 +21772,19 @@
                             "80": {
                               "type": "integer"
                             },
+                            "81": {
+                              "type": "integer"
+                            },
                             "82": {
+                              "type": "integer"
+                            },
+                            "83": {
+                              "type": "integer"
+                            },
+                            "84": {
+                              "type": "integer"
+                            },
+                            "85": {
                               "type": "integer"
                             },
                             "86": {
@@ -20379,6 +21797,12 @@
                               "type": "integer"
                             },
                             "89": {
+                              "type": "integer"
+                            },
+                            "90": {
+                              "type": "integer"
+                            },
+                            "91": {
                               "type": "integer"
                             },
                             "92": {
@@ -20417,10 +21841,19 @@
                             "107": {
                               "type": "integer"
                             },
+                            "109": {
+                              "type": "integer"
+                            },
                             "111": {
                               "type": "integer"
                             },
+                            "112": {
+                              "type": "integer"
+                            },
                             "113": {
+                              "type": "integer"
+                            },
+                            "115": {
                               "type": "integer"
                             },
                             "116": {
@@ -20438,6 +21871,9 @@
                             "120": {
                               "type": "integer"
                             },
+                            "121": {
+                              "type": "integer"
+                            },
                             "123": {
                               "type": "integer"
                             },
@@ -20447,7 +21883,22 @@
                             "125": {
                               "type": "integer"
                             },
+                            "126": {
+                              "type": "integer"
+                            },
+                            "131": {
+                              "type": "integer"
+                            },
+                            "132": {
+                              "type": "integer"
+                            },
                             "134": {
+                              "type": "integer"
+                            },
+                            "135": {
+                              "type": "integer"
+                            },
+                            "138": {
                               "type": "integer"
                             },
                             "140": {
@@ -20462,6 +21913,9 @@
                             "143": {
                               "type": "integer"
                             },
+                            "144": {
+                              "type": "integer"
+                            },
                             "147": {
                               "type": "integer"
                             },
@@ -20469,6 +21923,9 @@
                               "type": "integer"
                             },
                             "149": {
+                              "type": "integer"
+                            },
+                            "152": {
                               "type": "integer"
                             },
                             "153": {
@@ -20481,6 +21938,9 @@
                               "type": "integer"
                             },
                             "156": {
+                              "type": "integer"
+                            },
+                            "157": {
                               "type": "integer"
                             },
                             "159": {
@@ -20501,10 +21961,16 @@
                             "164": {
                               "type": "integer"
                             },
+                            "165": {
+                              "type": "integer"
+                            },
                             "166": {
                               "type": "integer"
                             },
                             "168": {
+                              "type": "integer"
+                            },
+                            "170": {
                               "type": "integer"
                             },
                             "172": {
@@ -20520,6 +21986,15 @@
                               "type": "integer"
                             },
                             "180": {
+                              "type": "integer"
+                            },
+                            "183": {
+                              "type": "integer"
+                            },
+                            "184": {
+                              "type": "integer"
+                            },
+                            "185": {
                               "type": "integer"
                             },
                             "186": {
@@ -20555,6 +22030,9 @@
                             "197": {
                               "type": "integer"
                             },
+                            "198": {
+                              "type": "integer"
+                            },
                             "200": {
                               "type": "integer"
                             },
@@ -20565,6 +22043,9 @@
                               "type": "integer"
                             },
                             "203": {
+                              "type": "integer"
+                            },
+                            "204": {
                               "type": "integer"
                             },
                             "205": {
@@ -20597,6 +22078,9 @@
                             "214": {
                               "type": "integer"
                             },
+                            "215": {
+                              "type": "integer"
+                            },
                             "218": {
                               "type": "integer"
                             },
@@ -20612,6 +22096,9 @@
                             "222": {
                               "type": "integer"
                             },
+                            "223": {
+                              "type": "integer"
+                            },
                             "224": {
                               "type": "integer"
                             },
@@ -20621,10 +22108,22 @@
                             "226": {
                               "type": "integer"
                             },
+                            "227": {
+                              "type": "integer"
+                            },
                             "229": {
                               "type": "integer"
                             },
+                            "230": {
+                              "type": "integer"
+                            },
                             "232": {
+                              "type": "integer"
+                            },
+                            "233": {
+                              "type": "integer"
+                            },
+                            "234": {
                               "type": "integer"
                             },
                             "235": {
@@ -20634,6 +22133,9 @@
                               "type": "integer"
                             },
                             "237": {
+                              "type": "integer"
+                            },
+                            "238": {
                               "type": "integer"
                             },
                             "239": {
@@ -20661,6 +22163,9 @@
                               "type": "integer"
                             },
                             "250": {
+                              "type": "integer"
+                            },
+                            "251": {
                               "type": "integer"
                             },
                             "252": {
@@ -20693,6 +22198,9 @@
                             "262": {
                               "type": "integer"
                             },
+                            "263": {
+                              "type": "integer"
+                            },
                             "264": {
                               "type": "integer"
                             },
@@ -20714,6 +22222,9 @@
                             "271": {
                               "type": "integer"
                             },
+                            "272": {
+                              "type": "integer"
+                            },
                             "273": {
                               "type": "integer"
                             },
@@ -20724,6 +22235,9 @@
                               "type": "integer"
                             },
                             "276": {
+                              "type": "integer"
+                            },
+                            "277": {
                               "type": "integer"
                             },
                             "278": {
@@ -20741,6 +22255,9 @@
                             "282": {
                               "type": "integer"
                             },
+                            "284": {
+                              "type": "integer"
+                            },
                             "285": {
                               "type": "integer"
                             },
@@ -20753,10 +22270,16 @@
                             "289": {
                               "type": "integer"
                             },
+                            "290": {
+                              "type": "integer"
+                            },
                             "291": {
                               "type": "integer"
                             },
                             "292": {
+                              "type": "integer"
+                            },
+                            "293": {
                               "type": "integer"
                             },
                             "294": {
@@ -20765,7 +22288,13 @@
                             "295": {
                               "type": "integer"
                             },
+                            "296": {
+                              "type": "integer"
+                            },
                             "297": {
+                              "type": "integer"
+                            },
+                            "298": {
                               "type": "integer"
                             },
                             "299": {
@@ -20774,13 +22303,25 @@
                             "300": {
                               "type": "integer"
                             },
+                            "301": {
+                              "type": "integer"
+                            },
+                            "302": {
+                              "type": "integer"
+                            },
                             "303": {
                               "type": "integer"
                             },
                             "304": {
                               "type": "integer"
                             },
+                            "305": {
+                              "type": "integer"
+                            },
                             "306": {
+                              "type": "integer"
+                            },
+                            "307": {
                               "type": "integer"
                             },
                             "308": {
@@ -20977,7 +22518,7 @@
                           "type": "integer"
                         },
                         "song_pure_imagination_best_completion": {
-                          "type": "integer"
+                          "type": "number"
                         },
                         "song_pure_imagination_completions": {
                           "type": "integer"
@@ -21020,6 +22561,20 @@
                         },
                         "last_free": {
                           "type": "integer"
+                        },
+                        "pass": {
+                          "properties": {
+                            "from_refund": {
+                              "type": "boolean"
+                            },
+                            "issued_at": {
+                              "type": "integer"
+                            },
+                            "rift_server_joins": {
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
                         }
                       },
                       "type": "object"
@@ -21264,6 +22819,9 @@
                         },
                         "solo": {
                           "type": "boolean"
+                        },
+                        "spawn_timestamp": {
+                          "type": "integer"
                         },
                         "start_timestamp": {
                           "type": "integer"
@@ -21923,6 +23481,9 @@
                           "type": "integer"
                         },
                         "completion_state": {
+                          "type": "integer"
+                        },
+                        "kill_timestamp": {
                           "type": "integer"
                         },
                         "last_killed_mob_island": {

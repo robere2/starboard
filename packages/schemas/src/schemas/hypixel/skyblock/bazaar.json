@@ -41367,7 +41367,7 @@
                   "type": "integer"
                 },
                 "buyPrice": {
-                  "type": "integer"
+                  "type": "number"
                 },
                 "buyVolume": {
                   "type": "integer"
