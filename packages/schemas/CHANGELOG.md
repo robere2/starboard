@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.30](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.29...@mcsb/schemas@1.0.0-pre.30) (2023-12-03)
+
+### Bug Fixes
+
+- `skills.json` schema top-level key changed to `skills` ([3395b5c](https://github.com/robere2/starboard/commit/3395b5cd83f7295f763d03829442364a372a8ab4))
+
+### Features
+
+- Update `skyblock/profile` schema to v2 ([edb5434](https://github.com/robere2/starboard/commit/edb54344c24d4425f363bb88dfec5184495edbd6))
+- Update all Hypixel API urls to API v2 ([876c9ac](https://github.com/robere2/starboard/commit/876c9ac95a9ccf71a466da07b5db4c6fdce41d21))
+
 # [1.0.0-pre.29](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.28...@mcsb/schemas@1.0.0-pre.29) (2023-12-03)
 
 ### Bug Fixes
