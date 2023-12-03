@@ -3,56 +3,31 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/vanity/pets.json",
   "title": "HypixelPetsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/vanity/pets",
-  "anyOf": [
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": true
-        },
-        "lastUpdated": {
-          "type": "integer"
-        },
-        "types": {
-          "items": {
-            "$ref": "#/definitions/HypixelPet"
-          },
-          "type": "array"
-        },
-        "rarities": {
-          "items": {
-            "$ref": "#/definitions/HypixelPetRarity"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "success",
-        "types",
-        "rarities"
-      ]
+  "type": "object",
+  "properties": {
+    "success": {
+      "const": true
     },
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": false
-        },
-        "cause": {
-          "type": "string"
-        },
-        "throttle": {
-          "type": "boolean"
-        },
-        "global": {
-          "type": "boolean"
-        }
+    "lastUpdated": {
+      "type": "integer"
+    },
+    "types": {
+      "items": {
+        "$ref": "#/definitions/HypixelPet"
       },
-      "required": [
-        "success",
-        "cause"
-      ]
+      "type": "array"
+    },
+    "rarities": {
+      "items": {
+        "$ref": "#/definitions/HypixelPetRarity"
+      },
+      "type": "array"
     }
+  },
+  "required": [
+    "success",
+    "types",
+    "rarities"
   ],
   "definitions": {
     "HypixelPet": {

@@ -3,46 +3,21 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/quests.json",
   "title": "HypixelQuestsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/quests",
-  "anyOf": [
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": true
-        },
-        "lastUpdated": {
-          "type": "integer"
-        },
-        "quests": {
-          "$ref": "#/definitions/HypixelQuests"
-        }
-      },
-      "required": [
-        "success",
-        "quests"
-      ]
+  "type": "object",
+  "properties": {
+    "success": {
+      "const": true
     },
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": false
-        },
-        "cause": {
-          "type": "string"
-        },
-        "throttle": {
-          "type": "boolean"
-        },
-        "global": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "success",
-        "cause"
-      ]
+    "lastUpdated": {
+      "type": "integer"
+    },
+    "quests": {
+      "$ref": "#/definitions/HypixelQuests"
     }
+  },
+  "required": [
+    "success",
+    "quests"
   ],
   "definitions": {
     "HypixelQuests": {

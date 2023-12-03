@@ -3,46 +3,21 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/skyblock/auctions_ended.json",
   "title": "HypixelSkyBlockAuctionsEndedResponse",
   "description": "Schema for data returned from https://api.hypixel.net/skyblock/auctions_ended",
-  "anyOf": [
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": true
-        },
-        "auctions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/HypixelSkyBlockEndedAuction"
-          }
-        }
-      },
-      "required": [
-        "success",
-        "auctions"
-      ]
+  "type": "object",
+  "properties": {
+    "success": {
+      "const": true
     },
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": false
-        },
-        "cause": {
-          "type": "string"
-        },
-        "throttle": {
-          "type": "boolean"
-        },
-        "global": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "success",
-        "cause"
-      ]
+    "auctions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/HypixelSkyBlockEndedAuction"
+      }
     }
+  },
+  "required": [
+    "success",
+    "auctions"
   ],
   "definitions": {
     "HypixelSkyBlockEndedAuction": {

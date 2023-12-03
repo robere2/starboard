@@ -3,46 +3,21 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/challenges.json",
   "title": "HypixelChallengesResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/challenges",
-  "anyOf": [
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": true
-        },
-        "lastUpdated": {
-          "type": "integer"
-        },
-        "challenges": {
-          "$ref": "#/definitions/HypixelChallenges"
-        }
-      },
-      "required": [
-        "success",
-        "challenges"
-      ]
+  "type": "object",
+  "properties": {
+    "success": {
+      "const": true
     },
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": false
-        },
-        "cause": {
-          "type": "string"
-        },
-        "throttle": {
-          "type": "boolean"
-        },
-        "global": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "success",
-        "cause"
-      ]
+    "lastUpdated": {
+      "type": "integer"
+    },
+    "challenges": {
+      "$ref": "#/definitions/HypixelChallenges"
     }
+  },
+  "required": [
+    "success",
+    "challenges"
   ],
   "definitions": {
     "HypixelChallenges": {

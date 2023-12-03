@@ -3,49 +3,24 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/skyblock/items.json",
   "title": "HypixelSkyBlockItemsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/skyblock/items",
-  "anyOf": [
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": true
-        },
-        "lastUpdated": {
-          "type": "integer"
-        },
-        "items": {
-          "items": {
-            "$ref": "#/definitions/HypixelSkyBlockItem"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "success",
-        "items"
-      ]
+  "type": "object",
+  "properties": {
+    "success": {
+      "const": true
     },
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": false
-        },
-        "cause": {
-          "type": "string"
-        },
-        "throttle": {
-          "type": "boolean"
-        },
-        "global": {
-          "type": "boolean"
-        }
+    "lastUpdated": {
+      "type": "integer"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/definitions/HypixelSkyBlockItem"
       },
-      "required": [
-        "success",
-        "cause"
-      ]
+      "type": "array"
     }
+  },
+  "required": [
+    "success",
+    "items"
   ],
   "definitions": {
     "HypixelSkyBlockItem": {

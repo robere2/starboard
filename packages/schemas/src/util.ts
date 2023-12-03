@@ -462,7 +462,7 @@ export function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema
     }
 
     // We can simplify anyOf arrays with 1 value to just be the value
-    if(baseAnyOf.length === 1) {
+    if(baseAnyOf.length === 1 && (!base.anyOf || Object.keys(base).length === 1)) {
         return baseAnyOf[0]
     } else if(base.anyOf) {
         base.anyOf = baseAnyOf
