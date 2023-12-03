@@ -3,46 +3,21 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/games.json",
   "title": "HypixelGamesResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/games",
-  "anyOf": [
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": true
-        },
-        "lastUpdated": {
-          "type": "integer"
-        },
-        "games": {
-          "$ref": "#/definitions/HypixelGames"
-        }
-      },
-      "required": [
-        "success",
-        "games"
-      ]
+  "type": "object",
+  "properties": {
+    "success": {
+      "const": true
     },
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": false
-        },
-        "cause": {
-          "type": "string"
-        },
-        "throttle": {
-          "type": "boolean"
-        },
-        "global": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "success",
-        "cause"
-      ]
+    "lastUpdated": {
+      "type": "integer"
+    },
+    "games": {
+      "$ref": "#/definitions/HypixelGames"
     }
+  },
+  "required": [
+    "success",
+    "games"
   ],
   "definitions": {
     "HypixelGames": {

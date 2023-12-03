@@ -3,56 +3,31 @@
   "$id": "https://starboard.ecr.dev/schemas/hypixel/resources/vanity/companions.json",
   "title": "HypixelCompanionsResponse",
   "description": "Schema for data returned from https://api.hypixel.net/resources/vanity/companions",
-  "anyOf": [
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": true
-        },
-        "lastUpdated": {
-          "type": "integer"
-        },
-        "types": {
-          "items": {
-            "$ref": "#/definitions/HypixelCompanion"
-          },
-          "type": "array"
-        },
-        "rarities": {
-          "items": {
-            "$ref": "#/definitions/HypixelCompanionRarity"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "success",
-        "types",
-        "rarities"
-      ]
+  "type": "object",
+  "properties": {
+    "success": {
+      "const": true
     },
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": false
-        },
-        "cause": {
-          "type": "string"
-        },
-        "throttle": {
-          "type": "boolean"
-        },
-        "global": {
-          "type": "boolean"
-        }
+    "lastUpdated": {
+      "type": "integer"
+    },
+    "types": {
+      "items": {
+        "$ref": "#/definitions/HypixelCompanion"
       },
-      "required": [
-        "success",
-        "cause"
-      ]
+      "type": "array"
+    },
+    "rarities": {
+      "items": {
+        "$ref": "#/definitions/HypixelCompanionRarity"
+      },
+      "type": "array"
     }
+  },
+  "required": [
+    "success",
+    "types",
+    "rarities"
   ],
   "definitions": {
     "HypixelCompanion": {

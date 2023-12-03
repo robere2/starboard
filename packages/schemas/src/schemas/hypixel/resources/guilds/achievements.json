@@ -6,27 +6,6 @@
   "anyOf": [
     {
       "$ref": "#/definitions/HypixelGuildAchievements"
-    },
-    {
-      "type": "object",
-      "properties": {
-        "success": {
-          "const": false
-        },
-        "cause": {
-          "type": "string"
-        },
-        "throttle": {
-          "type": "boolean"
-        },
-        "global": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "success",
-        "cause"
-      ]
     }
   ],
   "definitions": {
@@ -40,7 +19,8 @@
           "type": "object"
         },
         "success": {
-          "const": true
+          "const": true,
+          "type": "boolean"
         },
         "tiered": {
           "properties": {
