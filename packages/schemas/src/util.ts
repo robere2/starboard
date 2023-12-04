@@ -474,3 +474,15 @@ export function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema
 
     return base;
 }
+
+/**
+ * Generate a string containing the stack of an error and the stack for all causes, recursively.
+ * @param e Thrown value to get the stack for. If not an `Error`, then the value as a String is returned.
+ */
+export function getFullStack(e: unknown): string {
+    let str = (e instanceof Error ? e.stack : String(e)) ?? "";
+    if(e instanceof Error && e.cause) {
+        str += `\nCause: ${ getFullStack(e.cause) }`;
+    }
+    return str;
+}
