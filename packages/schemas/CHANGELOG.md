@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.32](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.31...@mcsb/schemas@1.0.0-pre.32) (2023-12-04)
+
+### Bug Fixes
+
+- Log full stack when generator throws an error ([f4f0dad](https://github.com/robere2/starboard/commit/f4f0daddbbebec56fed31c5c6eceb6b26d42bb6f))
+
+### Features
+
+- `hypixelRequest` will throw a `HypixelRequestCallbackError` if the callback throws. ([69876e1](https://github.com/robere2/starboard/commit/69876e1701cc3bc55b1cc328e6a9149133755507))
+- Add `generate-loop` command to the schemas script. Runs `generate` every 5m15s ([aceab37](https://github.com/robere2/starboard/commit/aceab376104d02966a7752170eec563bdbbecee0))
+- Add `HYPIXEL_GEN_MAX_WORKERS` option to limit the number of workers ([6d6ae0c](https://github.com/robere2/starboard/commit/6d6ae0c4ab5dc8d6a4b604e878343b03f0ef46da))
+- Added ability to write errors encountered during generation to the file system ([1f3706b](https://github.com/robere2/starboard/commit/1f3706bf2a7c55c00fcebab90421d641e01bb568))
+- Fetch errors no longer stop other generator requests from proceeding ([9e2fb92](https://github.com/robere2/starboard/commit/9e2fb92d7a479c15991252608b2eab5931e63cbb))
+- Force schemas to use LF line endings ([ea0eb50](https://github.com/robere2/starboard/commit/ea0eb509d438121d21623fd3713f631f2b37ee23))
+- Schema updates ([d4a9be1](https://github.com/robere2/starboard/commit/d4a9be1f83d5ef7bcb25dbe0c25cac2dc1941d47))
+
 # [1.0.0-pre.31](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.30...@mcsb/schemas@1.0.0-pre.31) (2023-12-03)
 
 ### Features
