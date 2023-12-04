@@ -3236,6 +3236,28 @@
               },
               "type": "object"
             },
+            "INFINI_VACUUM": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "INK_WAND": {
               "properties": {
                 "borrowing": {
@@ -5853,6 +5875,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
