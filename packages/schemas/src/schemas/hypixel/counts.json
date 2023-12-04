@@ -169,6 +169,9 @@
                     "BEDWARS_EIGHT_TWO_UNDERWORLD": {
                       "type": "integer"
                     },
+                    "BEDWARS_EIGHT_TWO_VOIDLESS": {
+                      "type": "integer"
+                    },
                     "BEDWARS_FOUR_FOUR": {
                       "type": "integer"
                     },
@@ -179,6 +182,9 @@
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR_RUSH": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_SWAP": {
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR_ULTIMATE": {
@@ -283,6 +289,9 @@
                       "type": "integer"
                     },
                     "DUELS_COMBO_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_DUEL_ARENA": {
                       "type": "integer"
                     },
                     "DUELS_MW_DOUBLES": {
@@ -617,6 +626,9 @@
                 "modes": {
                   "properties": {
                     "solo_normal": {
+                      "type": "integer"
+                    },
+                    "team_normal": {
                       "type": "integer"
                     }
                   },
