@@ -19,6 +19,24 @@ const agent = new Agent({
 });
 
 /**
+ * Helper function for catching errors from `hypixelRequest` calls.
+ * @param url URL that the error occurred on
+ * @param e The thrown value
+ */
+function handleHypixelReqError(url: string, e: unknown) {
+    let msg: string = `An error occurred while processing ${url}\n`;
+    if(e instanceof Error) {
+        msg += e.stack;
+        if(e.cause) {
+            msg += `\nCause: ${ e.cause instanceof Error ? e.cause.stack : e.cause}`;
+        }
+    } else {
+        msg += e;
+    }
+    logger(chalk.red(msg))
+}
+
+/**
  * Type of the callback that clients can provide to {@link processAllHypixelData} to process API responses. This is used
  * by {@link processAllHypixelData}.
  * @see {@link processAllHypixelData}
@@ -153,7 +171,7 @@ export class HypixelGenerator {
      * @returns A `Promise` that resolves with the full JSON-parsed API response, as it was before post-processing.
      * @throws
      * - `Error` if the HTTP request fails
-     * - `Error` if the Hypixel API response has `success` equal to `false`
+     * - `HypixelApiError` if the Hypixel API response has `success` equal to `false`
      */
     private async hypixelRequest(url: string, schemaData: SchemaData, callback?: ApiDataCallback): Promise<Record<string, any>> {
         logger(this.getPercentPrefix() + chalk.dim("Queueing request to ", url))
@@ -163,7 +181,7 @@ export class HypixelGenerator {
             headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY!},
             dispatcher: agent
         }).catch((e) => {
-            logger(this.getPercentPrefix() + chalk.yellow(`Fetch error for URL ${url}: ${e instanceof Error ? e.stack : e}`))
+            logger(this.getPercentPrefix() + chalk.yellow(`An error occurred while fetching URL ${url}`))
             throw e;
         });
 
@@ -188,7 +206,7 @@ export class HypixelGenerator {
         let output: Record<string, any> | Record<string, any>[] = json;
         if(schemaData.postProcess) {
             output = schemaData.postProcess(json, ([newUrl, newSchema]) => {
-                this.allRequests.set(newUrl, this.hypixelRequest(newUrl, newSchema, callback))
+                this.allRequests.set(newUrl, this.hypixelRequest(newUrl, newSchema, callback).catch((e) => handleHypixelReqError(url, e)))
             })
             // Some things, like current elections or requests for invalid players, aren't always defined. I have
             // not thought of a great solution other than to skip the value and assume that our schema properly has
@@ -224,24 +242,13 @@ export class HypixelGenerator {
         // Jumpstart the generation process by sending requests to all of the initial URLs. Additional URLs may have
         // requests sent to them by each schema's post-processor.
         for(const [url, schemaData] of initialGenerationUrlList) {
-            this.allRequests.set(url, this.hypixelRequest(url, schemaData, callback))
+            this.allRequests.set(url, this.hypixelRequest(url, schemaData, callback).catch((e) => handleHypixelReqError(url, e)))
         }
 
         // Wait for all requests to all URLs to complete. Maps iterate by insertion order, so any requests added later
         // won't be missed.
-        for(const [url, request] of this.allRequests.entries()) {
-            await request.catch((e) => {
-                if(e instanceof Error) {
-                    console.error(chalk.red(
-                        `An error occurred while processing ${url}\n` +
-                        `${e.name}: ${e.message}\n` +
-                        `${e.stack}`
-                    ))
-                } else {
-                    console.error(chalk.red(`An error occurred while processing ${url}\n${e}`))
-                }
-                process.exit(1);
-            })
+        for(const request of this.allRequests.values()) {
+            await request
         }
         clearInterval(loggerInterval)
     }
@@ -253,7 +260,6 @@ export class HypixelGenerator {
      * - `Error` if the schema file does not exist
      * - `Error` if any schema file is not a valid JSON schema
      * - `Error` if any schema definition does not exist in the associated schema file in the SchemaData
-     * - `Error` if any HTTP request fails
      * - `Error` if file writing for the updated schema fails
      * - Stack overflow if the schema is very deep (this method currently features recursion)
      * @returns A `Promise` that resolves to this once all schemas have been tested and updated, if necessary.
