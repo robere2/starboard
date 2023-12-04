@@ -153,7 +153,7 @@ function updateSchema(schema: JSONSchema4, data: Record<string, any>[]): JSONSch
             fs.writeFileSync(schemaDumpFile, JSON.stringify({
                 schema: container.schema,
                 data: datum
-            }))
+            }).replaceAll(/\r\n/g, '\n')) // Force LF line endings
             throw new Error("Unexpected errors were introduced after the addition of new schema properties. " +
                 `Schema and data has been dumped to ${schemaDumpFile}.\n` +
                 `Errors: ${container.ajv.errorsText(container.validate.errors)}`)
