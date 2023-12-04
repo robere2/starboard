@@ -12,6 +12,7 @@ declare global {
         interface ProcessEnv {
             [key: string]: string | undefined;
             HYPIXEL_GEN_API_KEY?: string;
+            HYPIXEL_GEN_WRITE_ERRORS?: string;
         }
     }
 }

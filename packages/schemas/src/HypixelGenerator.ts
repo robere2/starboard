@@ -79,12 +79,17 @@ export class HypixelGenerator {
      * @param e The thrown value
      * @throws
      * - `Error` if `e` is a {@link HypixelRequestCallbackError}.
+     * - `Error` if `HYPIXEL_GEN_WRITE_ERRORS` is enabled and there's a file I/O error
      */
-     private static handleHypixelReqError(url: string, e: unknown) {
+     private handleHypixelReqError(url: string, e: unknown) {
+        const msg = `An error occurred while processing ${url}\n ${getFullStack(e)}`;
+        if(process.env.HYPIXEL_GEN_WRITE_ERRORS === "true") {
+            fs.appendFileSync("schema-errors.txt", msg + "\n\n")
+        }
         if(e instanceof HypixelRequestCallbackError) {
             throw e;
         }
-        logger(chalk.red(`An error occurred while processing ${url}\n ${getFullStack(e)}`))
+        logger(chalk.red(msg))
     }
 
     /**
@@ -210,7 +215,7 @@ export class HypixelGenerator {
         let output: Record<string, any> | Record<string, any>[] = json;
         if(schemaData.postProcess) {
             output = schemaData.postProcess(json, ([newUrl, newSchema]) => {
-                this.allRequests.set(newUrl, this.hypixelRequest(newUrl, newSchema, callback).catch((e) => HypixelGenerator.handleHypixelReqError(url, e)))
+                this.allRequests.set(newUrl, this.hypixelRequest(newUrl, newSchema, callback).catch((e) => this.handleHypixelReqError(url, e)))
             })
             // Some things, like current elections or requests for invalid players, aren't always defined. I have
             // not thought of a great solution other than to skip the value and assume that our schema properly has
@@ -250,7 +255,7 @@ export class HypixelGenerator {
         // Jumpstart the generation process by sending requests to all of the initial URLs. Additional URLs may have
         // requests sent to them by each schema's post-processor.
         for(const [url, schemaData] of initialGenerationUrlList) {
-            this.allRequests.set(url, this.hypixelRequest(url, schemaData, callback).catch((e) => HypixelGenerator.handleHypixelReqError(url, e)))
+            this.allRequests.set(url, this.hypixelRequest(url, schemaData, callback).catch((e) => this.handleHypixelReqError(url, e)))
         }
 
         // Wait for all requests to all URLs to complete. Maps iterate by insertion order, so any requests added later
