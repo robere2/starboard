@@ -26,8 +26,18 @@ async function run(): Promise<void> {
         case "generate":
             await generate();
             break;
+        case "generate-loop":
+            generate().catch(e => {
+                console.error("GENERATOR ERROR: " + (e instanceof Error ? e.stack : e))
+            });
+            setInterval(() => {
+                generate().catch(e => {
+                    console.error("GENERATOR ERROR: " + (e instanceof Error ? e.stack : e))
+                });
+            }, 315_000);
+            break;
         default:
-            console.error("Usage: index.ts [build|generate]")
+            console.error("Usage: index.ts [build|generate|generate-loop]")
             process.exit(1);
     }
 }
