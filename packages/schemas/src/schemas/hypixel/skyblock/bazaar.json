@@ -41160,7 +41160,7 @@
                   "type": "integer"
                 },
                 "sellPrice": {
-                  "type": "integer"
+                  "type": "number"
                 },
                 "sellVolume": {
                   "type": "integer"
@@ -61791,7 +61791,7 @@
                   "type": "integer"
                 },
                 "buyPrice": {
-                  "type": "integer"
+                  "type": "number"
                 },
                 "buyVolume": {
                   "type": "integer"

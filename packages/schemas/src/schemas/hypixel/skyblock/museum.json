@@ -262,6 +262,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -609,6 +612,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -755,6 +761,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -1453,6 +1462,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -1843,6 +1855,31 @@
               "type": "object"
             },
             "END_SWORD": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "ENRAGER": {
               "properties": {
                 "borrowing": {
                   "type": "boolean"
@@ -2541,6 +2578,9 @@
             },
             "GEMSTONE_DRILL_3": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
                 },
@@ -3236,6 +3276,56 @@
               },
               "type": "object"
             },
+            "INFINI_VACUUM": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "INFINI_VACUUM_HOOVERIUS": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "INK_WAND": {
               "properties": {
                 "borrowing": {
@@ -3468,6 +3558,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -4091,6 +4184,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -4162,6 +4258,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -5410,6 +5509,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -5581,6 +5683,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -5854,6 +5959,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -5876,6 +5984,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -5897,6 +6008,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -6770,6 +6884,9 @@
                 "donated_time": {
                   "type": "integer"
                 },
+                "featured_slot": {
+                  "type": "string"
+                },
                 "items": {
                   "properties": {
                     "data": {
@@ -6941,6 +7058,9 @@
                 },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
@@ -8333,8 +8453,14 @@
             },
             "ZOMBIE": {
               "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
                 "donated_time": {
                   "type": "integer"
+                },
+                "featured_slot": {
+                  "type": "string"
                 },
                 "items": {
                   "properties": {
