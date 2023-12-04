@@ -10,6 +10,7 @@ import {getFullStack, logger, mergeSchemas, sortObject} from "./util";
 import {HypixelApiError} from "./HypixelApiError";
 import {Agent} from "undici";
 import {HypixelRequestCallbackError} from "./HypixelRequestCallbackError";
+import * as os from "os";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -35,7 +36,9 @@ export class HypixelGenerator {
     /**
      * Worker pool is used to offload the CPU-heavy tasks of compiling, validating, and updating the schema.
      */
-    private readonly pool = workerpool.pool(join(__dirname, 'generator-worker.ts'));
+    private readonly pool = workerpool.pool(join(__dirname, 'generator-worker.ts'), {
+        maxWorkers: parseInt(process.env.HYPIXEL_GEN_MAX_WORKERS ?? "") || os.cpus().length - 1
+    });
     /**
      * Total number of URLs that have been processed & their schemas updated.
      * @see {@link percentCompleted}

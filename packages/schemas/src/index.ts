@@ -13,6 +13,7 @@ declare global {
             [key: string]: string | undefined;
             HYPIXEL_GEN_API_KEY?: string;
             HYPIXEL_GEN_WRITE_ERRORS?: string;
+            HYPIXEL_GEN_MAX_WORKERS?: string;
         }
     }
 }
