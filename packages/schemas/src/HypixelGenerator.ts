@@ -163,7 +163,7 @@ export class HypixelGenerator {
             headers: {"API-Key": process.env.HYPIXEL_GEN_API_KEY!},
             dispatcher: agent
         }).catch((e) => {
-            logger(this.getPercentPrefix() + chalk.yellow(`Fetch error for URL ${url}: ${e}`))
+            logger(this.getPercentPrefix() + chalk.yellow(`Fetch error for URL ${url}: ${e instanceof Error ? e.stack : e}`))
             throw e;
         });
 
