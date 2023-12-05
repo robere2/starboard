@@ -17,6 +17,20 @@ const jsonSchemaAnnotations = [
     "deprecated"
 ]
 
+const numberRegex = /^\d+$/
+
+function isInventorySchema(schema: JSONSchema4): boolean {
+    if(schema.type !== "object" || !schema.properties || Object.keys(schema.properties).length === 0) {
+        return false;
+    }
+    for(const prop in schema.properties) {
+        if(!numberRegex.test(prop)) {
+            return false
+        }
+    }
+    return true;
+}
+
 /**
  * While JSON schemas do not need to obey any specific order, when we write them to the file system, we want to make
  * as small of a diff as possible. Additionally, similar properties may be discovered by the generator at vastly
@@ -417,6 +431,7 @@ export function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema
                                 schema[prop] = {}
                             }
                             for(const item in sourceSchema[prop]) {
+
                                 const propertyPattern: string | null =
                                     matchingPatternProperty(item, schema) ||
                                     matchingPatternProperty(item, sourceSchema);
@@ -433,6 +448,23 @@ export function mergeSchemas(base: JSONSchema4, source: JSONSchema4): JSONSchema
                                         schema.patternProperties[propertyPattern] = sourceSchema[prop]![item]
                                     }
                                 } else if(schema[prop][item]) {
+                                    // Inventory structures (large objects that have numerical strings for keys) should
+                                    // auto be replaced with a pattern property
+                                    if((item.includes("layout") || item.includes("inventory"))) {
+                                        if(isInventorySchema(sourceSchema[prop][item])) {
+                                            let patternSchema: JSONSchema4 = {}
+                                            for(const s of Object.values(sourceSchema[prop][item].properties)) {
+                                                patternSchema = mergeSchemas(patternSchema, s as JSONSchema4);
+                                            }
+                                            sourceSchema[prop][item] = {
+                                                type: "object",
+                                                patternProperties: {
+                                                    "^\\d+$": patternSchema
+                                                }
+                                            }
+                                        }
+                                    }
+
                                     schema[prop][item] = mergeSchemas(schema[prop][item], sourceSchema[prop][item])
                                 } else {
                                     schema[prop][item] = sourceSchema[prop][item]
