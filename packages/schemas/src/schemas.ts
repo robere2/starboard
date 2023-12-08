@@ -1,5 +1,5 @@
 import {dirname, join} from "path";
-import {SchemaData} from "./SchemaData.js";
+import {SchemaData} from "./classes/SchemaData.js";
 import {fileURLToPath} from "url";
 import {pickRandom} from "./util.js";
 

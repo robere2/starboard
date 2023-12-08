@@ -1,7 +1,7 @@
 import {textBox, logger, writeSchemaTypedefs, copyExtraFiles, createIndexFiles} from "./util.js";
 import dotenv from "dotenv";
 import chalk from "chalk";
-import {HypixelGenerator} from "./HypixelGenerator";
+import {HypixelGenerator} from "./classes/HypixelGenerator";
 import {allSchemas} from "./schemas";
 import fs from "fs";
 dotenv.config();

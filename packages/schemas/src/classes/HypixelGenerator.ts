@@ -5,11 +5,11 @@ import chalk from "chalk";
 import {LoadedSchemaData, SchemaData} from "./SchemaData";
 import fs from "fs";
 import {JSONSchema4} from "json-schema";
-import {initialGenerationUrlList} from "./schemas";
-import {getFullStack, logger, mergeSchemas, sortObject} from "./util";
-import {HypixelApiError} from "./HypixelApiError";
+import {initialGenerationUrlList} from "../schemas";
+import {getFullStack, logger, mergeSchemas, sortObject} from "../util";
+import {HypixelApiError} from "./throwables/HypixelApiError";
 import {Agent} from "undici";
-import {HypixelRequestCallbackError} from "./HypixelRequestCallbackError";
+import {HypixelRequestCallbackError} from "./throwables/HypixelRequestCallbackError";
 import * as os from "os";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
