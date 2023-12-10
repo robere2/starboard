@@ -4,6 +4,8 @@ import fs from "fs";
 import {dirname, join} from "path";
 import {fileURLToPath} from "url";
 import {JSONSchema4} from "json-schema";
+import path from "node:path";
+import {FileSchemaContainer} from "./classes/FileSchemaContainer";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -16,6 +18,56 @@ const jsonSchemaAnnotations = [
     "writeOnly",
     "deprecated"
 ]
+
+
+/**
+ * Visits each property/element in a given value and invokes a callback function on it. This is done recursively.
+ * The callback will not be called at all for non-objects/arrays.
+ *
+ * @param {any} value - The value to visit.
+ * @param {function} callback - The callback function to invoke on each element. It takes two parameters:
+ *  - key {string | number}: The key or index of the current element being visited.
+ *  - parent {any}: The parent object or array being visited.
+ * The return value of the callback will replace the current element in the value.
+ * @example
+ * // This example appends '_processed' to each string value
+ * const obj = {
+ *  name: "John",
+ *  age: 30,
+ *  city: "New York",
+ *  hobbies: ["Football", "Reading"]
+ * };
+ *
+ * visit(obj, (key, parent) => {
+ *  const value = parent[key];
+ *  if (typeof value === "string") {
+ *    return value + "_processed";
+ *  }
+ *  return value;
+ * });
+ *
+ * console.log(obj)
+ *
+ * // {
+ * //  name: 'John_processed',
+ * //  age: 30,
+ * //  city: 'New York_processed',
+ * //  hobbies: [ 'Football_processed', 'Reading_processed' ]
+ * // }
+ */
+export function visit(value: any, callback: (key: string | number, parent: any) => any) {
+    if(Array.isArray(value)) {
+        for(let i = 0; i < value.length; i++) {
+            value[i] = callback(i, value);
+            visit(value[i], callback)
+        }
+    } else if(typeof value === "object" && value !== null) {
+        for(const prop in value) {
+            value[prop] = callback(prop, value)
+            visit(value[prop], callback);
+        }
+    }
+}
 
 /**
  * While JSON schemas do not need to obey any specific order, when we write them to the file system, we want to make
@@ -130,22 +182,21 @@ export function logger(text: string | string[], debug = false) {
 /**
  * Create TypeScript type definition files based on a JSON schema.
  * @param schema The JSON schema to create type definitions for.
- * @param name Output file name, without the extension (`.d.ts` will be appended).
- * @param outdir Directory to write TypeScript definitions file to.
  * @returns A `Promise` that resolves when the TypeScript definition file has been written.
  * @throws
  * - `Error` on file system error
  * - `Error` if `schema` is not a valid JSON schema
  */
-export async function writeSchemaTypedefs(schema: Record<string, any>, name: string, outdir: string) {
+export async function writeSchemaTypedefs(schema: FileSchemaContainer) {
     // compile schema to TypeScript
-    const ts = await compile(schema, name, {
+    const ts = await compile(schema.schema, path.basename(schema.path).split('.')[0], {
         additionalProperties: true
     })
 
     // Write compiled TypeScript to .d.ts files
+    const outdir = join(__dirname, '..', 'dist');
     await fs.promises.mkdir(outdir, { recursive: true });
-    await fs.promises.writeFile(join(outdir, `${name}.d.ts`), ts)
+    await fs.promises.appendFile(join(outdir, `types.d.ts`), ts + "\n\n")
 }
 
 /**

@@ -2,8 +2,7 @@ import {textBox, logger, writeSchemaTypedefs, copyExtraFiles, createIndexFiles} 
 import dotenv from "dotenv";
 import chalk from "chalk";
 import {HypixelGenerator} from "./classes/HypixelGenerator";
-import {allSchemas} from "./schemas";
-import fs from "fs";
+import {loadAllSchemas} from "./schemas";
 dotenv.config();
 
 declare global {
@@ -46,15 +45,10 @@ async function run(): Promise<void> {
 
 async function build(): Promise<void> {
     const startTime = Date.now();
-
-    let fileCount = 0; // Not all schemas output types - particularly when two schemas share the same .json file
-    for(const schemaData of allSchemas) {
-        const fullSchema = JSON.parse((await fs.promises.readFile(schemaData.schemaPath)).toString())
-        if(schemaData.dtsOutDir) {
-            logger(chalk.cyan(`Writing type definitions for ${chalk.cyanBright(schemaData.defName)}...`))
-            await writeSchemaTypedefs(fullSchema, schemaData.defName, schemaData.dtsOutDir)
-            fileCount++;
-        }
+    const allSchemas = await loadAllSchemas();
+    for(const schema of allSchemas) {
+        logger(chalk.cyan(`Writing type definitions for ${chalk.cyanBright(schema.path)}...`))
+        await writeSchemaTypedefs(schema)
     }
 
     await copyExtraFiles();
@@ -67,7 +61,7 @@ async function build(): Promise<void> {
         '\n',
         ...textBox([
             `Build complete - Took ${Math.floor(timeTaken / 60000)}m ${Math.floor(timeTaken / 1000) % 60}s`,
-            `Built a total of ${fileCount} type definition files`
+            `Built a total of ${allSchemas.length} type definition files`
         ], chalk.green, chalk.green)
     ]);
 }

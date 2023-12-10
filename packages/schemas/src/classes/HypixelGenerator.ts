@@ -2,15 +2,15 @@ import {dirname, join} from "path";
 import {fileURLToPath} from "url";
 import workerpool from "workerpool";
 import chalk from "chalk";
-import {LoadedSchemaData, SchemaData} from "./SchemaData";
 import fs from "fs";
 import {JSONSchema4} from "json-schema";
-import {initialGenerationUrlList} from "../schemas";
 import {getFullStack, logger, mergeSchemas, sortObject} from "../util";
 import {HypixelApiError} from "./throwables/HypixelApiError";
 import {Agent} from "undici";
 import {HypixelRequestCallbackError} from "./throwables/HypixelRequestCallbackError";
 import * as os from "os";
+import {SchemaContainer} from "./SchemaContainer";
+import {loadAllSchemas} from "../schemas";
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -26,7 +26,7 @@ const agent = new Agent({
  * @see {@link processAllHypixelData}
  * @see {@link hypixelRequest}
  */
-type ApiDataCallback = (url: string, schema: SchemaData, data: Record<string, any> | Record<string, any>[]) => Promise<void> | void
+type ApiDataCallback = (url: string, schema: SchemaContainer, data: Record<string, any> | Record<string, any>[]) => Promise<void> | void
 
 /**
  * The `HypixelGenerator` is responsible for fetching data from the Hypixel API and generating updated JSON schemas
@@ -45,14 +45,6 @@ export class HypixelGenerator {
      * @see {@link getCompletedRequests}
      */
     private totalUrlsCompleted = 0;
-    /**
-     * Cache of schemas loaded from the file system, mapping their file path + definition to their
-     * {@link LoadedSchemaData} object. Since the processing of each API response is self-contained, we store all
-     * processing results here, and then once all URLs are processed, finally write all our schemas back to disk.
-     * @see {@link getSchema}
-     * @see {@link saveSchemas}
-     */
-    private loadedSchemas: Record<string, LoadedSchemaData> = {}
     /**
      * Map of URLs to Promises that will resolve with the body of an HTTP request sent out by this generator via
      * {@link hypixelRequest} to the matching URL. We use this to keep track of how many requests are still pending by
@@ -111,35 +103,6 @@ export class HypixelGenerator {
     }
 
     /**
-     * Retrieve a schema from our schema cache {@link loadedSchemas}, or if it's not present, load it from the file system.
-     * @param input Data of the schema to load
-     * @returns A `Promise` that resolves with the loaded schema data
-     * @see {@link loadedSchemas}
-     * @see {@link saveSchemas}
-     * @throws
-     * - `Error` if the schema file does not exist
-     * - `Error` on I/O error
-     * - `Error` if the schema file does not contain valid JSON
-     */
-    private async getSchema(input: SchemaData): Promise<LoadedSchemaData> {
-        // FIXME this breaks when multiple schema definitions use the same schema file (e.g. pets.json)
-        const schemaKey = `${input.schemaPath}#${input.defName}`;
-        if(this.loadedSchemas[schemaKey]) {
-            return this.loadedSchemas[schemaKey]
-        }
-        logger(this.getPercentPrefix() + chalk.dim("Reading file " + input.schemaPath), true)
-        const fileContents = (await fs.promises.readFile(input.schemaPath)).toString()
-        const schema: JSONSchema4 = JSON.parse(fileContents)
-        const definition: JSONSchema4 | undefined = schema.definitions?.[input.defName] ?? undefined;
-
-        if (!definition) {
-            throw new Error(`Schema definition ${input.defName} could not be found in the given schema!\nPath: ${input.schemaPath}`);
-        }
-
-        return this.loadedSchemas[schemaKey] = { schema, definition, ...input };
-    }
-
-    /**
      * Save all schemas cached within {@link loadedSchemas} back to disk. Once written, the schema will be removed
      * from the {@link loadedSchemas} cache.
      * @returns A `Promise` that resolves when all schemas have been written to disk.
@@ -175,7 +138,7 @@ export class HypixelGenerator {
      * Send an API request to the Hypixel API, process it through the preprocessor if present, and then return the
      * output. The request is also added to {@link allRequests}.
      * @param url URL to send the request to.
-     * @param schemaData Data about the schema we're expecting the response to follow. This is not used to actually
+     * @param schema Data about the schema we're expecting the response to follow. This is not used to actually
      * parse the data through the schema, but just to feed it through the request postprocessor. The schema parsing is
      * handled by {@link processAllHypixelData}.
      * @param callback Optional callback to await after the API response has been received and post-processed.
@@ -185,7 +148,7 @@ export class HypixelGenerator {
      * - `HypixelApiError` if the Hypixel API response has `success` equal to `false`
      * - `HypixelRequestCallbackError` if the callback throws.
      */
-    private async hypixelRequest(url: string, schemaData: SchemaData, callback?: ApiDataCallback): Promise<Record<string, any>> {
+    private async hypixelRequest(url: string, schema: SchemaContainer, callback?: ApiDataCallback): Promise<Record<string, any>> {
         logger(this.getPercentPrefix() + chalk.dim("Queueing request to ", url))
         await this.nextDelay();
 
@@ -215,26 +178,12 @@ export class HypixelGenerator {
         }
 
         // Post processors can perform mutations on the response, and they can add URLs based on the response
-        let output: Record<string, any> | Record<string, any>[] = json;
-        if(schemaData.postProcess) {
-            output = schemaData.postProcess(json, ([newUrl, newSchema]) => {
-                this.allRequests.set(newUrl, this.hypixelRequest(newUrl, newSchema, callback).catch((e) => this.handleHypixelReqError(url, e)))
-            })
-            // Some things, like current elections or requests for invalid players, aren't always defined. I have
-            // not thought of a great solution other than to skip the value and assume that our schema properly has
-            // that value marked as optional.
-            if(!output) {
-                logger(
-                    this.getPercentPrefix() +
-                    chalk.yellow(`Received "${String(output)}" from post-processor for ${schemaData.defName}. Skipping.`)
-                )
-                this.totalUrlsCompleted++;
-                return json;
-            }
-        }
+        const output: Record<string, any> | Record<string, any>[] = schema.applyTransformers(json, ([newUrl, newSchema]) => {
+            this.allRequests.set(newUrl, this.hypixelRequest(newUrl, newSchema, callback).catch((e) => this.handleHypixelReqError(url, e)))
+        });
         if(callback) {
             try {
-                await callback(url, schemaData, output);
+                await callback(url, schema, output);
             } catch(e) {
                 throw new HypixelRequestCallbackError("The request callback threw an error.", { cause: e })
             }
@@ -255,11 +204,11 @@ export class HypixelGenerator {
         const loggerInterval = setInterval(() => {
             logger(this.getPercentPrefix() + chalk.dim(`${this.getTotalRequests() - this.getCompletedRequests()} outstanding requests to be received and/or processed.`))
         }, 5000)
-        // Jumpstart the generation process by sending requests to all of the initial URLs. Additional URLs may have
-        // requests sent to them by each schema's post-processor.
-        for(const [url, schemaData] of initialGenerationUrlList) {
-            this.allRequests.set(url, this.hypixelRequest(url, schemaData, callback).catch((e) => this.handleHypixelReqError(url, e)))
-        }
+
+        // Load all schemas from the file system. The below callback will be called for each URL added to be queried.
+        await loadAllSchemas((url, schema) => {
+            this.allRequests.set(url, this.hypixelRequest(url, schema, callback).catch((e) => this.handleHypixelReqError(url, e)))
+        })
 
         // Wait for all requests to all URLs to complete. Maps iterate by insertion order, so any requests added later
         // won't be missed.
@@ -289,14 +238,12 @@ export class HypixelGenerator {
             // For singular data entries into a length-one array
             data = Array.isArray(data) ? data : [data];
 
-            const loadedSchema = await this.getSchema(schema);
-            const definitionSchema = loadedSchema.definition;
             logger(this.getPercentPrefix() + chalk.dim(`Loaded schema for request ${reqId}`), true)
 
             // Offload schema updating to a worker thread. This includes compiling the schema. Likely a long delay
             //  between when exec() is called here and when the worker is actually started, as all workers before it run
             //  first.
-            const newDefinitionSchema: JSONSchema4 = await this.pool.exec("updateSchema", [definitionSchema, data as Record<string, any>[]])
+            schema = await this.pool.exec("updateSchema", [schema, data as Record<string, any>[]])
             logger(this.getPercentPrefix() + chalk.dim(`Updated schema for request ${reqId}`), true)
 
             // Sort the schema definition alphanumerically. The schema was served from cache and any updates
@@ -304,7 +251,7 @@ export class HypixelGenerator {
             // this schema could have also been modified by other calls to this callback, and we don't want to overwrite
             // those.
             loadedSchema.schema.definitions![schema.defName] = sortObject(
-                mergeSchemas(newDefinitionSchema, loadedSchema.schema.definitions![schema.defName])
+                mergeSchemas(schemaContainer, loadedSchema.schema.definitions![schema.defName])
             );
             logger(this.getPercentPrefix() + chalk.dim(`Sorted schema for request ${reqId}`), true)
         })
