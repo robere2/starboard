@@ -13935,6 +13935,9 @@
                             "SPECIAL": {
                               "type": "integer"
                             },
+                            "ULTIMATE": {
+                              "type": "integer"
+                            },
                             "UNCOMMON": {
                               "type": "integer"
                             },
@@ -13962,6 +13965,9 @@
                               "type": "integer"
                             },
                             "SPECIAL": {
+                              "type": "integer"
+                            },
+                            "ULTIMATE": {
                               "type": "integer"
                             },
                             "UNCOMMON": {
@@ -14186,6 +14192,9 @@
                           "type": "integer"
                         },
                         "crypt_undead_codename_b": {
+                          "type": "integer"
+                        },
+                        "crypt_undead_connorlinfoot": {
                           "type": "integer"
                         },
                         "crypt_undead_dctr": {
@@ -18369,6 +18378,9 @@
                         "spider_1": {
                           "type": "integer"
                         },
+                        "spider_10": {
+                          "type": "integer"
+                        },
                         "spider_11": {
                           "type": "integer"
                         },
@@ -18897,6 +18909,9 @@
                         "zombie_12": {
                           "type": "integer"
                         },
+                        "zombie_13": {
+                          "type": "integer"
+                        },
                         "zombie_15": {
                           "type": "integer"
                         },
@@ -19028,6 +19043,9 @@
                               "type": "integer"
                             },
                             "none": {
+                              "type": "integer"
+                            },
+                            "null": {
                               "type": "integer"
                             },
                             "total": {
@@ -19439,6 +19457,14 @@
                         "invited_by": {
                           "type": "string"
                         },
+                        "timestamp": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "deletion_notice": {
+                      "properties": {
                         "timestamp": {
                           "type": "integer"
                         }
