@@ -61920,7 +61920,7 @@
                     "type": "integer"
                   },
                   "pricePerUnit": {
-                    "type": "integer"
+                    "type": "number"
                   }
                 },
                 "type": "object"

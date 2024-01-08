@@ -680,6 +680,9 @@
                         "crypt_undead_hypixel_50": {
                           "type": "integer"
                         },
+                        "crypt_undead_jayavarmen_45": {
+                          "type": "integer"
+                        },
                         "crypt_undead_likaos_40": {
                           "type": "integer"
                         },
@@ -6710,6 +6713,17 @@
                         }
                       },
                       "type": "object"
+                    },
+                    "miscellaneous": {
+                      "properties": {
+                        "max_kills_visible": {
+                          "type": "boolean"
+                        },
+                        "milestones_notifications": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
                     }
                   },
                   "type": "object"
@@ -10066,6 +10080,9 @@
                         "ABSOLUTE_ENDER_PEARL": {
                           "type": "integer"
                         },
+                        "AGARIMOO_TONGUE": {
+                          "type": "integer"
+                        },
                         "APPLE": {
                           "type": "integer"
                         },
@@ -10073,6 +10090,9 @@
                           "type": "integer"
                         },
                         "BEZOS": {
+                          "type": "integer"
+                        },
+                        "BIOFUEL": {
                           "type": "integer"
                         },
                         "BLAZE_ASHES": {
@@ -11072,6 +11092,9 @@
                           "type": "integer"
                         },
                         "RED_ROSE:8": {
+                          "type": "integer"
+                        },
+                        "REFINED_MINERAL": {
                           "type": "integer"
                         },
                         "REKINDLED_EMBER_FRAGMENT": {
@@ -12823,6 +12846,14 @@
                                   "type": "integer"
                                 },
                                 "talked_to": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "pet_trainer": {
+                              "properties": {
+                                "completed_quest": {
                                   "type": "boolean"
                                 }
                               },
@@ -19056,6 +19087,9 @@
                             "none": {
                               "type": "integer"
                             },
+                            "null": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -19082,6 +19116,9 @@
                             "none": {
                               "type": "integer"
                             },
+                            "null": {
+                              "type": "integer"
+                            },
                             "total": {
                               "type": "integer"
                             }
@@ -19106,6 +19143,9 @@
                               "type": "integer"
                             },
                             "none": {
+                              "type": "integer"
+                            },
+                            "null": {
                               "type": "integer"
                             },
                             "total": {
