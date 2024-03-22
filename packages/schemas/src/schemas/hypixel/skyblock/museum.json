@@ -2301,6 +2301,28 @@
               },
               "type": "object"
             },
+            "FISHERMAN": {
+              "properties": {
+                "borrowing": {
+                  "type": "boolean"
+                },
+                "donated_time": {
+                  "type": "integer"
+                },
+                "items": {
+                  "properties": {
+                    "data": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "FLAME_BREAKER": {
               "properties": {
                 "borrowing": {
