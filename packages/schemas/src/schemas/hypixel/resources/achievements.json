@@ -4547,6 +4547,146 @@
                   },
                   "type": "object"
                 },
+                "SLUMBER_FORGED_IN_FIRE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_HOTEL_REGULAR": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_HOTEL_VIP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_MILLIONAIRES_CLUB": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_SOLD_THE_DREAMSCAPE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_YOUR_JOURNEY_STARTS_HERE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_YOU_DID_IT": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "SNEAKY_RUSHER": {
                   "properties": {
                     "description": {
@@ -4916,6 +5056,9 @@
                   "properties": {
                     "description": {
                       "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -34085,6 +34228,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"

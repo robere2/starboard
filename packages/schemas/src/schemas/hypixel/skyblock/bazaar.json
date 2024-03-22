@@ -636,6 +636,154 @@
           },
           "type": "object"
         },
+        "ARACHNE_FANG": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "ARACHNE_FRAGMENT": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "ARACHNE_KEEPER_FRAGMENT": {
           "properties": {
             "buy_summary": {
@@ -61939,7 +62087,7 @@
                   "type": "integer"
                 },
                 "buyPrice": {
-                  "type": "integer"
+                  "type": "number"
                 },
                 "buyVolume": {
                   "type": "integer"
@@ -72639,6 +72787,80 @@
           "type": "object"
         },
         "GRIFFIN_FEATHER": {
+          "properties": {
+            "buy_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "product_id": {
+              "type": "string"
+            },
+            "quick_status": {
+              "properties": {
+                "buyMovingWeek": {
+                  "type": "integer"
+                },
+                "buyOrders": {
+                  "type": "integer"
+                },
+                "buyPrice": {
+                  "type": "number"
+                },
+                "buyVolume": {
+                  "type": "integer"
+                },
+                "productId": {
+                  "type": "string"
+                },
+                "sellMovingWeek": {
+                  "type": "integer"
+                },
+                "sellOrders": {
+                  "type": "integer"
+                },
+                "sellPrice": {
+                  "type": "number"
+                },
+                "sellVolume": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "sell_summary": {
+              "items": {
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "orders": {
+                    "type": "integer"
+                  },
+                  "pricePerUnit": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "GUARDIAN_LUCKY_BLOCK": {
           "properties": {
             "buy_summary": {
               "items": {

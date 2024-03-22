@@ -229,11 +229,20 @@
             "city_project": {
               "type": "string"
             },
+            "colors": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
             "consumed_item": {
               "type": "string"
             },
             "cooldown_seconds": {
               "type": "number"
+            },
+            "cycle_back": {
+              "type": "boolean"
             },
             "damage_multiplier": {
               "type": "number"
