@@ -73,7 +73,7 @@ export class HypixelGenerator {
     }
 
     public async nextDelay(): Promise<void> {
-        await new Promise(resolve => setTimeout(resolve, 250 * this.getTotalRequests()))
+        await new Promise(resolve => setTimeout(resolve, 500 * this.getTotalRequests()))
     }
 
     /**
