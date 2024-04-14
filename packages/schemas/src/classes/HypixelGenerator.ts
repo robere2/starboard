@@ -36,7 +36,7 @@ export class HypixelGenerator {
     /**
      * Worker pool is used to offload the CPU-heavy tasks of compiling, validating, and updating the schema.
      */
-    private readonly pool = workerpool.pool(join(__dirname, 'generator-worker.ts'), {
+    private readonly pool = workerpool.pool(join(__dirname, '..', 'generator-worker.ts'), {
         maxWorkers: parseInt(process.env.HYPIXEL_GEN_MAX_WORKERS ?? "") || os.cpus().length - 1
     });
     /**
