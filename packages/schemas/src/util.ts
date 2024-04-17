@@ -292,6 +292,7 @@ export function matchingPatternProperty(propName: string, schema: JSONSchema4): 
  * @returns A new schema that complies with both the `base` and `source` schemas.
  *
  * @example
+ * ```ts
  * const schemaOne = {
  *   "anyOf": [
  *     {
@@ -485,4 +486,53 @@ export function getFullStack(e: unknown): string {
         str += `\nCause: ${ getFullStack(e.cause) }`;
     }
     return str;
+}
+
+/**
+ * Visits each property/element in a given value and invokes a callback function on it. This is done recursively.
+ * The callback will not be called at all for non-objects/arrays.
+ *
+ * @param {any} value - The value to visit.
+ * @param {function} callback - The callback function to invoke on each element. It takes two parameters:
+ *  - key {string | number}: The key or index of the current element being visited.
+ *  - parent {any}: The parent object or array being visited.
+ * The return value of the callback will replace the current element in the value.
+ * @example
+ * // This example appends '_processed' to each string value
+ * const obj = {
+ *  name: "John",
+ *  age: 30,
+ *  city: "New York",
+ *  hobbies: ["Football", "Reading"]
+ * };
+ *
+ * visit(obj, (key, parent) => {
+ *  const value = parent[key];
+ *  if (typeof value === "string") {
+ *    return value + "_processed";
+ *  }
+ *  return value;
+ * });
+ *
+ * console.log(obj)
+ *
+ * // {
+ * //  name: 'John_processed',
+ * //  age: 30,
+ * //  city: 'New York_processed',
+ * //  hobbies: [ 'Football_processed', 'Reading_processed' ]
+ * // }
+ */
+export function visit(value: any, callback: (key: string | number, parent: any) => any) {
+    if(Array.isArray(value)) {
+        for(let i = 0; i < value.length; i++) {
+            value[i] = callback(i, value);
+            visit(value[i], callback)
+        }
+    } else if(typeof value === "object" && value !== null) {
+        for(const prop in value) {
+            value[prop] = callback(prop, value)
+            visit(value[prop], callback);
+        }
+    }
 }
