@@ -7,15 +7,14 @@ import {JSONSchema4} from "json-schema";
  */
 export class SchemaContainer<T = unknown> {
 
-    public ajv: Ajv;
-
+    private _ajv?: Ajv;
+    private readonly ajvOptions: Options;
     private _schema: JSONSchema4;
-
     private cachedValidate?: ValidateFunction<T>;
 
     constructor(options: Options, schema: JSONSchema4) {
-        this.ajv = new Ajv(options);
         this._schema = schema;
+        this.ajvOptions = options;
     }
 
     public set schema(val: JSONSchema4) {
@@ -29,6 +28,13 @@ export class SchemaContainer<T = unknown> {
 
     public get schema() {
         return structuredClone(this._schema);
+    }
+
+    public get ajv(): Ajv {
+        if(!this._ajv) {
+            this._ajv = new Ajv(this.ajvOptions);
+        }
+        return this._ajv;
     }
 
     public get validate(): ValidateFunction<T> {
