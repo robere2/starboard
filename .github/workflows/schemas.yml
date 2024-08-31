@@ -52,3 +52,11 @@ jobs:
         body: |
           Changes were detected in the Hypixel API. This PR includes recommended changes. This system is still 
           experimental, so all changes should be reviewed before merging.
+  keepalive-job:
+    name: Keepalive Workflow
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2
