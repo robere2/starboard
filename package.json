@@ -25,7 +25,7 @@
     "eslint": "^8.48.0",
     "eslint-plugin-vue": "^9.17.0",
     "globstar": "^1.0.0",
-    "lerna": "^7.3.1",
+    "lerna": "^8.1.8",
     "madge": "^6.1.0",
     "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
