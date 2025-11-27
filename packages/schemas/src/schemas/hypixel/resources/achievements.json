@@ -2081,6 +2081,92 @@
                   },
                   "type": "object"
                 },
+                "ZOMBIES_PRISON_COMPUTERS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ZOMBIES_PRISON_ESCAPE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ZOMBIES_PRISON_SECRET_BEYOND": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ZOMBIES_PRISON_TURRET": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "ZOMBIES_SPEED_RUNNER": {
                   "properties": {
                     "description": {
@@ -2162,6 +2248,26 @@
                   "type": "object"
                 },
                 "ZOMBIES_TIME_TRIAL_DEAD": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ZOMBIES_TIME_TRIAL_PRISON": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -4207,6 +4313,26 @@
                   },
                   "type": "object"
                 },
+                "FUTURE_IS_NOW": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "GEARED_UP": {
                   "properties": {
                     "description": {
@@ -4467,6 +4593,26 @@
                   },
                   "type": "object"
                 },
+                "RETURN_TO_SPAMMER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "REVENGE": {
                   "properties": {
                     "description": {
@@ -4528,6 +4674,146 @@
                   "type": "object"
                 },
                 "SLAYER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_FORGED_IN_FIRE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_HOTEL_REGULAR": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_HOTEL_VIP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_MILLIONAIRES_CLUB": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_SOLD_THE_DREAMSCAPE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_YOUR_JOURNEY_STARTS_HERE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_YOU_DID_IT": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -4913,6 +5199,37 @@
                   "type": "object"
                 },
                 "LOOT_BOX": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SLUMBER_TICKET_MASTER": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -6753,6 +7070,26 @@
           "properties": {
             "one_time": {
               "properties": {
+                "ALL_KNOWING": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "ARTIST": {
                   "properties": {
                     "description": {
@@ -6873,6 +7210,26 @@
                   },
                   "type": "object"
                 },
+                "GRAND_SLAM": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "GUESSING_STREAK": {
                   "properties": {
                     "description": {
@@ -6914,6 +7271,26 @@
                   "type": "object"
                 },
                 "LEGENDARY": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LOCKED_IN": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -7053,7 +7430,130 @@
                   },
                   "type": "object"
                 },
+                "PAID_HOURLY": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PERFECTCEPTION": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PERFECTCEPTIONCEPTION": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PERFECTION": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PERFECTLY_BALANCED": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "PERFECT_HARMONY": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PODIUM_POSITION": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -7094,6 +7594,26 @@
                   "type": "object"
                 },
                 "PRO_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RENOWNED_BUILDER": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -7357,6 +7877,62 @@
                     }
                   },
                   "type": "object"
+                },
+                "SPEED_BUILDERS_PERFECTIONIST": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SPEED_BUILDERS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
                 }
               },
               "type": "object"
@@ -7466,6 +8042,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -7827,6 +8406,26 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HUNT_BEGINS_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -7871,6 +8470,23 @@
                   "type": "object"
                 },
                 "ICE_SPREADER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "KNEAD_NO_MORE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -8166,6 +8782,26 @@
                   "type": "object"
                 },
                 "REAL_SANTA_2023": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "REAL_SANTA_2024": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -8530,6 +9166,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -8769,6 +9408,37 @@
                     "description": {
                       "type": "string"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ADVENT_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -8849,6 +9519,34 @@
                   "type": "object"
                 },
                 "PRESENT_COLLECTOR": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PROTEGE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -9221,6 +9919,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -9651,6 +10352,26 @@
                   },
                   "type": "object"
                 },
+                "RUBBING_IT_IN": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "RUN_AWAY": {
                   "properties": {
                     "description": {
@@ -9692,6 +10413,29 @@
                   "type": "object"
                 },
                 "SECRET_ORDER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SNAZZY": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -9812,6 +10556,26 @@
                   "type": "object"
                 },
                 "STREET_ARTIST": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "STYLISTIC": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -10084,6 +10848,34 @@
                   },
                   "type": "object"
                 },
+                "ASSASSIN": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
                 "BOMB_SPECIALIST": {
                   "properties": {
                     "description": {
@@ -10225,6 +11017,34 @@
                   "type": "object"
                 },
                 "PRACTICE_MAKES_PERFECT": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PROMISING_RECRUIT": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -10427,6 +11247,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -10624,6 +11447,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -10743,6 +11569,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -11081,6 +11910,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -11357,10 +12189,125 @@
                   },
                   "type": "object"
                 },
+                "BED_WARS_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "BLITZ_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "BOW_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "BOXING_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
                 "BRIDGE_DOUBLES_WINS": {
                   "properties": {
                     "description": {
                       "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -11390,6 +12337,9 @@
                     "description": {
                       "type": "string"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -11418,6 +12368,9 @@
                     "description": {
                       "type": "string"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -11445,6 +12398,9 @@
                   "properties": {
                     "description": {
                       "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -11498,6 +12454,65 @@
                   "type": "object"
                 },
                 "BRIDGE_WIN_STREAK": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CLASSIC_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "COMBO_DUELS_WINNER": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -11701,6 +12716,261 @@
                     "description": {
                       "type": "string"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MEGA_WALLS_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "NO_DEBUFF_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "OP_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PARKOUR_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "QUAKECRAFT_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SKYWARS_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SPLEEF_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SUMO_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "UHC_DUELS_WINNER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -11728,6 +12998,9 @@
                   "properties": {
                     "description": {
                       "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -11837,6 +13110,43 @@
                   "type": "object"
                 },
                 "ALL_EGGS_2023": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ALL_EGGS_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ALL_EGGS_2025": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -12133,6 +13443,43 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FIRST_EGG_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FIRST_EGG_2025": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -12218,6 +13565,43 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HAPPY_EASTER_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HAPPY_EASTER_2025": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -12251,6 +13635,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -12404,6 +13791,23 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SPRINGY_BINGO": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -12765,6 +14169,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -12992,6 +14399,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -13025,6 +14435,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -13222,6 +14635,43 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "TREASURE_HUNT_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "TREASURE_HUNT_2025": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -13336,6 +14786,9 @@
                   "properties": {
                     "description": {
                       "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -14465,6 +15918,43 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ALL_BASKETS_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ALL_BASKETS_2025": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -14771,6 +16261,43 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FIVE_BASKETS_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FIVE_BASKETS_2025": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -14906,6 +16433,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -15120,6 +16650,23 @@
                   },
                   "type": "object"
                 },
+                "REACH_PUMPKIN_MILESTONE_V": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "RISING_DEAD": {
                   "properties": {
                     "description": {
@@ -15213,6 +16760,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -15230,6 +16780,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -15246,6 +16799,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -17355,6 +18911,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -22136,6 +23695,29 @@
                   },
                   "type": "object"
                 },
+                "DEFEAT_SUN_GECKO": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "DIDNT_MEAN_TO": {
                   "properties": {
                     "description": {
@@ -22428,6 +24010,26 @@
                   },
                   "type": "object"
                 },
+                "EVOLUTION": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "EXISTENTIAL_REVELATIONS": {
                   "properties": {
                     "description": {
@@ -22574,6 +24176,29 @@
                   },
                   "type": "object"
                 },
+                "FINALLY_OVER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "FLAMIN_HOT": {
                   "properties": {
                     "description": {
@@ -22615,6 +24240,26 @@
                   "type": "object"
                 },
                 "FORBIDDEN_FRUIT": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FORGOTTEN_SHRINE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -22734,6 +24379,29 @@
                   },
                   "type": "object"
                 },
+                "GENIUS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "GERONIMO": {
                   "properties": {
                     "description": {
@@ -22817,6 +24485,26 @@
                   },
                   "type": "object"
                 },
+                "GOTCHA": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "GOTTAGOFAST": {
                   "properties": {
                     "description": {
@@ -22838,6 +24526,26 @@
                   "type": "object"
                 },
                 "GOTTA_GO_FAST": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HANDYMAN": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -22893,6 +24601,29 @@
                     },
                     "points": {
                       "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HASTA_LA_VISTA": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"
@@ -23363,6 +25094,26 @@
                   },
                   "type": "object"
                 },
+                "JADE_DRAGONS_EGG": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "JAKES_MYSTERY": {
                   "properties": {
                     "description": {
@@ -23706,6 +25457,29 @@
                   },
                   "type": "object"
                 },
+                "MAXIMUM_POWER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "MEAL_FIT_FOR_A_KING": {
                   "properties": {
                     "description": {
@@ -23868,6 +25642,29 @@
                     },
                     "points": {
                       "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "NOT_THE_EXIT": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"
@@ -24278,6 +26075,29 @@
                   },
                   "type": "object"
                 },
+                "RETURN_FROM_BREACH": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "RING_RING_WHOS_THIS": {
                   "properties": {
                     "description": {
@@ -24525,6 +26345,26 @@
                   "type": "object"
                 },
                 "SERIOUSLY": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SHINE_BRIGHT": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -24970,6 +26810,26 @@
                   },
                   "type": "object"
                 },
+                "THE_FAMILY": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "THE_FLASH": {
                   "properties": {
                     "description": {
@@ -25236,6 +27096,29 @@
                   },
                   "type": "object"
                 },
+                "TRAGEDY_REVERSED": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "TREASURE_FISHING": {
                   "properties": {
                     "description": {
@@ -25399,6 +27282,29 @@
                   },
                   "type": "object"
                 },
+                "WATCHFUL_PRESENCE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "WATCH_ME_SHINE": {
                   "properties": {
                     "description": {
@@ -25439,6 +27345,26 @@
                   },
                   "type": "object"
                 },
+                "WEIRD_SCIENCE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "WELCOME_TO_MY_FACTORY": {
                   "properties": {
                     "description": {
@@ -25455,6 +27381,29 @@
                     },
                     "points": {
                       "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WIZARD_FOOD_CHAIN": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"
@@ -25595,6 +27544,29 @@
                     },
                     "points": {
                       "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ZOOP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"
@@ -26025,6 +27997,34 @@
                   "type": "object"
                 },
                 "PEOPLE_PLEASER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "PREDATOR": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -27095,6 +29095,26 @@
           "properties": {
             "one_time": {
               "properties": {
+                "ALL_PERKS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "ASHES_TO_ASHES": {
                   "properties": {
                     "description": {
@@ -27133,6 +29153,46 @@
                   "type": "object"
                 },
                 "BALLER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "BLASPHEMOUS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CHALLENGER": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -27370,6 +29430,26 @@
                   "type": "object"
                 },
                 "CRIMINAL": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DIGGING_THROUGH_THE_DESCENT": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -27790,6 +29870,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -28248,6 +30331,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -28416,6 +30502,34 @@
                   "type": "object"
                 },
                 "KILLS_MEGA": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "KILLS_MINI": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -28696,6 +30810,34 @@
                   "type": "object"
                 },
                 "WINS_MEGA": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WINS_MINI": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -29733,6 +31875,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -29818,6 +31963,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -29885,6 +32033,23 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RELAXING_BINGO": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -30894,6 +33059,26 @@
           "properties": {
             "one_time": {
               "properties": {
+                "BEYOND_EXPECTATIONS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "BOW_SPLEEF_DOUBLE_JUMP_UPGRADE": {
                   "properties": {
                     "description": {
@@ -30904,6 +33089,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -30924,6 +33112,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -30965,6 +33156,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -30985,6 +33179,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -30995,6 +33192,26 @@
                   "type": "object"
                 },
                 "BYE_BYE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CANT_STOP_WONT_STOP": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -31114,6 +33331,26 @@
                   },
                   "type": "object"
                 },
+                "FREE_POINTS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "GRAND_MASTER": {
                   "properties": {
                     "description": {
@@ -31154,6 +33391,46 @@
                   },
                   "type": "object"
                 },
+                "HOLE_IN_MY_POCKET": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "INFINITE_JUMP_GLITCH": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "JACK_OF_ALL": {
                   "properties": {
                     "description": {
@@ -31175,6 +33452,26 @@
                   "type": "object"
                 },
                 "KANGAROO": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LEAVE_ME_ALONE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -31284,6 +33581,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -31525,6 +33825,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -31555,6 +33858,26 @@
                   "type": "object"
                 },
                 "PVP_RUN_TRIPLE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "QUARANTINE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -31795,6 +34118,26 @@
                   "type": "object"
                 },
                 "THAT_WAS_CLOSE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "THERE_AND_BACK_AGAIN": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -32065,6 +34408,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -32314,6 +34660,26 @@
                   },
                   "type": "object"
                 },
+                "VARIETY_SHOW": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "WIN_STREAK": {
                   "properties": {
                     "description": {
@@ -32385,6 +34751,9 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -32424,6 +34793,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -32613,6 +34985,26 @@
                     }
                   },
                   "type": "object"
+                },
+                "WRONG_GAME": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
                 }
               },
               "type": "object"
@@ -32703,6 +35095,34 @@
                   },
                   "type": "object"
                 },
+                "POWER_HUNGRY": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
                 "PVP_RUN_KILLER": {
                   "properties": {
                     "description": {
@@ -32732,6 +35152,34 @@
                   "type": "object"
                 },
                 "PVP_RUN_WINS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "THE_UPPER_HAND": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -34085,6 +36533,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -36541,6 +38992,26 @@
           "properties": {
             "one_time": {
               "properties": {
+                "ABIL_SPAMMER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "ADVANCED_STRATEGIES": {
                   "properties": {
                     "description": {
@@ -36551,6 +39022,9 @@
                     },
                     "globalPercentUnlocked": {
                       "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
                     },
                     "name": {
                       "type": "string"
@@ -36582,6 +39056,26 @@
                   "type": "object"
                 },
                 "ALOTV1": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ASHES_TO_ASHES": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -36701,6 +39195,26 @@
                   },
                   "type": "object"
                 },
+                "BEYOND_THE_GRAVE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "BIOLOGICAL_RESTORATION": {
                   "properties": {
                     "description": {
@@ -36722,6 +39236,26 @@
                   "type": "object"
                 },
                 "BIRDS_EYE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "BLAZECALLER": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -36881,6 +39415,26 @@
                   },
                   "type": "object"
                 },
+                "BURIAL_AT_SEA": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "CAKE_HUNTER_2": {
                   "properties": {
                     "description": {
@@ -36901,7 +39455,47 @@
                   },
                   "type": "object"
                 },
+                "CALL_IT_A_COMEBACK": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "CAPTAIN_COMBO": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CHASED_DOWN": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -36942,6 +39536,26 @@
                   "type": "object"
                 },
                 "CIRCLE_OF_TRUST": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "COLLATERAL": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37021,7 +39635,90 @@
                   },
                   "type": "object"
                 },
+                "COMPLETIONIST": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CONFIGURATION": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "CONSTRUCTOR": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CONTRACT_KILLER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CROSSFIRE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37061,7 +39758,67 @@
                   },
                   "type": "object"
                 },
+                "CURRENT_OBJECTIVE_SURVIVE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "DEATH_FROM_ABOVE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DELAYING_THE_INEVITABLE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DERPBRINES_REVENGE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37101,7 +39858,67 @@
                   },
                   "type": "object"
                 },
+                "DRAGONBORN": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DRAGONS_EYE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "EMP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "END_TO_END": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37141,7 +39958,47 @@
                   },
                   "type": "object"
                 },
+                "EVERBLIND": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "EXCHANGE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "EXPLOSIVE_ENDING": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37201,7 +40058,47 @@
                   },
                   "type": "object"
                 },
+                "FIERY_TOMB": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "FIND_CHEST": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FINE_DINING": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37281,7 +40178,47 @@
                   },
                   "type": "object"
                 },
+                "FRIGHTFUL_FLAMES": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "FROSTY_FRIENDSHIP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "GATHERING_TALENT_INDEED": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37361,6 +40298,26 @@
                   },
                   "type": "object"
                 },
+                "GRAVE_DIGGER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "GRAVE_ROBBER": {
                   "properties": {
                     "description": {
@@ -37382,6 +40339,26 @@
                   "type": "object"
                 },
                 "GREAT_WHITE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "GUARDIAN_ANGEL": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37521,6 +40498,26 @@
                   },
                   "type": "object"
                 },
+                "HOWLING_MOON": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "HUG_ME": {
                   "properties": {
                     "description": {
@@ -37542,6 +40539,26 @@
                   "type": "object"
                 },
                 "HUNTING_SEASON": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "INSTABOOM": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37601,6 +40618,26 @@
                   },
                   "type": "object"
                 },
+                "IRON_HEARTED": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "ITS_ALL_OGRE_NOW": {
                   "properties": {
                     "description": {
@@ -37641,6 +40678,26 @@
                   },
                   "type": "object"
                 },
+                "I_DONT_FEEL_SO_GOOD": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "I_FEEL_SICK": {
                   "properties": {
                     "description": {
@@ -37661,7 +40718,87 @@
                   },
                   "type": "object"
                 },
+                "JUDGEMENT_CALL": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "KINGMAKER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LADY_LUCK": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "LASER_PRECISION": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LEGENDARY_ANGEL": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -37782,6 +40919,26 @@
                   "type": "object"
                 },
                 "LEGENDARY_CREEPER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LEGENDARY_DRAGON": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -38041,6 +41198,26 @@
                   },
                   "type": "object"
                 },
+                "LEGENDARY_SHEEP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "LEGENDARY_SKELETON": {
                   "properties": {
                     "description": {
@@ -38161,6 +41338,46 @@
                   },
                   "type": "object"
                 },
+                "LIGHT_EM_UP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LIVING_ON_THE_EDGE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "LOUIS": {
                   "properties": {
                     "description": {
@@ -38182,6 +41399,26 @@
                   "type": "object"
                 },
                 "LUCKY_SUNNY": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MAGICAL_PARTY": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -38481,6 +41718,26 @@
                   },
                   "type": "object"
                 },
+                "MR_CLUTCHERSON": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "MUCH_DOGS": {
                   "properties": {
                     "description": {
@@ -38561,7 +41818,107 @@
                   },
                   "type": "object"
                 },
+                "NOM_NOM": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "NOT_A_GOLEM": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "OCEANS_DEFENDER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "OCEANS_EXPLORER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ONE_GIANT_LEAP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "ONE_WITH_NATURE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -38621,6 +41978,26 @@
                   },
                   "type": "object"
                 },
+                "PERFECT_DISGUISE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "POTIONS_OF_DEATH": {
                   "properties": {
                     "description": {
@@ -38641,7 +42018,47 @@
                   },
                   "type": "object"
                 },
+                "RANGED_TRAINING": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "READY_SET_BOOM": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "REBORN": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -38702,6 +42119,26 @@
                   "type": "object"
                 },
                 "REVENGE_OF_THE_WOLVES": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "REWRITING_FATE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -38801,6 +42238,46 @@
                   },
                   "type": "object"
                 },
+                "SIMMER_DOWN": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SIXTY_FEET_UNDER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "SKELETONS_BEST_FRIEND": {
                   "properties": {
                     "description": {
@@ -38862,6 +42339,46 @@
                   "type": "object"
                 },
                 "SNEAK_ATTACK": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SNOWBALL_FIGHT": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SOULS_BOUND": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -38981,6 +42498,46 @@
                   },
                   "type": "object"
                 },
+                "TARGET_ELIMINATED": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "TEAMKILL": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "TEAM_PLAYER": {
                   "properties": {
                     "description": {
@@ -39022,6 +42579,66 @@
                   "type": "object"
                 },
                 "THANKS_CONNOR": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "THE_CHOSEN_FEW": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "THE_HAND_THAT_FEEDS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "THINK_TWICE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -39181,6 +42798,26 @@
                   },
                   "type": "object"
                 },
+                "TOUGH_SKIN": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "TO_INFINITY": {
                   "properties": {
                     "description": {
@@ -39221,6 +42858,46 @@
                   },
                   "type": "object"
                 },
+                "TRIPLESHOT": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "TRUE_TELEPORTER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "TRUST_ME_IM_A_DOCTOR": {
                   "properties": {
                     "description": {
@@ -39241,7 +42918,87 @@
                   },
                   "type": "object"
                 },
+                "UNBRIDLED_RICHES": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "UNSTOPPABLE_FORCE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "UNTOUCHABLE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "UNWAVERING": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "VEGETARIAN": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -39401,6 +43158,46 @@
                   },
                   "type": "object"
                 },
+                "WOOLLY_RESPITE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WORLD_ENDER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "WUNDERBAR": {
                   "properties": {
                     "description": {
@@ -39422,6 +43219,26 @@
                   "type": "object"
                 },
                 "YEEHAW": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "YOUNG_THUG": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -41011,6 +44828,66 @@
                   },
                   "type": "object"
                 },
+                "ALL_ABOARD": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CHROMATIC": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "COMEBACK": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "ENDERMAN": {
                   "properties": {
                     "description": {
@@ -41034,7 +44911,87 @@
                   },
                   "type": "object"
                 },
+                "FAIR_AND_SQUARE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FASHIONABLY_LATE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "FIRST": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "FIRST_BLOOD": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HEY_THERE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -41074,6 +45031,26 @@
                   },
                   "type": "object"
                 },
+                "I_CAN_BE_ANYTHING": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "KEYSTONE": {
                   "properties": {
                     "description": {
@@ -41094,6 +45071,29 @@
                   },
                   "type": "object"
                 },
+                "MAGICIAN": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
                 "MERCILESS": {
                   "properties": {
                     "description": {
@@ -41110,6 +45110,169 @@
                     },
                     "points": {
                       "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MISSING_THE_POINT": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MVP": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "NINJA": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "NO_NEED_BRO": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RESILIENT": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RIGHT_PLACE_RIGHT_TIME": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SAFETY_IS_AN_ILLUSION": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SHOPPING_FOR_WOOL": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"
@@ -41135,6 +45298,26 @@
                   "type": "object"
                 },
                 "SURVIVOR": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "THE_BEST_OFFENSE": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -41199,7 +45382,175 @@
             },
             "tiered": {
               "properties": {
+                "CAPTURE_THE_WOOL_SLAYER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "CAPTURE_THE_WOOL_SMUGGLER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
                 "MOUNTAIN_OF_WOOL": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SHEEP_WARS_SHARPSHOOTER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SHEEP_WARS_SHEEP_SLAYER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SHEEP_WARS_SLAYER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SHEEP_WARS_WINNER": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -41256,6 +45607,90 @@
                   "type": "object"
                 },
                 "WOOL_KILLS": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WOOL_WARS_CAPTURER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WOOL_WARS_SLAYER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "WOOL_WARS_WINNER": {
                   "properties": {
                     "description": {
                       "type": "string"

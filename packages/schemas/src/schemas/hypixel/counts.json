@@ -109,6 +109,9 @@
                     },
                     "ZOMBIES_DEAD_END": {
                       "type": "integer"
+                    },
+                    "ZOMBIES_PRISON": {
+                      "type": "integer"
                     }
                   },
                   "type": "object"
@@ -145,7 +148,13 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "BEDWARS_CASTLE": {
+                      "type": "integer"
+                    },
                     "BEDWARS_EIGHT_ONE": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_EIGHT_ONE_ONEBLOCK": {
                       "type": "integer"
                     },
                     "BEDWARS_EIGHT_TWO": {
@@ -188,6 +197,9 @@
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR_ULTIMATE": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_FOUR_FOUR_UNDERWORLD": {
                       "type": "integer"
                     },
                     "BEDWARS_FOUR_FOUR_VOIDLESS": {
@@ -236,6 +248,9 @@
                     "BUILD_BATTLE_SOLO_PRO": {
                       "type": "integer"
                     },
+                    "BUILD_BATTLE_SPEED_BUILDERS": {
+                      "type": "integer"
+                    },
                     "BUILD_BATTLE_TEAMS_NORMAL": {
                       "type": "integer"
                     }
@@ -252,6 +267,12 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "BEDWARS_TWO_ONE_DUELS": {
+                      "type": "integer"
+                    },
+                    "BEDWARS_TWO_ONE_DUELS_RUSH": {
+                      "type": "integer"
+                    },
                     "DUELS_BLITZ_DUEL": {
                       "type": "integer"
                     },
@@ -285,6 +306,9 @@
                     "DUELS_CAPTURE_THREES": {
                       "type": "integer"
                     },
+                    "DUELS_CLASSIC_DOUBLES": {
+                      "type": "integer"
+                    },
                     "DUELS_CLASSIC_DUEL": {
                       "type": "integer"
                     },
@@ -310,6 +334,12 @@
                       "type": "integer"
                     },
                     "DUELS_POTION_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_QUAKE_DUEL": {
+                      "type": "integer"
+                    },
+                    "DUELS_SPLEEF_DUEL": {
                       "type": "integer"
                     },
                     "DUELS_SUMO_DUEL": {
@@ -473,6 +503,14 @@
             },
             "PROTOTYPE": {
               "properties": {
+                "modes": {
+                  "properties": {
+                    "DISASTERS": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "players": {
                   "type": "integer"
                 }
@@ -534,7 +572,13 @@
                     "farming_1": {
                       "type": "integer"
                     },
+                    "fishing_1": {
+                      "type": "integer"
+                    },
                     "foraging_1": {
+                      "type": "integer"
+                    },
+                    "foraging_2": {
                       "type": "integer"
                     },
                     "garden": {
@@ -543,7 +587,13 @@
                     "hub": {
                       "type": "integer"
                     },
+                    "instanced": {
+                      "type": "integer"
+                    },
                     "kuudra": {
+                      "type": "integer"
+                    },
+                    "mineshaft": {
                       "type": "integer"
                     },
                     "mining_1": {
@@ -574,10 +624,19 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "mega_doubles": {
+                      "type": "integer"
+                    },
                     "mega_normal": {
                       "type": "integer"
                     },
+                    "mini_normal": {
+                      "type": "integer"
+                    },
                     "solo_insane": {
+                      "type": "integer"
+                    },
+                    "solo_insane_hunters_vs_beasts": {
                       "type": "integer"
                     },
                     "solo_insane_lucky": {
@@ -599,6 +658,15 @@
                       "type": "integer"
                     },
                     "teams_insane_lucky": {
+                      "type": "integer"
+                    },
+                    "teams_insane_rush": {
+                      "type": "integer"
+                    },
+                    "teams_insane_slime": {
+                      "type": "integer"
+                    },
+                    "teams_insane_tnt_madness": {
                       "type": "integer"
                     },
                     "teams_normal": {
@@ -727,6 +795,9 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "BRAWL_DUO": {
+                      "type": "integer"
+                    },
                     "SOLO": {
                       "type": "integer"
                     },
@@ -765,6 +836,12 @@
               "properties": {
                 "modes": {
                   "properties": {
+                    "capture_the_wool_two_twenty": {
+                      "type": "integer"
+                    },
+                    "sheep_wars_two_six": {
+                      "type": "integer"
+                    },
                     "wool_wars_two_four": {
                       "type": "integer"
                     }
