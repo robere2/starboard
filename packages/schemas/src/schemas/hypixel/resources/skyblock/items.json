@@ -174,6 +174,26 @@
                 },
                 "type": "array"
               },
+              "requirements": {
+                "items": {
+                  "properties": {
+                    "data_key": {
+                      "type": "string"
+                    },
+                    "operator": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
               "slot_type": {
                 "type": "string"
               }
@@ -517,6 +537,1002 @@
         "museum": {
           "type": "boolean"
         },
+        "museum_data": {
+          "properties": {
+            "armor_set_donation_xp": {
+              "properties": {
+                "ABYSSAL": {
+                  "type": "integer"
+                },
+                "ADAPTIVE": {
+                  "type": "integer"
+                },
+                "ANGLER": {
+                  "type": "integer"
+                },
+                "ARACHNE": {
+                  "type": "integer"
+                },
+                "ARMOR_OF_THE_PACK": {
+                  "type": "integer"
+                },
+                "ARMOR_OF_YOG": {
+                  "type": "integer"
+                },
+                "AURORA": {
+                  "type": "integer"
+                },
+                "BACKWATER": {
+                  "type": "integer"
+                },
+                "BAT_PERSON": {
+                  "type": "integer"
+                },
+                "BERSERKER": {
+                  "type": "integer"
+                },
+                "BIOHAZARD": {
+                  "type": "integer"
+                },
+                "BLAZE": {
+                  "type": "integer"
+                },
+                "BLOSSOM": {
+                  "type": "integer"
+                },
+                "BOUNCY": {
+                  "type": "integer"
+                },
+                "BRONZE_HUNTER": {
+                  "type": "integer"
+                },
+                "CACTUS": {
+                  "type": "integer"
+                },
+                "CANOPY": {
+                  "type": "integer"
+                },
+                "CELESTE": {
+                  "type": "integer"
+                },
+                "CHALLENGER": {
+                  "type": "integer"
+                },
+                "CHEAP_TUXEDO": {
+                  "type": "integer"
+                },
+                "CRIMSON": {
+                  "type": "integer"
+                },
+                "CRIMSON_HUNTER": {
+                  "type": "integer"
+                },
+                "CROPIE": {
+                  "type": "integer"
+                },
+                "CRYSTAL": {
+                  "type": "integer"
+                },
+                "DIAMOND_HUNTER": {
+                  "type": "integer"
+                },
+                "DIVAN": {
+                  "type": "integer"
+                },
+                "DIVER": {
+                  "type": "integer"
+                },
+                "ELEANOR": {
+                  "type": "integer"
+                },
+                "ELEGANT_TUXEDO": {
+                  "type": "integer"
+                },
+                "EMERALD_ARMOR": {
+                  "type": "integer"
+                },
+                "END": {
+                  "type": "integer"
+                },
+                "FAIRY": {
+                  "type": "integer"
+                },
+                "FANCY_TUXEDO": {
+                  "type": "integer"
+                },
+                "FARM_ARMOR": {
+                  "type": "integer"
+                },
+                "FARM_SUIT": {
+                  "type": "integer"
+                },
+                "FERMENTO": {
+                  "type": "integer"
+                },
+                "FERVOR": {
+                  "type": "integer"
+                },
+                "FIG": {
+                  "type": "integer"
+                },
+                "FINAL_DESTINATION": {
+                  "type": "integer"
+                },
+                "FINWAVE": {
+                  "type": "integer"
+                },
+                "FISHERMAN": {
+                  "type": "integer"
+                },
+                "FLAME_BREAKER": {
+                  "type": "integer"
+                },
+                "FROZEN_BLAZE": {
+                  "type": "integer"
+                },
+                "GEMSTONE": {
+                  "type": "integer"
+                },
+                "GILLSPLASH": {
+                  "type": "integer"
+                },
+                "GLACITE": {
+                  "type": "integer"
+                },
+                "GLOSSY_MINERAL": {
+                  "type": "integer"
+                },
+                "GOBLIN": {
+                  "type": "integer"
+                },
+                "GOLD_HUNTER": {
+                  "type": "integer"
+                },
+                "GOLEM_ARMOR": {
+                  "type": "integer"
+                },
+                "GROWTH": {
+                  "type": "integer"
+                },
+                "HARDENED_DIAMOND": {
+                  "type": "integer"
+                },
+                "HEAT": {
+                  "type": "integer"
+                },
+                "HEAVY": {
+                  "type": "integer"
+                },
+                "HELIANTHUS": {
+                  "type": "integer"
+                },
+                "HOLLOW": {
+                  "type": "integer"
+                },
+                "HOLY_DRAGON": {
+                  "type": "integer"
+                },
+                "ICHTHYIC": {
+                  "type": "integer"
+                },
+                "LAPIS_ARMOR": {
+                  "type": "integer"
+                },
+                "LAVA_SEA_CREATURE": {
+                  "type": "integer"
+                },
+                "LEAFLET": {
+                  "type": "integer"
+                },
+                "LOTUS": {
+                  "type": "integer"
+                },
+                "MAGMA_LORD": {
+                  "type": "integer"
+                },
+                "MANGROVE": {
+                  "type": "integer"
+                },
+                "MASTIFF": {
+                  "type": "integer"
+                },
+                "MELON": {
+                  "type": "integer"
+                },
+                "MERCENARY": {
+                  "type": "integer"
+                },
+                "MINERAL": {
+                  "type": "integer"
+                },
+                "MINER_OUTFIT": {
+                  "type": "integer"
+                },
+                "MITHRIL": {
+                  "type": "integer"
+                },
+                "MOLTEN": {
+                  "type": "integer"
+                },
+                "MONSTER_HUNTER": {
+                  "type": "integer"
+                },
+                "MONSTER_RAIDER": {
+                  "type": "integer"
+                },
+                "MUSHROOM": {
+                  "type": "integer"
+                },
+                "MYTHOS": {
+                  "type": "integer"
+                },
+                "NECROMANCER_LORD": {
+                  "type": "integer"
+                },
+                "NUTCRACKER": {
+                  "type": "integer"
+                },
+                "OLD_DRAGON": {
+                  "type": "integer"
+                },
+                "PARK": {
+                  "type": "integer"
+                },
+                "PARTY": {
+                  "type": "integer"
+                },
+                "PERFECT_TIER_12": {
+                  "type": "integer"
+                },
+                "PERFECT_TIER_13": {
+                  "type": "integer"
+                },
+                "POWER_WITHER": {
+                  "type": "integer"
+                },
+                "PRIMORDIAL": {
+                  "type": "integer"
+                },
+                "PROTECTOR_DRAGON": {
+                  "type": "integer"
+                },
+                "PUMPKIN": {
+                  "type": "integer"
+                },
+                "RABBIT": {
+                  "type": "integer"
+                },
+                "RAMPART": {
+                  "type": "integer"
+                },
+                "REAPER": {
+                  "type": "integer"
+                },
+                "REKINDLED_EMBER": {
+                  "type": "integer"
+                },
+                "REVENANT": {
+                  "type": "integer"
+                },
+                "ROSETTA": {
+                  "type": "integer"
+                },
+                "ROTTEN": {
+                  "type": "integer"
+                },
+                "SALMON_NEW": {
+                  "type": "integer"
+                },
+                "SEYMOUR": {
+                  "type": "integer"
+                },
+                "SHADOW_ASSASSIN": {
+                  "type": "integer"
+                },
+                "SHARK_SCALE": {
+                  "type": "integer"
+                },
+                "SHIMMERING_LIGHT": {
+                  "type": "integer"
+                },
+                "SILVER_HUNTER": {
+                  "type": "integer"
+                },
+                "SKELETON_GRUNT": {
+                  "type": "integer"
+                },
+                "SKELETON_LORD": {
+                  "type": "integer"
+                },
+                "SKELETON_MASTER": {
+                  "type": "integer"
+                },
+                "SKELETON_SOLDIER": {
+                  "type": "integer"
+                },
+                "SKELETOR": {
+                  "type": "integer"
+                },
+                "SNORKELING": {
+                  "type": "integer"
+                },
+                "SNOW_SUIT": {
+                  "type": "integer"
+                },
+                "SORROW": {
+                  "type": "integer"
+                },
+                "SPEEDSTER": {
+                  "type": "integer"
+                },
+                "SPEED_WITHER": {
+                  "type": "integer"
+                },
+                "SPONGE": {
+                  "type": "integer"
+                },
+                "SPOOKY": {
+                  "type": "integer"
+                },
+                "SQUASH": {
+                  "type": "integer"
+                },
+                "SQUIRE": {
+                  "type": "integer"
+                },
+                "STARLIGHT": {
+                  "type": "integer"
+                },
+                "STRONG_DRAGON": {
+                  "type": "integer"
+                },
+                "SUPERIOR_DRAGON": {
+                  "type": "integer"
+                },
+                "SUPER_HEAVY": {
+                  "type": "integer"
+                },
+                "TANK_MINER": {
+                  "type": "integer"
+                },
+                "TANK_WITHER": {
+                  "type": "integer"
+                },
+                "TARANTULA": {
+                  "type": "integer"
+                },
+                "TERROR": {
+                  "type": "integer"
+                },
+                "THUNDER": {
+                  "type": "integer"
+                },
+                "TITANIUM": {
+                  "type": "integer"
+                },
+                "UNSTABLE_DRAGON": {
+                  "type": "integer"
+                },
+                "VANQUISHED": {
+                  "type": "integer"
+                },
+                "WEREWOLF": {
+                  "type": "integer"
+                },
+                "WISE_DRAGON": {
+                  "type": "integer"
+                },
+                "WISE_WITHER": {
+                  "type": "integer"
+                },
+                "WITHER": {
+                  "type": "integer"
+                },
+                "YOUNG_DRAGON": {
+                  "type": "integer"
+                },
+                "ZOMBIE": {
+                  "type": "integer"
+                },
+                "ZOMBIE_COMMANDER": {
+                  "type": "integer"
+                },
+                "ZOMBIE_KNIGHT": {
+                  "type": "integer"
+                },
+                "ZOMBIE_LORD": {
+                  "type": "integer"
+                },
+                "ZOMBIE_SOLDIER": {
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
+            "donation_xp": {
+              "type": "integer"
+            },
+            "game_stage": {
+              "type": "string"
+            },
+            "mapped_item_ids": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "parent": {
+              "properties": {
+                "ABYSMAL_LASSO": {
+                  "type": "string"
+                },
+                "ALERT_FLARE": {
+                  "type": "string"
+                },
+                "ANCESTRAL_SPADE": {
+                  "type": "string"
+                },
+                "ANGLER": {
+                  "type": "string"
+                },
+                "APEX_PRAEDATOR": {
+                  "type": "string"
+                },
+                "AQUAMASTER_X": {
+                  "type": "string"
+                },
+                "ARCHAIC_SPADE": {
+                  "type": "string"
+                },
+                "ASPECT_OF_THE_END": {
+                  "type": "string"
+                },
+                "ASTRAEA": {
+                  "type": "string"
+                },
+                "BANDAGED_MITHRIL_PICKAXE": {
+                  "type": "string"
+                },
+                "BASIC_FISHING_NET": {
+                  "type": "string"
+                },
+                "BASIC_GARDENING_AXE": {
+                  "type": "string"
+                },
+                "BASIC_GARDENING_HOE": {
+                  "type": "string"
+                },
+                "BLAZE": {
+                  "type": "string"
+                },
+                "BONE_REAVER": {
+                  "type": "string"
+                },
+                "BRONZE_HUNTER": {
+                  "type": "string"
+                },
+                "BURSTFIRE_DAGGER": {
+                  "type": "string"
+                },
+                "BURSTMAW_DAGGER": {
+                  "type": "string"
+                },
+                "CACTUS_KNIFE": {
+                  "type": "string"
+                },
+                "CACTUS_KNIFE_2": {
+                  "type": "string"
+                },
+                "CANOPY": {
+                  "type": "string"
+                },
+                "CHALLENGER": {
+                  "type": "string"
+                },
+                "CHALLENGE_ROD": {
+                  "type": "string"
+                },
+                "CHAMP_ROD": {
+                  "type": "string"
+                },
+                "CHEAP_TUXEDO": {
+                  "type": "string"
+                },
+                "CLEAVER": {
+                  "type": "string"
+                },
+                "COCO_CHOPPER": {
+                  "type": "string"
+                },
+                "COCO_CHOPPER_2": {
+                  "type": "string"
+                },
+                "CRIMSON_HUNTER": {
+                  "type": "string"
+                },
+                "CROPIE": {
+                  "type": "string"
+                },
+                "CROWN_OF_GREED": {
+                  "type": "string"
+                },
+                "CRYSTALLIZED_HEART": {
+                  "type": "string"
+                },
+                "CURSUS_FERAE": {
+                  "type": "string"
+                },
+                "DARK_GOGGLES": {
+                  "type": "string"
+                },
+                "DESTRUCTION_CLOAK": {
+                  "type": "string"
+                },
+                "DIVER": {
+                  "type": "string"
+                },
+                "DOJO_BLUE_BELT": {
+                  "type": "string"
+                },
+                "DOJO_BROWN_BELT": {
+                  "type": "string"
+                },
+                "DOJO_GREEN_BELT": {
+                  "type": "string"
+                },
+                "DOJO_WHITE_BELT": {
+                  "type": "string"
+                },
+                "DOJO_YELLOW_BELT": {
+                  "type": "string"
+                },
+                "ENTANGLER_LASSO": {
+                  "type": "string"
+                },
+                "FANCY_TUXEDO": {
+                  "type": "string"
+                },
+                "FARMER_BOOTS": {
+                  "type": "string"
+                },
+                "FERMENTO": {
+                  "type": "string"
+                },
+                "FIG_AXE": {
+                  "type": "string"
+                },
+                "FINWAVE": {
+                  "type": "string"
+                },
+                "FIREDUST_DAGGER": {
+                  "type": "string"
+                },
+                "FLAME_BREAKER": {
+                  "type": "string"
+                },
+                "FLOWER_OF_TRUTH": {
+                  "type": "string"
+                },
+                "FRACTURED_MITHRIL_PICKAXE": {
+                  "type": "string"
+                },
+                "FROZEN_SCYTHE": {
+                  "type": "string"
+                },
+                "FUNGI_CUTTER": {
+                  "type": "string"
+                },
+                "FUNGI_CUTTER_2": {
+                  "type": "string"
+                },
+                "GEMSTONE_DRILL_1": {
+                  "type": "string"
+                },
+                "GEMSTONE_DRILL_2": {
+                  "type": "string"
+                },
+                "GEMSTONE_DRILL_3": {
+                  "type": "string"
+                },
+                "GLACITE_CHISEL": {
+                  "type": "string"
+                },
+                "GOLD_BONZO_HEAD": {
+                  "type": "string"
+                },
+                "GOLD_HUNTER": {
+                  "type": "string"
+                },
+                "GOLD_LIVID_HEAD": {
+                  "type": "string"
+                },
+                "GOLD_NECRON_HEAD": {
+                  "type": "string"
+                },
+                "GOLD_PROFESSOR_HEAD": {
+                  "type": "string"
+                },
+                "GOLD_SADAN_HEAD": {
+                  "type": "string"
+                },
+                "GOLD_SCARF_HEAD": {
+                  "type": "string"
+                },
+                "GOLD_THORN_HEAD": {
+                  "type": "string"
+                },
+                "GROWTH": {
+                  "type": "string"
+                },
+                "HARDENED_DIAMOND": {
+                  "type": "string"
+                },
+                "HOE_OF_GREATER_TILLING": {
+                  "type": "string"
+                },
+                "HOE_OF_GREAT_TILLING": {
+                  "type": "string"
+                },
+                "HYDRO_CAN_1000": {
+                  "type": "string"
+                },
+                "HYDRO_CAN_TURBO_2000": {
+                  "type": "string"
+                },
+                "HYDRO_CAN_ULTRA_3000": {
+                  "type": "string"
+                },
+                "HYPER_CLEAVER": {
+                  "type": "string"
+                },
+                "ICHTHYIC": {
+                  "type": "string"
+                },
+                "INFERNO_ROD": {
+                  "type": "string"
+                },
+                "INFINI_VACUUM": {
+                  "type": "string"
+                },
+                "JUNGLE_AXE": {
+                  "type": "string"
+                },
+                "LEAPING_SWORD": {
+                  "type": "string"
+                },
+                "LEGEND_ROD": {
+                  "type": "string"
+                },
+                "LOTUS": {
+                  "type": "string"
+                },
+                "MAGMA_ROD": {
+                  "type": "string"
+                },
+                "MANA_FLUX_POWER_ORB": {
+                  "type": "string"
+                },
+                "MAWDUST_DAGGER": {
+                  "type": "string"
+                },
+                "MEDIUM_FISHING_NET": {
+                  "type": "string"
+                },
+                "MEDIUM_SCAFFOLDING": {
+                  "type": "string"
+                },
+                "MELON": {
+                  "type": "string"
+                },
+                "MELON_DICER": {
+                  "type": "string"
+                },
+                "MELON_DICER_2": {
+                  "type": "string"
+                },
+                "MENDER_FEDORA": {
+                  "type": "string"
+                },
+                "MENDER_HELMET": {
+                  "type": "string"
+                },
+                "METAL_CHESTPLATE": {
+                  "type": "string"
+                },
+                "MINERAL": {
+                  "type": "string"
+                },
+                "MITHRIL": {
+                  "type": "string"
+                },
+                "MITHRIL_DRILL_1": {
+                  "type": "string"
+                },
+                "MITHRIL_PICKAXE": {
+                  "type": "string"
+                },
+                "MONSTER_HUNTER": {
+                  "type": "string"
+                },
+                "MUSHROOM": {
+                  "type": "string"
+                },
+                "NECRON_BLADE": {
+                  "type": "string"
+                },
+                "ORNATE_ZOMBIE_SWORD": {
+                  "type": "string"
+                },
+                "OVERFLUX_POWER_ORB": {
+                  "type": "string"
+                },
+                "PERFECT_TIER_12": {
+                  "type": "string"
+                },
+                "PUMPKIN_DICER": {
+                  "type": "string"
+                },
+                "PUMPKIN_DICER_2": {
+                  "type": "string"
+                },
+                "RADIANT_POWER_ORB": {
+                  "type": "string"
+                },
+                "REAPER_SWORD": {
+                  "type": "string"
+                },
+                "RECLUSE_FANG": {
+                  "type": "string"
+                },
+                "REINFORCED_CHISEL": {
+                  "type": "string"
+                },
+                "REVENANT": {
+                  "type": "string"
+                },
+                "REVENANT_SWORD": {
+                  "type": "string"
+                },
+                "REVIVED_HEART": {
+                  "type": "string"
+                },
+                "RUSTY_TITANIUM_PICKAXE": {
+                  "type": "string"
+                },
+                "SAM_SCYTHE": {
+                  "type": "string"
+                },
+                "SCORPION_BOW": {
+                  "type": "string"
+                },
+                "SCORPION_FOIL": {
+                  "type": "string"
+                },
+                "SCYLLA": {
+                  "type": "string"
+                },
+                "SERIOUSLY_DAMAGED_AXE": {
+                  "type": "string"
+                },
+                "SHADOW_GOGGLES": {
+                  "type": "string"
+                },
+                "SHAMAN_SWORD": {
+                  "type": "string"
+                },
+                "SILVA_DOMINUS": {
+                  "type": "string"
+                },
+                "SILVER_HUNTER": {
+                  "type": "string"
+                },
+                "SKYMART_HYPER_VACUUM": {
+                  "type": "string"
+                },
+                "SKYMART_TURBO_VACUUM": {
+                  "type": "string"
+                },
+                "SKYMART_VACUUM": {
+                  "type": "string"
+                },
+                "SMALL_POCKET_BLACK_HOLE": {
+                  "type": "string"
+                },
+                "SNORKELING": {
+                  "type": "string"
+                },
+                "SNOW_BLASTER": {
+                  "type": "string"
+                },
+                "SNOW_CANNON": {
+                  "type": "string"
+                },
+                "SNOW_SUIT": {
+                  "type": "string"
+                },
+                "SOUL_WHIP": {
+                  "type": "string"
+                },
+                "SPEED_WITHER": {
+                  "type": "string"
+                },
+                "SPIDER_SWORD": {
+                  "type": "string"
+                },
+                "SPIRIT_SWORD": {
+                  "type": "string"
+                },
+                "SPONGE": {
+                  "type": "string"
+                },
+                "SPOOKY": {
+                  "type": "string"
+                },
+                "SQUASH": {
+                  "type": "string"
+                },
+                "STONE_CHESTPLATE": {
+                  "type": "string"
+                },
+                "SUPER_CLEAVER": {
+                  "type": "string"
+                },
+                "SUPER_UNDEAD_BOW": {
+                  "type": "string"
+                },
+                "SWORD_OF_REVELATIONS": {
+                  "type": "string"
+                },
+                "SYNTHESIZER_V1": {
+                  "type": "string"
+                },
+                "SYNTHESIZER_V2": {
+                  "type": "string"
+                },
+                "TANK_MINER": {
+                  "type": "string"
+                },
+                "TANK_WITHER": {
+                  "type": "string"
+                },
+                "TARANTULA": {
+                  "type": "string"
+                },
+                "TARANTULA_FANG": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_CANE_1": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_CANE_2": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_CARROT_1": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_CARROT_2": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_POTATO_1": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_POTATO_2": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_SUNFLOWER_1": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_SUNFLOWER_2": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_WARTS_1": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_WARTS_2": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_WHEAT_1": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_WHEAT_2": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_WILD_ROSE_1": {
+                  "type": "string"
+                },
+                "THEORETICAL_HOE_WILD_ROSE_2": {
+                  "type": "string"
+                },
+                "TINY_SCAFFOLDING": {
+                  "type": "string"
+                },
+                "TITANIUM_DRILL_1": {
+                  "type": "string"
+                },
+                "TITANIUM_DRILL_2": {
+                  "type": "string"
+                },
+                "TITANIUM_DRILL_3": {
+                  "type": "string"
+                },
+                "TITANIUM_DRILL_4": {
+                  "type": "string"
+                },
+                "TITANIUM_PICKAXE": {
+                  "type": "string"
+                },
+                "UNDEAD_BOW": {
+                  "type": "string"
+                },
+                "UNDEAD_SWORD": {
+                  "type": "string"
+                },
+                "VALKYRIE": {
+                  "type": "string"
+                },
+                "VAMPIRE_MASK": {
+                  "type": "string"
+                },
+                "VENATOR_GENESIS": {
+                  "type": "string"
+                },
+                "VINERIP_LASSO": {
+                  "type": "string"
+                },
+                "VOIDEDGE_KATANA": {
+                  "type": "string"
+                },
+                "VOIDWALKER_KATANA": {
+                  "type": "string"
+                },
+                "VOODOO_DOLL": {
+                  "type": "string"
+                },
+                "VORPAL_KATANA": {
+                  "type": "string"
+                },
+                "WAND_OF_HEALING": {
+                  "type": "string"
+                },
+                "WAND_OF_MENDING": {
+                  "type": "string"
+                },
+                "WAND_OF_RESTORATION": {
+                  "type": "string"
+                },
+                "WARNING_FLARE": {
+                  "type": "string"
+                },
+                "WEIRD_TUBA": {
+                  "type": "string"
+                },
+                "WISE_WITHER": {
+                  "type": "string"
+                },
+                "WITCH_MASK": {
+                  "type": "string"
+                },
+                "WITHER": {
+                  "type": "string"
+                },
+                "ZOMBIE": {
+                  "type": "string"
+                },
+                "ZOMBIE_HEART": {
+                  "type": "string"
+                },
+                "ZOMBIE_SWORD": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
         "name": {
           "type": "string"
         },
@@ -725,6 +1741,9 @@
               "type": "number"
             },
             "bonus_pest_chance": {
+              "type": "number"
+            },
+            "cactus_fortune": {
               "type": "integer"
             },
             "carrot_fortune": {
@@ -781,6 +1800,18 @@
             "mending": {
               "type": "number"
             },
+            "mining_fortune": {
+              "type": "integer"
+            },
+            "mining_speed": {
+              "type": "integer"
+            },
+            "mushroom_fortune": {
+              "type": "integer"
+            },
+            "nether_stalk_fortune": {
+              "type": "integer"
+            },
             "potato_fortune": {
               "type": "integer"
             },
@@ -813,6 +1844,21 @@
             },
             "strength": {
               "type": "number"
+            },
+            "sugar_cane_fortune": {
+              "type": "integer"
+            },
+            "sweep": {
+              "type": "integer"
+            },
+            "tracking": {
+              "type": "number"
+            },
+            "treasure_chance": {
+              "type": "number"
+            },
+            "trophy_fish_chance": {
+              "type": "integer"
             },
             "vitality": {
               "type": "number"

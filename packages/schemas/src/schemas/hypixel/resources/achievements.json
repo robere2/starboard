@@ -449,6 +449,412 @@
                   },
                   "type": "object"
                 },
+                "DISASTERS_ALWAYS_A_BIGGER_FISH": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_DRAGON_TAMER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_DUMPSTER_DIVING": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_FINAL_DESTINATION": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_FULL_HOUSE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_GOT_ANY_CHANGE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_HALF_A_HEART_AND_A_DREAM": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_HERE_WE_GO": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_JUGGLER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_LAST_MAN_STANDING": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_LIKE_A_STATUE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_MAXIMUM_OVERLOAD": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_PEACEKEEPER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_SHARING_IS_CARING": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_SHIELDWALL": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_TITANFALL": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_TORNADO_WRANGLER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_UNTOUCHABLE": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_WARWICK": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_YAHOO": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
                 "DRAGONTAMER": {
                   "properties": {
                     "description": {
@@ -2339,6 +2745,62 @@
                   "type": "object"
                 },
                 "CTW_SLAYER": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_PREPARED": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amount": {
+                            "type": "integer"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "DISASTERS_SURVIVALIST": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -7827,6 +8289,43 @@
                     "globalPercentUnlocked": {
                       "type": "number"
                     },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HUNT_BEGINS_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HUNT_BEGINS_2025": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
                     "name": {
                       "type": "string"
                     },
@@ -8166,6 +8665,43 @@
                   "type": "object"
                 },
                 "REAL_SANTA_2023": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "REAL_SANTA_2024": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "legacy": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "REAL_SANTA_2025": {
                   "properties": {
                     "description": {
                       "type": "string"
@@ -25212,6 +25748,29 @@
                     },
                     "points": {
                       "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "TOO_MUCH_JOY": {
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "gamePercentUnlocked": {
+                      "type": "number"
+                    },
+                    "globalPercentUnlocked": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "points": {
+                      "type": "integer"
+                    },
+                    "secret": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"

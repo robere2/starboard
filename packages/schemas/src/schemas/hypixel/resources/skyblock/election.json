@@ -106,6 +106,9 @@
                     },
                     "name": {
                       "type": "string"
+                    },
+                    "minister": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"
