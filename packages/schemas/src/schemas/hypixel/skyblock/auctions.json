@@ -90,6 +90,12 @@
         "bin": {
           "type": "boolean"
         },
+        "categories": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "category": {
           "type": "string"
         },
