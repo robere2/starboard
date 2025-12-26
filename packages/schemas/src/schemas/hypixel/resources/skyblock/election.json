@@ -41,6 +41,9 @@
                         "description": {
                           "type": "string"
                         },
+                        "minister": {
+                          "type": "boolean"
+                        },
                         "name": {
                           "type": "string"
                         }
@@ -106,6 +109,9 @@
                     },
                     "name": {
                       "type": "string"
+                    },
+                    "minister": {
+                      "type": "boolean"
                     }
                   },
                   "type": "object"

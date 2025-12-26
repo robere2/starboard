@@ -99,6 +99,20 @@
             "id": {
               "type": "integer"
             },
+            "modeNames": {
+              "properties": {
+                "CTF": {
+                  "type": "string"
+                },
+                "DOM": {
+                  "type": "string"
+                },
+                "TDM": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
             "name": {
               "type": "string"
             }
@@ -119,6 +133,9 @@
                   "type": "string"
                 },
                 "BEDWARS_EIGHT_ONE": {
+                  "type": "string"
+                },
+                "BEDWARS_EIGHT_ONE_ONEBLOCK": {
                   "type": "string"
                 },
                 "BEDWARS_EIGHT_ONE_RUSH": {
@@ -169,6 +186,9 @@
                 "BEDWARS_FOUR_FOUR_SWAP": {
                   "type": "string"
                 },
+                "BEDWARS_FOUR_FOUR_TOURNEY": {
+                  "type": "string"
+                },
                 "BEDWARS_FOUR_FOUR_ULTIMATE": {
                   "type": "string"
                 },
@@ -182,6 +202,9 @@
                   "type": "string"
                 },
                 "BEDWARS_TWO_FOUR": {
+                  "type": "string"
+                },
+                "BEDWARS_TWO_FOUR_TOURNEY": {
                   "type": "string"
                 }
               },
@@ -225,6 +248,9 @@
                   "type": "string"
                 },
                 "BUILD_BATTLE_SOLO_PRO": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_SPEED_BUILDERS": {
                   "type": "string"
                 },
                 "BUILD_BATTLE_TEAMS_NORMAL": {
@@ -313,6 +339,9 @@
                   "type": "string"
                 },
                 "DUELS_POTION_DUEL": {
+                  "type": "string"
+                },
+                "DUELS_QUAKE_DUEL": {
                   "type": "string"
                 },
                 "DUELS_SUMO_DUEL": {
@@ -406,6 +435,14 @@
             },
             "id": {
               "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "DEFUSAL_TOURNEY": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
             "name": {
               "type": "string"
@@ -660,6 +697,9 @@
                 "ranked_normal": {
                   "type": "string"
                 },
+                "solo_crazyinsane": {
+                  "type": "string"
+                },
                 "solo_insane": {
                   "type": "string"
                 },
@@ -696,7 +736,13 @@
                 "teams_insane_tnt_madness": {
                   "type": "string"
                 },
+                "teams_insane_tourney": {
+                  "type": "string"
+                },
                 "teams_normal": {
+                  "type": "string"
+                },
+                "teams_normal_tourney": {
                   "type": "string"
                 }
               },
@@ -757,6 +803,14 @@
             },
             "id": {
               "type": "integer"
+            },
+            "modeNames": {
+              "properties": {
+                "teams_tourney": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
             "name": {
               "type": "string"
@@ -893,6 +947,15 @@
             },
             "modeNames": {
               "properties": {
+                "capture_the_wool_two_twenty": {
+                  "type": "string"
+                },
+                "sheep_wars_two_six": {
+                  "type": "string"
+                },
+                "wool_wars_two_four": {
+                  "type": "string"
+                },
                 "wool_wars_two_four_tourney": {
                   "type": "string"
                 }

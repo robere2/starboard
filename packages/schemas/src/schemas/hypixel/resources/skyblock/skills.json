@@ -263,6 +263,40 @@
           },
           "type": "object"
         },
+        "HUNTING": {
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "levels": {
+              "items": {
+                "properties": {
+                  "level": {
+                    "type": "integer"
+                  },
+                  "totalExpRequired": {
+                    "type": "integer"
+                  },
+                  "unlocks": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "maxLevel": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
         "MINING": {
           "properties": {
             "description": {
