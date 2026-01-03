@@ -247,6 +247,35 @@
           },
           "type": "array"
         },
+        "HOUSING": {
+          "items": {
+            "properties": {
+              "count": {
+                "type": "integer"
+              },
+              "leaders": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "location": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "prefix": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
         "MCGO": {
           "items": {
             "properties": {

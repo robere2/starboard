@@ -31,6 +31,9 @@
         "buyer": {
           "type": "string"
         },
+        "buyer_profile": {
+          "type": "string"
+        },
         "item_bytes": {
           "type": "string"
         },
