@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-pre.33](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.32...@mcsb/schemas@1.0.0-pre.33) (2026-01-04)
+
+**Note:** Version bump only for package @mcsb/schemas
+
 # [1.0.0-pre.32](https://github.com/robere2/starboard/compare/@mcsb/schemas@1.0.0-pre.31...@mcsb/schemas@1.0.0-pre.32) (2023-12-04)
 
 ### Bug Fixes
