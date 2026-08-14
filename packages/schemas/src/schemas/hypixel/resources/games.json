@@ -121,6 +121,9 @@
                 "BEDWARS_EIGHT_ONE": {
                   "type": "string"
                 },
+                "BEDWARS_EIGHT_ONE_ONEBLOCK": {
+                  "type": "string"
+                },
                 "BEDWARS_EIGHT_ONE_RUSH": {
                   "type": "string"
                 },
@@ -167,6 +170,9 @@
                   "type": "string"
                 },
                 "BEDWARS_FOUR_FOUR_SWAP": {
+                  "type": "string"
+                },
+                "BEDWARS_FOUR_FOUR_TOURNEY": {
                   "type": "string"
                 },
                 "BEDWARS_FOUR_FOUR_ULTIMATE": {
@@ -225,6 +231,9 @@
                   "type": "string"
                 },
                 "BUILD_BATTLE_SOLO_PRO": {
+                  "type": "string"
+                },
+                "BUILD_BATTLE_SPEED_BUILDERS": {
                   "type": "string"
                 },
                 "BUILD_BATTLE_TEAMS_NORMAL": {
@@ -407,6 +416,14 @@
             "id": {
               "type": "integer"
             },
+            "modeNames": {
+              "properties": {
+                "DEFUSAL_TOURNEY": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
             "name": {
               "type": "string"
             }
@@ -489,6 +506,15 @@
                   "type": "string"
                 },
                 "PIXEL_PARTY": {
+                  "type": "string"
+                },
+                "RAVENGARD_DUNGEON_TRIO": {
+                  "type": "string"
+                },
+                "RAVENGARD_HUB": {
+                  "type": "string"
+                },
+                "RAVENGARD_TUTORIAL": {
                   "type": "string"
                 },
                 "TOWERWARS_SOLO": {
@@ -660,6 +686,9 @@
                 "ranked_normal": {
                   "type": "string"
                 },
+                "solo_crazyinsane": {
+                  "type": "string"
+                },
                 "solo_insane": {
                   "type": "string"
                 },
@@ -696,7 +725,13 @@
                 "teams_insane_tnt_madness": {
                   "type": "string"
                 },
+                "teams_insane_tourney": {
+                  "type": "string"
+                },
                 "teams_normal": {
+                  "type": "string"
+                },
+                "teams_normal_tourney": {
                   "type": "string"
                 }
               },
@@ -893,6 +928,15 @@
             },
             "modeNames": {
               "properties": {
+                "capture_the_wool_two_twenty": {
+                  "type": "string"
+                },
+                "sheep_wars_two_six": {
+                  "type": "string"
+                },
+                "wool_wars_two_four": {
+                  "type": "string"
+                },
                 "wool_wars_two_four_tourney": {
                   "type": "string"
                 }

@@ -445,6 +445,37 @@
                   },
                   "type": "object"
                 },
+                "DOUBLE_PLANT": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
                 "FEATHER": {
                   "properties": {
                     "maxTiers": {
@@ -539,6 +570,37 @@
                   "type": "object"
                 },
                 "MELON": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MOONFLOWER": {
                   "properties": {
                     "maxTiers": {
                       "type": "integer"
@@ -909,6 +971,37 @@
                     }
                   },
                   "type": "object"
+                },
+                "WILD_ROSE": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
                 }
               },
               "type": "object"
@@ -955,6 +1048,37 @@
                   "type": "object"
                 },
                 "INK_SACK": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LOTUS": {
                   "properties": {
                     "maxTiers": {
                       "type": "integer"
@@ -1277,6 +1401,99 @@
           "properties": {
             "items": {
               "properties": {
+                "FIG_LOG": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HELIX_LOG": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "HONEYCOMB": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
                 "LOG": {
                   "properties": {
                     "maxTiers": {
@@ -1433,6 +1650,192 @@
                   "type": "object"
                 },
                 "LOG_2:1": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "LUSHLILAC": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "MANGROVE_LOG": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "RUBY_VEILSHROOM": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "SEA_LUMIES": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "TENDER_WOOD": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "VINESAP": {
                   "properties": {
                     "maxTiers": {
                       "type": "integer"
@@ -1632,6 +2035,37 @@
                   "type": "object"
                 },
                 "GEMSTONE_COLLECTION": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "GLACITE": {
                   "properties": {
                     "maxTiers": {
                       "type": "integer"
@@ -2157,6 +2591,68 @@
                     }
                   },
                   "type": "object"
+                },
+                "TUNGSTEN": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "UMBER": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
                 }
               },
               "type": "object"
@@ -2296,6 +2792,37 @@
                   "type": "object"
                 },
                 "METAL_HEART": {
+                  "properties": {
+                    "maxTiers": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "tiers": {
+                      "items": {
+                        "properties": {
+                          "amountRequired": {
+                            "type": "integer"
+                          },
+                          "tier": {
+                            "type": "integer"
+                          },
+                          "unlocks": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "TIMITE": {
                   "properties": {
                     "maxTiers": {
                       "type": "integer"
