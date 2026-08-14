@@ -59,6 +59,9 @@
         "price": {
           "type": "number"
         },
+        "rune": {
+          "type": "string"
+        },
         "start": {
           "type": "integer"
         }
